@@ -21,6 +21,10 @@
 		DF69D2481967EA7F00B8C011 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF69D2461967EA7F00B8C011 /* InfoPlist.strings */; };
 		DF69D24A1967EA7F00B8C011 /* M9DevTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2491967EA7F00B8C011 /* M9DevTests.m */; };
 		DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */; };
+		DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */; };
+		DF69D2651968513300B8C011 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = DF69D25D1968513300B8C011 /* readme.md */; };
+		DF69D2661968513300B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2601968513300B8C011 /* M9Networking.m */; };
+		DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2631968513300B8C011 /* NSObject+AssociatedValues.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,16 @@
 		DF69D2491967EA7F00B8C011 /* M9DevTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = M9DevTests.m; sourceTree = "<group>"; };
 		DF69D2531968490F00B8C011 /* M9NetworkingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9NetworkingViewController.h; sourceTree = "<group>"; };
 		DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9NetworkingViewController.m; sourceTree = "<group>"; };
+		DF69D2581968513300B8C011 /* NSObject+AssociatedObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedObjects.h"; sourceTree = "<group>"; };
+		DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObjects.m"; sourceTree = "<group>"; };
+		DF69D25B1968513300B8C011 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		DF69D25C1968513300B8C011 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		DF69D25D1968513300B8C011 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
+		DF69D25F1968513300B8C011 /* M9Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Networking.h; sourceTree = "<group>"; };
+		DF69D2601968513300B8C011 /* M9Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Networking.m; sourceTree = "<group>"; };
+		DF69D2611968513300B8C011 /* M9Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Utilities.h; sourceTree = "<group>"; };
+		DF69D2621968513300B8C011 /* NSObject+AssociatedValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedValues.h"; sourceTree = "<group>"; };
+		DF69D2631968513300B8C011 /* NSObject+AssociatedValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedValues.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +98,7 @@
 		DF69D2181967EA7E00B8C011 = {
 			isa = PBXGroup;
 			children = (
+				DF69D2561968513300B8C011 /* Libraries */,
 				DF69D22A1967EA7E00B8C011 /* M9Dev */,
 				DF69D2431967EA7F00B8C011 /* M9DevTests */,
 				DF69D2231967EA7E00B8C011 /* Frameworks */,
@@ -153,6 +168,47 @@
 				DF69D2461967EA7F00B8C011 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DF69D2561968513300B8C011 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				DF69D2571968513300B8C011 /* BlocksKit */,
+				DF69D25A1968513300B8C011 /* extobjc */,
+				DF69D25E1968513300B8C011 /* M9 */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		DF69D2571968513300B8C011 /* BlocksKit */ = {
+			isa = PBXGroup;
+			children = (
+				DF69D2581968513300B8C011 /* NSObject+AssociatedObjects.h */,
+				DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */,
+			);
+			path = BlocksKit;
+			sourceTree = "<group>";
+		};
+		DF69D25A1968513300B8C011 /* extobjc */ = {
+			isa = PBXGroup;
+			children = (
+				DF69D25B1968513300B8C011 /* EXTScope.h */,
+				DF69D25C1968513300B8C011 /* metamacros.h */,
+				DF69D25D1968513300B8C011 /* readme.md */,
+			);
+			path = extobjc;
+			sourceTree = "<group>";
+		};
+		DF69D25E1968513300B8C011 /* M9 */ = {
+			isa = PBXGroup;
+			children = (
+				DF69D25F1968513300B8C011 /* M9Networking.h */,
+				DF69D2601968513300B8C011 /* M9Networking.m */,
+				DF69D2611968513300B8C011 /* M9Utilities.h */,
+				DF69D2621968513300B8C011 /* NSObject+AssociatedValues.h */,
+				DF69D2631968513300B8C011 /* NSObject+AssociatedValues.m */,
+			);
+			path = M9;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF69D22F1967EA7E00B8C011 /* InfoPlist.strings in Resources */,
+				DF69D2651968513300B8C011 /* readme.md in Resources */,
 				DF69D2371967EA7F00B8C011 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +342,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
+				DF69D2661968513300B8C011 /* M9Networking.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
+				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
 			);
