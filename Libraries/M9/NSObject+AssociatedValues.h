@@ -2,7 +2,7 @@
 //  NSObject+AssociatedValues.h
 //  ProgressedAnimation
 //
-//  Created by MingLQ on 2014-02-21.
+//  Created by iwill on 2014-02-21.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
