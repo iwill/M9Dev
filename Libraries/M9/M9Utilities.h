@@ -24,11 +24,12 @@
  */
 #define NSStringFromValue(value)                [@(value) description]
 #define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
-#define NSStringFromVariableName(variableName)  @(#variableName)
+#define NSStringFromVariableName(variableName)  @(#variableName) // #variableName - variableName to CString
 
 
 /**
  * NSLocking
+ * allows return everywhere between LOCK and UNLOCK without extra unlock
  */
 
 /* SYNCHRONIZED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
@@ -46,8 +47,9 @@
         [$lock unlock]; \
     }
 
-/* LOCK(id<NSLocking> lock) & UNLOCK(id<NSLocking> lock) - allows return everywhere between LOCK and UNLOCK without extra unlock
- */
+/* LOCK(id<NSLocking> lock);
+ * // statements
+ * UNLOCK(id<NSLocking> lock);
 #define LOCK($lock) \
     @try { \
         [$lock lock];
@@ -56,17 +58,21 @@
     @finally { \
         [$lock unlock]; \
     }
+ */
 
-/* LOCK(id<NSLocking> lock) & UNLOCK()
+/* LOCK(id<NSLocking> lock);
+ * // statements
+ * UNLOCK();
+ */
 #define LOCK($lock) \
-    id<NSLocking> $$lock$$ = $lock; \
+    {id<NSLocking> $$lock$$ = $lock; \
     @try { \
         [$$lock$$ lock];
-#define UNLOCK \
+#define UNLOCK() \
     } \
     @finally { \
         [$$lock$$ unlock]; \
-    } */
+    }}
 
 
 /**
