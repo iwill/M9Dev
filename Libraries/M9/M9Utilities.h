@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 #define OR          ? :
 
 // for compound statement
@@ -17,15 +18,25 @@
 #define _BREAK      return NO
 #define _CONTINUE   return YES
 
-// NS instead of CF
-// typedef CGFloat NSFloat;
 
-// NSString
+/**
+ * NSString
+ */
 #define NSStringFromValue(value)                [@(value) description]
 #define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
 #define NSStringFromVariableName(variableName)  @(#variableName)
 
-// NSLocking SYNCHRONIZED
+
+/**
+ * NSLocking
+ */
+
+/* SYNCHRONIZED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
+ * e.g.
+ *  SYNCHRONIZED(lock, {
+ *      // statements
+ *  });
+ */
 #define SYNCHRONIZED($lock, $statements) \
     @try { \
         [$lock lock]; \
@@ -34,7 +45,9 @@
     @finally { \
         [$lock unlock]; \
     }
-// NSLocking LOCK & UNLOCK
+
+/* LOCK(id<NSLocking> lock) & UNLOCK(id<NSLocking> lock) - allows return everywhere between LOCK and UNLOCK without extra unlock
+ */
 #define LOCK($lock) \
     @try { \
         [$lock lock];
@@ -43,22 +56,29 @@
     @finally { \
         [$lock unlock]; \
     }
-/*
+
+/* LOCK(id<NSLocking> lock) & UNLOCK()
 #define LOCK($lock) \
-    id<NSLocking> $$lock = $lock; \
+    id<NSLocking> $$lock$$ = $lock; \
     @try { \
-        [$$lock lock];
+        [$$lock$$ lock];
 #define UNLOCK \
     } \
     @finally { \
-        [$$lock unlock]; \
+        [$$lock$$ unlock]; \
     } */
 
-// dispatch
+
+/**
+ * dispatch
+ */
+
 #define dispatch_time_in_seconds(seconds) \
     dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC))
+
 #define dispatch_after_seconds(seconds, block) \
     dispatch_after(dispatch_time_in_seconds(seconds), dispatch_get_main_queue(), block)
+
 #define dispatch_sync_main_queue(block) \
     if ([NSThread isMainThread]) { \
         block(); \
@@ -66,30 +86,19 @@
     else { \
         dispatch_sync(dispatch_get_main_queue(), block); \
     }
+
 #define dispatch_async_main_queue(block) \
     dispatch_async(dispatch_get_main_queue(), block)
 
-/* suppress warning, @see
- *  http://stackoverflow.com/a/7933931/456536
- * @see also
- *  http://stackoverflow.com/a/20058585/456536
+
+/**
+ * M9MakeCopy & @M9MakeCopyWithZone
  */
-#define SuppressPerformSelectorLeakWarning(statements) \
-_Pragma("clang diagnostic push") \
-_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
-statements \
-_Pragma("clang diagnostic pop")
 
+@protocol M9MakeCopy <NSCopying>
+- (void)makeCopy:(id)copy;
+@end
 
-typedef void (^CompletionType)();
-typedef void (^CompletionTypeWithBOOL)(BOOL finished);
-
-static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
-    return [paths count] ? [paths objectAtIndex:0] : nil;
-}
-
-// @M9MakeCopyWithZone();
 #define M9MakeCopyWithZone \
 class NSObject; /* for @ */ \
 - (instancetype)copyWithZone:(NSZone *)zone { \
@@ -98,9 +107,44 @@ class NSObject; /* for @ */ \
     return copy; \
 }
 
-@protocol M9MakeCopy <NSCopying>
 
-- (void)makeCopy:(id)copy;
+/**
+ * NSDirectory
+ */
+static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
+    return [paths count] ? [paths objectAtIndex:0] : nil;
+}
 
-@end
+
+/**
+ * typedef
+ */
+
+// NS instead of CG
+// typedef CGFloat NSFloat;
+
+// UIAnimationCompletion
+typedef void (^UIAnimationCompletion)();
+typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
+
+
+/**
+ * suppress warning
+ *
+ * e.g.
+ *  SuppressPerformSelectorLeakWarning({
+ *      // statements
+ *  });
+ * suppress warning, @see
+ *  http://stackoverflow.com/a/7933931/456536
+ * @see also
+ *  http://stackoverflow.com/a/20058585/456536
+ */
+
+#define SuppressPerformSelectorLeakWarning(statements) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
+statements \
+_Pragma("clang diagnostic pop")
 
