@@ -241,6 +241,11 @@
         requestRef.currentRequestOperation.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
     }
     
+    // disable NSURLCache
+    [requestRef.currentRequestOperation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
+        return nil;
+    }];
+    
     // send request
     [_AFN.operationQueue addOperation:requestRef.currentRequestOperation];
 }}
