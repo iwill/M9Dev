@@ -1,5 +1,5 @@
 //
-//  M9RequestSettings.h
+//  M9RequestConfig.h
 //  M9Dev
 //
 //  Created by iwill on 2014-07-06.
@@ -11,7 +11,7 @@
 #import "M9Utilities.h"
 
 #import "M9RequestRef.h"
-#import "M9Response.h"
+#import "M9ResponseRef.h"
 
 typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
     M9ResponseParseOption_Data  = 1 << 0,
@@ -25,12 +25,11 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
     M9ResponseParseOption_All   = 0xFFFFFFFF
 };
 
-@interface M9RequestSettings : NSObject <M9MakeCopy>
+@interface M9RequestConfig : NSObject <M9MakeCopy>
 
 @property(nonatomic) M9ResponseParseOptions responseParseOptions;
 
 @property(nonatomic) NSTimeInterval timeoutInterval; // default: 10 per request / retry, AFNetworking: 60
-
 @property(nonatomic) NSInteger maxRetryTimes; // default: 2, AFNetworking: 0
 
 @property(nonatomic) BOOL cacheData; // default: YES
@@ -41,15 +40,15 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 
 #pragma mark -
 
-@interface M9RequestInfo : M9RequestSettings
+@interface M9RequestInfo : M9RequestConfig
 
 @property(nonatomic, strong) NSString *URLString;
 @property(nonatomic, strong) NSDictionary *parameters;
-@property(nonatomic, copy) void (^success)(id<M9Response> response, id responseObject, M9RequestRef *requestRef);
-@property(nonatomic, copy) void (^failure)(id<M9Response> response, NSError *error, M9RequestRef *requestRef);
+@property(nonatomic, copy) void (^success)(id<M9ResponseRef> responseRef, id responseObject);
+@property(nonatomic, copy) void (^failure)(id<M9ResponseRef> responseRef, NSError *error);
 
 @property(nonatomic, weak) id sender; // for cancel all requests by sender
 
-+ (instancetype)requestInfoWithSettings:(M9RequestSettings *)requestSettings;
++ (instancetype)requestInfoWithConfig:(M9RequestConfig *)requestConfig;
 
 @end

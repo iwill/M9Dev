@@ -20,6 +20,8 @@
 
 #import "NSObject+AssociatedValues.h"
 
+#import "AFHTTPRequestOperation.h"
+
 @implementation M9RequestRef {
     __weak id _sender;
 }

@@ -17,7 +17,7 @@
 
 #import "M9Networking.h"
 #import "M9RequestRef+Private.h"
-#import "AFHTTPRequestOperation+M9Response.h"
+#import "AFNResponseRef.h"
 
 #import "AFNetworking.h"
 #import "TMCache.h"
@@ -61,19 +61,19 @@
     return [[self alloc] init];
 }
 
-+ (instancetype)instanceWithRequestSettings:(M9RequestSettings *)settings {
-    return [[self alloc] initWithRequestSettings:settings];
++ (instancetype)instanceWithRequestConfig:(M9RequestConfig *)config {
+    return [[self alloc] initWithRequestConfig:config];
 }
 
 - (id)init {
-    return [self initWithRequestSettings:[M9RequestSettings new]];
+    return [self initWithRequestConfig:[M9RequestConfig new]];
 }
 
-- (instancetype)initWithRequestSettings:(M9RequestSettings *)settings {
+- (instancetype)initWithRequestConfig:(M9RequestConfig *)config {
     self = [super init];
     if (self) {
         _AFN = [AFHTTPRequestOperationManager manager];
-        self.requestSettings = settings;
+        self.requestConfig = config;
     }
     return self;
 }
@@ -82,26 +82,26 @@
 
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
-              success:(void (^)(id<M9Response> response, id responseObject, M9RequestRef *requestRef))success
-              failure:(void (^)(id<M9Response> response, NSError *error, M9RequestRef *requestRef))failure {
+              success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+              failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:parameters error:nil];
-    return [self sendRequest:request settings:self.requestSettings success:success failure:failure];
+    return [self sendRequest:request config:self.requestConfig success:success failure:failure];
 }
 
 - (M9RequestRef *)POST:(NSString *)URLString
             parameters:(NSDictionary *)parameters
-               success:(void (^)(id<M9Response> response, id responseObject, M9RequestRef *requestRef))success
-               failure:(void (^)(id<M9Response> response, NSError *error, M9RequestRef *requestRef))failure {
+               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:parameters error:nil];
-    return [self sendRequest:request settings:self.requestSettings success:success failure:failure];
+    return [self sendRequest:request config:self.requestConfig success:success failure:failure];
 }
 
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender settings:requestInfo success:requestInfo.success failure:requestInfo.failure];
+    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
@@ -111,52 +111,55 @@
                                     ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
                                     : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender settings:requestInfo success:requestInfo.success failure:requestInfo.failure];
+    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 #pragma mark private
 
 - (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
-                     settings:(M9RequestSettings *)settings
-                      success:(void (^)(id<M9Response> response, id responseObject, M9RequestRef *requestRef))success
-                      failure:(void (^)(id<M9Response> response, NSError *error, M9RequestRef *requestRef))failure {
-    return [self sendRequest:request sender:nil settings:settings success:success failure:failure];
+                       config:(M9RequestConfig *)config
+                      success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+                      failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
+    return [self sendRequest:request sender:nil config:config success:success failure:failure];
 }
 
 - (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
                        sender:(id)sender
-                     settings:(M9RequestSettings *)settings
-                      success:(void (^)(id<M9Response> response, id responseObject, M9RequestRef *requestRef))success
-                      failure:(void (^)(id<M9Response> response, NSError *error, M9RequestRef *requestRef))failure {
+                       config:(M9RequestConfig *)config
+                      success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+                      failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:sender];
     [sender addRequestRef:requestRef];
-    if (settings.useCachedData) {
+    if (config.useCachedData) {
         weakify(self);
-        [self loadCachedResponseWithRequest:request settings:settings callback:^(id<M9Response> response, BOOL expired)
+        [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, BOOL expired)
          { @synchronized(requestRef) {
             strongify(self);
             if (requestRef.isCancelled) {
                 return;
             }
-            if (response && !expired) {
-                if (success) success(response, [response responseObject], requestRef);
+            if (operation && !expired) {
+                if (success) {
+                    id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
+                    success(responseRef, [operation responseObject]);
+                }
             }
             else {
-                [self sendRequest:request settings:settings requestRef:requestRef success:success failure:failure];
+                [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
             }
         }}];
     }
     else {
-        [self sendRequest:request settings:settings requestRef:requestRef success:success failure:failure];
+        [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
     }
     return requestRef;
 }
 
 - (void)sendRequest:(NSMutableURLRequest *)request
-           settings:(M9RequestSettings *)settings
+             config:(M9RequestConfig *)config
          requestRef:(M9RequestRef *)requestRef
-            success:(void (^)(id<M9Response> response, id responseObject, M9RequestRef *requestRef))success
-            failure:(void (^)(id<M9Response> response, NSError *error, M9RequestRef *requestRef))failure
+            success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+            failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure
 { @synchronized(requestRef) { // lock: requestRef.isCancelled && requestRef.currentRequestOperation
     NSParameterAssert(requestRef);
     
@@ -173,10 +176,13 @@
             if (requestRef.isCancelled) {
                 return;
             }
-            if (settings.cacheData) {
+            if (config.cacheData) {
                 [[TMCache sharedCache] setObject:operation forKey:[[request URL] absoluteString] block:nil];
             }
-            if (success) success(operation, responseObject, requestRef);
+            if (success) {
+                id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
+                success(responseRef, responseObject);
+            }
             [requestRef.sender removeRequestRef:requestRef];
         }} failure:^(AFHTTPRequestOperation *operation, NSError *error)
          { @synchronized(requestRef) {
@@ -184,29 +190,35 @@
             if (requestRef.isCancelled) {
                 return;
             }
-            if (requestRef.retryTimes < settings.maxRetryTimes) {
-                requestRef.retryTimes++;
-                [self sendRequest:request settings:settings requestRef:requestRef success:success failure:failure];
+            if (requestRef.retriedTimes < config.maxRetryTimes) {
+                requestRef.retriedTimes++;
+                [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
                 return;
             }
-            if (settings.useCachedDataWhenFailure) {
-                [self loadCachedResponseWithRequest:request settings:settings callback:^(id<M9Response> response, BOOL expired)
+            if (config.useCachedDataWhenFailure) {
+                [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, BOOL expired)
                  { @synchronized(requestRef) {
                     strongify(self);
                     if (requestRef.isCancelled) {
                         return;
                     }
                     // expired || !expired, either is ok
-                    if (response) {
-                        if (success) success(response, [response responseObject], requestRef);
+                    if (operation) {
+                        if (success) {
+                            id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
+                            success(responseRef, [operation responseObject]);
+                        }
                     }
                     else {
-                        [self sendRequest:request settings:settings requestRef:requestRef success:success failure:failure];
+                        [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
                     }
                 }}];
             }
             else {
-                if (failure) failure(operation, error, requestRef);
+                if (failure) {
+                    id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
+                    failure(responseRef, error);
+                }
             }
             [requestRef.sender removeRequestRef:requestRef];
         }}];
@@ -214,24 +226,24 @@
     
     // data parsing
     NSMutableArray *responseSerializers = [NSMutableArray array];
-    if (settings.responseParseOptions & M9ResponseParseOption_Data) {
+    if (config.responseParseOptions & M9ResponseParseOption_Data) {
         [responseSerializers addObject:[AFHTTPResponseSerializer serializer]];
     }
-    if (settings.responseParseOptions & M9ResponseParseOption_JSON) {
+    if (config.responseParseOptions & M9ResponseParseOption_JSON) {
         [responseSerializers addObject:[AFJSONResponseSerializer serializer]];
     }
-    if (settings.responseParseOptions & M9ResponseParseOption_XML) {
+    if (config.responseParseOptions & M9ResponseParseOption_XML) {
         [responseSerializers addObject:[AFXMLParserResponseSerializer serializer]];
     }
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
-    if (settings.responseParseOptions & M9ResponseParseOption_XMLDocument) {
+    if (config.responseParseOptions & M9ResponseParseOption_XMLDocument) {
         [responseSerializers addObject:[AFXMLDocumentResponseSerializer serializer]];
     }
 #endif
-    if (settings.responseParseOptions & M9ResponseParseOption_PList) {
+    if (config.responseParseOptions & M9ResponseParseOption_PList) {
         [responseSerializers addObject:[AFPropertyListResponseSerializer serializer]];
     }
-    if (settings.responseParseOptions & M9ResponseParseOption_Image) {
+    if (config.responseParseOptions & M9ResponseParseOption_Image) {
         [responseSerializers addObject:[AFImageResponseSerializer serializer]];
     }
     if ([responseSerializers count] == 1) {
@@ -251,8 +263,8 @@
 }}
 
 - (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request
-                             settings:(M9RequestSettings *)settings
-                             callback:(void (^)(id<M9Response> response, BOOL expired))callback {
+                               config:(M9RequestConfig *)config
+                             callback:(void (^)(AFHTTPRequestOperation *operation, BOOL expired))callback {
     if (!callback) {
         return;
     }

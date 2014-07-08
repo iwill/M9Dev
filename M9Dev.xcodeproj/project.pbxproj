@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
+		DF1AF121196C56AB00238C77 /* AFNResponseRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseRef.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
 		DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2281967EA7E00B8C011 /* UIKit.framework */; };
@@ -26,10 +27,9 @@
 		DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2631968513300B8C011 /* NSObject+AssociatedValues.m */; };
 		DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D28A19685B6500B8C011 /* NSDate+RFC1123.m */; };
 		DF69D28E1968605800B8C011 /* NSDate+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D28D1968605800B8C011 /* NSDate+.m */; };
-		DF69D2A71968763B00B8C011 /* AFHTTPRequestOperation+M9Response.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D29E1968763B00B8C011 /* AFHTTPRequestOperation+M9Response.m */; };
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
-		DF69D2AA1968763B00B8C011 /* M9RequestSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestSettings.m */; };
+		DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +45,8 @@
 /* Begin PBXFileReference section */
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		DF1AF11F196C56AB00238C77 /* AFNResponseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNResponseRef.h; sourceTree = "<group>"; };
+		DF1AF120196C56AB00238C77 /* AFNResponseRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNResponseRef.m; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF69D2241967EA7E00B8C011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -75,16 +77,14 @@
 		DF69D28A19685B6500B8C011 /* NSDate+RFC1123.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RFC1123.m"; sourceTree = "<group>"; };
 		DF69D28C1968605800B8C011 /* NSDate+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+.h"; sourceTree = "<group>"; };
 		DF69D28D1968605800B8C011 /* NSDate+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+.m"; sourceTree = "<group>"; };
-		DF69D29D1968763B00B8C011 /* AFHTTPRequestOperation+M9Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperation+M9Response.h"; sourceTree = "<group>"; };
-		DF69D29E1968763B00B8C011 /* AFHTTPRequestOperation+M9Response.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperation+M9Response.m"; sourceTree = "<group>"; };
 		DF69D29F1968763B00B8C011 /* M9Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Networking.h; sourceTree = "<group>"; };
 		DF69D2A01968763B00B8C011 /* M9Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Networking.m; sourceTree = "<group>"; };
 		DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M9RequestRef+Private.h"; sourceTree = "<group>"; };
 		DF69D2A21968763B00B8C011 /* M9RequestRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestRef.h; sourceTree = "<group>"; };
 		DF69D2A31968763B00B8C011 /* M9RequestRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestRef.m; sourceTree = "<group>"; };
-		DF69D2A41968763B00B8C011 /* M9RequestSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestSettings.h; sourceTree = "<group>"; };
-		DF69D2A51968763B00B8C011 /* M9RequestSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestSettings.m; sourceTree = "<group>"; };
-		DF69D2A61968763B00B8C011 /* M9Response.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Response.h; sourceTree = "<group>"; };
+		DF69D2A41968763B00B8C011 /* M9RequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestConfig.h; sourceTree = "<group>"; };
+		DF69D2A51968763B00B8C011 /* M9RequestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestConfig.m; sourceTree = "<group>"; };
+		DF69D2A61968763B00B8C011 /* M9ResponseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseRef.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,16 +242,16 @@
 		DF69D29C1968763B00B8C011 /* M9Networking */ = {
 			isa = PBXGroup;
 			children = (
-				DF69D29D1968763B00B8C011 /* AFHTTPRequestOperation+M9Response.h */,
-				DF69D29E1968763B00B8C011 /* AFHTTPRequestOperation+M9Response.m */,
+				DF1AF11F196C56AB00238C77 /* AFNResponseRef.h */,
+				DF1AF120196C56AB00238C77 /* AFNResponseRef.m */,
 				DF69D29F1968763B00B8C011 /* M9Networking.h */,
 				DF69D2A01968763B00B8C011 /* M9Networking.m */,
-				DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */,
 				DF69D2A21968763B00B8C011 /* M9RequestRef.h */,
 				DF69D2A31968763B00B8C011 /* M9RequestRef.m */,
-				DF69D2A41968763B00B8C011 /* M9RequestSettings.h */,
-				DF69D2A51968763B00B8C011 /* M9RequestSettings.m */,
-				DF69D2A61968763B00B8C011 /* M9Response.h */,
+				DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */,
+				DF69D2A41968763B00B8C011 /* M9RequestConfig.h */,
+				DF69D2A51968763B00B8C011 /* M9RequestConfig.m */,
+				DF69D2A61968763B00B8C011 /* M9ResponseRef.h */,
 			);
 			path = M9Networking;
 			sourceTree = "<group>";
@@ -387,9 +387,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF1AF121196C56AB00238C77 /* AFNResponseRef.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
-				DF69D2AA1968763B00B8C011 /* M9RequestSettings.m in Sources */,
+				DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
 				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
@@ -397,7 +398,6 @@
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
-				DF69D2A71968763B00B8C011 /* AFHTTPRequestOperation+M9Response.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

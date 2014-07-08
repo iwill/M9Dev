@@ -8,15 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AFHTTPRequestOperation.h"
+#import "M9RequestRef.h"
+
+@class AFHTTPRequestOperation;
 
 @interface M9RequestRef ()
 
-@property(nonatomic, readwrite) NSInteger requestID;
-@property(nonatomic, readwrite) NSInteger retryTimes;
+@property(nonatomic, readwrite) NSInteger retriedTimes;
 @property(nonatomic, readwrite) BOOL usedCachedData;
 @property(nonatomic, readwrite) AFHTTPRequestOperation *currentRequestOperation;
 
+@property(nonatomic, readwrite) NSInteger requestID;
 @property(nonatomic, readonly, weak) id sender;
 @property(nonatomic, readwrite, setter = setCancelled:) BOOL isCancelled;
 

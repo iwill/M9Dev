@@ -10,9 +10,6 @@
 
 @interface M9RequestRef : NSObject
 
-@property(nonatomic, readonly) NSInteger retryTimes;
-@property(nonatomic, readonly) BOOL usedCache;
-
 - (BOOL)isCancelled;
 - (void)cancel;
 

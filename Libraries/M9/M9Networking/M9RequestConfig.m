@@ -1,5 +1,5 @@
 //
-//  M9RequestSettings.m
+//  M9RequestConfig.m
 //  M9Dev
 //
 //  Created by iwill on 2014-07-06.
@@ -15,9 +15,9 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "M9RequestSettings.h"
+#import "M9RequestConfig.h"
 
-@implementation M9RequestSettings
+@implementation M9RequestConfig
 
 @M9MakeCopyWithZone;
 
@@ -33,7 +33,8 @@
     return self;
 }
 
-- (void)makeCopy:(M9RequestSettings *)copy {
+- (void)makeCopy:(M9RequestConfig *)copy {
+    copy.responseParseOptions = self.responseParseOptions;
     copy.timeoutInterval = self.timeoutInterval;
     copy.maxRetryTimes = self.maxRetryTimes;
     copy.cacheData = self.cacheData;
@@ -42,6 +43,8 @@
 }
 
 @end
+
+#pragma mark -
 
 @implementation M9RequestInfo
 
@@ -54,9 +57,9 @@
     copy.sender = self.sender;
 }
 
-+ (instancetype)requestInfoWithSettings:(M9RequestSettings *)requestSettings {
++ (instancetype)requestInfoWithConfig:(M9RequestConfig *)requestConfig {
     M9RequestInfo *requestInfo = [self new];
-    [requestSettings makeCopy:requestInfo];
+    [requestConfig makeCopy:requestInfo];
     return requestInfo;
 }
 
