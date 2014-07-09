@@ -12,9 +12,10 @@
 
 @interface M9RequestRef ()
 
-// public readonly?
-@property(nonatomic, readwrite) NSInteger requestID;
+@property(nonatomic, readonly) NSInteger requestID;
 @property(nonatomic, readonly, weak) id sender;
+
+// ???: @property(nonatomic, readonly) NSURLRequest *request;
 
 @property(nonatomic, readwrite) NSInteger retriedTimes;
 @property(nonatomic, readwrite) BOOL usedCachedData;
