@@ -82,6 +82,32 @@
 
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
+               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+        if (finish) {
+            finish(responseRef, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+        if (finish) {
+            finish(responseRef, nil, error);
+        }
+    }];
+}
+
+- (M9RequestRef *)POST:(NSString *)URLString
+            parameters:(NSDictionary *)parameters
+                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+    return [self POST:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+        if (finish) {
+            finish(responseRef, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+        finish(responseRef, nil, error);
+    }];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString
+           parameters:(NSDictionary *)parameters
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
