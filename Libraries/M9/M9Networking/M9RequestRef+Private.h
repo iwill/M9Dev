@@ -10,16 +10,16 @@
 
 #import "M9RequestRef.h"
 
-@class AFHTTPRequestOperation;
-
 @interface M9RequestRef ()
+
+// public readonly?
+@property(nonatomic, readwrite) NSInteger requestID;
+@property(nonatomic, readonly, weak) id sender;
 
 @property(nonatomic, readwrite) NSInteger retriedTimes;
 @property(nonatomic, readwrite) BOOL usedCachedData;
-@property(nonatomic, readwrite) AFHTTPRequestOperation *currentRequestOperation;
+@property(nonatomic, readwrite) NSOperation *currentRequestOperation;
 
-@property(nonatomic, readwrite) NSInteger requestID;
-@property(nonatomic, readonly, weak) id sender;
 @property(nonatomic, readwrite, setter = setCancelled:) BOOL isCancelled;
 
 - (instancetype)initWithSender:(id)sender;
