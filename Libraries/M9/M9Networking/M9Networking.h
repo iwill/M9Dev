@@ -26,7 +26,7 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
-// if no error success, else failure
+// finish: if no error success, else failure
 - (M9RequestRef *)GET:(NSString *)URLString
                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
 - (M9RequestRef *)GET:(NSString *)URLString
@@ -36,6 +36,7 @@
             parameters:(NSDictionary *)parameters
                 finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
 
+// success & failure
 - (M9RequestRef *)GET:(NSString *)URLString
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
@@ -48,6 +49,7 @@
                success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
 
+// request info
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo;
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo;
 

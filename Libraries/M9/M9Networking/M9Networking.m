@@ -213,10 +213,7 @@
                 return;
             }
             if (config.cacheData) {
-                BOOL expired = [self isResponseExpired:[operation response]];
-                if (!expired) {
-                    [[TMCache sharedCache] setObject:operation forKey:[[request URL] absoluteString] block:nil];
-                }
+                [[TMCache sharedCache] setObject:operation forKey:[[request URL] absoluteString] block:nil];
             }
             if (success) {
                 id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
