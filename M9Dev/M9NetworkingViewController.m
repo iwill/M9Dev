@@ -8,6 +8,10 @@
 
 #import "M9NetworkingViewController.h"
 
+#import "EXTScope.h"
+#import "M9Utilities.h"
+#import "M9Networking.h"
+
 @interface M9NetworkingViewController ()
 
 @end
@@ -43,6 +47,28 @@
 }
 
 - (void)buttonDidTapped:(UIButton *)button {
+    if (button.selected) {
+        button.selected = NO; // confirm result
+        return;
+    }
+    else {
+        button.enabled = NO; // start loading
+    }
+    
+    weakify(button);
+    [M9N POST:@"http://10.2.10.187:3000/route/path/file.json?a=1,&b=2" parameters:@{ @"x": @1, @"y": @2 } success:^(id<M9ResponseRef> responseRef, id responseObject) {
+        NSLog(@"success: %@", responseObject);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"success" forState:UIControlStateSelected];
+    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+        NSLog(@"failure: %@", error);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"failure" forState:UIControlStateSelected];
+    }];
 }
 
 @end
