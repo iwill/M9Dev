@@ -80,6 +80,11 @@
 #pragma mark public
 
 - (M9RequestRef *)GET:(NSString *)URLString
+               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:nil finish:finish];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     return [self GET:URLString parameters:nil success:success failure:failure];
