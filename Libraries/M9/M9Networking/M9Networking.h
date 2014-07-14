@@ -10,6 +10,8 @@
 #import "M9RequestRef.h"
 #import "M9ResponseRef.h"
 
+// Key_Value, JSON, Key_JSON
+
 /**
  *  M9Networking
  *
@@ -24,6 +26,9 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
+- (M9RequestRef *)GET:(NSString *)URLString
+              success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+              failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success

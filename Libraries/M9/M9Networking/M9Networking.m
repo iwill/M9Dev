@@ -81,6 +81,12 @@
 #pragma mark public
 
 - (M9RequestRef *)GET:(NSString *)URLString
+              success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
+              failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
+    return [self GET:URLString parameters:nil success:success failure:failure];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
@@ -274,8 +280,10 @@
             AFHTTPRequestOperation *cachedOperation = (AFHTTPRequestOperation *)object;
             NSString *expiresOn = [[cachedOperation response] allHeaderFields][HTTPExpires];
             NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];
-            BOOL expired = [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
-            callback(cachedOperation, expired);
+            BOOL expired = !expiresOnDate || [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
+            dispatch_async_main_queue(^{
+                callback(cachedOperation, expired);
+            });
             return;
         }
         callback(nil, NO);
