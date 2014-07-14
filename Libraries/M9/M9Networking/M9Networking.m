@@ -28,7 +28,6 @@
 
 #define HTTPGET     @"GET"
 #define HTTPPOST    @"POST"
-#define HTTPExpires @"Expires"
 
 /**
  * AFN
@@ -183,7 +182,10 @@
                 return;
             }
             if (config.cacheData) {
-                [[TMCache sharedCache] setObject:operation forKey:[[request URL] absoluteString] block:nil];
+                BOOL expired = [self isResponseExpired:[operation response]];
+                if (!expired) {
+                    [[TMCache sharedCache] setObject:operation forKey:[[request URL] absoluteString] block:nil];
+                }
             }
             if (success) {
                 id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
@@ -278,16 +280,21 @@
     [[TMCache sharedCache] objectForKey:[[request URL] absoluteString] block:^(TMCache *cache, NSString *key, id object) {
         if ([object isKindOfClass:[AFHTTPRequestOperation class]]) {
             AFHTTPRequestOperation *cachedOperation = (AFHTTPRequestOperation *)object;
-            NSString *expiresOn = [[cachedOperation response] allHeaderFields][HTTPExpires];
-            NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];
-            BOOL expired = !expiresOnDate || [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
             dispatch_async_main_queue(^{
+                BOOL expired = [self isResponseExpired:[cachedOperation response]];
                 callback(cachedOperation, expired);
             });
             return;
         }
         callback(nil, NO);
     }];
+}
+
+- (BOOL)isResponseExpired:(NSHTTPURLResponse *)response {
+#define HTTPExpires @"Expires"
+    NSString *expiresOn = [response allHeaderFields][HTTPExpires];
+    NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];
+    return !expiresOnDate || [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
 }
 
 - (void)cancelAllWithSender:(id)sender { @synchronized(sender) { // lock: sender.allRequestRefOfSender
