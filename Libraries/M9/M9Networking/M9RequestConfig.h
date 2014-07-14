@@ -35,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 @property(nonatomic) BOOL cacheData; // default: YES
 @property(nonatomic) BOOL useCachedData; // default: YES
 @property(nonatomic) BOOL useCachedDataWhenFailure; // default: NO
+// TODO: @property(nonatomic) BOOL useCachedDataWithoutLoading; // default: NO
 
 @end
 

@@ -29,16 +29,16 @@
 
 /**
  * NSLocking
- * allows return everywhere between LOCK and UNLOCK without extra unlock
+ * Allows return everywhere between LOCK and UNLOCK, no need extra unlock
  */
 
-/* SYNCHRONIZED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
+/* LOCKED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
  * e.g.
- *  SYNCHRONIZED(lock, {
+ *  LOCKED(lock, {
  *      // statements
  *  });
  */
-#define SYNCHRONIZED($lock, $statements) \
+#define LOCKED($lock, $statements) \
     @try { \
         [$lock lock]; \
         $statements \
@@ -47,9 +47,9 @@
         [$lock unlock]; \
     }
 
-/* LOCK(id<NSLocking> lock);
- * // statements
- * UNLOCK(id<NSLocking> lock);
+/*  LOCK(id<NSLocking> lock);
+ *  // statements
+ *  UNLOCK(id<NSLocking> lock);
 #define LOCK($lock) \
     @try { \
         [$lock lock];
@@ -60,9 +60,9 @@
     }
  */
 
-/* LOCK(id<NSLocking> lock);
- * // statements
- * UNLOCK();
+/*  LOCK(id<NSLocking> lock);
+ *  // statements
+ *  UNLOCK();
  */
 #define LOCK($lock) \
     {id<NSLocking> $$lock$$ = $lock; \

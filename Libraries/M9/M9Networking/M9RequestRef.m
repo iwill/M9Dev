@@ -20,9 +20,8 @@
 
 #import "NSObject+AssociatedValues.h"
 
-#import "AFHTTPRequestOperation.h"
-
 @implementation M9RequestRef {
+    NSInteger _requestID;
     __weak id _sender;
 }
 
@@ -37,7 +36,7 @@
     if (self) {
         @synchronized([self class]) {
             static NSInteger M9RequestID = 1;
-            self.requestID = M9RequestID++;
+            _requestID = M9RequestID++;
             _sender = sender;
         }
     }

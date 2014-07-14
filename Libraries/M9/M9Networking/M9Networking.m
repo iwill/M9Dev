@@ -87,6 +87,32 @@
 
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
+               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+        if (finish) {
+            finish(responseRef, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+        if (finish) {
+            finish(responseRef, nil, error);
+        }
+    }];
+}
+
+- (M9RequestRef *)POST:(NSString *)URLString
+            parameters:(NSDictionary *)parameters
+                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+    return [self POST:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+        if (finish) {
+            finish(responseRef, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+        finish(responseRef, nil, error);
+    }];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString
+           parameters:(NSDictionary *)parameters
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
@@ -121,14 +147,14 @@
 
 #pragma mark private
 
-- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
+- (M9RequestRef *)sendRequest:(NSURLRequest *)request
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                       failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     return [self sendRequest:request sender:nil config:config success:success failure:failure];
 }
 
-- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
+- (M9RequestRef *)sendRequest:(NSURLRequest *)request
                        sender:(id)sender
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
@@ -160,7 +186,7 @@
     return requestRef;
 }
 
-- (void)sendRequest:(NSMutableURLRequest *)request
+- (void)sendRequest:(NSURLRequest *)request
              config:(M9RequestConfig *)config
          requestRef:(M9RequestRef *)requestRef
             success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
@@ -174,7 +200,7 @@
     
     // callback
     weakify(self);
-    requestRef.currentRequestOperation = ({
+    AFHTTPRequestOperation *currentRequestOperation = ({
         _RETURN [_AFN HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
          { @synchronized(requestRef) {
             // strongify(self);
@@ -255,22 +281,23 @@
         [responseSerializers addObject:[AFImageResponseSerializer serializer]];
     }
     if ([responseSerializers count] == 1) {
-        requestRef.currentRequestOperation.responseSerializer = [responseSerializers firstObject];
+        currentRequestOperation.responseSerializer = [responseSerializers firstObject];
     }
     else if ([responseSerializers count] > 1) {
-        requestRef.currentRequestOperation.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
+        currentRequestOperation.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
     }
     
     // disable NSURLCache
-    [requestRef.currentRequestOperation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
+    [currentRequestOperation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
         return nil;
     }];
     
-    // send request
-    [_AFN.operationQueue addOperation:requestRef.currentRequestOperation];
+    requestRef.currentRequestOperation = currentRequestOperation;
+    
+    [_AFN.operationQueue addOperation:currentRequestOperation];
 }}
 
-- (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request
+- (void)loadCachedResponseWithRequest:(NSURLRequest *)request
                                config:(M9RequestConfig *)config
                              callback:(void (^)(AFHTTPRequestOperation *operation, BOOL expired))callback {
     if (!callback) {
