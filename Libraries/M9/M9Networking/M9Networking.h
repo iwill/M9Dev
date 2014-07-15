@@ -10,7 +10,7 @@
 #import "M9RequestRef.h"
 #import "M9ResponseRef.h"
 
-// Key_Value, JSON, Key_JSON
+// TODO: Key_Value, JSON, Key_JSON
 
 /**
  *  M9Networking
@@ -18,6 +18,9 @@
  *  !!!: Just for common networking, use AFNetworking or other framework directly for more requirements
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
  */
+
+#define M9NETWORKING [M9Networking sharedInstance]
+
 @interface M9Networking : NSObject
 
 @property(nonatomic, strong) M9RequestConfig *requestConfig;
@@ -26,17 +29,6 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
-// finish: if no error success, else failure
-- (M9RequestRef *)GET:(NSString *)URLString
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
-- (M9RequestRef *)GET:(NSString *)URLString
-           parameters:(NSDictionary *)parameters
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
-- (M9RequestRef *)POST:(NSString *)URLString
-            parameters:(NSDictionary *)parameters
-                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
-
-// success & failure
 - (M9RequestRef *)GET:(NSString *)URLString
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
@@ -49,15 +41,18 @@
                success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
 
-// request info
-- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo;
-- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo;
-
 - (void)cancelAllWithSender:(id)sender;
 
 @end
 
-#define M9N [M9Networking sharedInstance]
+#pragma mark -
+
+@interface M9Networking (M9RequestInfo)
+
+- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo;
+- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo;
+
+@end
 
 /*
  
@@ -88,4 +83,3 @@
     #pragma clang diagnostic pop
  
  */
-

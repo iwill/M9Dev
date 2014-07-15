@@ -80,40 +80,9 @@
 #pragma mark public
 
 - (M9RequestRef *)GET:(NSString *)URLString
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
-    return [self GET:URLString parameters:nil finish:finish];
-}
-
-- (M9RequestRef *)GET:(NSString *)URLString
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     return [self GET:URLString parameters:nil success:success failure:failure];
-}
-
-- (M9RequestRef *)GET:(NSString *)URLString
-           parameters:(NSDictionary *)parameters
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
-    return [self GET:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
-        if (finish) {
-            finish(responseRef, responseObject, nil);
-        }
-    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
-        if (finish) {
-            finish(responseRef, nil, error);
-        }
-    }];
-}
-
-- (M9RequestRef *)POST:(NSString *)URLString
-            parameters:(NSDictionary *)parameters
-                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
-    return [self POST:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
-        if (finish) {
-            finish(responseRef, responseObject, nil);
-        }
-    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
-        finish(responseRef, nil, error);
-    }];
 }
 
 - (M9RequestRef *)GET:(NSString *)URLString
@@ -134,32 +103,16 @@
     return [self sendRequest:request config:self.requestConfig success:success failure:failure];
 }
 
-- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
-    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
-}
-
-- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
-    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
-    /* constructingBodyBlock
-    NSMutableURLRequest *request = (requestInfo.constructingBodyBlock
-                                    ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
-                                    : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
-}
-
 #pragma mark private
 
-- (M9RequestRef *)sendRequest:(NSURLRequest *)request
+- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                       failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     return [self sendRequest:request sender:nil config:config success:success failure:failure];
 }
 
-- (M9RequestRef *)sendRequest:(NSURLRequest *)request
+- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
                        sender:(id)sender
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
@@ -191,7 +144,7 @@
     return requestRef;
 }
 
-- (void)sendRequest:(NSURLRequest *)request
+- (void)sendRequest:(NSMutableURLRequest *)request
              config:(M9RequestConfig *)config
          requestRef:(M9RequestRef *)requestRef
             success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
@@ -283,23 +236,23 @@
         [responseSerializers addObject:[AFImageResponseSerializer serializer]];
     }
     if ([responseSerializers count] == 1) {
-        currentRequestOperation.responseSerializer = [responseSerializers firstObject];
+        requestOperation.responseSerializer = [responseSerializers firstObject];
     }
     else if ([responseSerializers count] > 1) {
-        currentRequestOperation.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
+        requestOperation.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:responseSerializers];
     }
     
     // disable NSURLCache
-    [currentRequestOperation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
+    [requestOperation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
         return nil;
     }];
     
-    requestRef.currentRequestOperation = currentRequestOperation;
+    requestRef.currentRequestOperation = requestOperation;
     
-    [_AFN.operationQueue addOperation:currentRequestOperation];
+    [_AFN.operationQueue addOperation:requestOperation];
 }}
 
-- (void)loadCachedResponseWithRequest:(NSURLRequest *)request
+- (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request
                                config:(M9RequestConfig *)config
                              callback:(void (^)(AFHTTPRequestOperation *operation, BOOL expired))callback {
     if (!callback) {
@@ -331,5 +284,27 @@
         [requestRef cancel];
     }
 }}
+
+@end
+
+#pragma mark -
+
+@implementation M9Networking (M9RequestInfo)
+
+- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
+    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
+    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
+    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
+}
+
+- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
+    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
+    /* constructingBodyBlock
+     NSMutableURLRequest *request = (requestInfo.constructingBodyBlock
+     ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
+     : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
+    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
+    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
+}
 
 @end
