@@ -24,10 +24,13 @@
 #import "NSDate+RFC1123.h"
 #import "EXTScope.h"
 
+#import "NSDictionary+Shortcuts.h"
 #import "NSDate+.h"
 
 #define HTTPGET     @"GET"
 #define HTTPPOST    @"POST"
+
+#define HTTPExpires @"Expires"
 
 /**
  * AFN
@@ -264,8 +267,8 @@
     [[TMCache sharedCache] objectForKey:[[request URL] absoluteString] block:^(TMCache *cache, NSString *key, id object) {
         if ([object isKindOfClass:[AFHTTPRequestOperation class]]) {
             AFHTTPRequestOperation *cachedOperation = (AFHTTPRequestOperation *)object;
+            BOOL expired = [self isResponseExpired:[cachedOperation response]];
             dispatch_async_main_queue(^{
-                BOOL expired = [self isResponseExpired:[cachedOperation response]];
                 callback(cachedOperation, expired);
             });
             return;
@@ -275,8 +278,7 @@
 }
 
 - (BOOL)isResponseExpired:(NSHTTPURLResponse *)response {
-#define HTTPExpires @"Expires"
-    NSString *expiresOn = [response allHeaderFields][HTTPExpires];
+    NSString *expiresOn = [[response allHeaderFields] stringForKey:HTTPExpires];
     NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];
     return !expiresOnDate || [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
 }
