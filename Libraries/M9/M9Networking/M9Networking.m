@@ -217,11 +217,11 @@
     
     // data parsing
     NSMutableArray *responseSerializers = [NSMutableArray array];
-    if (config.responseParseOptions & M9ResponseParseOption_Data) {
-        [responseSerializers addObject:[AFHTTPResponseSerializer serializer]];
-    }
     if (config.responseParseOptions & M9ResponseParseOption_JSON) {
         [responseSerializers addObject:[AFJSONResponseSerializer serializer]];
+    }
+    if (config.responseParseOptions & M9ResponseParseOption_Image) {
+        [responseSerializers addObject:[AFImageResponseSerializer serializer]];
     }
     if (config.responseParseOptions & M9ResponseParseOption_XML) {
         [responseSerializers addObject:[AFXMLParserResponseSerializer serializer]];
@@ -234,8 +234,8 @@
     if (config.responseParseOptions & M9ResponseParseOption_PList) {
         [responseSerializers addObject:[AFPropertyListResponseSerializer serializer]];
     }
-    if (config.responseParseOptions & M9ResponseParseOption_Image) {
-        [responseSerializers addObject:[AFImageResponseSerializer serializer]];
+    if (config.responseParseOptions & M9ResponseParseOption_Data) {
+        [responseSerializers addObject:[AFHTTPResponseSerializer serializer]];
     }
     if ([responseSerializers count] == 1) {
         requestOperation.responseSerializer = [responseSerializers firstObject];

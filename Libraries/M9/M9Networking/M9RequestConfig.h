@@ -13,6 +13,16 @@
 #import "M9RequestRef.h"
 #import "M9ResponseRef.h"
 
+/**
+ * MIME
+ *  M9ResponseParseOption_Data:         nil
+ *  M9ResponseParseOption_JSON:         application/json, text/json, text/javascript - text/javascript for JSONP
+ *  M9ResponseParseOption_XML:          application/xml, text/xml
+ *  M9ResponseParseOption_XMLDocument:  application/xml, text/xml
+ *  M9ResponseParseOption_PList:        application/x-plist
+ *  M9ResponseParseOption_Image:        image/tiff, image/jpeg, image/gif, image/png, image/ico, image/x-icon, image/bmp, image/x-bmp, image/x-xbitmap, image/x-win-bitmap
+ *  M9ResponseParseOption_All
+ */
 typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
     M9ResponseParseOption_Data  = 1 << 0,
     M9ResponseParseOption_JSON  = 1 << 1,
