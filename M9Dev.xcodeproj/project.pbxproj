@@ -31,6 +31,7 @@
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
 		DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestConfig.m */; };
 		DFA2F856197501E1009706AD /* M9Networking+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F855197501E1009706AD /* M9Networking+.m */; };
+		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		DF69D2A61968763B00B8C011 /* M9ResponseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseRef.h; sourceTree = "<group>"; };
 		DFA2F854197501E1009706AD /* M9Networking+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M9Networking+.h"; sourceTree = "<group>"; };
 		DFA2F855197501E1009706AD /* M9Networking+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M9Networking+.m"; sourceTree = "<group>"; };
+		DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Shortcuts.h"; sourceTree = "<group>"; };
+		DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Shortcuts.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +230,8 @@
 				DF69D2611968513300B8C011 /* M9Utilities.h */,
 				DF69D28C1968605800B8C011 /* NSDate+.h */,
 				DF69D28D1968605800B8C011 /* NSDate+.m */,
+				DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */,
+				DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */,
 				DF69D2621968513300B8C011 /* NSObject+AssociatedValues.h */,
 				DF69D2631968513300B8C011 /* NSObject+AssociatedValues.m */,
 			);
@@ -400,6 +405,7 @@
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
 				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
+				DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */,
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
