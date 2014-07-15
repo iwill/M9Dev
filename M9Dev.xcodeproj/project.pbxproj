@@ -30,6 +30,7 @@
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
 		DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestConfig.m */; };
+		DFA2F856197501E1009706AD /* M9Networking+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F855197501E1009706AD /* M9Networking+.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		DF69D2A41968763B00B8C011 /* M9RequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestConfig.h; sourceTree = "<group>"; };
 		DF69D2A51968763B00B8C011 /* M9RequestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestConfig.m; sourceTree = "<group>"; };
 		DF69D2A61968763B00B8C011 /* M9ResponseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseRef.h; sourceTree = "<group>"; };
+		DFA2F854197501E1009706AD /* M9Networking+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M9Networking+.h"; sourceTree = "<group>"; };
+		DFA2F855197501E1009706AD /* M9Networking+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M9Networking+.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +249,8 @@
 				DF1AF120196C56AB00238C77 /* AFNResponseRef.m */,
 				DF69D29F1968763B00B8C011 /* M9Networking.h */,
 				DF69D2A01968763B00B8C011 /* M9Networking.m */,
+				DFA2F854197501E1009706AD /* M9Networking+.h */,
+				DFA2F855197501E1009706AD /* M9Networking+.m */,
 				DF69D2A21968763B00B8C011 /* M9RequestRef.h */,
 				DF69D2A31968763B00B8C011 /* M9RequestRef.m */,
 				DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */,
@@ -390,6 +395,7 @@
 				DF1AF121196C56AB00238C77 /* AFNResponseRef.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
+				DFA2F856197501E1009706AD /* M9Networking+.m in Sources */,
 				DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
