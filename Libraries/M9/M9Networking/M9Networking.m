@@ -156,9 +156,11 @@
         return;
     }
     
+    request.timeoutInterval = config.timeoutInterval;
+    
     // callback
     weakify(self);
-    AFHTTPRequestOperation *currentRequestOperation = ({
+    AFHTTPRequestOperation *requestOperation = ({
         _RETURN [_AFN HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
          { @synchronized(requestRef) {
             // strongify(self);
@@ -179,7 +181,7 @@
             if (requestRef.isCancelled) {
                 return;
             }
-            if (requestRef.retriedTimes < config.maxRetryTimes) {
+            if (error.code == NSURLErrorTimedOut && requestRef.retriedTimes < config.maxRetryTimes) {
                 requestRef.retriedTimes++;
                 [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
                 return;
