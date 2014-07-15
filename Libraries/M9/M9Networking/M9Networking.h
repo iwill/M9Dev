@@ -10,6 +10,8 @@
 #import "M9RequestRef.h"
 #import "M9ResponseRef.h"
 
+#import "M9Utilities.h"
+
 // TODO: Key_Value, JSON, Key_JSON
 
 /**
@@ -57,29 +59,32 @@
 /*
  
  # synchronized
-    TODO: use lock instead of synchronized
  
  # cancel & isCancelled
  
- # cache
-    pod install AFNetworking & TMCache
- 
  ==== TODO: ====
  
- # naming
-    M9RequestInfo?
+ # baseURL
  
- # M9Networking & Other implementation, like NetRequestManager
+ # class cluster: other implementation, like NetRequestManager & AFNNetRequestManager
+ 
+ # use lock instead of synchronized?
  
  # ???: delegate and selectors
     // !!!: DEPRECATED, use block instead
     @property(nonatomic) SEL successSelector DEPRECATED_ATTRIBUTE, failureSelector DEPRECATED_ATTRIBUTE;
  
- # ???: base url
+ ==== Keynote ====
  
- # deprecated
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    #pragma clang diagnostic pop
+ # 80-20: 80% requirements
+ 
+ # general solution: AFN
+ 
+ # M9Networking: get/post url & parameters, timeout, retry, cache, parse, callback, cancel & cancel by sender
+ 
+ # extend: subclass M9RequestInfo + helper
+    validate arguments, arguments to parameters: M9RequestInfo subclass or helper
+    json to objects: M9RequestInfo subclass or helper
+    delegate(sender) & selectors
  
  */
