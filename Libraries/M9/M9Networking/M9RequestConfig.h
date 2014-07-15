@@ -27,7 +27,7 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 
 @interface M9RequestConfig : NSObject <M9MakeCopy>
 
-@property(nonatomic) M9ResponseParseOptions responseParseOptions;
+@property(nonatomic) M9ResponseParseOptions responseParseOptions; // default: M9ResponseParseOption_JSON
 
 @property(nonatomic) NSTimeInterval timeoutInterval; // default: 10 per request / retry, AFNetworking: 60
 @property(nonatomic) NSInteger maxRetryTimes; // default: 2, AFNetworking: 0
@@ -49,7 +49,5 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 @property(nonatomic, copy) void (^failure)(id<M9ResponseRef> responseRef, NSError *error);
 
 @property(nonatomic, weak) id sender; // for cancel all requests by sender
-
-+ (instancetype)requestInfoWithConfig:(M9RequestConfig *)requestConfig;
 
 @end

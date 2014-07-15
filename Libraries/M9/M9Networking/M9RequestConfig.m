@@ -57,10 +57,4 @@
     copy.sender = self.sender;
 }
 
-+ (instancetype)requestInfoWithConfig:(M9RequestConfig *)requestConfig {
-    M9RequestInfo *requestInfo = [self new];
-    [requestConfig makeCopy:requestInfo];
-    return requestInfo;
-}
-
 @end
