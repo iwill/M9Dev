@@ -34,12 +34,12 @@
 }
 
 - (void)makeCopy:(M9RequestConfig *)copy {
-    copy.responseParseOptions = self.responseParseOptions;
     copy.timeoutInterval = self.timeoutInterval;
     copy.maxRetryTimes = self.maxRetryTimes;
     copy.cacheData = self.cacheData;
     copy.useCachedData = self.useCachedData;
     copy.useCachedDataWhenFailure = self.useCachedDataWhenFailure;
+    copy.responseParseOptions = self.responseParseOptions;
 }
 
 @end

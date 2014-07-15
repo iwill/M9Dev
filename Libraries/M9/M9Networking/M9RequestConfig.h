@@ -37,8 +37,6 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 
 @interface M9RequestConfig : NSObject <M9MakeCopy>
 
-@property(nonatomic) M9ResponseParseOptions responseParseOptions; // default: M9ResponseParseOption_JSON
-
 @property(nonatomic) NSTimeInterval timeoutInterval; // default: 10 per request / retry, AFNetworking: 60
 @property(nonatomic) NSInteger maxRetryTimes; // default: 2, AFNetworking: 0
 
@@ -46,6 +44,8 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 @property(nonatomic) BOOL useCachedData; // default: YES
 @property(nonatomic) BOOL useCachedDataWhenFailure; // default: NO
 // TODO: @property(nonatomic) BOOL useCachedDataWithoutLoading; // default: NO
+
+@property(nonatomic) M9ResponseParseOptions responseParseOptions; // default: M9ResponseParseOption_JSON
 
 @end
 
