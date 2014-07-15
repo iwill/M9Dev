@@ -11,6 +11,7 @@
 #import "EXTScope.h"
 #import "M9Utilities.h"
 #import "M9Networking.h"
+#import "M9Networking+.h"
 
 @interface M9NetworkingViewController ()
 
@@ -55,20 +56,35 @@
         button.enabled = NO; // start loading
     }
     
+    M9RequestInfo *requestInfo = [M9RequestInfo new];
+    // requestInfo.URLString = @"http://10.2.10.187:3000/static/index.html";
+    requestInfo.URLString = @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2";
+    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
+    
+    requestInfo.responseParseOptions = M9ResponseParseOption_JSON; // √
+    requestInfo.timeoutInterval = 5; // √
+    requestInfo.maxRetryTimes = 4; // √
+    requestInfo.cacheData = YES; // YES: √, TODO: NO
+    requestInfo.useCachedData = YES; // YES: √, TODO: NO
+    requestInfo.useCachedDataWhenFailure = NO; // TODO:
+    
     weakify(button);
-    [M9N POST:@"http://10.2.10.187:3000/route/path/file.json?a=1,&b=2" parameters:@{ @"x": @1, @"y": @2 } success:^(id<M9ResponseRef> responseRef, id responseObject) {
+    requestInfo.success = ^(id<M9ResponseRef> responseRef, id responseObject) {
         NSLog(@"success: %@", responseObject);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"success" forState:UIControlStateSelected];
-    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+    };
+    requestInfo.failure = ^(id<M9ResponseRef> responseRef, NSError *error) {
         NSLog(@"failure: %@", error);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"failure" forState:UIControlStateSelected];
-    }];
+    };
+    
+    [M9NETWORKING GET:requestInfo];
 }
 
 @end
