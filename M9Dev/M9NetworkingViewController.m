@@ -74,7 +74,7 @@
 }
 
 - (id)testBOOL:(BOOL)boolean Integer:(NSInteger)integer UInteger:(NSUInteger)uInteger {
-    NSLog(@"<#NSString *format#>: %@ %d, %ld, %lu", NSStringFromSelector(_cmd), boolean, integer, uInteger);
+    NSLog(@"<#NSString *format#>: %@ %d, %d, %u", NSStringFromSelector(_cmd), boolean, integer, uInteger);
     return self;
 }
 
@@ -87,11 +87,11 @@
     
     NSInteger integer = 10000000;
     [self invokeWithSelector:@selector(testInteger:) returnValue:&integer argument:&integer];
-    NSLog(@"integer: %ld", integer);
+    NSLog(@"integer: %d", integer);
     
     NSUInteger uInteger = 10000000;
     [self invokeWithSelector:@selector(testUInteger:) returnValue:&uInteger argument:&uInteger];
-    NSLog(@"uInteger: %lu", uInteger);
+    NSLog(@"uInteger: %u", uInteger);
     
     id object = self;
     [self invokeWithSelector:@selector(testObject:) returnValue:&object argument:&object];
