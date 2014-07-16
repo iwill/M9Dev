@@ -92,7 +92,7 @@
            parameters:(NSDictionary *)parameters
               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
-    URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
+    URLString = [[NSURL URLWithString:URLString relativeToURL:self.requestConfig.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:parameters error:nil];
     return [self sendRequest:request config:self.requestConfig success:success failure:failure];
 }
@@ -101,7 +101,7 @@
             parameters:(NSDictionary *)parameters
                success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
-    URLString = [[NSURL URLWithString:URLString relativeToURL:_AFN.baseURL] absoluteString];
+    URLString = [[NSURL URLWithString:URLString relativeToURL:self.requestConfig.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:parameters error:nil];
     return [self sendRequest:request config:self.requestConfig success:success failure:failure];
 }
@@ -308,13 +308,13 @@
 @implementation M9Networking (M9RequestInfo)
 
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
-    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
+    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
     return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
-    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:_AFN.baseURL] absoluteString];
+    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
     /* constructingBodyBlock
      NSMutableURLRequest *request = (requestInfo.constructingBodyBlock
      ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]

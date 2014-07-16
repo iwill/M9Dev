@@ -37,6 +37,8 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 
 @interface M9RequestConfig : NSObject <M9MakeCopy>
 
+@property(nonatomic, strong) NSURL *baseURL; // default: nil
+
 @property(nonatomic) NSTimeInterval timeoutInterval; // default: 10 per request / retry, AFNetworking: 60
 @property(nonatomic) NSInteger maxRetryTimes; // default: 2, AFNetworking: 0
 

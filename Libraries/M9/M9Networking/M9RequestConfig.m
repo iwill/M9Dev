@@ -34,6 +34,7 @@
 }
 
 - (void)makeCopy:(M9RequestConfig *)copy {
+    copy.baseURL = self.baseURL;
     copy.timeoutInterval = self.timeoutInterval;
     copy.maxRetryTimes = self.maxRetryTimes;
     copy.cacheData = self.cacheData;
