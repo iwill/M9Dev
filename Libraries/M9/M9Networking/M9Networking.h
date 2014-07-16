@@ -58,9 +58,7 @@
 
 /*
  
- # synchronized
- 
- # cancel & isCancelled
+ # check synchronized
  
  ==== TODO: ====
  
