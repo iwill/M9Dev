@@ -252,6 +252,18 @@
         return nil;
     }];
     
+    // !!!: sohu https
+    [requestOperation setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge) {
+        id<NSURLAuthenticationChallengeSender> sender = [challenge sender];
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            [sender useCredential:credential forAuthenticationChallenge:challenge];
+        }
+        else {
+            [sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+        }
+    }];
+    
     requestRef.currentRequestOperation = requestOperation;
     
     [_AFN.operationQueue addOperation:requestOperation];
