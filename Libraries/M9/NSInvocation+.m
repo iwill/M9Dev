@@ -37,49 +37,65 @@
 @implementation NSObject (NSInvocation)
 
 - (NSInvocation *)invocationWithSelector:(SEL)selector {
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
+    NSMethodSignature *methodSignature = [self methodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
     [invocation setTarget:self];
     [invocation setSelector:selector];
     [invocation retainArguments];
     return invocation;
 }
 
-- (NSInvocation *)invocationWithSelector:(SEL)selector withObject:(void *)object {
+// @see http://www.cocoawithlove.com/2009/05/variable-argument-lists-in-cocoa.html
+- (NSInvocation *)invocationWithSelector:(SEL)selector argList:(va_list)argList start:(void *)start {
     NSInvocation *invocation = [self invocationWithSelector:selector];
-    [invocation setArgument:object atIndex:2];
+    NSUInteger index = 2, numberOfArguments = invocation.methodSignature.numberOfArguments;
+    for (void *argumentLocation = start; index < numberOfArguments/* argumentLocation != nil */; argumentLocation = va_arg(argList, void *)) {
+        [invocation setArgument:argumentLocation atIndex:index++];
+    }
     return invocation;
 }
 
-- (NSInvocation *)invocationWithSelector:(SEL)selector withObject:(void *)object1 withObject:(void *)object2 {
-    NSInvocation *invocation = [self invocationWithSelector:selector];
-    [invocation setArgument:object1 atIndex:2];
-    [invocation setArgument:object2 atIndex:3];
+- (NSInvocation *)invocationWithSelector:(SEL)selector argument:(void *)argument {
+    return [self invocationWithSelector:selector arguments:argument];
+}
+
+- (NSInvocation *)invocationWithSelector:(SEL)selector arguments:(void *)start, ... {
+    va_list argList;
+    va_start(argList, start);
+    NSInvocation *invocation = [self invocationWithSelector:selector argList:argList start:start];
+    va_end(argList);
     return invocation;
 }
 
 - (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue {
     NSInvocation *invocation = [self invocationWithSelector:selector];
     [invocation invoke];
-    [invocation getReturnValue:returnValue];
+    if (strcmp(invocation.methodSignature.methodReturnType, @encode(void)) != 0) {
+        [invocation getReturnValue:returnValue];
+    }
 }
 
-- (void)invokeWithSelector:(SEL)selector withObject:(void *)object returnValue:(void *)returnValue {
-    NSInvocation *invocation = [self invocationWithSelector:selector withObject:object];
-    [invocation invoke];
-    [invocation getReturnValue:returnValue];
+- (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue argument:(void *)argument {
+    [self invokeWithSelector:selector returnValue:returnValue arguments:argument];
 }
 
-- (void)invokeWithSelector:(SEL)selector withObject:(void *)object1 withObject:(void *)object2 returnValue:(void *)returnValue {
-    NSInvocation *invocation = [self invocationWithSelector:selector withObject:object1 withObject:object2];
+- (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue arguments:(void *)start, ... {
+    va_list argList;
+    va_start(argList, start);
+    NSInvocation *invocation = [self invocationWithSelector:selector argList:argList start:start];
+    va_end(argList);
+    
     [invocation invoke];
-    [invocation getReturnValue:returnValue];
+    if (strcmp(invocation.methodSignature.methodReturnType, @encode(void)) != 0) {
+        [invocation getReturnValue:returnValue];
+    }
 }
 
 /*
-- (NSInvocation *)performSelector:(SEL)selector withObject:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval {
+- (NSInvocation *)performSelector:(SEL)selector argument:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval {
 }
 
-- (NSInvocation *)performSelector:(SEL)selector withObject:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval inModes:(NSArray *)modes {
+- (NSInvocation *)performSelector:(SEL)selector argument:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval inModes:(NSArray *)modes {
 } */
 
 @end

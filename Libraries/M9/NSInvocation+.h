@@ -21,13 +21,13 @@
 
 /* invocation with selector and arguments */
 - (NSInvocation *)invocationWithSelector:(SEL)selector;
-- (NSInvocation *)invocationWithSelector:(SEL)selector withObject:(void *)object;
-- (NSInvocation *)invocationWithSelector:(SEL)selector withObject:(void *)object1 withObject:(void *)object2;
+- (NSInvocation *)invocationWithSelector:(SEL)selector argument:(void *)argument;
+- (NSInvocation *)invocationWithSelector:(SEL)selector arguments:(void *)argument, ...;
 
 /* invoke with selector, arguments and return-value */
 - (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue;
-- (void)invokeWithSelector:(SEL)selector withObject:(void *)object returnValue:(void *)returnValue;
-- (void)invokeWithSelector:(SEL)selector withObject:(void *)object1 withObject:(void *)object2 returnValue:(void *)returnValue;
+- (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue argument:(void *)argument;
+- (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue arguments:(void *)argument, ...;
 
 @end
 
