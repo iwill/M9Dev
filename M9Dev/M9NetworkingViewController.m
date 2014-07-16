@@ -60,13 +60,7 @@
     // requestInfo.URLString = @"http://10.2.10.187:3000/static/index.html";
     requestInfo.URLString = @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2";
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
-    
-    requestInfo.timeoutInterval = 5; // √
-    requestInfo.maxRetryTimes = 4; // √
-    requestInfo.cacheData = YES; // YES: √, TODO: NO
-    requestInfo.useCachedData = YES; // YES: √, TODO: NO
-    requestInfo.useCachedDataWhenFailure = NO; // TODO:
-    requestInfo.responseParseOptions = M9ResponseParseOption_JSON; // √
+    requestInfo.sender = self;
     
     weakify(button);
     requestInfo.success = ^(id<M9ResponseRef> responseRef, id responseObject) {
