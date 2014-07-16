@@ -122,28 +122,30 @@
                       failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
     M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:sender];
     [sender addRequestRef:requestRef];
-    if (config.useCachedData) {
-        weakify(self);
-        [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, BOOL expired)
-         { @synchronized(requestRef) {
-            strongify(self);
-            if (requestRef.isCancelled) {
-                return;
-            }
-            if (operation && !expired) {
-                if (success) {
-                    id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
-                    success(responseRef, [operation responseObject]);
-                }
-            }
-            else {
-                [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
-            }
-        }}];
-    }
-    else {
+    
+    if (!config.useCachedData) {
         [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+        return requestRef;
     }
+    
+    weakify(self);
+    [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
+     { @synchronized(requestRef) {
+        strongify(self);
+        if (requestRef.isCancelled) {
+            return;
+        }
+        if (operation && !expired) {
+            requestRef.usedCachedData = YES;
+            if (success) {
+                id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
+                success(responseRef, responseObject);
+            }
+        }
+        else {
+            [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+        }
+    }}];
     return requestRef;
 }
 
@@ -190,7 +192,7 @@
                 return;
             }
             if (config.useCachedDataWhenFailure) {
-                [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, BOOL expired)
+                [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
                  { @synchronized(requestRef) {
                     strongify(self);
                     if (requestRef.isCancelled) {
@@ -200,7 +202,7 @@
                     if (operation) {
                         if (success) {
                             id responseRef = [AFNResponseRef responseRefWithRequestOperation:operation requestRef:requestRef];
-                            success(responseRef, [operation responseObject]);
+                            success(responseRef, responseObject);
                         }
                     }
                     else {
@@ -271,7 +273,7 @@
 
 - (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request
                                config:(M9RequestConfig *)config
-                             callback:(void (^)(AFHTTPRequestOperation *operation, BOOL expired))callback {
+                             callback:(void (^)(AFHTTPRequestOperation *operation, id responseObject, BOOL expired))callback {
     if (!callback) {
         return;
     }
@@ -279,13 +281,22 @@
     [[TMCache sharedCache] objectForKey:[[request URL] absoluteString] block:^(TMCache *cache, NSString *key, id object) {
         if ([object isKindOfClass:[AFHTTPRequestOperation class]]) {
             AFHTTPRequestOperation *cachedOperation = (AFHTTPRequestOperation *)object;
+            
+            id responseObject = [cachedOperation responseObject];
+            // !!!: [cachedOperation responseObject] is nil when cache is loaded from disk
+            if (!responseObject) {
+                AFHTTPResponseSerializer<AFURLResponseSerialization> *responseSerializer = cachedOperation.responseSerializer OR _AFN.responseSerializer;
+                responseObject = [responseSerializer responseObjectForResponse:[cachedOperation response] data:[cachedOperation responseData] error:nil];
+            }
+            
             BOOL expired = [self isResponseExpired:[cachedOperation response]];
+            
             dispatch_async_main_queue(^{
-                callback(cachedOperation, expired);
+                callback(cachedOperation, responseObject, expired);
             });
             return;
         }
-        callback(nil, NO);
+        callback(nil, nil, NO);
     }];
 }
 
