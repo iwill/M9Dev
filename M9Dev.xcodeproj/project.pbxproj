@@ -32,6 +32,8 @@
 		DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestConfig.m */; };
 		DFA2F856197501E1009706AD /* M9Networking+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F855197501E1009706AD /* M9Networking+.m */; };
 		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
+		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
+		DFF2360319765D2E00F0A7F0 /* DEPRECATEDRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2360219765D2E00F0A7F0 /* DEPRECATEDRequestInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,10 @@
 		DFA2F855197501E1009706AD /* M9Networking+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M9Networking+.m"; sourceTree = "<group>"; };
 		DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Shortcuts.h"; sourceTree = "<group>"; };
 		DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Shortcuts.m"; sourceTree = "<group>"; };
+		DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfo.h; sourceTree = "<group>"; };
+		DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfo.m; sourceTree = "<group>"; };
+		DFF2360119765D2E00F0A7F0 /* DEPRECATEDRequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DEPRECATEDRequestInfo.h; path = M9Dev/DEPRECATEDRequestInfo.h; sourceTree = SOURCE_ROOT; };
+		DFF2360219765D2E00F0A7F0 /* DEPRECATEDRequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DEPRECATEDRequestInfo.m; path = M9Dev/DEPRECATEDRequestInfo.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +164,8 @@
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
 				DF69D2531968490F00B8C011 /* M9NetworkingViewController.h */,
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
+				DFF2360119765D2E00F0A7F0 /* DEPRECATEDRequestInfo.h */,
+				DFF2360219765D2E00F0A7F0 /* DEPRECATEDRequestInfo.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -261,6 +269,8 @@
 				DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */,
 				DF69D2A41968763B00B8C011 /* M9RequestConfig.h */,
 				DF69D2A51968763B00B8C011 /* M9RequestConfig.m */,
+				DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */,
+				DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */,
 				DF69D2A61968763B00B8C011 /* M9ResponseRef.h */,
 			);
 			path = M9Networking;
@@ -398,8 +408,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF1AF121196C56AB00238C77 /* AFNResponseRef.m in Sources */,
+				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
+				DFF2360319765D2E00F0A7F0 /* DEPRECATEDRequestInfo.m in Sources */,
 				DFA2F856197501E1009706AD /* M9Networking+.m in Sources */,
 				DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,

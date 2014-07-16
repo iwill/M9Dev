@@ -154,3 +154,9 @@ _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
 statements \
 _Pragma("clang diagnostic pop")
 
+#define SuppressDeprecatedDeclarationsWarning(statements) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
+statements \
+_Pragma("clang diagnostic pop")
+

@@ -7,6 +7,7 @@
 //
 
 #import "M9RequestConfig.h"
+#import "M9RequestInfo.h"
 #import "M9RequestRef.h"
 #import "M9ResponseRef.h"
 

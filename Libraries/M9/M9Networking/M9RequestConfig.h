@@ -50,16 +50,3 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 @property(nonatomic) M9ResponseParseOptions responseParseOptions; // default: M9ResponseParseOption_JSON
 
 @end
-
-#pragma mark -
-
-@interface M9RequestInfo : M9RequestConfig
-
-@property(nonatomic, strong) NSString *URLString;
-@property(nonatomic, strong) NSDictionary *parameters;
-@property(nonatomic, copy) void (^success)(id<M9ResponseRef> responseRef, id responseObject);
-@property(nonatomic, copy) void (^failure)(id<M9ResponseRef> responseRef, NSError *error);
-
-@property(nonatomic, weak) id sender; // for cancel all requests by sender
-
-@end

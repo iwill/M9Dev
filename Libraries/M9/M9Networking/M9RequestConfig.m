@@ -46,18 +46,3 @@
 }
 
 @end
-
-#pragma mark -
-
-@implementation M9RequestInfo
-
-- (void)makeCopy:(M9RequestInfo *)copy {
-    [super makeCopy:copy];
-    copy.URLString = self.URLString;
-    copy.parameters = self.parameters;
-    copy.success = self.success;
-    copy.failure = self.failure;
-    copy.sender = self.sender;
-}
-
-@end
