@@ -112,15 +112,16 @@
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                       failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
-    return [self sendRequest:request sender:nil config:config success:success failure:failure];
+    return [self sendRequest:request sender:nil userInfo:nil config:config success:success failure:failure];
 }
 
 - (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request
                        sender:(id)sender
+                     userInfo:(id)userInfo
                        config:(M9RequestConfig *)config
                       success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
                       failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure {
-    M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:sender];
+    M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:sender userInfo:userInfo];
     [sender addRequestRef:requestRef];
     
     if (config.useCachedDataWithoutLoading) {
@@ -345,7 +346,7 @@
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
+    return [self sendRequest:request sender:requestInfo.sender userInfo:requestInfo.userInfo config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
@@ -355,7 +356,7 @@
      ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
      : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
+    return [self sendRequest:request sender:requestInfo.sender userInfo:requestInfo.userInfo config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 @end

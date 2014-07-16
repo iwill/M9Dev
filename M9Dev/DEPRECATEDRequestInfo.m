@@ -16,7 +16,7 @@
     self = [super init];
     if (self) {
         weakify(self);
-        self.success = ^(id<M9ResponseRef> responseRef, id responseObject) {
+        [super setSuccess:^(id<M9ResponseRef> responseRef, id responseObject) {
             strongify(self);
             if ([self.delegate respondsToSelector:self.successSelector]) {
 #pragma clang diagnostic push
@@ -24,8 +24,8 @@
                 [self.delegate performSelector:self.successSelector withObject:responseRef withObject:responseObject];
 #pragma clang diagnostic pop
             }
-        };
-        self.failure = ^(id<M9ResponseRef> responseRef, NSError *error) {
+        }];
+        [super setFailure:^(id<M9ResponseRef> responseRef, NSError *error) {
             strongify(self);
             if ([self.delegate respondsToSelector:self.failureSelector]) {
 #pragma clang diagnostic push
@@ -33,7 +33,7 @@
                 [self.delegate performSelector:self.failureSelector withObject:responseRef withObject:error];
 #pragma clang diagnostic pop
             }
-        };
+        }];
     }
     return self;
 }
@@ -44,6 +44,25 @@
 
 - (void)setDelegate:(id)delegate {
     self.sender = delegate;
+}
+
+- (void)setDelegate:(id)delegate successSelector:(SEL)successSelector failureSelector:(SEL)failureSelector {
+    self.delegate = delegate;
+    self.successSelector = successSelector;
+    self.failureSelector = failureSelector;
+}
+
+- (void)setSuccess:(void (^)(id<M9ResponseRef>, id))success {
+}
+
+- (void)setFailure:(void (^)(id<M9ResponseRef>, NSError *))failure {
+}
+
+- (void)makeCopy:(DEPRECATEDRequestInfo *)copy {
+    [super makeCopy:copy];
+    copy.delegate = self.delegate;
+    copy.successSelector = self.successSelector;
+    copy.failureSelector = self.failureSelector;
 }
 
 @end

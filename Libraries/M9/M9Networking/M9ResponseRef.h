@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class M9RequestRef;
+
 @protocol M9ResponseRef <NSObject>
+
+@property(nonatomic, strong, readonly) M9RequestRef *requestRef;
 
 @property(nonatomic, strong, readonly) NSURLRequest *request;
 @property(nonatomic, strong, readonly) NSHTTPURLResponse *response;
@@ -17,8 +21,5 @@
 @property(nonatomic, strong, readonly) NSString *responseString;
 @property(nonatomic, strong, readonly) id responseObject;
 @property(nonatomic, strong, readonly) NSError *error;
-
-@property(nonatomic, readonly) NSInteger retriedTimes;
-@property(nonatomic, readonly) BOOL usedCache;
 
 @end

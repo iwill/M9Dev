@@ -33,6 +33,10 @@
     return self;
 }
 
+- (id)requestRef {
+    return _requestRef;
+}
+
 - (NSURLRequest *)request {
     return [_operation request];
 }
@@ -55,14 +59,6 @@
 
 - (NSError *)error {
     return [_operation error];
-}
-
-- (NSInteger)retriedTimes {
-    return _requestRef.retriedTimes;
-}
-
-- (BOOL)usedCache {
-    return _requestRef.usedCachedData;
 }
 
 @end

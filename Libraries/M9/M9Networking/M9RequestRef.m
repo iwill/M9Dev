@@ -23,21 +23,23 @@
 @implementation M9RequestRef {
     NSInteger _requestID;
     __weak id _sender;
+    id _userInfo;
 }
 
-@dynamic sender;
+@dynamic sender, userInfo;
 
-+ (instancetype)requestRefWithSender:(id)sender {
-    return [[self alloc] initWithSender:sender];
++ (instancetype)requestRefWithSender:(id)sender userInfo:(id)userInfo {
+    return [[self alloc] initWithSender:sender userInfo:userInfo];
 }
 
-- (instancetype)initWithSender:(id)sender {
+- (instancetype)initWithSender:(id)sender userInfo:(id)userInfo {
     self = [super init];
     if (self) {
         @synchronized([self class]) {
             static NSInteger M9RequestID = 1;
             _requestID = M9RequestID++;
             _sender = sender;
+            _userInfo = userInfo;
         }
     }
     return self;
@@ -54,6 +56,10 @@
 
 - (id)sender {
     return _sender;
+}
+
+- (id)userInfo {
+    return _userInfo;
 }
 
 - (BOOL)isCancelled { @synchronized(self) { // lock: requestRef.isCancelled && requestRef.currentRequestOperation
