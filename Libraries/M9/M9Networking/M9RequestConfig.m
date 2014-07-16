@@ -28,6 +28,7 @@
         self.maxRetryTimes = 2;
         self.cacheData = YES;
         self.useCachedData = YES;
+        self.useCachedDataWithoutLoading = NO;
         self.useCachedDataWhenFailure = NO;
     }
     return self;
@@ -39,6 +40,7 @@
     copy.maxRetryTimes = self.maxRetryTimes;
     copy.cacheData = self.cacheData;
     copy.useCachedData = self.useCachedData;
+    copy.useCachedDataWithoutLoading = self.useCachedDataWithoutLoading;
     copy.useCachedDataWhenFailure = self.useCachedDataWhenFailure;
     copy.responseParseOptions = self.responseParseOptions;
 }
