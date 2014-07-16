@@ -12,14 +12,14 @@
 
 @interface M9RequestRef ()
 
-@property(nonatomic, readwrite) NSInteger retriedTimes;
-@property(nonatomic, readwrite) BOOL usedCachedData;
 @property(nonatomic, readwrite) NSOperation *currentRequestOperation;
 
+@property(nonatomic, readwrite) NSInteger retriedTimes;
+@property(nonatomic, readwrite) BOOL usedCachedData;
 @property(nonatomic, readwrite, setter = setCancelled:) BOOL isCancelled;
 
-- (instancetype)initWithSender:(id)sender userInfo:(id)userInfo;
-+ (instancetype)requestRefWithSender:(id)sender userInfo:(id)userInfo;
+- (instancetype)initWithSender:(id)sender;
++ (instancetype)requestRefWithSender:(id)sender;
 
 - (void)cancel;
 

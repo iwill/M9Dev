@@ -9,7 +9,7 @@
 #import "M9RequestConfig.h"
 #import "M9RequestInfo.h"
 #import "M9RequestRef.h"
-#import "M9ResponseRef.h"
+#import "M9ResponseInfo.h"
 
 #import "M9Utilities.h"
 
@@ -33,16 +33,16 @@
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
 - (M9RequestRef *)GET:(NSString *)URLString
-              success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
-              failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
+              success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
+              failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
-              success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
-              failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
+              success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
+              failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
 - (M9RequestRef *)POST:(NSString *)URLString
             parameters:(NSDictionary *)parameters
-               success:(void (^)(id<M9ResponseRef> responseRef, id responseObject))success
-               failure:(void (^)(id<M9ResponseRef> responseRef, NSError *error))failure;
+               success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
+               failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
 
 - (void)cancelAllWithSender:(id)sender;
 

@@ -13,12 +13,12 @@
 @interface M9Networking (finish)
 
 - (M9RequestRef *)GET:(NSString *)URLString
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
 - (M9RequestRef *)POST:(NSString *)URLString
             parameters:(NSDictionary *)parameters
-                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish;
+                finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
 
 @end

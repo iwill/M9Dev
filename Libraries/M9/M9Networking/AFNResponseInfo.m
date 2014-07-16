@@ -1,26 +1,26 @@
 //
-//  AFNResponseRef.m
+//  AFNResponseInfo.m
 //  M9Dev
 //
 //  Created by iwill on 2014-07-09.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "AFNResponseRef.h"
+#import "AFNResponseInfo.h"
 
 #import "AFHTTPRequestOperation.h"
 #import "M9RequestRef+Private.h"
 
-@interface AFNResponseRef ()
+@interface AFNResponseInfo ()
 
 @end
 
-@implementation AFNResponseRef {
+@implementation AFNResponseInfo {
     AFHTTPRequestOperation *_operation;
     M9RequestRef *_requestRef;
 }
 
-+ (instancetype)responseRefWithRequestOperation:(AFHTTPRequestOperation *)operation requestRef:(M9RequestRef *)requestRef {
++ (instancetype)responseInfoWithRequestOperation:(AFHTTPRequestOperation *)operation requestRef:(M9RequestRef *)requestRef {
     return [[self alloc] initWithRequestOperation:operation requestRef:requestRef];
 }
 
@@ -31,10 +31,6 @@
         _requestRef = requestRef;
     }
     return self;
-}
-
-- (id)requestRef {
-    return _requestRef;
 }
 
 - (NSURLRequest *)request {
@@ -59,6 +55,14 @@
 
 - (NSError *)error {
     return [_operation error];
+}
+
+- (NSInteger)retriedTimes {
+    return _requestRef.retriedTimes;
+}
+
+- (BOOL)usedCachedData {
+    return _requestRef.usedCachedData;
 }
 
 @end

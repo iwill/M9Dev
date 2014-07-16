@@ -17,7 +17,6 @@
     copy.success = self.success;
     copy.failure = self.failure;
     copy.sender = self.sender;
-    copy.userInfo = self.userInfo;
 }
 
 @end

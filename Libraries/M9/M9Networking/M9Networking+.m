@@ -11,33 +11,33 @@
 @implementation M9Networking (finish)
 
 - (M9RequestRef *)GET:(NSString *)URLString
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
     return [self GET:URLString parameters:nil finish:finish];
 }
 
 - (M9RequestRef *)GET:(NSString *)URLString
            parameters:(NSDictionary *)parameters
-               finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
-    return [self GET:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
         if (finish) {
-            finish(responseRef, responseObject, nil);
+            finish(responseInfo, responseObject, nil);
         }
-    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
+    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
         if (finish) {
-            finish(responseRef, nil, error);
+            finish(responseInfo, nil, error);
         }
     }];
 }
 
 - (M9RequestRef *)POST:(NSString *)URLString
             parameters:(NSDictionary *)parameters
-                finish:(void (^)(id<M9ResponseRef> responseRef, id responseObject, NSError *error))finish {
-    return [self POST:URLString parameters:parameters success:^(id<M9ResponseRef> responseRef, id responseObject) {
+                finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
+    return [self POST:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
         if (finish) {
-            finish(responseRef, responseObject, nil);
+            finish(responseInfo, responseObject, nil);
         }
-    } failure:^(id<M9ResponseRef> responseRef, NSError *error) {
-        finish(responseRef, nil, error);
+    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        finish(responseInfo, nil, error);
     }];
 }
 

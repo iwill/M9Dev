@@ -10,9 +10,6 @@
 
 #import "M9Utilities.h"
 
-#import "M9RequestRef.h"
-#import "M9ResponseRef.h"
-
 /**
  * MIME
  *  M9ResponseParseOption_Data:         nil

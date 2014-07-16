@@ -13,8 +13,6 @@
 #import "M9Networking.h"
 #import "M9Networking+.h"
 
-#import "DEPRECATEDRequestInfo.h"
-
 @interface M9NetworkingViewController ()
 
 @end
@@ -58,7 +56,6 @@
         button.enabled = NO; // start loading
     }
     
-    /*
     M9RequestInfo *requestInfo = [M9RequestInfo new];
     // requestInfo.URLString = @"http://10.2.10.187:3000/static/index.html";
     requestInfo.URLString = @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2";
@@ -66,44 +63,22 @@
     requestInfo.sender = self;
     
     weakify(button);
-    requestInfo.success = ^(id<M9ResponseRef> responseRef, id responseObject) {
+    requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
         NSLog(@"success: %@", responseObject);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"success" forState:UIControlStateSelected];
     };
-    requestInfo.failure = ^(id<M9ResponseRef> responseRef, NSError *error) {
+    requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
         NSLog(@"failure: %@", error);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"failure" forState:UIControlStateSelected];
-    }; */
-    
-    DEPRECATEDRequestInfo *requestInfo = [DEPRECATEDRequestInfo new];
-    requestInfo.URLString = @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2";
-    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
-    [requestInfo setDelegate:self successSelector:@selector(successWithResponseRef:responseObject:) failureSelector:@selector(failureWithResponseRef:error:)];
-    requestInfo.userInfo = button;
+    };
     
     [M9NETWORKING GET:requestInfo];
-}
-
-- (void)successWithResponseRef:(id<M9ResponseRef>)responseRef responseObject:(id)responseObject {
-    NSLog(@"success: %@", responseObject);
-    UIButton *button = responseRef.requestRef.userInfo;
-    button.enabled = YES; // stop loading
-    button.selected = YES; // alert result
-    [button setTitle:@"success" forState:UIControlStateSelected];
-}
-
-- (void)failureWithResponseRef:(id<M9ResponseRef>)responseRef error:(NSError *)error {
-    NSLog(@"failure: %@", error);
-    UIButton *button = responseRef.requestRef.userInfo;
-    button.enabled = YES; // stop loading
-    button.selected = YES; // alert result
-    [button setTitle:@"failure" forState:UIControlStateSelected];
 }
 
 @end

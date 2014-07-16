@@ -1,5 +1,5 @@
 //
-//  M9ResponseRef.h
+//  M9ResponseInfo.h
 //  M9Dev
 //
 //  Created by iwill on 2014-07-06.
@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class M9RequestRef;
-
-@protocol M9ResponseRef <NSObject>
-
-@property(nonatomic, strong, readonly) M9RequestRef *requestRef;
+@protocol M9ResponseInfo <NSObject>
 
 @property(nonatomic, strong, readonly) NSURLRequest *request;
 @property(nonatomic, strong, readonly) NSHTTPURLResponse *response;
@@ -21,5 +17,8 @@
 @property(nonatomic, strong, readonly) NSString *responseString;
 @property(nonatomic, strong, readonly) id responseObject;
 @property(nonatomic, strong, readonly) NSError *error;
+
+@property(nonatomic, readonly) NSInteger retriedTimes;
+@property(nonatomic, readonly) BOOL usedCachedData;
 
 @end

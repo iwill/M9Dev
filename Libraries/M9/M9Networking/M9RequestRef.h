@@ -12,7 +12,6 @@
 
 @property(nonatomic, readonly) NSInteger requestID;
 @property(nonatomic, readonly, weak) id sender;
-@property(nonatomic, readonly, strong) id userInfo;
 
 @property(nonatomic, readonly) NSInteger retriedTimes;
 @property(nonatomic, readonly) BOOL usedCachedData;
