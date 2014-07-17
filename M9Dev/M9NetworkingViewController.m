@@ -35,12 +35,34 @@
     
     CGRect frame = CGRectMake(- 1, 0, 320 + 2, 44);
     
-    frame.origin.y += CGRectGetMaxY(frame) + 20;
+    frame.origin.y = CGRectGetMaxY(frame) + 20;
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
-        [button setTitle:@"request" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"request with callback" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonDidTapped1:) forControlEvents:UIControlEventTouchUpInside];
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
+        button;
+    })];
+    
+    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    [self.view addSubview:({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.frame = frame;
+        [button setTitle:@"request with custom callback" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonDidTapped2:) forControlEvents:UIControlEventTouchUpInside];
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
+        button;
+    })];
+    
+    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    [self.view addSubview:({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.frame = frame;
+        [button setTitle:@"request with delegate" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonDidTapped3:) forControlEvents:UIControlEventTouchUpInside];
         button.layer.borderColor = [UIColor lightGrayColor].CGColor;
         button.layer.borderWidth = 0.5;
         button;
@@ -51,7 +73,10 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)buttonDidTapped:(UIButton *)button {
+// #define TestURLString @"http://10.2.10.187:3000/static/index.html"
+#define TestURLString @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2"
+
+- (void)buttonDidTapped1:(UIButton *)button {
     if (button.selected) {
         button.selected = NO; // confirm result
         return;
@@ -60,69 +85,79 @@
         button.enabled = NO; // start loading
     }
     
-    // NSString *URLString = @"http://10.2.10.187:3000/static/index.html";
-    NSString *URLString = @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2";
-    NSDictionary *parameters = @{ @"x": @1, @"y": @2 };
+    M9RequestInfo *requestInfo = [M9RequestInfo new];
+    requestInfo.URLString = TestURLString;
+    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
-    BOOL useBlock = NO;
-    BOOL useCustomBlock = YES;
-    if (useBlock) {
-        M9RequestInfo *requestInfo = [M9RequestInfo new];
-        requestInfo.URLString = URLString;
-        requestInfo.parameters = parameters;
-        
-        weakify(button);
-        requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
-            NSLog(@"success: %@", responseObject);
-            strongify(button);
-            button.enabled = YES; // stop loading
-            button.selected = YES; // alert result
-            [button setTitle:@"success" forState:UIControlStateSelected];
-        };
-        requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
-            NSLog(@"failure: %@", error);
-            strongify(button);
-            button.enabled = YES; // stop loading
-            button.selected = YES; // alert result
-            [button setTitle:@"failure" forState:UIControlStateSelected];
-        };
-        
-        [M9NETWORKING GET:requestInfo];
-    }
-    else if (useCustomBlock) {
-        CallbackRequestInfo *requestInfo = [CallbackRequestInfo new];
-        requestInfo.URLString = URLString;
-        requestInfo.parameters = parameters;
-        
-        weakify(button);
-        [requestInfo setSuccessWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSDictionary *data) {
-            NSLog(@"CallbackRequestInfo: %@", data);
-            strongify(button);
-            button.enabled = YES; // stop loading
-            button.selected = YES; // alert result
-            [button setTitle:@"success" forState:UIControlStateSelected];
-        }];
-        [requestInfo setFailureWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSString *errorMessage) {
-            NSLog(@"CallbackRequestInfo: %@", errorMessage);
-            strongify(button);
-            button.enabled = YES; // stop loading
-            button.selected = YES; // alert result
-            [button setTitle:@"failure" forState:UIControlStateSelected];
-        }];
-        
-        [M9NETWORKING GET:requestInfo];
+    weakify(button);
+    requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        NSLog(@"success: %@", responseObject);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"success" forState:UIControlStateSelected];
+    };
+    requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        NSLog(@"failure: %@", error);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"failure" forState:UIControlStateSelected];
+    };
+    
+    [M9NETWORKING GET:requestInfo];
+}
+
+- (void)buttonDidTapped2:(UIButton *)button {
+    if (button.selected) {
+        button.selected = NO; // confirm result
+        return;
     }
     else {
-        DelegateRequestInfo *requestInfo = [DelegateRequestInfo new];
-        requestInfo.URLString = URLString;
-        requestInfo.parameters = parameters;
-        [requestInfo setDelegate:self
-                   successSelector:@selector(successWithRequestInfo:responseInfo:responseObject:)
-                   failureSelector:@selector(failureWithRequestInfo:responseInfo:error:)];
-        requestInfo.userInfo = button;
-        
-        [M9NETWORKING GET:requestInfo];
+        button.enabled = NO; // start loading
     }
+    
+    CallbackRequestInfo *requestInfo = [CallbackRequestInfo new];
+    requestInfo.URLString = TestURLString;
+    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
+    
+    weakify(button);
+    [requestInfo setSuccessWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSDictionary *data) {
+        NSLog(@"CallbackRequestInfo: %@", data);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"success" forState:UIControlStateSelected];
+    }];
+    [requestInfo setFailureWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSString *errorMessage) {
+        NSLog(@"CallbackRequestInfo: %@", errorMessage);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"failure" forState:UIControlStateSelected];
+    }];
+    
+    [M9NETWORKING GET:requestInfo];
+}
+
+- (void)buttonDidTapped3:(UIButton *)button {
+    if (button.selected) {
+        button.selected = NO; // confirm result
+        return;
+    }
+    else {
+        button.enabled = NO; // start loading
+    }
+    
+    DelegateRequestInfo *requestInfo = [DelegateRequestInfo new];
+    requestInfo.URLString = TestURLString;
+    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
+    [requestInfo setDelegate:self
+             successSelector:@selector(successWithRequestInfo:responseInfo:responseObject:)
+             failureSelector:@selector(failureWithRequestInfo:responseInfo:error:)];
+    requestInfo.userInfo = button;
+    
+    [M9NETWORKING GET:requestInfo];
 }
 
 - (void)successWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject {
