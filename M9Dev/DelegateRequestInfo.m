@@ -1,18 +1,18 @@
 //
-//  SVRequestInfo.m
+//  DelegateRequestInfo.m
 //  M9Dev
 //
 //  Created by MingLQ on 2014-07-17.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "SVRequestInfo.h"
+#import "DelegateRequestInfo.h"
 
 #import "EXTScope.h"
 #import "M9Utilities.h"
 #import "NSInvocation+.h"
 
-@implementation SVRequestInfo
+@implementation DelegateRequestInfo
 
 @dynamic delegate;
 
@@ -62,7 +62,7 @@
     self.failureSelector = failureSelector;
 }
 
-- (void)makeCopy:(SVRequestInfo *)copy {
+- (void)makeCopy:(DelegateRequestInfo *)copy {
     copy.userInfo = self.userInfo;
     copy.delegate = self.delegate;
     copy.successSelector = self.successSelector;

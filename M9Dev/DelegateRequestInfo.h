@@ -1,5 +1,5 @@
 //
-//  SVRequestInfo.h
+//  DelegateRequestInfo.h
 //  M9Dev
 //
 //  Created by MingLQ on 2014-07-17.
@@ -8,19 +8,19 @@
 
 #import "M9RequestInfo.h"
 
-@interface SVRequestInfo : M9RequestInfo
+@interface DelegateRequestInfo : M9RequestInfo
 
 @property(nonatomic, strong) id userInfo;
 
 /* just an alias of sender
  */
 @property(nonatomic, weak) id delegate;
-/* 3 arguments: SVRequestInfo *requestInfo, id<M9ResponseInfo> responseInfo, id responseObject
- * e.g. - (void)successWithRequestInfo:(SVRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject
+/* 3 arguments: DelegateRequestInfo *requestInfo, id<M9ResponseInfo> responseInfo, id responseObject
+ * e.g. - (void)successWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject
  */
 @property(nonatomic) SEL successSelector;
-/* 3 arguments: SVRequestInfo *requestInfo, id<M9ResponseInfo> responseInfo, NSError *error
- * e.g. - (void)failureWithRequestInfo:(SVRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo error:(NSError *)error
+/* 3 arguments: DelegateRequestInfo *requestInfo, id<M9ResponseInfo> responseInfo, NSError *error
+ * e.g. - (void)failureWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo error:(NSError *)error
  */
 @property(nonatomic) SEL failureSelector;
 
