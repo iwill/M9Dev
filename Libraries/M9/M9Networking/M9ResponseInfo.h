@@ -20,5 +20,6 @@
 
 @property(nonatomic, readonly) NSInteger retriedTimes;
 @property(nonatomic, readonly) BOOL usedCachedData;
+// @property(nonatomic, readonly) NSTimeInterval loadingDuration;
 
 @end
