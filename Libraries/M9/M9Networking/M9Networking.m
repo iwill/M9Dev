@@ -406,3 +406,13 @@
 }
 
 @end
+
+@implementation M9RequestInfo (M9RequestConfig)
+
++ (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig {
+    M9RequestInfo *requestInfo = [self new];
+    [requestConfig makeCopy:requestInfo];
+    return requestInfo;
+}
+
+@end

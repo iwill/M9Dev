@@ -75,6 +75,12 @@
 
 @end
 
+@interface M9RequestInfo (M9RequestConfig)
+
++ (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig;
+
+@end
+
 /*
  
  # check synchronized
