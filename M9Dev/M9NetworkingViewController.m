@@ -12,7 +12,6 @@
 #import "M9Utilities.h"
 #import "NSInvocation+.h"
 #import "M9Networking.h"
-#import "M9Networking+.h"
 
 #import "CallbackRequestInfo.h"
 #import "DelegateRequestInfo.h"
@@ -21,11 +20,15 @@
 
 @end
 
-@implementation M9NetworkingViewController
+@implementation M9NetworkingViewController {
+    NSURL *baseURL;
+    NSString *testURLString;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self setupRequestConfig];
     }
     return self;
 }
@@ -73,8 +76,13 @@
     [super didReceiveMemoryWarning];
 }
 
-// #define TestURLString @"http://10.2.10.187:3000/static/index.html"
-#define TestURLString @"http://10.2.10.187:3000/route/path/file.json?a=1&b=2"
+- (void)setupRequestConfig {
+    baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    // baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    
+    // testURLString = @"/static/index.html";
+    testURLString = @"/route/path/file.json?a=1&b=2";
+}
 
 - (void)buttonDidTapped1:(UIButton *)button {
     if (button.selected) {
@@ -86,7 +94,8 @@
     }
     
     M9RequestInfo *requestInfo = [M9RequestInfo new];
-    requestInfo.URLString = TestURLString;
+    requestInfo.baseURL = baseURL;
+    requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
     weakify(button);
@@ -118,7 +127,8 @@
     }
     
     CallbackRequestInfo *requestInfo = [CallbackRequestInfo new];
-    requestInfo.URLString = TestURLString;
+    requestInfo.baseURL = baseURL;
+    requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
     weakify(button);
@@ -150,7 +160,8 @@
     }
     
     DelegateRequestInfo *requestInfo = [DelegateRequestInfo new];
-    requestInfo.URLString = TestURLString;
+    requestInfo.baseURL = baseURL;
+    requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     [requestInfo setDelegate:self
              successSelector:@selector(successWithRequestInfo:responseInfo:responseObject:)
