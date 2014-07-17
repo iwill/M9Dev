@@ -8,6 +8,8 @@
 
 #import "NSInvocation+.h"
 
+#import "M9Utilities.h"
+
 @implementation NSInvocation (Repeat)
 
 - (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval {
@@ -44,12 +46,9 @@
 - (NSInvocation *)invocationWithSelector:(SEL)selector argList:(va_list)argList start:(void *)start {
     NSInvocation *invocation = [self invocationWithSelector:selector];
     NSUInteger index = 2, numberOfArguments = invocation.methodSignature.numberOfArguments;
-    void *nilLocation = nil;
+    id nilLocation = nil;
     for (void *argumentLocation = start; index < numberOfArguments/* argumentLocation != nil */; argumentLocation = va_arg(argList, void *)) {
-        if (!argumentLocation) {
-            argumentLocation = &nilLocation;
-        }
-        [invocation setArgument:argumentLocation atIndex:index++];
+        [invocation setArgument:argumentLocation OR &nilLocation atIndex:index++];
     }
     return invocation;
 }
