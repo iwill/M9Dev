@@ -100,12 +100,5 @@
     }
 }
 
-/*
-- (NSInvocation *)performSelector:(SEL)selector argument:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval {
-}
-
-- (NSInvocation *)performSelector:(SEL)selector argument:(id)anArgument repeatsInterval:(NSTimeInterval)repeatsInterval inModes:(NSArray *)modes {
-} */
-
 @end
 
