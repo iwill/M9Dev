@@ -99,7 +99,7 @@
     
     id final = nil;
     [self invokeWithSelector:@selector(testBOOL:Integer:UInteger:) returnValue:&final arguments:&boolean, &integer, &uInteger];
-    NSLog(@"object: %@", object);
+    NSLog(@"final: %@", final);
     
     if (button.selected) {
         button.selected = NO; // confirm result

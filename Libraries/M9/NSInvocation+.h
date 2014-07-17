@@ -24,6 +24,11 @@
 - (NSInvocation *)invocationWithSelector:(SEL)selector argument:(void *)argument;
 - (NSInvocation *)invocationWithSelector:(SEL)selector arguments:(void *)argument, ...;
 
+/* invoke with selector, arguments */
+- (void)invokeWithSelector:(SEL)selector;
+- (void)invokeWithSelector:(SEL)selector argument:(void *)argument;
+- (void)invokeWithSelector:(SEL)selector arguments:(void *)argument, ...;
+
 /* invoke with selector, arguments and return-value */
 - (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue;
 - (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue argument:(void *)argument;

@@ -67,6 +67,21 @@
     return invocation;
 }
 
+- (void)invokeWithSelector:(SEL)selector {
+    [[self invocationWithSelector:selector] invoke];
+}
+
+- (void)invokeWithSelector:(SEL)selector argument:(void *)argument {
+    [self invokeWithSelector:selector arguments:argument];
+}
+
+- (void)invokeWithSelector:(SEL)selector arguments:(void *)start, ... {
+    va_list argList;
+    va_start(argList, start);
+    [[self invocationWithSelector:selector argList:argList start:start] invoke];
+    va_end(argList);
+}
+
 - (void)invokeWithSelector:(SEL)selector returnValue:(void *)returnValue {
     NSInvocation *invocation = [self invocationWithSelector:selector];
     [invocation invoke];
@@ -84,7 +99,6 @@
     va_start(argList, start);
     NSInvocation *invocation = [self invocationWithSelector:selector argList:argList start:start];
     va_end(argList);
-    
     [invocation invoke];
     if (strcmp(invocation.methodSignature.methodReturnType, @encode(void)) != 0) {
         [invocation getReturnValue:returnValue];
