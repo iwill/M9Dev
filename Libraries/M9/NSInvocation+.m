@@ -11,14 +11,9 @@
 @implementation NSInvocation (Repeat)
 
 - (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval {
-    SEL selector = @selector(repeatInvokeWithIntervalNumber:);
-    
-    id anArgument = nil;
-    if ([[self methodSignature] numberOfArguments] > 2) {
-        [self getArgument:&anArgument atIndex:2];
-    }
-    
-    [self performSelector:selector withObject:[NSNumber numberWithDouble:repeatInterval] afterDelay:repeatInterval];
+    [self performSelector:@selector(repeatInvokeWithIntervalNumber:)
+               withObject:[NSNumber numberWithDouble:repeatInterval]
+               afterDelay:repeatInterval];
 }
 
 - (void)repeatInvokeWithIntervalNumber:(NSNumber *)repeatInterval {
