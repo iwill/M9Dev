@@ -49,58 +49,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)test {
-    NSLog(@"<#NSString *format#>: %@", NSStringFromSelector(_cmd));
-}
-
-- (BOOL)testBOOL:(BOOL)boolean {
-    NSLog(@"<#NSString *format#>: %@", NSStringFromSelector(_cmd));
-    return !boolean;
-}
-
-- (NSInteger)testInteger:(NSInteger)integer {
-    NSLog(@"<#NSString *format#>: %@", NSStringFromSelector(_cmd));
-    return integer + 123;
-}
-
-- (NSUInteger)testUInteger:(NSUInteger)uInteger {
-    NSLog(@"<#NSString *format#>: %@", NSStringFromSelector(_cmd));
-    return uInteger + 123456;
-}
-
-- (id)testObject:(id)object {
-    NSLog(@"<#NSString *format#>: %@", NSStringFromSelector(_cmd));
-    return object;
-}
-
-- (id)testBOOL:(BOOL)boolean Integer:(NSInteger)integer UInteger:(NSUInteger)uInteger {
-    NSLog(@"<#NSString *format#>: %@ %d, %ld, %lu", NSStringFromSelector(_cmd), boolean, integer, uInteger);
-    return self;
-}
-
 - (void)buttonDidTapped:(UIButton *)button {
-    [self invokeWithSelector:@selector(test) returnValue:nil arguments:nil];
-    
-    BOOL boolean = NO;
-    [self invokeWithSelector:@selector(testBOOL:) returnValue:&boolean argument:&boolean];
-    NSLog(@"boolean: %d", boolean);
-    
-    NSInteger integer = 10000000;
-    [self invokeWithSelector:@selector(testInteger:) returnValue:&integer argument:&integer];
-    NSLog(@"integer: %ld", integer);
-    
-    NSUInteger uInteger = 10000000;
-    [self invokeWithSelector:@selector(testUInteger:) returnValue:&uInteger argument:&uInteger];
-    NSLog(@"uInteger: %lu", uInteger);
-    
-    id object = self;
-    [self invokeWithSelector:@selector(testObject:) returnValue:&object argument:&object];
-    NSLog(@"object: %@", object);
-    
-    id final = nil;
-    [self invokeWithSelector:@selector(testBOOL:Integer:UInteger:) returnValue:&final arguments:&boolean, &integer, &uInteger];
-    NSLog(@"final: %@", final);
-    
     if (button.selected) {
         button.selected = NO; // confirm result
         return;
