@@ -46,6 +46,24 @@
 
 - (void)cancelAllWithSender:(id)sender;
 
++ (void)removeAllCachedData;
++ (void)removeCachedDataForKey:(NSString *)key;
+
+@end
+
+#pragma mark -
+
+@interface M9Networking (finish)
+
+- (M9RequestRef *)GET:(NSString *)URLString
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
+- (M9RequestRef *)GET:(NSString *)URLString
+           parameters:(NSDictionary *)parameters
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
+- (M9RequestRef *)POST:(NSString *)URLString
+            parameters:(NSDictionary *)parameters
+                finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
+
 @end
 
 #pragma mark -
@@ -63,15 +81,9 @@
  
  ==== TODO: ====
  
- # baseURL
- 
  # class cluster: other implementation, like NetRequestManager & AFNNetRequestManager
  
  # use lock instead of synchronized?
- 
- # ???: delegate and selectors
-    // !!!: DEPRECATED, use block instead
-    @property(nonatomic) SEL successSelector DEPRECATED_ATTRIBUTE, failureSelector DEPRECATED_ATTRIBUTE;
  
  ==== Keynote ====
  

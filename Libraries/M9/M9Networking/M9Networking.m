@@ -336,6 +336,51 @@
     }
 }}
 
++ (void)removeAllCachedData {
+    [[TMCache sharedCache] removeAllObjects];
+}
+
++ (void)removeCachedDataForKey:(NSString *)key {
+    [[TMCache sharedCache] removeObjectForKey:key];
+}
+
+@end
+
+#pragma mark -
+
+@implementation M9Networking (finish)
+
+- (M9RequestRef *)GET:(NSString *)URLString
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:nil finish:finish];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString
+           parameters:(NSDictionary *)parameters
+               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
+    return [self GET:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        if (finish) {
+            finish(responseInfo, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        if (finish) {
+            finish(responseInfo, nil, error);
+        }
+    }];
+}
+
+- (M9RequestRef *)POST:(NSString *)URLString
+            parameters:(NSDictionary *)parameters
+                finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish {
+    return [self POST:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        if (finish) {
+            finish(responseInfo, responseObject, nil);
+        }
+    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        finish(responseInfo, nil, error);
+    }];
+}
+
 @end
 
 #pragma mark -
@@ -345,6 +390,7 @@
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
+    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
     return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
@@ -355,6 +401,7 @@
      ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
      : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
     NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
+    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
     return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 

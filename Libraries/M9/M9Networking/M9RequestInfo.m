@@ -14,6 +14,7 @@
     [super makeCopy:copy];
     copy.URLString = self.URLString;
     copy.parameters = self.parameters;
+    copy.allHTTPHeaderFields = self.allHTTPHeaderFields;
     copy.success = self.success;
     copy.failure = self.failure;
     copy.sender = self.sender;

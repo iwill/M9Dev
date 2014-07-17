@@ -14,6 +14,7 @@
 
 @property(nonatomic, strong) NSString *URLString;
 @property(nonatomic, strong) NSDictionary *parameters;
+@property(nonatomic, strong) NSDictionary *allHTTPHeaderFields;
 @property(nonatomic, copy) void (^success)(id<M9ResponseInfo> responseInfo, id responseObject);
 @property(nonatomic, copy) void (^failure)(id<M9ResponseInfo> responseInfo, NSError *error);
 
