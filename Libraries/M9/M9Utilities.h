@@ -74,6 +74,16 @@
         [$$lock$$ unlock]; \
     }}
 
+/* TODO: @synchronized without indent
+ *  SYNCHRONIZED(object)
+ *  // statements
+ *  SYNCHRONIZED_END
+#define SYNCHRONIZED(object) { \
+    @synchronized(object) {
+#define END \
+    }
+ */
+
 
 /**
  * dispatch
