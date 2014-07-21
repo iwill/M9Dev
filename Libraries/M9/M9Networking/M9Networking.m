@@ -217,7 +217,7 @@
             if (config.useCachedDataWhenFailure) {
                 [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
                  { @synchronized(requestRef) {
-                    strongify(self);
+                    // strongify(self);
                     if (requestRef.isCancelled) {
                         return;
                     }
@@ -229,7 +229,10 @@
                         }
                     }
                     else {
-                        [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+                        if (failure) {
+                            id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
+                            failure(responseInfo, error);
+                        }
                     }
                 }}];
             }
