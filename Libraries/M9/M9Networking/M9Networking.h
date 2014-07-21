@@ -18,7 +18,7 @@
 /**
  *  M9Networking
  *
- *  !!!: Just for common networking, use AFNetworking or other framework directly for more requirements
+ *  !!!: ONLY used for common requirements, or use AFNetworking or other framework directly
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
  */
 
@@ -70,6 +70,7 @@
 
 @interface M9Networking (M9RequestInfo)
 
+// @see - [M9RequestInfo requestInfoWithRequestConfig:]
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo;
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo;
 
