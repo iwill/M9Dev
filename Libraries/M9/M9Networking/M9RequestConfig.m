@@ -43,6 +43,7 @@
     copy.useCachedDataWithoutLoading = self.useCachedDataWithoutLoading;
     copy.useCachedDataWhenFailure = self.useCachedDataWhenFailure;
     copy.responseParseOptions = self.responseParseOptions;
+    copy.willSendRequestForAuthenticationChallengeBlock = self.willSendRequestForAuthenticationChallengeBlock;
 }
 
 @end

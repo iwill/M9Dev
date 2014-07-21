@@ -46,4 +46,17 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseParseOptions) {
 
 @property(nonatomic) M9ResponseParseOptions responseParseOptions; // default: M9ResponseParseOption_JSON
 
+/* Authentication Challenges
+ *  How to Respond to an Authentication Challenge. In order for the connection to continue, the block has three options:
+ *      Provide authentication credentials
+ *      Attempt to continue without credentials
+ *      Cancel the authentication challenge
+ *  Respond to an Authentication Challenge. The following are the three ways:
+ *      Providing Credentials
+ *      Continuing Without Credentials
+ *      Canceling the Connection
+ *  @see https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/URLLoadingSystem/Articles/AuthenticationChallenges.html#//apple_ref/doc/uid/TP40009507-SW1
+ */
+@property(nonatomic, copy) void (^willSendRequestForAuthenticationChallengeBlock)(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge);
+
 @end
