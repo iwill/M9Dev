@@ -32,17 +32,9 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
-- (M9RequestRef *)GET:(NSString *)URLString
-              success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
-              failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
-- (M9RequestRef *)GET:(NSString *)URLString
-           parameters:(NSDictionary *)parameters
-              success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
-              failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
-- (M9RequestRef *)POST:(NSString *)URLString
-            parameters:(NSDictionary *)parameters
-               success:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject))success
-               failure:(void (^)(id<M9ResponseInfo> responseInfo, NSError *error))failure;
+- (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
+- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
+- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
 
 - (void)cancelAllWithSender:(id)sender;
 
@@ -53,16 +45,13 @@
 
 #pragma mark - finish
 
+typedef void (^M9RequestFinish)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error);
+
 @interface M9Networking (finish)
 
-- (M9RequestRef *)GET:(NSString *)URLString
-               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
-- (M9RequestRef *)GET:(NSString *)URLString
-           parameters:(NSDictionary *)parameters
-               finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
-- (M9RequestRef *)POST:(NSString *)URLString
-            parameters:(NSDictionary *)parameters
-                finish:(void (^)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error))finish;
+- (M9RequestRef *)GET:(NSString *)URLString finish:(M9RequestFinish)finish;
+- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish;
+- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish;
 
 @end
 
@@ -91,18 +80,5 @@
  # class cluster: other implementation, like NetRequestManager & AFNNetRequestManager
  
  # use lock instead of synchronized?
- 
- ==== Keynote ====
- 
- # 80-20: 80% requirements
- 
- # general solution: AFN
- 
- # M9Networking: get/post url & parameters, timeout, retry, cache, parse, callback, cancel & cancel by sender
- 
- # extend: subclass M9RequestInfo + helper
-    validate arguments, arguments to parameters: M9RequestInfo subclass or helper
-    json to objects: M9RequestInfo subclass or helper
-    delegate(sender) & selectors
  
  */
