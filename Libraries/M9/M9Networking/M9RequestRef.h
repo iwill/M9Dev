@@ -10,7 +10,9 @@
 
 @interface M9RequestRef : NSObject
 
-// TODO: requestInfo & responseInfo?
+// TODO: requestInfo & responseInfo and no sender?
+// @property(nonatomic, readonly, strong) M9RequestInfo *requestInfo;
+// @property(nonatomic, readonly, strong) id<M9ResponseInfo> responseInfo;
 
 @property(nonatomic, readonly) NSInteger requestID;
 @property(nonatomic, readonly, weak) id sender;
