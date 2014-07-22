@@ -88,8 +88,8 @@
 }
 
 - (void)setupRequestConfig {
-    // baseURL = [NSURL URLWithString:@"http://localhost:3000"];
-    baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    // baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
@@ -105,6 +105,7 @@
     }
     
     M9RequestInfo *requestInfo = [M9RequestInfo new];
+    requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } };
@@ -126,7 +127,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     };
     
-    [M9NETWORKING GET:requestInfo];
+    [M9NETWORKING request:requestInfo];
 }
 
 - (void)buttonDidTapped1:(UIButton *)button {
@@ -139,6 +140,7 @@
     }
     
     M9RequestInfo *requestInfo = [M9RequestInfo new];
+    requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
@@ -159,7 +161,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     };
     
-    [M9NETWORKING GET:requestInfo];
+    [M9NETWORKING request:requestInfo];
 }
 
 - (void)buttonDidTapped2:(UIButton *)button {
@@ -172,6 +174,7 @@
     }
     
     CallbackRequestInfo *requestInfo = [CallbackRequestInfo new];
+    requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
@@ -192,7 +195,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     }];
     
-    [M9NETWORKING GET:requestInfo];
+    [M9NETWORKING request:requestInfo];
 }
 
 - (void)buttonDidTapped3:(UIButton *)button {
@@ -205,6 +208,7 @@
     }
     
     DelegateRequestInfo *requestInfo = [DelegateRequestInfo new];
+    requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
@@ -213,7 +217,7 @@
              failureSelector:@selector(failureWithRequestInfo:responseInfo:error:)];
     requestInfo.userInfo = button;
     
-    [M9NETWORKING GET:requestInfo];
+    [M9NETWORKING request:requestInfo];
 }
 
 - (void)successWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject {

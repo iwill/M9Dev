@@ -27,9 +27,6 @@
 #import "NSDictionary+Shortcuts.h"
 #import "NSDate+.h"
 
-#define HTTPGET     @"GET"
-#define HTTPPOST    @"POST"
-
 #define HTTPExpires @"Expires"
 
 /**
@@ -64,10 +61,6 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     return sharedInstance;
 }
 
-+ (instancetype)new {
-    return [[self alloc] init];
-}
-
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)config {
     return [[self alloc] initWithRequestConfig:config];
 }
@@ -87,57 +80,38 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 
 #pragma mark public
 
-- (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
-    return [self GET:URLString parameters:nil success:success failure:failure];
-}
-
-- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
-    URLString = [[NSURL URLWithString:URLString relativeToURL:self.requestConfig.baseURL] absoluteString];
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:parameters error:nil];
-    return [self sendRequest:request config:self.requestConfig success:success failure:failure];
-}
-
-- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
-    URLString = [[NSURL URLWithString:URLString relativeToURL:self.requestConfig.baseURL] absoluteString];
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:parameters error:nil];
-    return [self sendRequest:request config:self.requestConfig success:success failure:failure];
-}
-
-#pragma mark private
-
-- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request config:(M9RequestConfig *)config success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
-    return [self sendRequest:request sender:nil config:config success:success failure:failure];
-}
-
-- (M9RequestRef *)sendRequest:(NSMutableURLRequest *)request sender:(id)sender config:(M9RequestConfig *)config success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
-    M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:sender];
-    [sender addRequestRef:requestRef];
+- (M9RequestRef *)request:(M9RequestInfo *)requestInfo {
+    NSMutableURLRequest *request = [self requestWithRequestInfo:requestInfo];
+    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
     
-    if (config.useCachedDataWithoutLoading) {
+    M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:requestInfo.sender];
+    [requestInfo.sender addRequestRef:requestRef];
+    
+    if (requestInfo.useCachedDataWithoutLoading) {
         // weakify(self);
-        [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
+        [self loadCachedResponseWithRequest:request config:requestInfo callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
          { @synchronized(requestRef) {
             // strongify(self);
             if (requestRef.isCancelled) {
                 return;
             }
             if (operation) {
-                if (success) {
+                if (requestInfo.success) {
                     id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    success(responseInfo, responseObject);
+                    requestInfo.success(responseInfo, responseObject);
                 }
             }
             else {
-                if (failure) {
+                if (requestInfo.failure) {
                     id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    failure(responseInfo, nil);
+                    requestInfo.failure(responseInfo, nil);
                 }
             }
         }}];
     }
-    else if (config.useCachedData) {
+    else if (requestInfo.useCachedData) {
         weakify(self);
-        [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
+        [self loadCachedResponseWithRequest:request config:requestInfo callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
          { @synchronized(requestRef) {
             strongify(self);
             if (requestRef.isCancelled) {
@@ -145,21 +119,89 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
             }
             if (operation && !expired) {
                 requestRef.usedCachedData = YES;
-                if (success) {
+                if (requestInfo.success) {
                     id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    success(responseInfo, responseObject);
+                    requestInfo.success(responseInfo, responseObject);
                 }
             }
             else {
-                [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+                [self sendRequest:request config:requestInfo requestRef:requestRef success:requestInfo.success failure:requestInfo.failure];
             }
         }}];
     }
     else {
-        [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+        [self sendRequest:request config:requestInfo requestRef:requestRef success:requestInfo.success failure:requestInfo.failure];
     }
     
     return requestRef;
+}
+
+- (void)cancelAllWithSender:(id)sender { @synchronized(sender) { // lock: sender.allRequestRefOfSender
+    for (M9RequestRef *requestRef in [[sender allRequestRef] copy]) {
+        [requestRef cancel];
+    }
+}}
+
++ (void)removeAllCachedData {
+    [[TMCache sharedCache] removeAllObjects];
+}
+
++ (void)removeCachedDataForURLString:(NSString *)key {
+    [[TMCache sharedCache] removeObjectForKey:key];
+}
+
+#pragma mark private
+
+- (NSMutableURLRequest *)requestWithRequestInfo:(M9RequestInfo *)requestInfo {
+    AFHTTPRequestSerializer<AFURLRequestSerialization> *requestSerializer = nil;
+    switch (requestInfo.parametersFormatter) {
+        case M9RequestParametersFormatter_JSON:
+            if (!JSONRequestSerializer) {
+                JSONRequestSerializer = [AFJSONRequestSerializer serializer];
+            }
+            requestSerializer = JSONRequestSerializer;
+            break;
+        case M9RequestParametersFormatter_PList:
+            if (!PListRequestSerializer) {
+                PListRequestSerializer = [AFPropertyListRequestSerializer serializer];
+            }
+            requestSerializer = PListRequestSerializer;
+            break;
+        default: // M9RequestParametersFormatter_KeyValue & M9RequestParametersFormatter_KeyJSON
+            if (!HTTPRequestSerializer) {
+                HTTPRequestSerializer = [AFHTTPRequestSerializer serializer];
+            }
+            requestSerializer = HTTPRequestSerializer;
+            break;
+    }
+    
+    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
+    
+    NSDictionary *parameters = nil;
+    if (requestInfo.parametersFormatter == M9RequestParametersFormatter_KeyJSON
+        || (requestInfo.parametersFormatter != M9RequestParametersFormatter_KeyValue && requestSerializer.HTTPMethodsEncodingParametersInURI)) {
+        NSMutableDictionary *formatedParameters = [NSMutableDictionary new];
+        for (__strong id key in requestInfo.parameters) {
+            id value = parameters[key];
+            key = [key description];
+            if ([value isKindOfClass:[NSSet class]]) {
+                value = [(NSSet *)value allObjects];
+            }
+            if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
+                value = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];
+            }
+            else {
+                value = [value description];
+            }
+            [formatedParameters setObject:value OR @"" forKey:key OR @""];
+        }
+        parameters = formatedParameters;
+    }
+    else {
+        parameters = requestInfo.parameters;
+    }
+    
+    return [requestSerializer requestWithMethod:requestInfo.HTTPMethod OR HTTPGET URLString:URLString parameters:parameters error:nil];
 }
 
 - (void)sendRequest:(NSMutableURLRequest *)request config:(M9RequestConfig *)config requestRef:(M9RequestRef *)requestRef success:(M9RequestSuccess)success failure:(M9RequestFailure)failure
@@ -308,25 +350,35 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     return !expiresOnDate || [NSDate timeIntervalSinceDate:expiresOnDate] > 0;
 }
 
-- (void)cancelAllWithSender:(id)sender { @synchronized(sender) { // lock: sender.allRequestRefOfSender
-    for (M9RequestRef *requestRef in [[sender allRequestRef] copy]) {
-        [requestRef cancel];
-    }
-}}
-
-+ (void)removeAllCachedData {
-    [[TMCache sharedCache] removeAllObjects];
-}
-
-+ (void)removeCachedDataForKey:(NSString *)key {
-    [[TMCache sharedCache] removeObjectForKey:key];
-}
-
 @end
 
-#pragma mark - finish
+#pragma mark - simple
 
-@implementation M9Networking (finish)
+@implementation M9Networking (simple)
+
+- (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
+    return [self GET:URLString parameters:nil success:success failure:failure];
+}
+
+- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
+    M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
+    requestInfo.HTTPMethod = HTTPGET;
+    requestInfo.URLString = URLString;
+    requestInfo.parameters = parameters;
+    requestInfo.success = success;
+    requestInfo.failure = failure;
+    return [self request:requestInfo];
+}
+
+- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
+    M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
+    requestInfo.HTTPMethod = HTTPPOST;
+    requestInfo.URLString = URLString;
+    requestInfo.parameters = parameters;
+    requestInfo.success = success;
+    requestInfo.failure = failure;
+    return [self request:requestInfo];
+}
 
 - (M9RequestRef *)GET:(NSString *)URLString finish:(M9RequestFinish)finish {
     return [self GET:URLString parameters:nil finish:finish];
@@ -357,74 +409,6 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 @end
 
 #pragma mark - M9RequestInfo
-
-@implementation M9Networking (M9RequestInfo)
-
-- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
-    NSMutableURLRequest *request = [self requestWithMethod:HTTPGET requestInfo:requestInfo];
-    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
-}
-
-- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
-    NSMutableURLRequest *request = [self requestWithMethod:HTTPPOST  requestInfo:requestInfo];
-    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
-    return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
-}
-
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method requestInfo:(M9RequestInfo *)requestInfo {
-    AFHTTPRequestSerializer<AFURLRequestSerialization> *requestSerializer = nil;
-    switch (requestInfo.parametersFormatter) {
-        case M9RequestParametersFormatter_JSON:
-            if (!JSONRequestSerializer) {
-                JSONRequestSerializer = [AFJSONRequestSerializer serializer];
-            }
-            requestSerializer = JSONRequestSerializer;
-            break;
-        case M9RequestParametersFormatter_PList:
-            if (!PListRequestSerializer) {
-                PListRequestSerializer = [AFPropertyListRequestSerializer serializer];
-            }
-            requestSerializer = PListRequestSerializer;
-            break;
-        default: // M9RequestParametersFormatter_KeyValue & M9RequestParametersFormatter_KeyJSON
-            if (!HTTPRequestSerializer) {
-                HTTPRequestSerializer = [AFHTTPRequestSerializer serializer];
-            }
-            requestSerializer = HTTPRequestSerializer;
-            break;
-    }
-    
-    NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
-    
-    NSDictionary *parameters = nil;
-    if (requestInfo.parametersFormatter == M9RequestParametersFormatter_KeyJSON
-        || (requestInfo.parametersFormatter != M9RequestParametersFormatter_KeyValue && requestSerializer.HTTPMethodsEncodingParametersInURI)) {
-        NSMutableDictionary *formatedParameters = [NSMutableDictionary new];
-        for (__strong id key in requestInfo.parameters) {
-            id value = parameters[key];
-            key = [key description];
-            if ([value isKindOfClass:[NSSet class]]) {
-                value = [(NSSet *)value allObjects];
-            }
-            if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
-                value = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];
-            }
-            else {
-                value = [value description];
-            }
-            [formatedParameters setObject:value OR @"" forKey:key OR @""];
-        }
-        parameters = formatedParameters;
-    }
-    else {
-        parameters = requestInfo.parameters;
-    }
-    
-    return [requestSerializer requestWithMethod:method URLString:URLString parameters:parameters error:nil];
-}
-
-@end
 
 @implementation M9RequestInfo (M9RequestConfig)
 

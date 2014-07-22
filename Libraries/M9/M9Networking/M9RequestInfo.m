@@ -12,6 +12,7 @@
 
 - (void)makeCopy:(M9RequestInfo *)copy {
     [super makeCopy:copy];
+    copy.HTTPMethod = self.HTTPMethod;
     copy.URLString = self.URLString;
     copy.parameters = self.parameters;
     copy.allHTTPHeaderFields = self.allHTTPHeaderFields;

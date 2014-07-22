@@ -32,22 +32,23 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
-- (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
-- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
-- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
-
+- (M9RequestRef *)request:(M9RequestInfo *)requestInfo;
 - (void)cancelAllWithSender:(id)sender;
 
 + (void)removeAllCachedData;
-+ (void)removeCachedDataForKey:(NSString *)key;
++ (void)removeCachedDataForURLString:(NSString *)key;
 
 @end
 
-#pragma mark - finish
+#pragma mark - simple
 
 typedef void (^M9RequestFinish)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error);
 
-@interface M9Networking (finish)
+@interface M9Networking (simple)
+
+- (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
+- (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
+- (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
 
 - (M9RequestRef *)GET:(NSString *)URLString finish:(M9RequestFinish)finish;
 - (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish;
@@ -56,14 +57,6 @@ typedef void (^M9RequestFinish)(id<M9ResponseInfo> responseInfo, id responseObje
 @end
 
 #pragma mark - M9RequestInfo
-
-@interface M9Networking (M9RequestInfo)
-
-// @see - [M9RequestInfo requestInfoWithRequestConfig:]
-- (M9RequestRef *)GET:(M9RequestInfo *)requestInfo;
-- (M9RequestRef *)POST:(M9RequestInfo *)requestInfo;
-
-@end
 
 @interface M9RequestInfo (M9RequestConfig)
 
