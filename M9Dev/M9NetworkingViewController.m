@@ -42,6 +42,17 @@
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
+        [button setTitle:@"test" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
+        button;
+    })];
+    
+    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    [self.view addSubview:({
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.frame = frame;
         [button setTitle:@"request with callback" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped1:) forControlEvents:UIControlEventTouchUpInside];
         button.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -77,11 +88,45 @@
 }
 
 - (void)setupRequestConfig {
-    baseURL = [NSURL URLWithString:@"http://localhost:3000"];
-    // baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    // baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
+}
+
+- (void)buttonDidTapped:(UIButton *)button {
+    if (button.selected) {
+        button.selected = NO; // confirm result
+        return;
+    }
+    else {
+        button.enabled = NO; // start loading
+    }
+    
+    M9RequestInfo *requestInfo = [M9RequestInfo new];
+    requestInfo.baseURL = baseURL;
+    requestInfo.URLString = testURLString;
+    requestInfo.parameters = @{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } };
+    requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
+    
+    weakify(button);
+    requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        NSLog(@"success: %@", responseObject);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"success" forState:UIControlStateSelected];
+    };
+    requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        NSLog(@"failure: %@", error);
+        strongify(button);
+        button.enabled = YES; // stop loading
+        button.selected = YES; // alert result
+        [button setTitle:@"failure" forState:UIControlStateSelected];
+    };
+    
+    [M9NETWORKING GET:requestInfo];
 }
 
 - (void)buttonDidTapped1:(UIButton *)button {

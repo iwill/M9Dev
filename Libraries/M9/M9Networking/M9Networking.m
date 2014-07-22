@@ -48,6 +48,9 @@
 
 @implementation M9Networking {
     AFHTTPRequestOperationManager *_AFN;
+    AFHTTPRequestSerializer<AFURLRequestSerialization> *HTTPRequestSerializer;
+    AFJSONRequestSerializer<AFURLRequestSerialization> *JSONRequestSerializer;
+    AFPropertyListRequestSerializer<AFURLRequestSerialization> *PListRequestSerializer;
 }
 
 + (instancetype)sharedInstance {
@@ -248,24 +251,24 @@
     
     // data parsing
     NSMutableArray *responseSerializers = [NSMutableArray array];
-    if (config.responseParseOptions & M9ResponseParseOption_JSON) {
+    if (config.dataParser & M9ResponseDataParser_JSON) {
         [responseSerializers addObject:[AFJSONResponseSerializer serializer]];
     }
-    if (config.responseParseOptions & M9ResponseParseOption_Image) {
+    if (config.dataParser & M9ResponseDataParser_Image) {
         [responseSerializers addObject:[AFImageResponseSerializer serializer]];
     }
-    if (config.responseParseOptions & M9ResponseParseOption_XML) {
+    if (config.dataParser & M9ResponseDataParser_XML) {
         [responseSerializers addObject:[AFXMLParserResponseSerializer serializer]];
     }
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
-    if (config.responseParseOptions & M9ResponseParseOption_XMLDocument) {
+    if (config.dataParser & M9ResponseDataParser_XMLDocument) {
         [responseSerializers addObject:[AFXMLDocumentResponseSerializer serializer]];
     }
 #endif
-    if (config.responseParseOptions & M9ResponseParseOption_PList) {
+    if (config.dataParser & M9ResponseDataParser_PList) {
         [responseSerializers addObject:[AFPropertyListResponseSerializer serializer]];
     }
-    if (config.responseParseOptions & M9ResponseParseOption_Data) {
+    if (config.dataParser & M9ResponseDataParser_Data) {
         [responseSerializers addObject:[AFHTTPResponseSerializer serializer]];
     }
     if ([responseSerializers count] == 1) {
@@ -383,20 +386,65 @@
 
 - (M9RequestRef *)GET:(M9RequestInfo *)requestInfo {
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters error:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:HTTPGET URLString:URLString parameters:requestInfo.parameters parametersFormatter:requestInfo.parametersFormatter];
     [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
     return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
 }
 
 - (M9RequestRef *)POST:(M9RequestInfo *)requestInfo {
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
-    /* constructingBodyBlock
-     NSMutableURLRequest *request = (requestInfo.constructingBodyBlock
-     ? [_AFN.requestSerializer multipartFormRequestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters constructingBodyWithBlock:requestInfo.constructingBodyBlock error:nil]
-     : [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil]); */
-    NSMutableURLRequest *request = [_AFN.requestSerializer requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters error:nil];
+    NSMutableURLRequest *request = [self requestWithMethod:HTTPPOST URLString:URLString parameters:requestInfo.parameters parametersFormatter:requestInfo.parametersFormatter];
     [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
     return [self sendRequest:request sender:requestInfo.sender config:requestInfo success:requestInfo.success failure:requestInfo.failure];
+}
+
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
+                                 URLString:(NSString *)URLString
+                                parameters:(id)parameters
+                       parametersFormatter:(M9RequestParametersFormatter)parametersFormatter {
+    AFHTTPRequestSerializer<AFURLRequestSerialization> *requestSerializer = nil;
+    switch (parametersFormatter) {
+        case M9RequestParametersFormatter_JSON:
+            if (!JSONRequestSerializer) {
+                JSONRequestSerializer = [AFJSONRequestSerializer serializer];
+            }
+            requestSerializer = JSONRequestSerializer;
+            break;
+        case M9RequestParametersFormatter_PList:
+            if (!PListRequestSerializer) {
+                PListRequestSerializer = [AFPropertyListRequestSerializer serializer];
+            }
+            requestSerializer = PListRequestSerializer;
+            break;
+        default: // M9RequestParametersFormatter_KeyValue & M9RequestParametersFormatter_KeyJSON
+            if (!HTTPRequestSerializer) {
+                HTTPRequestSerializer = [AFHTTPRequestSerializer serializer];
+            }
+            requestSerializer = HTTPRequestSerializer;
+            break;
+    }
+    
+    if (parametersFormatter == M9RequestParametersFormatter_KeyJSON
+        || (parametersFormatter != M9RequestParametersFormatter_KeyValue && requestSerializer.HTTPMethodsEncodingParametersInURI)) {
+        NSMutableDictionary *formatedParameters = [NSMutableDictionary new];
+        for (__strong id key in parameters) {
+            id value = parameters[key];
+            key = [key description];
+            if ([value isKindOfClass:[NSSet class]]) {
+                value = [(NSSet *)value allObjects];
+            }
+            if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
+                value = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];
+            }
+            else {
+                value = [value description];
+            }
+            [formatedParameters setObject:value OR @"" forKey:key OR @""];
+        }
+        parameters = formatedParameters;
+    }
+    
+    return [requestSerializer requestWithMethod:method URLString:URLString parameters:parameters error:nil];
 }
 
 @end

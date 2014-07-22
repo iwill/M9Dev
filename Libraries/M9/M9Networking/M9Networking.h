@@ -13,13 +13,13 @@
 
 #import "M9Utilities.h"
 
-// TODO: Key_Value, JSON, Key_JSON
-
 /**
  *  M9Networking
  *
  *  !!!: ONLY used for common requirements, or use AFNetworking or other framework directly
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
+ *
+ *  ???: send all request via M9RequestInfo
  */
 
 #define M9NETWORKING [M9Networking sharedInstance]
