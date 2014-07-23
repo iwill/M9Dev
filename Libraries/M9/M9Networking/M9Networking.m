@@ -362,21 +362,15 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 
 - (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
-    requestInfo.HTTPMethod = HTTPGET;
-    requestInfo.URLString = URLString;
-    requestInfo.parameters = parameters;
-    requestInfo.success = success;
-    requestInfo.failure = failure;
+    [requestInfo setHTTPMethod:HTTPGET URLString:URLString parameters:parameters];
+    [requestInfo setSuccess:success failure:failure];
     return [self request:requestInfo];
 }
 
 - (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
-    requestInfo.HTTPMethod = HTTPPOST;
-    requestInfo.URLString = URLString;
-    requestInfo.parameters = parameters;
-    requestInfo.success = success;
-    requestInfo.failure = failure;
+    [requestInfo setHTTPMethod:HTTPPOST URLString:URLString parameters:parameters];
+    [requestInfo setSuccess:success failure:failure];
     return [self request:requestInfo];
 }
 
@@ -404,18 +398,6 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
         finish(responseInfo, nil, error);
     }];
-}
-
-@end
-
-#pragma mark - M9RequestInfo
-
-@implementation M9RequestInfo (M9RequestConfig)
-
-+ (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig {
-    M9RequestInfo *requestInfo = [self new];
-    [requestConfig makeCopy:requestInfo];
-    return requestInfo;
 }
 
 @end

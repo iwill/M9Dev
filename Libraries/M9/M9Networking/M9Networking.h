@@ -56,14 +56,6 @@ typedef void (^M9RequestFinish)(id<M9ResponseInfo> responseInfo, id responseObje
 
 @end
 
-#pragma mark - M9RequestInfo
-
-@interface M9RequestInfo (M9RequestConfig)
-
-+ (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig;
-
-@end
-
 /*
  
  # check synchronized

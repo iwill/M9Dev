@@ -18,7 +18,7 @@ typedef void (^M9RequestFailure)(id<M9ResponseInfo> responseInfo, NSError *error
 
 @interface M9RequestInfo : M9RequestConfig
 
-@property(nonatomic, copy) NSString *HTTPMethod; // use HTTPGET if nil
+@property(nonatomic, copy) NSString *HTTPMethod; // default: GET, use GET if nil
 @property(nonatomic, copy) NSString *URLString;
 @property(nonatomic, strong) NSDictionary *parameters;
 @property(nonatomic, strong) NSDictionary *allHTTPHeaderFields;
@@ -26,5 +26,10 @@ typedef void (^M9RequestFailure)(id<M9ResponseInfo> responseInfo, NSError *error
 @property(nonatomic, copy) M9RequestFailure failure;
 
 @property(nonatomic, weak) id sender; // for cancel all requests by sender
+
++ (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig;
+
+- (void)setHTTPMethod:(NSString *)HTTPMethod URLString:(NSString *)URLString parameters:(NSDictionary *)parameters;
+- (void)setSuccess:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
 
 @end
