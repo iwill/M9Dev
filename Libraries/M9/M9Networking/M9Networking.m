@@ -177,13 +177,15 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     
     NSString *URLString = [[NSURL URLWithString:requestInfo.URLString relativeToURL:requestInfo.baseURL] absoluteString];
     
-    NSDictionary *parameters = nil;
+    NSDictionary *parameters = requestInfo.parameters;
     if (requestInfo.parametersFormatter == M9RequestParametersFormatter_KeyJSON
         || (requestInfo.parametersFormatter != M9RequestParametersFormatter_KeyValue && requestSerializer.HTTPMethodsEncodingParametersInURI)) {
         NSMutableDictionary *formatedParameters = [NSMutableDictionary new];
-        for (__strong id key in requestInfo.parameters) {
+        for (__strong id key in parameters) {
             id value = parameters[key];
-            key = [key description];
+            
+            key = [key description] OR [NSString stringWithFormat:@"%@", key];
+            
             if ([value isKindOfClass:[NSSet class]]) {
                 value = [(NSSet *)value allObjects];
             }
@@ -193,12 +195,10 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
             else {
                 value = [value description];
             }
-            [formatedParameters setObject:value OR @"" forKey:key OR @""];
+            
+            [formatedParameters setObject:value OR @"" forKey:key];
         }
         parameters = formatedParameters;
-    }
-    else {
-        parameters = requestInfo.parameters;
     }
     
     return [requestSerializer requestWithMethod:requestInfo.HTTPMethod OR HTTPGET URLString:URLString parameters:parameters error:nil];

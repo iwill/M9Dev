@@ -8,5 +8,3 @@
 
 #import "M9Utilities.h"
 
-NSString * const _EMPTY_STRING = @"";
-

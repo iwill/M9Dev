@@ -10,7 +10,6 @@
 
 
 #define OR          ? :
-extern NSString * const _EMPTY_STRING; // @""
 
 // for compound statement
 #define _RETURN     ; // RETURN is defined in tty.h
