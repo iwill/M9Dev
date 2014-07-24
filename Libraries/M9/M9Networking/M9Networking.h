@@ -6,7 +6,6 @@
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "M9RequestConfig.h"
 #import "M9RequestInfo.h"
 #import "M9RequestRef.h"
 #import "M9ResponseInfo.h"
@@ -32,7 +31,7 @@
 + (instancetype)instanceWithRequestConfig:(M9RequestConfig *)requestConfig;
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
-- (M9RequestRef *)request:(M9RequestInfo *)requestInfo;
+- (M9RequestRef *)send:(M9RequestInfo *)requestInfo;
 - (void)cancelAllWithSender:(id)sender;
 
 + (void)removeAllCachedData;

@@ -31,7 +31,6 @@
 		DF69D28E1968605800B8C011 /* NSDate+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D28D1968605800B8C011 /* NSDate+.m */; };
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
-		DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A51968763B00B8C011 /* M9RequestConfig.m */; };
 		DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7774771976D7C70011FB45 /* NSInvocation+.m */; };
 		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
@@ -92,8 +91,6 @@
 		DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "M9RequestRef+Private.h"; sourceTree = "<group>"; };
 		DF69D2A21968763B00B8C011 /* M9RequestRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestRef.h; sourceTree = "<group>"; };
 		DF69D2A31968763B00B8C011 /* M9RequestRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestRef.m; sourceTree = "<group>"; };
-		DF69D2A41968763B00B8C011 /* M9RequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestConfig.h; sourceTree = "<group>"; };
-		DF69D2A51968763B00B8C011 /* M9RequestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestConfig.m; sourceTree = "<group>"; };
 		DF69D2A61968763B00B8C011 /* M9ResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseInfo.h; sourceTree = "<group>"; };
 		DF7774761976D7C70011FB45 /* NSInvocation+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+.h"; sourceTree = "<group>"; };
 		DF7774771976D7C70011FB45 /* NSInvocation+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+.m"; sourceTree = "<group>"; };
@@ -275,8 +272,6 @@
 				DF69D2A21968763B00B8C011 /* M9RequestRef.h */,
 				DF69D2A31968763B00B8C011 /* M9RequestRef.m */,
 				DF69D2A11968763B00B8C011 /* M9RequestRef+Private.h */,
-				DF69D2A41968763B00B8C011 /* M9RequestConfig.h */,
-				DF69D2A51968763B00B8C011 /* M9RequestConfig.m */,
 				DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */,
 				DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */,
 				DF69D2A61968763B00B8C011 /* M9ResponseInfo.h */,
@@ -419,7 +414,6 @@
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
-				DF69D2AA1968763B00B8C011 /* M9RequestConfig.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,

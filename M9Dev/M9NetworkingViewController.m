@@ -88,8 +88,8 @@
 }
 
 - (void)setupRequestConfig {
-    baseURL = [NSURL URLWithString:@"http://localhost:3000"];
-    // baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    // baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
@@ -112,6 +112,15 @@
     requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
     
     weakify(button);
+    requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
+        NSLog(@"parsing: %@", responseObject);
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            *error = nil;
+            return responseObject;
+        }
+        *error = [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil];
+        return nil;
+    };
     requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
         NSLog(@"success: %@", responseObject);
         strongify(button);
@@ -127,7 +136,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     };
     
-    [M9NETWORKING request:requestInfo];
+    [M9NETWORKING send:requestInfo];
 }
 
 - (void)buttonDidTapped1:(UIButton *)button {
@@ -161,7 +170,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     };
     
-    [M9NETWORKING request:requestInfo];
+    [M9NETWORKING send:requestInfo];
 }
 
 - (void)buttonDidTapped2:(UIButton *)button {
@@ -195,7 +204,7 @@
         [button setTitle:@"failure" forState:UIControlStateSelected];
     }];
     
-    [M9NETWORKING request:requestInfo];
+    [M9NETWORKING send:requestInfo];
 }
 
 - (void)buttonDidTapped3:(UIButton *)button {
@@ -217,7 +226,7 @@
              failureSelector:@selector(failureWithRequestInfo:responseInfo:error:)];
     requestInfo.userInfo = button;
     
-    [M9NETWORKING request:requestInfo];
+    [M9NETWORKING send:requestInfo];
 }
 
 - (void)successWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject {

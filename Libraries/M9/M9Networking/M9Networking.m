@@ -80,58 +80,60 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 
 #pragma mark public
 
-- (M9RequestRef *)request:(M9RequestInfo *)requestInfo {
-    NSMutableURLRequest *request = [self requestWithRequestInfo:requestInfo];
-    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
-    
+- (M9RequestRef *)send:(M9RequestInfo *)requestInfo {
     M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:requestInfo.sender];
     [requestInfo.sender addRequestRef:requestRef];
     
-    if (requestInfo.useCachedDataWithoutLoading) {
-        // weakify(self);
-        [self loadCachedResponseWithRequest:request config:requestInfo callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
-         { @synchronized(requestRef) {
-            // strongify(self);
-            if (requestRef.isCancelled) {
-                return;
+    NSMutableURLRequest *request = [self requestWithRequestInfo:requestInfo];
+    [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
+    
+    M9RequestConfig *config = requestInfo;
+    
+    M9RequestParsing parsing = requestInfo.parsing;
+    M9RequestSuccess success = parsing ? ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        NSError *error = nil;
+        responseObject = parsing(responseInfo, responseObject, &error);
+        if (!error) {
+            if (requestInfo.success) {
+                requestInfo.success(responseInfo, responseObject);
             }
-            if (operation) {
-                if (requestInfo.success) {
-                    id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    requestInfo.success(responseInfo, responseObject);
-                }
+        }
+        else {
+            if (requestInfo.failure) {
+                requestInfo.failure(responseInfo, error);
             }
-            else {
-                if (requestInfo.failure) {
-                    id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    requestInfo.failure(responseInfo, nil);
-                }
-            }
-        }}];
+        }
+    } : requestInfo.success;
+    M9RequestFailure failure = requestInfo.failure;
+    
+    if (!requestInfo.useCachedDataWithoutLoading && !requestInfo.useCachedData) {
+        [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
     }
-    else if (requestInfo.useCachedData) {
-        weakify(self);
-        [self loadCachedResponseWithRequest:request config:requestInfo callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
-         { @synchronized(requestRef) {
-            strongify(self);
-            if (requestRef.isCancelled) {
-                return;
+    
+    weakify(self);
+    [self loadCachedResponseWithRequest:request callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
+     { @synchronized(requestRef) {
+        strongify(self);
+        if (requestRef.isCancelled) {
+            return;
+        }
+        if (operation && (!expired || requestInfo.useCachedDataWithoutLoading)) {
+            requestRef.usedCachedData = YES;
+            if (success) {
+                id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
+                success(responseInfo, responseObject);
             }
-            if (operation && !expired) {
-                requestRef.usedCachedData = YES;
-                if (requestInfo.success) {
-                    id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
-                    requestInfo.success(responseInfo, responseObject);
-                }
+        }
+        else if (requestInfo.useCachedDataWithoutLoading) {
+            if (failure) {
+                id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
+                failure(responseInfo, nil);
             }
-            else {
-                [self sendRequest:request config:requestInfo requestRef:requestRef success:requestInfo.success failure:requestInfo.failure];
-            }
-        }}];
-    }
-    else {
-        [self sendRequest:request config:requestInfo requestRef:requestRef success:requestInfo.success failure:requestInfo.failure];
-    }
+        }
+        else {
+            [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+        }
+    }}];
     
     return requestRef;
 }
@@ -243,7 +245,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
                 return;
             }
             if (config.useCachedDataWhenFailure) {
-                [self loadCachedResponseWithRequest:request config:config callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
+                [self loadCachedResponseWithRequest:request callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
                  { @synchronized(requestRef) {
                     // strongify(self);
                     if (requestRef.isCancelled) {
@@ -317,30 +319,32 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 }}
 
 // callback: responseObject must be nil when operation is nil
-- (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request config:(M9RequestConfig *)config callback:(M9LoadCachedResponseCallback)callback {
+- (void)loadCachedResponseWithRequest:(NSMutableURLRequest *)request callback:(M9LoadCachedResponseCallback)callback {
     if (!callback) {
         return;
     }
     // weakify(self);
     [[TMCache sharedCache] objectForKey:[[request URL] absoluteString] block:^(TMCache *cache, NSString *key, id object) {
+        AFHTTPRequestOperation *cachedOperation = nil;
+        id responseObject = nil;
+        BOOL expired = NO;
+        
         if ([object isKindOfClass:[AFHTTPRequestOperation class]]) {
-            AFHTTPRequestOperation *cachedOperation = (AFHTTPRequestOperation *)object;
+            cachedOperation = (AFHTTPRequestOperation *)object;
             
-            id responseObject = [cachedOperation responseObject];
+            responseObject = [cachedOperation responseObject];
             // !!!: [cachedOperation responseObject] maybe nil when cache is loaded from disk
             if (!responseObject) {
                 AFHTTPResponseSerializer<AFURLResponseSerialization> *responseSerializer = cachedOperation.responseSerializer OR _AFN.responseSerializer;
                 responseObject = [responseSerializer responseObjectForResponse:[cachedOperation response] data:[cachedOperation responseData] error:nil];
             }
             
-            BOOL expired = [self isResponseExpired:[cachedOperation response]];
-            
-            dispatch_async_main_queue(^{
-                callback(cachedOperation, responseObject, expired);
-            });
-            return;
+            expired = [self isResponseExpired:[cachedOperation response]];
         }
-        callback(nil, nil, NO);
+        
+        dispatch_async_main_queue(^{
+            callback(cachedOperation, responseObject, expired);
+        });
     }];
 }
 
@@ -364,14 +368,14 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
     [requestInfo setHTTPMethod:HTTPGET URLString:URLString parameters:parameters];
     [requestInfo setSuccess:success failure:failure];
-    return [self request:requestInfo];
+    return [self send:requestInfo];
 }
 
 - (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters success:(M9RequestSuccess)success failure:(M9RequestFailure)failure {
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
     [requestInfo setHTTPMethod:HTTPPOST URLString:URLString parameters:parameters];
     [requestInfo setSuccess:success failure:failure];
-    return [self request:requestInfo];
+    return [self send:requestInfo];
 }
 
 - (M9RequestRef *)GET:(NSString *)URLString finish:(M9RequestFinish)finish {
