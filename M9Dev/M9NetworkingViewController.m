@@ -110,16 +110,17 @@
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } };
     requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
+    requestInfo.dataParser = M9ResponseDataParser_JSON;
     
     weakify(button);
     requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
         NSLog(@"parsing: %@", responseObject);
-        if ([responseObject isKindOfClass:[NSDictionary class]]) {
-            *error = nil;
-            return responseObject;
+        if (![responseObject isKindOfClass:[NSDictionary class]]) {
+            *error = [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil];
+            return nil;
         }
-        *error = [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil];
-        return nil;
+        *error = nil;
+        return responseObject;
     };
     requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
         NSLog(@"success: %@", responseObject);

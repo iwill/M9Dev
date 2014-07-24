@@ -87,7 +87,9 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseDataParser) {
 
 @protocol M9ResponseInfo;
 
+// if error failure, else success
 typedef   id (^M9RequestParsing)(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error);
+
 typedef void (^M9RequestSuccess)(id<M9ResponseInfo> responseInfo, id responseObject);
 typedef void (^M9RequestFailure)(id<M9ResponseInfo> responseInfo, NSError *error);
 
