@@ -108,6 +108,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     
     if (!requestInfo.useCachedDataWithoutLoading && !requestInfo.useCachedData) {
         [self sendRequest:request config:config requestRef:requestRef success:success failure:failure];
+        return requestRef;
     }
     
     weakify(self);
@@ -383,25 +384,17 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 }
 
 - (M9RequestRef *)GET:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish {
-    return [self GET:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        if (finish) {
-            finish(responseInfo, responseObject, nil);
-        }
-    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        if (finish) {
-            finish(responseInfo, nil, error);
-        }
-    }];
+    M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
+    [requestInfo setHTTPMethod:HTTPGET URLString:URLString parameters:parameters];
+    [requestInfo setSuccessAndFailureByFinish:finish];
+    return [self send:requestInfo];
 }
 
 - (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish {
-    return [self POST:URLString parameters:parameters success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        if (finish) {
-            finish(responseInfo, responseObject, nil);
-        }
-    } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        finish(responseInfo, nil, error);
-    }];
+    M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:self.requestConfig];
+    [requestInfo setHTTPMethod:HTTPPOST URLString:URLString parameters:parameters];
+    [requestInfo setSuccessAndFailureByFinish:finish];
+    return [self send:requestInfo];
 }
 
 @end

@@ -92,6 +92,7 @@ typedef   id (^M9RequestParsing)(id<M9ResponseInfo> responseInfo, id responseObj
 
 typedef void (^M9RequestSuccess)(id<M9ResponseInfo> responseInfo, id responseObject);
 typedef void (^M9RequestFailure)(id<M9ResponseInfo> responseInfo, NSError *error);
+typedef void (^M9RequestFinish )(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error);
 
 @interface M9RequestInfo : M9RequestConfig
 
@@ -109,5 +110,6 @@ typedef void (^M9RequestFailure)(id<M9ResponseInfo> responseInfo, NSError *error
 
 - (void)setHTTPMethod:(NSString *)HTTPMethod URLString:(NSString *)URLString parameters:(NSDictionary *)parameters;
 - (void)setSuccess:(M9RequestSuccess)success failure:(M9RequestFailure)failure;
+- (void)setSuccessAndFailureByFinish:(M9RequestFinish)finish;
 
 @end

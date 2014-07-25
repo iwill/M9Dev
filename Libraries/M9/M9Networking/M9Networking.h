@@ -41,8 +41,6 @@
 
 #pragma mark - simple
 
-typedef void (^M9RequestFinish)(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error);
-
 @interface M9Networking (simple)
 
 - (M9RequestRef *)GET:(NSString *)URLString success:(M9RequestSuccess)success failure:(M9RequestFailure)failure;

@@ -63,6 +63,19 @@
     self.failure = failure;
 }
 
+- (void)setSuccessAndFailureByFinish:(M9RequestFinish)finish {
+    self.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        if (finish) {
+            finish(responseInfo, responseObject, nil);
+        }
+    };
+    self.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        if (finish) {
+            finish(responseInfo, nil, error);
+        }
+    };
+}
+
 - (void)makeCopy:(M9RequestInfo *)copy {
     [super makeCopy:copy];
     copy.HTTPMethod = self.HTTPMethod;
