@@ -108,11 +108,34 @@
 
 
 /**
+ * if: return self if condition is YES
+ * as: return self if self is kind of class
+ */
+
+@interface NSObject (SelfIf)
+
+- (id)if:(BOOL)condition;
+
+- (id)as:(Class)class;
+- (id)asMemberOfClass:(Class)class;
+- (id)asProtocol:(Protocol *)protocol;
+- (id)ifRespondsToSelector:(SEL)selector;
+
+- (id)performIfRespondsToSelector:(SEL)selector;
+- (id)performIfRespondsToSelector:(SEL)selector withObject:(id)object;
+- (id)performIfRespondsToSelector:(SEL)selector withObject:(id)object1 withObject:(id)object2;
+
+@end
+
+
+/**
  * M9MakeCopy & @M9MakeCopyWithZone
  */
 
 @protocol M9MakeCopy <NSCopying>
+
 - (void)makeCopy:(id)copy;
+
 @end
 
 #define M9MakeCopyWithZone \
