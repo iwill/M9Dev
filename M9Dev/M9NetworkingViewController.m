@@ -115,7 +115,8 @@
     weakify(button);
     requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
         NSLog(@"parsing: %@", responseObject);
-        if (![responseObject isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *responseDictionary = [responseObject as:[NSDictionary class]];
+        if (!responseDictionary) {
             *error = [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil];
             return nil;
         }
