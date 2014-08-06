@@ -89,6 +89,7 @@
     // M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://localhost:3000"];
     M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
+    // testURLString = @"/hello.txt";
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
 }
