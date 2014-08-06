@@ -33,6 +33,7 @@
 
 #pragma mark -
 
+// !!!: just a demo
 @interface M9RequestInfoCallbackExt : M9RequestInfo
 
 - (void)setSuccessWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSArray *dataList))success;

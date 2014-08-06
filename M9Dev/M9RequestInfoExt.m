@@ -76,11 +76,20 @@
 @implementation M9RequestInfoCallbackExt
 
 - (void)setSuccessWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSArray *data))success {
+    weakify(self);
     self.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        if (success && [responseObject isKindOfClass:[NSDictionary class]]) {
-            success(responseInfo, @[ [(NSDictionary *)responseObject dictionaryForKey:@"query"] OR [NSNull null],
-                                     [(NSDictionary *)responseObject dictionaryForKey:@"params"] OR [NSNull null]
-                                     ]);
+        strongify(self);
+        NSDictionary *dataDict = [responseObject as:[NSDictionary class]];
+        if (dataDict) {
+            if (success) {
+                success(responseInfo, @[ [dataDict dictionaryForKey:@"query"] OR [NSNull null],
+                                         [dataDict dictionaryForKey:@"params"] OR [NSNull null] ]);
+            }
+        }
+        else {
+            if (self.failure) {
+                self.failure(responseInfo, [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil]);
+            }
         }
     };
 }
