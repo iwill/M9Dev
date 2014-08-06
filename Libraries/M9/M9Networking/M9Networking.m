@@ -81,8 +81,8 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 #pragma mark public
 
 - (M9RequestRef *)send:(M9RequestInfo *)requestInfo {
-    M9RequestRef *requestRef = [M9RequestRef requestRefWithSender:requestInfo.sender];
-    [requestInfo.sender addRequestRef:requestRef];
+    M9RequestRef *requestRef = [M9RequestRef requestRefWithOwner:requestInfo.owner];
+    [requestInfo.owner addRequestRef:requestRef];
     
     NSMutableURLRequest *request = [self requestWithRequestInfo:requestInfo];
     [request setAllHTTPHeaderFields:requestInfo.allHTTPHeaderFields];
@@ -139,8 +139,8 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     return requestRef;
 }
 
-- (void)cancelAllWithSender:(id)sender { @synchronized(sender) { // lock: sender.allRequestRefOfSender
-    for (M9RequestRef *requestRef in [[sender allRequestRef] copy]) {
+- (void)cancelAllWithOwner:(id)owner { @synchronized(owner) { // lock: owner.allRequestRefOfOwner
+    for (M9RequestRef *requestRef in [[owner allRequestRef] copy]) {
         [requestRef cancel];
     }
 }}
@@ -233,7 +233,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
                 id responseInfo = [AFNResponseInfo responseInfoWithRequestOperation:operation requestRef:requestRef];
                 success(responseInfo, responseObject);
             }
-            [requestRef.sender removeRequestRef:requestRef];
+            [requestRef.owner removeRequestRef:requestRef];
         }} failure:^(AFHTTPRequestOperation *operation, NSError *error)
          { @synchronized(requestRef) {
             strongify(self);
@@ -273,7 +273,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
                     failure(responseInfo, error);
                 }
             }
-            [requestRef.sender removeRequestRef:requestRef];
+            [requestRef.owner removeRequestRef:requestRef];
         }}];
     });
     

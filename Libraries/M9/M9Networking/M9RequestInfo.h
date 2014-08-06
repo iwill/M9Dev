@@ -104,7 +104,7 @@ typedef void (^M9RequestFinish )(id<M9ResponseInfo> responseInfo, id responseObj
 @property(nonatomic, copy) M9RequestSuccess success;
 @property(nonatomic, copy) M9RequestFailure failure;
 
-@property(nonatomic, weak) id sender; // for cancel all requests by sender
+@property(nonatomic, weak) id owner; // for cancel all requests by owner
 
 + (instancetype)requestInfoWithRequestConfig:(M9RequestConfig *)requestConfig;
 

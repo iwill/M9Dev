@@ -42,7 +42,7 @@
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
-        [button setTitle:@"test" forState:UIControlStateNormal];
+        [button setTitle:@"request" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
         button.layer.borderColor = [UIColor lightGrayColor].CGColor;
         button.layer.borderWidth = 0.5;

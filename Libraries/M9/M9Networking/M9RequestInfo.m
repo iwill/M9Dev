@@ -85,7 +85,7 @@
     copy.parsing = self.parsing;
     copy.success = self.success;
     copy.failure = self.failure;
-    copy.sender = self.sender;
+    copy.owner = self.owner;
 }
 
 @end

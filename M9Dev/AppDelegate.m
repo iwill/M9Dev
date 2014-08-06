@@ -15,7 +15,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [M9NetworkingViewController new];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[ ({ [M9NetworkingViewController new]; }),
+                                          ({ [M9NetworkingViewController new]; }) ];
+    tabBarController.tabBarController.tabBar.barStyle = UIBarStyleBlack;
+    tabBarController.tabBarController.tabBar.translucent = NO;
+    self.window.rootViewController = tabBarController;
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

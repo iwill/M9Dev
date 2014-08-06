@@ -18,8 +18,8 @@
 @property(nonatomic, readwrite) BOOL usedCachedData;
 @property(nonatomic, readwrite, setter = setCancelled:) BOOL isCancelled;
 
-- (instancetype)initWithSender:(id)sender;
-+ (instancetype)requestRefWithSender:(id)sender;
+- (instancetype)initWithOwner:(id)owner;
++ (instancetype)requestRefWithOwner:(id)owner;
 
 - (void)cancel;
 
@@ -27,7 +27,7 @@
 
 #pragma mark -
 
-@interface NSObject (M9RequestSender) /* <M9RequestSender> */
+@interface NSObject (M9RequestOwner) /* <M9RequestOwner> */
 
 - (void)addRequestRef:(M9RequestRef *)requestRef;
 - (void)removeRequestRef:(M9RequestRef *)requestRef;

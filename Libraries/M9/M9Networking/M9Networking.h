@@ -32,7 +32,7 @@
 - (instancetype)initWithRequestConfig:(M9RequestConfig *)requestConfig;
 
 - (M9RequestRef *)send:(M9RequestInfo *)requestInfo;
-- (void)cancelAllWithSender:(id)sender;
+- (void)cancelAllWithOwner:(id)owner;
 
 + (void)removeAllCachedData;
 + (void)removeCachedDataForURLString:(NSString *)key;

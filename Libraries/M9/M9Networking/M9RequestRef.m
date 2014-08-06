@@ -22,22 +22,22 @@
 
 @implementation M9RequestRef {
     NSInteger _requestID;
-    __weak id _sender;
+    __weak id _owner;
 }
 
-@dynamic sender;
+@dynamic owner;
 
-+ (instancetype)requestRefWithSender:(id)sender {
-    return [[self alloc] initWithSender:sender];
++ (instancetype)requestRefWithOwner:(id)owner {
+    return [[self alloc] initWithOwner:owner];
 }
 
-- (instancetype)initWithSender:(id)sender {
+- (instancetype)initWithOwner:(id)owner {
     self = [super init];
     if (self) {
         @synchronized([self class]) {
             static NSInteger M9RequestID = 1;
             _requestID = M9RequestID++;
-            _sender = sender;
+            _owner = owner;
         }
     }
     return self;
@@ -52,8 +52,8 @@
             && ((M9RequestRef *)object).requestID == self.requestID);
 }
 
-- (id)sender {
-    return _sender;
+- (id)owner {
+    return _owner;
 }
 
 - (BOOL)isCancelled { @synchronized(self) { // lock: requestRef.isCancelled && requestRef.currentRequestOperation
@@ -69,35 +69,35 @@
 
 #pragma mark -
 
-@implementation NSObject (M9RequestSender)
+@implementation NSObject (M9RequestOwner)
 
-static void *const M9RequestSender_allRequestRef = (void *)&M9RequestSender_allRequestRef;
+static void *const M9RequestOwner_allRequestRef = (void *)&M9RequestOwner_allRequestRef;
 
-- (void)addRequestRef:(M9RequestRef *)requestRef { @synchronized(self) { // lock: sender.allRequestRefOfSender
+- (void)addRequestRef:(M9RequestRef *)requestRef { @synchronized(self) { // lock: owner.allRequestRefOfOwner
     if (!requestRef) {
         return;
     }
     NSMutableArray *allRequestRef = [self allRequestRef];
     if (!allRequestRef) {
         allRequestRef = [NSMutableArray array];
-        [self associateValue:allRequestRef withKey:M9RequestSender_allRequestRef];
+        [self associateValue:allRequestRef withKey:M9RequestOwner_allRequestRef];
     }
     [allRequestRef addObject:requestRef];
 }}
 
-- (void)removeRequestRef:(M9RequestRef *)requestRef { @synchronized(requestRef) { // lock: sender.allRequestRefOfSender
+- (void)removeRequestRef:(M9RequestRef *)requestRef { @synchronized(requestRef) { // lock: owner.allRequestRefOfOwner
     if (!requestRef) {
         return;
     }
     NSMutableArray *allRequestRef = [self allRequestRef];
     [allRequestRef removeObject:requestRef];
     if (![allRequestRef count]) {
-        [self associateValue:nil withKey:M9RequestSender_allRequestRef];
+        [self associateValue:nil withKey:M9RequestOwner_allRequestRef];
     }
 }}
 
-- (NSMutableArray *)allRequestRef { @synchronized(self) { // lock: sender.allRequestRefOfSender
-    return [self associatedValueForKey:M9RequestSender_allRequestRef class:[NSMutableArray class]];
+- (NSMutableArray *)allRequestRef { @synchronized(self) { // lock: owner.allRequestRefOfOwner
+    return [self associatedValueForKey:M9RequestOwner_allRequestRef class:[NSMutableArray class]];
 }}
 
 @end

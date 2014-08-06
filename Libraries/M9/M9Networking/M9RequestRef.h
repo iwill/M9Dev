@@ -10,12 +10,12 @@
 
 @interface M9RequestRef : NSObject
 
-// TODO: requestInfo & responseInfo and no sender?
+// TODO: requestInfo & responseInfo and no owner?
 // @property(nonatomic, readonly, strong) M9RequestInfo *requestInfo;
 // @property(nonatomic, readonly, strong) id<M9ResponseInfo> responseInfo;
 
 @property(nonatomic, readonly) NSInteger requestID;
-@property(nonatomic, readonly, weak) id sender;
+@property(nonatomic, readonly, weak) id owner;
 
 @property(nonatomic, readonly) NSInteger retriedTimes;
 @property(nonatomic, readonly) BOOL usedCachedData;

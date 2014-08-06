@@ -49,11 +49,11 @@
 }
 
 - (id)delegate {
-    return self.sender;
+    return self.owner;
 }
 
 - (void)setDelegate:(id)delegate {
-    self.sender = delegate;
+    self.owner = delegate;
 }
 
 - (void)setDelegate:(id)delegate successSelector:(SEL)successSelector failureSelector:(SEL)failureSelector {

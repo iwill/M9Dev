@@ -12,7 +12,7 @@
 
 @property(nonatomic, strong) id userInfo;
 
-/* just an alias of sender
+/* just an alias of owner
  */
 @property(nonatomic, weak) id delegate;
 /* 3 arguments: DelegateRequestInfo *requestInfo, id<M9ResponseInfo> responseInfo, id responseObject
