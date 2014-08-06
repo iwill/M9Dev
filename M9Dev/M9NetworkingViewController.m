@@ -88,7 +88,7 @@
 
 - (void)setupRequestConfig {
     // baseURL = [NSURL URLWithString:@"http://localhost:3000"];
-    baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
@@ -103,13 +103,40 @@
         button.enabled = NO; // start loading
     }
     
-    M9RequestInfo *requestInfo = [M9RequestInfo new];
-    requestInfo.HTTPMethod = HTTPGET;
-    requestInfo.baseURL = baseURL;
+    weakify(button);
+    [M9NETWORKING GET:testURLString
+           parameters:@{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } }
+               finish:^(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error) {
+                   strongify(button);
+                   if (responseObject && !error) {
+                       NSLog(@"success: %@", responseObject);
+                       [button setTitle:@"success" forState:UIControlStateSelected];
+                   }
+                   else {
+                       NSLog(@"failure: %@", error);
+                       [button setTitle:@"failure" forState:UIControlStateSelected];
+                   }
+                   button.enabled = YES; // stop loading
+                   button.selected = YES; // alert result
+               }];
+}
+
+- (void)buttonDidTapped1:(UIButton *)button {
+    if (button.selected) {
+        button.selected = NO; // confirm result
+        return;
+    }
+    else {
+        button.enabled = NO; // start loading
+    }
+    
+    M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
+    /* can be removed */ requestInfo.HTTPMethod = HTTPGET;
+    /* can be removed */ requestInfo.baseURL = baseURL;
+    /* can be removed */ requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
+    /* can be removed */ requestInfo.dataParser = M9ResponseDataParser_JSON;
     requestInfo.URLString = testURLString;
-    requestInfo.parameters = @{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } };
-    requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
-    requestInfo.dataParser = M9ResponseDataParser_JSON;
+    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
     weakify(button);
     requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
@@ -140,40 +167,6 @@
     [M9NETWORKING send:requestInfo];
 }
 
-- (void)buttonDidTapped1:(UIButton *)button {
-    if (button.selected) {
-        button.selected = NO; // confirm result
-        return;
-    }
-    else {
-        button.enabled = NO; // start loading
-    }
-    
-    M9RequestInfo *requestInfo = [M9RequestInfo new];
-    requestInfo.HTTPMethod = HTTPGET;
-    requestInfo.baseURL = baseURL;
-    requestInfo.URLString = testURLString;
-    requestInfo.parameters = @{ @"x": @1, @"y": @2 };
-    
-    weakify(button);
-    requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        NSLog(@"success: %@", responseObject);
-        strongify(button);
-        button.enabled = YES; // stop loading
-        button.selected = YES; // alert result
-        [button setTitle:@"success" forState:UIControlStateSelected];
-    };
-    requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        NSLog(@"failure: %@", error);
-        strongify(button);
-        button.enabled = YES; // stop loading
-        button.selected = YES; // alert result
-        [button setTitle:@"failure" forState:UIControlStateSelected];
-    };
-    
-    [M9NETWORKING send:requestInfo];
-}
-
 - (void)buttonDidTapped2:(UIButton *)button {
     if (button.selected) {
         button.selected = NO; // confirm result
@@ -183,7 +176,7 @@
         button.enabled = NO; // start loading
     }
     
-    M9RequestInfoCallbackExt *requestInfo = [M9RequestInfoCallbackExt new];
+    M9RequestInfoCallbackExt *requestInfo = [M9RequestInfoCallbackExt requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
     requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
@@ -217,7 +210,7 @@
         button.enabled = NO; // start loading
     }
     
-    M9RequestInfoDelegateExt *requestInfo = [M9RequestInfoDelegateExt new];
+    M9RequestInfoDelegateExt *requestInfo = [M9RequestInfoDelegateExt requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
     requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
