@@ -1,14 +1,14 @@
 //
-//  DelegateRequestInfo.h
+//  M9RequestInfoExt.h
 //  M9Dev
 //
-//  Created by MingLQ on 2014-07-17.
+//  Created by MingLQ on 2014-08-06.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
 #import "M9RequestInfo.h"
 
-@interface DelegateRequestInfo : M9RequestInfo
+@interface M9RequestInfoDelegateExt : M9RequestInfo
 
 @property(nonatomic, strong) id userInfo;
 
@@ -28,5 +28,14 @@
 
 - (void)setSuccess:(void (^)(id<M9ResponseInfo>, id))success DEPRECATED_ATTRIBUTE;
 - (void)setFailure:(void (^)(id<M9ResponseInfo>, NSError *))failure DEPRECATED_ATTRIBUTE;
+
+@end
+
+#pragma mark -
+
+@interface M9RequestInfoCallbackExt : M9RequestInfo
+
+- (void)setSuccessWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSArray *dataList))success;
+- (void)setFailureWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSString *errorMessage))failure;
 
 @end

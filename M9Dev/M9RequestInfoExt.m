@@ -1,18 +1,18 @@
 //
-//  DelegateRequestInfo.m
+//  M9RequestInfoExt.m
 //  M9Dev
 //
-//  Created by MingLQ on 2014-07-17.
+//  Created by MingLQ on 2014-08-06.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "DelegateRequestInfo.h"
+#import "M9RequestInfoExt.h"
 
 #import "EXTScope.h"
-#import "M9Utilities.h"
 #import "NSInvocation+.h"
+#import "NSDictionary+Shortcuts.h"
 
-@implementation DelegateRequestInfo
+@implementation M9RequestInfoDelegateExt
 
 @dynamic delegate;
 
@@ -62,11 +62,35 @@
     self.failureSelector = failureSelector;
 }
 
-- (void)makeCopy:(DelegateRequestInfo *)copy {
+- (void)makeCopy:(M9RequestInfoDelegateExt *)copy {
     copy.userInfo = self.userInfo;
     copy.delegate = self.delegate;
     copy.successSelector = self.successSelector;
     copy.failureSelector = self.failureSelector;
+}
+
+@end
+
+#pragma mark -
+
+@implementation M9RequestInfoCallbackExt
+
+- (void)setSuccessWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSArray *data))success {
+    self.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        if (success && [responseObject isKindOfClass:[NSDictionary class]]) {
+            success(responseInfo, @[ [(NSDictionary *)responseObject dictionaryForKey:@"query"] OR [NSNull null],
+                                     [(NSDictionary *)responseObject dictionaryForKey:@"params"] OR [NSNull null]
+                                     ]);
+        }
+    };
+}
+
+- (void)setFailureWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSString *errorMessage))failure {
+    self.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
+        if (failure) {
+            failure(responseInfo, [error description]);
+        }
+    };
 }
 
 @end

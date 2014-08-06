@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
-		DF2BC70319779B2700F77023 /* DelegateRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2BC70219779B2700F77023 /* DelegateRequestInfo.m */; };
-		DF2BC7061977ADA000F77023 /* CallbackRequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF2BC7051977ADA000F77023 /* CallbackRequestInfo.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
 		DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2281967EA7E00B8C011 /* UIKit.framework */; };
@@ -34,6 +32,7 @@
 		DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7774771976D7C70011FB45 /* NSInvocation+.m */; };
 		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
+		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
 		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
 /* End PBXBuildFile section */
 
@@ -52,10 +51,6 @@
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DF1AF11F196C56AB00238C77 /* AFNResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNResponseInfo.h; sourceTree = "<group>"; };
 		DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNResponseInfo.m; sourceTree = "<group>"; };
-		DF2BC70119779B2700F77023 /* DelegateRequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateRequestInfo.h; sourceTree = "<group>"; };
-		DF2BC70219779B2700F77023 /* DelegateRequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateRequestInfo.m; sourceTree = "<group>"; };
-		DF2BC7041977ADA000F77023 /* CallbackRequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallbackRequestInfo.h; sourceTree = "<group>"; };
-		DF2BC7051977ADA000F77023 /* CallbackRequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallbackRequestInfo.m; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF69D2241967EA7E00B8C011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,6 +92,8 @@
 		DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Shortcuts.h"; sourceTree = "<group>"; };
 		DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Shortcuts.m"; sourceTree = "<group>"; };
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
+		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
+		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
 		DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfo.h; sourceTree = "<group>"; };
 		DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,10 +163,8 @@
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
 				DF69D2531968490F00B8C011 /* M9NetworkingViewController.h */,
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
-				DF2BC7041977ADA000F77023 /* CallbackRequestInfo.h */,
-				DF2BC7051977ADA000F77023 /* CallbackRequestInfo.m */,
-				DF2BC70119779B2700F77023 /* DelegateRequestInfo.h */,
-				DF2BC70219779B2700F77023 /* DelegateRequestInfo.m */,
+				DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */,
+				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -417,12 +412,11 @@
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
-				DF2BC70319779B2700F77023 /* DelegateRequestInfo.m in Sources */,
 				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
 				DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */,
-				DF2BC7061977ADA000F77023 /* CallbackRequestInfo.m in Sources */,
 				DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */,
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,
+				DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,

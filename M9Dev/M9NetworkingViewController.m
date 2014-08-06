@@ -13,8 +13,7 @@
 #import "NSInvocation+.h"
 #import "M9Networking.h"
 
-#import "CallbackRequestInfo.h"
-#import "DelegateRequestInfo.h"
+#import "M9RequestInfoExt.h"
 
 @interface M9NetworkingViewController ()
 
@@ -184,22 +183,22 @@
         button.enabled = NO; // start loading
     }
     
-    CallbackRequestInfo *requestInfo = [CallbackRequestInfo new];
+    M9RequestInfoCallbackExt *requestInfo = [M9RequestInfoCallbackExt new];
     requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
     weakify(button);
-    [requestInfo setSuccessWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSDictionary *data) {
-        NSLog(@"CallbackRequestInfo: %@", data);
+    [requestInfo setSuccessWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSArray *dataList) {
+        NSLog(@"M9RequestInfoCallbackExt: %@", dataList);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"success" forState:UIControlStateSelected];
     }];
     [requestInfo setFailureWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSString *errorMessage) {
-        NSLog(@"CallbackRequestInfo: %@", errorMessage);
+        NSLog(@"M9RequestInfoCallbackExt: %@", errorMessage);
         strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
@@ -218,7 +217,7 @@
         button.enabled = NO; // start loading
     }
     
-    DelegateRequestInfo *requestInfo = [DelegateRequestInfo new];
+    M9RequestInfoDelegateExt *requestInfo = [M9RequestInfoDelegateExt new];
     requestInfo.HTTPMethod = HTTPGET;
     requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
@@ -231,16 +230,16 @@
     [M9NETWORKING send:requestInfo];
 }
 
-- (void)successWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject {
-    NSLog(@"DelegateRequestInfo: %@", responseObject);
+- (void)successWithRequestInfo:(M9RequestInfoDelegateExt *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo responseObject:(id)responseObject {
+    NSLog(@"M9RequestInfoDelegateExt: %@", responseObject);
     UIButton *button = requestInfo.userInfo;
     button.enabled = YES; // stop loading
     button.selected = YES; // alert result
     [button setTitle:@"success" forState:UIControlStateSelected];
 }
 
-- (void)failureWithRequestInfo:(DelegateRequestInfo *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo error:(NSError *)error {
-    NSLog(@"DelegateRequestInfo: %@", error);
+- (void)failureWithRequestInfo:(M9RequestInfoDelegateExt *)requestInfo responseInfo:(id<M9ResponseInfo>)responseInfo error:(NSError *)error {
+    NSLog(@"M9RequestInfoDelegateExt: %@", error);
     UIButton *button = requestInfo.userInfo;
     button.enabled = YES; // stop loading
     button.selected = YES; // alert result
