@@ -18,7 +18,7 @@
  *  !!!: ONLY used for common requirements, or use AFNetworking or other framework directly
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
  *
- *  ???: send all request via M9RequestInfo
+ *  use lock instead of synchronized? not yet!
  */
 
 #define M9NETWORKING [M9Networking sharedInstance]
@@ -52,15 +52,3 @@
 - (M9RequestRef *)POST:(NSString *)URLString parameters:(NSDictionary *)parameters finish:(M9RequestFinish)finish;
 
 @end
-
-/*
- 
- # check synchronized
- 
- ==== TODO: ====
- 
- # class cluster: other implementation, like NetRequestManager & AFNNetRequestManager
- 
- # use lock instead of synchronized?
- 
- */
