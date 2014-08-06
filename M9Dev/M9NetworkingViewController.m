@@ -20,7 +20,6 @@
 @end
 
 @implementation M9NetworkingViewController {
-    NSURL *baseURL;
     NSString *testURLString;
 }
 
@@ -87,7 +86,7 @@
 }
 
 - (void)setupRequestConfig {
-    // baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    // M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://localhost:3000"];
     M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     
     // testURLString = @"/static/index.html";
@@ -106,19 +105,19 @@
     weakify(button);
     [M9NETWORKING GET:testURLString
            parameters:@{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } }
-               finish:^(id<M9ResponseInfo> responseInfo, id responseObject, NSError *error) {
-                   strongify(button);
-                   if (responseObject && !error) {
-                       NSLog(@"success: %@", responseObject);
-                       [button setTitle:@"success" forState:UIControlStateSelected];
-                   }
-                   else {
-                       NSLog(@"failure: %@", error);
-                       [button setTitle:@"failure" forState:UIControlStateSelected];
-                   }
-                   button.enabled = YES; // stop loading
-                   button.selected = YES; // alert result
-               }];
+              success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
+                  NSLog(@"success: %@", responseObject);
+                  strongify(button);
+                  button.enabled = YES; // stop loading
+                  button.selected = YES; // alert result
+                  [button setTitle:@"success" forState:UIControlStateSelected];
+              } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
+                  NSLog(@"failure: %@", error);
+                  strongify(button);
+                  button.enabled = YES; // stop loading
+                  button.selected = YES; // alert result
+                  [button setTitle:@"failure" forState:UIControlStateSelected];
+              }];
 }
 
 - (void)buttonDidTapped1:(UIButton *)button {
@@ -132,33 +131,36 @@
     
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
     /* can be removed */ requestInfo.HTTPMethod = HTTPGET;
-    /* can be removed */ requestInfo.baseURL = baseURL;
+    /* can be removed */ requestInfo.baseURL = M9NETWORKING.requestConfig.baseURL;
     /* can be removed */ requestInfo.parametersFormatter = M9RequestParametersFormatter_KeyJSON;
     /* can be removed */ requestInfo.dataParser = M9ResponseDataParser_JSON;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
-    weakify(button);
+    weakify(requestInfo, button);
     requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
         NSLog(@"parsing: %@", responseObject);
+        *error = nil;
         NSDictionary *responseDictionary = [responseObject as:[NSDictionary class]];
         if (!responseDictionary) {
             *error = [NSError errorWithDomain:@"M9TestErrorDomain" code:0 userInfo:nil];
-            return nil;
         }
-        *error = nil;
-        return responseObject;
+        return responseDictionary;
     };
     requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
+        strongify(requestInfo, button);
+        if (![responseObject count]) {
+            requestInfo.failure((id<M9ResponseInfo>)requestInfo, nil);
+            return;
+        }
         NSLog(@"success: %@", responseObject);
-        strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"success" forState:UIControlStateSelected];
     };
     requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        NSLog(@"failure: %@", error);
         strongify(button);
+        NSLog(@"failure: %@", error);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"failure" forState:UIControlStateSelected];
@@ -177,8 +179,6 @@
     }
     
     M9RequestInfoCallbackExt *requestInfo = [M9RequestInfoCallbackExt requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
-    requestInfo.HTTPMethod = HTTPGET;
-    requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
@@ -211,8 +211,6 @@
     }
     
     M9RequestInfoDelegateExt *requestInfo = [M9RequestInfoDelegateExt requestInfoWithRequestConfig:M9NETWORKING.requestConfig];
-    requestInfo.HTTPMethod = HTTPGET;
-    requestInfo.baseURL = baseURL;
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     [requestInfo setDelegate:self
