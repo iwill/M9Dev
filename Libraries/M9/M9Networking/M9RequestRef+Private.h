@@ -16,6 +16,7 @@
 
 @property(nonatomic, readwrite) NSInteger retriedTimes;
 @property(nonatomic, readwrite) BOOL usedCachedData;
+// @property(nonatomic, readwrite) NSTimeInterval loadingDuration;
 @property(nonatomic, readwrite, setter = setCancelled:) BOOL isCancelled;
 
 - (instancetype)initWithOwner:(id)owner;
