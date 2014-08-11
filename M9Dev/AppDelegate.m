@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 
+#import "M9Networking.h"
+
 #import "M9NetworkingViewController.h"
+#import "JSLayoutViewController.h"
 
 @implementation AppDelegate
 
@@ -16,8 +19,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
+    M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://localhost:3000"];
+    // M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
+    M9NETWORKING.requestConfig.dataParser = M9ResponseDataParser_All;
+    
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[ ({ [M9NetworkingViewController new]; }),
+    tabBarController.viewControllers = @[ ({ [JSLayoutViewController new]; }),
                                           ({ [M9NetworkingViewController new]; }) ];
     tabBarController.tabBarController.tabBar.barStyle = UIBarStyleBlack;
     tabBarController.tabBarController.tabBar.translucent = NO;
