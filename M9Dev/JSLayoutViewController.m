@@ -17,14 +17,6 @@
 #import "UIView+JS.h"
 #import "JSView.h"
 
-@protocol JSLayoutViewControllerExport <JSExport>
-
-@property(nonatomic) NSInteger top;
-
-@end
-
-#pragma mark -
-
 @interface JSLayoutViewController ()
 
 @property(nonatomic) NSInteger top;
@@ -55,15 +47,13 @@
             }
         } };
         
-        context[@"NSObject"] = [NSObject class];
+        // context[@"NSObject"] = [NSObject class];
         context[@"UIColor"] = [UIColor class];
         context[@"UIFont"] = [UIFont class];
         context[@"UIView"] = [UIView class];
         context[@"UILabel"] = [UILabel class];
         
         context[@"JSView"] = [JSView class];
-        
-        context[@"self"] = self;
     }
     return self;
 }
@@ -92,6 +82,11 @@
 }
 
 - (void)buttonDidTapped:(UIButton *)button {
+    [self clearUsersWithButton:button];
+    [self loadScriptWithButton:button];
+}
+
+- (void)loadScriptWithButton:(UIButton *)button {
     if (button.selected) {
         button.selected = NO; // confirm result
         return;
@@ -100,11 +95,6 @@
         button.enabled = NO; // start loading
     }
     
-    [self clearUsersWithButton:button];
-    [self loadScriptWithButton:button];
-}
-
-- (void)loadScriptWithButton:(UIButton *)button {
     [M9NETWORKING GET:@"/static/jslayout/layout.js" success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
         NSString *script = [NSString stringWithData:[responseObject as:[NSData class]]];
         NSLog(@"script: %@", script);
@@ -139,7 +129,7 @@
     for (id object in users) {
         NSDictionary *user = [object as:[NSDictionary class]];
         
-        JSValue *jsLayout = [context[@"src"] callMethod:@"layoutWithData" withArguments:@[ user ]];
+        JSValue *jsLayout = [context[@"JSLayout"] callMethod:@"layoutWithData" withArguments:@[ user ]];
         JSValue *jsView = [jsLayout callMethod:@"createView" withArguments:@[ @(self.top) ]];
         
         JSView *userView = [[jsView toObject] as:[JSView class]];
@@ -165,15 +155,5 @@
         }
     }
 }
-
-@end
-
-#pragma mark -
-
-@interface JSLayoutViewController (JS) <JSLayoutViewControllerExport>
-
-@end
-
-@implementation JSLayoutViewController (JS)
 
 @end
