@@ -21,7 +21,7 @@
     if (applyMethod.isNull || applyMethod.isUndefined) {
         NSString *script = @(
         "this." OCApplyMethod " = function(object, method, args) {"
-        "   object[method].apply(object, args);"
+        "   return object[method].apply(object, args);"
         "};"
         );
         applyMethod = [context evaluateScript:script];
