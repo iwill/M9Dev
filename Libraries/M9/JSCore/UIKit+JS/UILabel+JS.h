@@ -26,7 +26,7 @@
 @property(nonatomic,retain)               UIColor *highlightedTextColor;
 @property(nonatomic,getter=isHighlighted) BOOL     highlighted;
 
-@property(nonatomic,getter=isUserInteractionEnabled) BOOL userInteractionEnabled;
+// @property(nonatomic,getter=isUserInteractionEnabled) BOOL userInteractionEnabled;
 @property(nonatomic,getter=isEnabled)                BOOL enabled;
 
 @property(nonatomic) NSInteger numberOfLines;

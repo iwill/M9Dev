@@ -13,8 +13,6 @@
 
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "JSCore.h"
-#import "UIColor+JS.h"
-#import "UIView+JS.h"
 #import "JSView.h"
 
 @interface JSLayoutViewController ()
@@ -32,28 +30,8 @@
     if (self) {
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:NSIntegerMax - 2014 - 8 - 11];
         
-        context = [JSContext new];
-        
-        context.exceptionHandler = ^(JSContext *context, JSValue *exception) {
-            NSLog(@"exception: %@", exception);
-        };
-        
-        context[@"console"] = @{ @"log": ^(NSString *message) {
-            NSLog(@"%@", message);
-        }, @"dir": ^(NSDictionary *dict) {
-            NSLog(@"js dir: %@", dict);
-            for (id key in dict) {
-                NSLog(@"    %@: %@", key, dict[key]);
-            }
-        } };
-        
-        // context[@"NSObject"] = [NSObject class];
-        context[@"UIColor"] = [UIColor class];
-        context[@"UIFont"] = [UIFont class];
-        context[@"UIView"] = [UIView class];
-        context[@"UILabel"] = [UILabel class];
-        
-        context[@"JSView"] = [JSView class];
+        context = [JSContext contextWithName:NSStringFromClass([self class])];
+        [context setupAll];
     }
     return self;
 }
@@ -71,7 +49,6 @@
     button.layer.borderWidth = 0.5;
     [self.view addSubview:button];
     
-    context[@"canvas"] = self.view;
     self.top = CGRectGetMaxY(frame) + 20;
     
     [self loadScriptWithButton:button];
