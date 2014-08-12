@@ -12,16 +12,26 @@
 
 @interface JSView : UIView
 
+@property(nonatomic, readonly, copy) NSDictionary *keyedSubviews;
+
+- (UIView *)subviewForKey:(id)key;
+- (void)addSubview:(UIView *)subview forKey:(id)key;
+- (void)removeSubviewForKey:(id)key;
+
 @end
+
+#pragma mark -
 
 @protocol JSViewExport <JSExport>
 
-@property(nonatomic, strong) NSMutableDictionary *keyedSubviews;
+@property(nonatomic, readonly, copy) NSDictionary *keyedSubviews;
+
+- (UIView *)subviewForKey:(id)key;
+- (void)addSubview:(UIView *)subview forKey:(id)key;
+- (void)removeSubviewForKey:(id)key;
 
 @end
 
-@interface JSValue (JS) <UIViewExport, JSViewExport>
-
-@property(nonatomic, strong) NSMutableDictionary *keyedSubviews;
+@interface JSView (JS) <UIViewExport, JSViewExport>
 
 @end
