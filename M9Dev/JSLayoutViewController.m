@@ -47,7 +47,7 @@
         };
         
         context[@"console"] = @{ @"log": ^(NSString *message) {
-            NSLog(@"js log: %@", message);
+            NSLog(@"%@", message);
         }, @"dir": ^(NSDictionary *dict) {
             NSLog(@"js dir: %@", dict);
             for (id key in dict) {
@@ -57,7 +57,9 @@
         
         context[@"NSObject"] = [NSObject class];
         context[@"UIColor"] = [UIColor class];
+        context[@"UIFont"] = [UIFont class];
         context[@"UIView"] = [UIView class];
+        context[@"UILabel"] = [UILabel class];
         
         context[@"JSView"] = [JSView class];
         
@@ -69,9 +71,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(- 1, 0, 320 + 2, 44);
-    
-    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    CGRect frame = CGRectMake(- 1, 20 * 2, 320 + 2, 44);
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.frame = frame;
@@ -140,19 +140,27 @@
         NSDictionary *user = [object as:[NSDictionary class]];
         
         JSValue *jsLayout = [context[@"src"] callMethod:@"layoutWithData" withArguments:@[ user ]];
-        JSValue *jsView = [jsLayout callMethod:@"createView" withArguments:@[ user, @(self.top) ]];
+        JSValue *jsView = [jsLayout callMethod:@"createView" withArguments:@[ @(self.top) ]];
         
         JSView *userView = [[jsView toObject] as:[JSView class]];
-        [jsLayout callMethod:@"updateWithData" withArguments:@[ userView, user ]];
+        if (userView) {
+            [jsLayout callMethod:@"updateWithData" withArguments:@[ userView, user ]];
+        }
         
-        [self.view addSubview:userView];
-        self.top = CGRectGetMaxY(userView.frame) + 20;
+        if (userView) {
+            [self.view addSubview:userView];
+            self.top = CGRectGetMaxY(userView.frame) + 20;
+        }
     }
 }
 
 - (void)clearUsersWithButton:(UIButton *)button {
+    self.top = 0;
     for (UIView *view in self.view.subviews) {
-        if (view != button) {
+        if (view == button) {
+            self.top = MAX(self.top, CGRectGetMaxY(button.frame) + 20);
+        }
+        else {
             [view removeFromSuperview];
         }
     }

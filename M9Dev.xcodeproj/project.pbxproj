@@ -33,6 +33,8 @@
 		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
+		DFD273D91999D9340062462F /* UILabel+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD273D81999D9340062462F /* UILabel+JS.m */; };
+		DFD273DC1999DD890062462F /* UIFont+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD273DB1999DD890062462F /* UIFont+JS.m */; };
 		DFD4735119932F2A0054D528 /* TestJSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD4735019932F2A0054D528 /* TestJSViewController.m */; };
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
 		DFD69652199880F10089B2B5 /* UIColor+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD69651199880F10089B2B5 /* UIColor+.m */; };
@@ -103,6 +105,10 @@
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
 		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
 		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
+		DFD273D71999D9340062462F /* UILabel+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+JS.h"; sourceTree = "<group>"; };
+		DFD273D81999D9340062462F /* UILabel+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+JS.m"; sourceTree = "<group>"; };
+		DFD273DA1999DD890062462F /* UIFont+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+JS.h"; sourceTree = "<group>"; };
+		DFD273DB1999DD890062462F /* UIFont+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+JS.m"; sourceTree = "<group>"; };
 		DFD4734F19932F2A0054D528 /* TestJSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestJSViewController.h; sourceTree = "<group>"; };
 		DFD4735019932F2A0054D528 /* TestJSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestJSViewController.m; sourceTree = "<group>"; };
 		DFD6964D1998788B0089B2B5 /* JSLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSLayoutViewController.h; sourceTree = "<group>"; };
@@ -329,6 +335,10 @@
 				DFD696571998E1B10089B2B5 /* JSView.m */,
 				DFD7AB731994C0E10054CD55 /* UIColor+JS.h */,
 				DFD7AB741994C0E10054CD55 /* UIColor+JS.m */,
+				DFD273DA1999DD890062462F /* UIFont+JS.h */,
+				DFD273DB1999DD890062462F /* UIFont+JS.m */,
+				DFD273D71999D9340062462F /* UILabel+JS.h */,
+				DFD273D81999D9340062462F /* UILabel+JS.m */,
 				DFD7AB751994C0E10054CD55 /* UIView+JS.h */,
 				DFD7AB761994C0E10054CD55 /* UIView+JS.m */,
 			);
@@ -467,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */,
+				DFD273D91999D9340062462F /* UILabel+JS.m in Sources */,
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
 				DFD7AB7C1994C1140054CD55 /* NSObject+JS.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
@@ -484,6 +495,7 @@
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,
 				DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */,
 				DFD69652199880F10089B2B5 /* UIColor+.m in Sources */,
+				DFD273DC1999DD890062462F /* UIFont+JS.m in Sources */,
 				DFD7AB781994C0E10054CD55 /* UIColor+JS.m in Sources */,
 				DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
