@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
+		DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D32199D097800304E8E /* VideosTableViewController.m */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
@@ -59,6 +60,8 @@
 /* Begin PBXFileReference section */
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		DF157D31199D097800304E8E /* VideosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosTableViewController.h; sourceTree = "<group>"; };
+		DF157D32199D097800304E8E /* VideosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosTableViewController.m; sourceTree = "<group>"; };
 		DF1AF11F196C56AB00238C77 /* AFNResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNResponseInfo.h; sourceTree = "<group>"; };
 		DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNResponseInfo.m; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +200,8 @@
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
 				DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */,
 				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
+				DF157D31199D097800304E8E /* VideosTableViewController.h */,
+				DF157D32199D097800304E8E /* VideosTableViewController.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -478,6 +483,7 @@
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
+				DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DFD696551998CF7F0089B2B5 /* NSString+.m in Sources */,
