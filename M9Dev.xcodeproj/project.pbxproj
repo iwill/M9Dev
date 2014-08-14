@@ -30,7 +30,7 @@
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
 		DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7774771976D7C70011FB45 /* NSInvocation+.m */; };
-		DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */; };
+		DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
 		DFD273D91999D9340062462F /* UILabel+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD273D81999D9340062462F /* UILabel+JS.m */; };
@@ -99,8 +99,8 @@
 		DF69D2A61968763B00B8C011 /* M9ResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseInfo.h; sourceTree = "<group>"; };
 		DF7774761976D7C70011FB45 /* NSInvocation+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+.h"; sourceTree = "<group>"; };
 		DF7774771976D7C70011FB45 /* NSInvocation+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+.m"; sourceTree = "<group>"; };
-		DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Shortcuts.h"; sourceTree = "<group>"; };
-		DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Shortcuts.m"; sourceTree = "<group>"; };
+		DFA2F8D9197542CA009706AD /* NSDictionary+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+.h"; sourceTree = "<group>"; };
+		DFA2F8DA197542CA009706AD /* NSDictionary+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+.m"; sourceTree = "<group>"; };
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
 		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
 		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
@@ -271,8 +271,8 @@
 				DFB335ED197FC33D002060E7 /* M9Utilities.m */,
 				DF69D28C1968605800B8C011 /* NSDate+.h */,
 				DF69D28D1968605800B8C011 /* NSDate+.m */,
-				DFA2F8D9197542CA009706AD /* NSDictionary+Shortcuts.h */,
-				DFA2F8DA197542CA009706AD /* NSDictionary+Shortcuts.m */,
+				DFA2F8D9197542CA009706AD /* NSDictionary+.h */,
+				DFA2F8DA197542CA009706AD /* NSDictionary+.m */,
 				DF7774761976D7C70011FB45 /* NSInvocation+.h */,
 				DF7774771976D7C70011FB45 /* NSInvocation+.m */,
 				DF69D2621968513300B8C011 /* NSObject+AssociatedValues.h */,
@@ -484,7 +484,7 @@
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
 				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
 				DFD696581998E1B10089B2B5 /* JSView.m in Sources */,
-				DFA2F8DB197542CA009706AD /* NSDictionary+Shortcuts.m in Sources */,
+				DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */,
 				DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */,
 				DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */,
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,

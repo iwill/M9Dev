@@ -1,5 +1,5 @@
 //
-//  NSDictionary+Shortcuts.h
+//  NSDictionary+.h
 //  iM9
 //
 //  Created by iwill on 2011-05-20.
