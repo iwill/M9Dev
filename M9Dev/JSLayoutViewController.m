@@ -51,7 +51,7 @@
     
     self.top = CGRectGetMaxY(frame) + 20;
     
-    [self loadScriptWithButton:button];
+    [self buttonDidTapped:button];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,13 +59,9 @@
 }
 
 - (void)buttonDidTapped:(UIButton *)button {
-    [self clearUsersWithButton:button];
-    [self loadScriptWithButton:button];
-}
-
-- (void)loadScriptWithButton:(UIButton *)button {
     if (button.selected) {
         button.selected = NO; // confirm result
+        [self clearUsersWithButton:button];
         return;
     }
     else {
