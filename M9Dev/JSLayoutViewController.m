@@ -30,6 +30,10 @@
     if (self) {
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:NSIntegerMax - 2014 - 8 - 11];
         
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.automaticallyAdjustsScrollViewInsets = YES;
+        
         context = [JSContext contextWithName:NSStringFromClass([self class])];
         [context setupAll];
     }
@@ -43,7 +47,7 @@
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.frame = frame;
-    [button setTitle:@"load" forState:UIControlStateNormal];
+    [button setTitle:@"reload" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
     button.layer.borderColor = [UIColor lightGrayColor].CGColor;
     button.layer.borderWidth = 0.5;

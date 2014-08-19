@@ -10,8 +10,9 @@
 
 #import "M9Networking.h"
 
-#import "M9NetworkingViewController.h"
+#import "VideosTableViewController.h"
 #import "JSLayoutViewController.h"
+#import "M9NetworkingViewController.h"
 
 @implementation AppDelegate
 
@@ -24,8 +25,9 @@
     M9NETWORKING.requestConfig.dataParser = M9ResponseDataParser_All;
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[ ({ [JSLayoutViewController new]; }),
-                                          ({ [M9NetworkingViewController new]; }) ];
+    tabBarController.viewControllers = @[ [[UINavigationController alloc] initWithRootViewController:[VideosTableViewController new]],
+                                          [[UINavigationController alloc] initWithRootViewController:[JSLayoutViewController new]],
+                                          [[UINavigationController alloc] initWithRootViewController:[M9NetworkingViewController new]] ];
     tabBarController.tabBarController.tabBar.barStyle = UIBarStyleBlack;
     tabBarController.tabBarController.tabBar.translucent = NO;
     self.window.rootViewController = tabBarController;

@@ -28,6 +28,10 @@
     if (self) {
         self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemDownloads tag:NSIntegerMax - 2014 - 7 - 5];
         
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.automaticallyAdjustsScrollViewInsets = YES;
+        
         [self setupRequestConfig];
     }
     return self;

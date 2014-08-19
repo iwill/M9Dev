@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VideosTableViewController : UITableViewController
+@interface VideosTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+- (id)initWithStyle:(UITableViewStyle)style;
 
 @end

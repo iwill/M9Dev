@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
 		DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D32199D097800304E8E /* VideosTableViewController.m */; };
+		DF157D36199D12B600304E8E /* NSArray+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D35199D12B600304E8E /* NSArray+.m */; };
+		DF157D57199D53BF00304E8E /* UIImage+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D56199D53BF00304E8E /* UIImage+.m */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
@@ -62,6 +64,10 @@
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DF157D31199D097800304E8E /* VideosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosTableViewController.h; sourceTree = "<group>"; };
 		DF157D32199D097800304E8E /* VideosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosTableViewController.m; sourceTree = "<group>"; };
+		DF157D34199D12B600304E8E /* NSArray+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+.h"; sourceTree = "<group>"; };
+		DF157D35199D12B600304E8E /* NSArray+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+.m"; sourceTree = "<group>"; };
+		DF157D55199D53BF00304E8E /* UIImage+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+.h"; sourceTree = "<group>"; };
+		DF157D56199D53BF00304E8E /* UIImage+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+.m"; sourceTree = "<group>"; };
 		DF1AF11F196C56AB00238C77 /* AFNResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNResponseInfo.h; sourceTree = "<group>"; };
 		DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNResponseInfo.m; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +280,8 @@
 				DF69D29C1968763B00B8C011 /* M9Networking */,
 				DF69D2611968513300B8C011 /* M9Utilities.h */,
 				DFB335ED197FC33D002060E7 /* M9Utilities.m */,
+				DF157D34199D12B600304E8E /* NSArray+.h */,
+				DF157D35199D12B600304E8E /* NSArray+.m */,
 				DF69D28C1968605800B8C011 /* NSDate+.h */,
 				DF69D28D1968605800B8C011 /* NSDate+.m */,
 				DFA2F8D9197542CA009706AD /* NSDictionary+.h */,
@@ -286,6 +294,8 @@
 				DFD696541998CF7F0089B2B5 /* NSString+.m */,
 				DFD69650199880F10089B2B5 /* UIColor+.h */,
 				DFD69651199880F10089B2B5 /* UIColor+.m */,
+				DF157D55199D53BF00304E8E /* UIImage+.h */,
+				DF157D56199D53BF00304E8E /* UIImage+.m */,
 			);
 			path = M9;
 			sourceTree = "<group>";
@@ -497,9 +507,11 @@
 				DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */,
 				DFD69652199880F10089B2B5 /* UIColor+.m in Sources */,
 				DFD273DC1999DD890062462F /* UIFont+JS.m in Sources */,
+				DF157D36199D12B600304E8E /* NSArray+.m in Sources */,
 				DFD7AB781994C0E10054CD55 /* UIColor+JS.m in Sources */,
 				DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
+				DF157D57199D53BF00304E8E /* UIImage+.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
 			);
