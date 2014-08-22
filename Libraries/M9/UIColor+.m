@@ -20,30 +20,46 @@
 @implementation UIColor (M9Category)
 
 - (UIColor *)inverseColor {
+    CGFloat alpha;
+    CGFloat white;
+    CGFloat hue, saturation, brightness;
+    CGFloat red, green, blue;
     
-    CGColorRef oldCGColor = self.CGColor;
-    
-    NSUInteger numberOfComponents = CGColorGetNumberOfComponents(oldCGColor);
-    
-    // can not invert - the only component is the alpha
-    // e.g. self == [UIColor groupTableViewBackgroundColor]
-    if (numberOfComponents <= 1) {
-        return [UIColor colorWithCGColor:oldCGColor];
+    if ([self getWhite:&white alpha:&alpha]) {
+        return [UIColor colorWithWhite:1 - white alpha:alpha];
     }
-    
-    const CGFloat *oldComponentColors = CGColorGetComponents(oldCGColor);
-    CGFloat newComponentColors[numberOfComponents];
-    int i = - 1;
-    while (++i < numberOfComponents - 1) {
-        newComponentColors[i] = 1 - oldComponentColors[i];
+    else if ([self getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha]) {
+        return [UIColor colorWithHue:1 - hue saturation:1 - saturation brightness:1 - brightness alpha:alpha];
     }
-    newComponentColors[i] = oldComponentColors[i]; // alpha
-    
-    CGColorRef newCGColor = CGColorCreate(CGColorGetColorSpace(oldCGColor), newComponentColors);
-    UIColor *newColor = [UIColor colorWithCGColor:newCGColor];
-    CGColorRelease(newCGColor);
-    
-    return newColor;
+    else if ([self getRed:&red green:&green blue:&blue alpha:&alpha]) {
+        return [UIColor colorWithRed:1 - red green:1 - green blue:1 - blue alpha:alpha];
+    }
+    /* else {
+        CGColorRef oldCGColor = self.CGColor;
+        
+        NSUInteger numberOfComponents = CGColorGetNumberOfComponents(oldCGColor);
+        
+        // can not invert - the only component is the alpha
+        // e.g. self == [UIColor groupTableViewBackgroundColor]
+        if (numberOfComponents <= 1) {
+            return [UIColor colorWithCGColor:oldCGColor];
+        }
+        
+        const CGFloat *oldComponentColors = CGColorGetComponents(oldCGColor);
+        CGFloat newComponentColors[numberOfComponents];
+        int i = - 1;
+        while (++i < numberOfComponents - 1) {
+            newComponentColors[i] = 1 - oldComponentColors[i];
+        }
+        newComponentColors[i] = oldComponentColors[i]; // alpha
+        
+        CGColorRef newCGColor = CGColorCreate(CGColorGetColorSpace(oldCGColor), newComponentColors);
+        UIColor *newColor = [UIColor colorWithCGColor:newCGColor];
+        CGColorRelease(newCGColor);
+        
+        return newColor;
+    } */
+    return nil;
 }
 
 + (UIColor *)colorWithName:(NSString *)name {
