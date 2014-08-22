@@ -10,9 +10,7 @@
 
 #import "M9Networking.h"
 
-#import "VideosTableViewController.h"
-#import "JSLayoutViewController.h"
-#import "M9NetworkingViewController.h"
+#import "M9DevTestTableViewController.h"
 
 @implementation AppDelegate
 
@@ -24,13 +22,7 @@
     M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     M9NETWORKING.requestConfig.dataParser = M9ResponseDataParser_All;
     
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[ [[UINavigationController alloc] initWithRootViewController:[VideosTableViewController new]],
-                                          [[UINavigationController alloc] initWithRootViewController:[JSLayoutViewController new]],
-                                          [[UINavigationController alloc] initWithRootViewController:[M9NetworkingViewController new]] ];
-    tabBarController.tabBarController.tabBar.barStyle = UIBarStyleBlack;
-    tabBarController.tabBarController.tabBar.translucent = NO;
-    self.window.rootViewController = tabBarController;
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[M9DevTestTableViewController alloc] initWithStyle:UITableViewStylePlain]];
     
     [self.window makeKeyAndVisible];
     return YES;

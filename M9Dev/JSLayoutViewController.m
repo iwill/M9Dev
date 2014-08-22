@@ -28,7 +28,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:NSIntegerMax - 2014 - 8 - 11];
+        self.navigationItem.title = @"display views by js";
         
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
@@ -43,7 +43,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(- 1, 20 * 2, 320 + 2, 44);
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.scrollView.autoResizeHeight = YES;
+    self.scrollView.marginBottom = 10;
+    self.scrollView.alwaysBounceVertical = YES;
+    
+    CGRect frame = CGRectMake(- 1, 20, 320 + 2, 44);
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.frame = frame;

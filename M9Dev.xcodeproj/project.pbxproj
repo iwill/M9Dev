@@ -12,6 +12,8 @@
 		DF157D36199D12B600304E8E /* NSArray+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D35199D12B600304E8E /* NSArray+.m */; };
 		DF157D57199D53BF00304E8E /* UIImage+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D56199D53BF00304E8E /* UIImage+.m */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
+		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
+		DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64519A7525500C374E8 /* UIScrollViewController.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
 		DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2281967EA7E00B8C011 /* UIKit.framework */; };
@@ -70,6 +72,10 @@
 		DF157D56199D53BF00304E8E /* UIImage+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+.m"; sourceTree = "<group>"; };
 		DF1AF11F196C56AB00238C77 /* AFNResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNResponseInfo.h; sourceTree = "<group>"; };
 		DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNResponseInfo.m; sourceTree = "<group>"; };
+		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
+		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
+		DF57B64419A7525500C374E8 /* UIScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewController.h; sourceTree = "<group>"; };
+		DF57B64519A7525500C374E8 /* UIScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIScrollViewController.m; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF69D2241967EA7E00B8C011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -206,6 +212,8 @@
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
 				DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */,
 				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
+				DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */,
+				DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */,
 				DF157D31199D097800304E8E /* VideosTableViewController.h */,
 				DF157D32199D097800304E8E /* VideosTableViewController.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
@@ -296,6 +304,8 @@
 				DFD69651199880F10089B2B5 /* UIColor+.m */,
 				DF157D55199D53BF00304E8E /* UIImage+.h */,
 				DF157D56199D53BF00304E8E /* UIImage+.m */,
+				DF57B64419A7525500C374E8 /* UIScrollViewController.h */,
+				DF57B64519A7525500C374E8 /* UIScrollViewController.m */,
 			);
 			path = M9;
 			sourceTree = "<group>";
@@ -495,6 +505,7 @@
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
+				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DFD696551998CF7F0089B2B5 /* NSString+.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
@@ -510,6 +521,7 @@
 				DF157D36199D12B600304E8E /* NSArray+.m in Sources */,
 				DFD7AB781994C0E10054CD55 /* UIColor+JS.m in Sources */,
 				DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */,
+				DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
 				DF157D57199D53BF00304E8E /* UIImage+.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,

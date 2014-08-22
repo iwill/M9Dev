@@ -61,15 +61,9 @@
 
 @interface VideosTableViewController ()
 
-@property(nonatomic, strong) UITableView *tableView;
-@property(nonatomic, strong) UIRefreshControl *refreshControl;
-@property(nonatomic) BOOL clearsSelectionOnViewWillAppear;
-
 @end
 
 @implementation VideosTableViewController {
-    UITableViewStyle tableViewStyle;
-    
     M9Networking *networking;
     JSContext *context;
     
@@ -79,20 +73,15 @@
     BOOL isLoading;
 }
 
-- (id)init {
-    return [self initWithStyle:UITableViewStylePlain];
-}
-
 - (id)initWithStyle:(UITableViewStyle)style {
-    self = [super init];
+    self = [super initWithStyle:style];
     if (self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:NSIntegerMax - 2014 - 8 - 15];
+        self.navigationItem.title = @"display video list by oc or js";
         
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
         self.automaticallyAdjustsScrollViewInsets = YES;
         
-        tableViewStyle = style;
         self.clearsSelectionOnViewWillAppear = YES;
         
         M9RequestConfig *config = [M9RequestConfig new];
@@ -112,18 +101,9 @@
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:tableViewStyle];
-    tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    tableView.scrollsToTop = YES;
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    self.tableView = tableView;
-    [self.view addSubview:tableView];
-    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlEventValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    [self.tableView addSubview:refreshControl];
     
     [self.tableView registerClass:[UIImageTableViewCell class] forCellReuseIdentifier:@"reuseIdentifier"];
     self.tableView.rowHeight = UIImageTableViewCellHeight;
@@ -141,13 +121,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (self.clearsSelectionOnViewWillAppear) {
-        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
-    }
 }
 
 - (void)refreshControlEventValueChanged:(UIRefreshControl *)refreshControl {
     if (refreshControl.isRefreshing) {
+        [networking cancelAllWithOwner:self];
         [self clearData];
         [self loadData];
     }
@@ -168,6 +146,7 @@
                                 @"cid":         @2,
                                 @"page":        @(page + 1),
                                 @"page_size":   @30 };
+    requestInfo.owner = self;
     
     weakify(requestInfo);
     [requestInfo setSuccess:^(id<M9ResponseInfo> responseInfo, id responseObject) {

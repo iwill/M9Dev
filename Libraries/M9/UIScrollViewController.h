@@ -8,6 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  default values:
+ *      autoresizingMask:       W + H
+ *      autoResizeWidth:        NO
+ *      autoResizeHeight:       NO
+ *      marginRight:            0
+ *      marginBottom:           0
+ */
+@interface UIAutoResizeScrollView : UIScrollView
+
+@property(nonatomic) BOOL autoResizeWidth, autoResizeHeight;
+@property(nonatomic) CGFloat marginRight, marginBottom;
+
+@end
+
+#pragma mark -
+
 @interface UIScrollViewController : UIViewController
+
+@property(nonatomic, strong) UIAutoResizeScrollView *scrollView;
 
 @end

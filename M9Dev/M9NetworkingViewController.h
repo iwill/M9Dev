@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface M9NetworkingViewController : UIViewController
+#import "UIScrollViewController.h"
+
+@interface M9NetworkingViewController : UIScrollViewController
 
 @end

@@ -26,7 +26,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemDownloads tag:NSIntegerMax - 2014 - 7 - 5];
+        self.navigationItem.title = @"M9Networking";
         
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
@@ -40,9 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(- 1, 0, 320 + 2, 44);
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.scrollView.autoResizeHeight = YES;
+    self.scrollView.marginBottom = 10;
+    self.scrollView.alwaysBounceVertical = YES;
     
-    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    CGRect frame = CGRectMake(- 1, 20, 320 + 2, 44);
+    
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;

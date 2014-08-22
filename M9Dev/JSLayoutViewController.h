@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JSLayoutViewController : UIViewController
+#import "UIScrollViewController.h"
+
+@interface JSLayoutViewController : UIScrollViewController
 
 @end

@@ -8,30 +8,52 @@
 
 #import "UIScrollViewController.h"
 
+@implementation UIAutoResizeScrollView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
+    return self;
+}
+
+- (void)addSubview:(UIView *)view {
+    [super addSubview:view];
+    
+    CGSize contentSize = self.contentSize;
+    if (self.autoResizeWidth) {
+        contentSize.width = MAX(contentSize.width, CGRectGetMaxX(view.frame) + self.marginRight);
+    }
+    if (self.autoResizeHeight) {
+        contentSize.height = MAX(contentSize.height, CGRectGetMaxY(view.frame) + self.marginBottom);
+    }
+    self.contentSize = contentSize;
+}
+
+@end
+
+#pragma mark -
+
 @interface UIScrollViewController ()
 
 @end
 
 @implementation UIScrollViewController
 
+- (void)loadView {
+    UIAutoResizeScrollView *scrollView = [[UIAutoResizeScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    scrollView.scrollsToTop = YES;
+    self.scrollView = scrollView;
+    self.view = scrollView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
