@@ -24,7 +24,7 @@
 #import "NSDate+RFC1123.h"
 #import "EXTScope.h"
 
-#import "NSDictionary+Shortcuts.h"
+#import "NSDictionary+.h"
 #import "NSDate+.h"
 
 #define HTTPExpires @"Expires"

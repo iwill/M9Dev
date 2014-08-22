@@ -10,7 +10,7 @@
 
 #import "EXTScope.h"
 #import "NSInvocation+.h"
-#import "NSDictionary+Shortcuts.h"
+#import "NSDictionary+.h"
 
 @implementation M9RequestInfoDelegateExt
 

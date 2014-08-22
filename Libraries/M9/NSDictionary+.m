@@ -1,5 +1,5 @@
 //
-//  NSDictionary+Shortcuts.m
+//  NSDictionary+.m
 //  iM9
 //
 //  Created by iwill on 2011-05-20.
@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "NSDictionary+Shortcuts.h"
+#import "NSDictionary+.h"
 
 @implementation NSDictionary (Shortcuts)
 

@@ -26,6 +26,12 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.navigationItem.title = @"M9Networking";
+        
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.automaticallyAdjustsScrollViewInsets = YES;
+        
         [self setupRequestConfig];
     }
     return self;
@@ -34,9 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGRect frame = CGRectMake(- 1, 0, 320 + 2, 44);
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.scrollView.autoResizeHeight = YES;
+    self.scrollView.marginBottom = 10;
+    self.scrollView.alwaysBounceVertical = YES;
     
-    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    CGRect frame = CGRectMake(- 1, 20, 320 + 2, 44);
+    
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
@@ -86,9 +96,6 @@
 }
 
 - (void)setupRequestConfig {
-    // M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://localhost:3000"];
-    M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
-    
     // testURLString = @"/hello.txt";
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
