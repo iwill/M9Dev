@@ -49,6 +49,7 @@
 		DFD7AB7C1994C1140054CD55 /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7B1994C1140054CD55 /* NSObject+JS.m */; };
 		DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7E1994C5CD0054CD55 /* JSCore.m */; };
 		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
+		DFF23A1A19B5C9E8003E5361 /* VideosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 /* End PBXBuildFile section */
 
@@ -142,6 +143,8 @@
 		DFD7AB7E1994C5CD0054CD55 /* JSCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCore.m; sourceTree = "<group>"; };
 		DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfo.h; sourceTree = "<group>"; };
 		DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfo.m; sourceTree = "<group>"; };
+		DFF23A1819B5C9E8003E5361 /* VideosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosCollectionViewController.h; sourceTree = "<group>"; };
+		DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosCollectionViewController.m; sourceTree = "<group>"; };
 		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
 		DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CGRect.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +222,8 @@
 				DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */,
 				DF157D31199D097800304E8E /* VideosTableViewController.h */,
 				DF157D32199D097800304E8E /* VideosTableViewController.m */,
+				DFF23A1819B5C9E8003E5361 /* VideosCollectionViewController.h */,
+				DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -501,6 +506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFF23A1A19B5C9E8003E5361 /* VideosCollectionViewController.m in Sources */,
 				DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */,
 				DFD273D91999D9340062462F /* UILabel+JS.m in Sources */,
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
