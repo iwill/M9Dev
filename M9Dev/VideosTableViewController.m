@@ -104,8 +104,9 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlEventValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    // custom table view controller: [self.tableView addSubview:refreshControl];
     
-    [self.tableView registerClass:[UIImageTableViewCell class] forCellReuseIdentifier:@"reuseIdentifier"];
+    [self.tableView registerClass:[UIImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([UIImageTableViewCell class])];
     self.tableView.rowHeight = UIImageTableViewCellHeight;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, UIImageTableViewMargin, 0, 0);
     
@@ -114,6 +115,7 @@
 }
 
 - (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +123,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 }
 
 - (void)refreshControlEventValueChanged:(UIRefreshControl *)refreshControl {
@@ -141,9 +144,9 @@
     requestInfo.URLString = @"search/channel.json";
     requestInfo.parameters = @{ @"api_key":     @"695fe827ffeb7d74260a813025970bd5",
                                 @"plat":        @3,
-                                @"sver":        @"4.3.1",
+                                @"sver":        @"4.5",
                                 @"partner":     @1,
-                                @"cid":         @2,
+                                @"cid":         @1,
                                 @"page":        @(page + 1),
                                 @"page_size":   @30 };
     requestInfo.owner = self;
@@ -185,7 +188,38 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark <UITableViewDataSource>
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [allVideos count];
+}
+
+#pragma mark <UITableViewDelegate>
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static UIImage *defaultImage = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(120, 90)];
+    });
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UIImageTableViewCell class]) forIndexPath:indexPath];
+    NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.row];
+    
+    NSString *title = [video stringForKey:@"album_name"];;
+    NSURL *imageURL = [NSURL URLWithString:[video stringForKey:@"hor_high_pic"]];
+    
+    cell.textLabel.text = title;
+    [cell.imageView sd_setImageWithURL:imageURL placeholderImage:defaultImage options:SDWebImageRetryFailed completed:nil];
+    
+    return cell;
+}
+
+#pragma mark <UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (isLoading) {
@@ -215,38 +249,9 @@
 } */
 
 /* - (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    return YES;
+return YES;
 } */
 /* - (void)scrollViewDidScrollToTop:(UIScrollView *)scrollView {
 } */
-
-#pragma mark - UITableViewDataSource & UITableViewDelegate
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [allVideos count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static UIImage *defaultImage = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(120, 90)];
-    });
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier" forIndexPath:indexPath];
-    NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.row];
-    
-    NSString *title = [video stringForKey:@"album_name"];;
-    NSURL *imageURL = [NSURL URLWithString:[video stringForKey:@"hor_high_pic"]];
-    
-    cell.textLabel.text = title;
-    [cell.imageView sd_setImageWithURL:imageURL placeholderImage:defaultImage options:SDWebImageRetryFailed completed:nil];
-    
-    return cell;
-}
 
 @end
