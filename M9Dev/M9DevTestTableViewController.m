@@ -10,6 +10,7 @@
 
 #import "NSArray+.h"
 
+#import "VideosCollectionViewController.h"
 #import "VideosTableViewController.h"
 #import "JSLayoutViewController.h"
 #import "M9NetworkingViewController.h"
@@ -38,6 +39,7 @@
     
     viewControllers =  @[ [M9NetworkingViewController new],
                           [JSLayoutViewController new],
+                          [VideosCollectionViewController new],
                           [VideosTableViewController new] ];
 }
 
