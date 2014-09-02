@@ -44,7 +44,7 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 #pragma mark resizable image
 
 - (UIImage *)resizableImage {
-    CGFloat x = (self.size.width - 1) / 2, y = (self.size.height - 1) / 2;
+    CGFloat x = MAX(self.size.width / 2 - 1, 0), y = MAX(self.size.height / 2 - 1, 0);
     
     if (![self respondsToSelector:@selector(resizableImageWithCapInsets:)]) {
         return [self stretchableImageWithLeftCapWidth:x topCapHeight:y];
