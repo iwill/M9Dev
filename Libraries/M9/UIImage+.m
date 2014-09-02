@@ -142,6 +142,10 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 
 #pragma mark image with color
 
++ (UIImage *)imageWithColor:(UIColor *)color {
+    return [[self imageWithColor:color size:CGSizeMake(1, 1)] resizableImage];
+}
+
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
     color = color ? color : [UIColor clearColor];
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
@@ -151,10 +155,6 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
-}
-
-+ (UIImage *)resizableImageWithColor:(UIColor *)color {
-    return [[self imageWithColor:color size:CGSizeMake(1, 1)] resizableImage];
 }
 
 #pragma mark screenshot image

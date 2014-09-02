@@ -29,8 +29,8 @@
 + (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees;
 + (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees size:(CGSize)size;
 
++ (UIImage *)imageWithColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;
-+ (UIImage *)resizableImageWithColor:(UIColor *)color;
 
 + (UIImage *)screenshot;
 
