@@ -38,9 +38,9 @@
     Class tableViewCellClass = [UITableViewCell class];
     [self.tableView registerClass:tableViewCellClass forCellReuseIdentifier:NSStringFromClass(tableViewCellClass)];
     
-    viewControllers =  @[ [M9NetworkingViewController new],
-                          [JSLayoutViewController new],
-                          [VideosCollectionViewController new] ];
+    viewControllers = @[ [M9NetworkingViewController new],
+                         [JSLayoutViewController new],
+                         [VideosCollectionViewController new] ];
 }
 
 - (void)didReceiveMemoryWarning {
