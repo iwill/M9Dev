@@ -98,22 +98,37 @@
     NSUInteger page;
     
     BOOL isLoading;
+    
+    UICollectionViewFlowLayout *horLayout, *verLayout;
 }
 
 static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollectionViewCellIdentifier";
 
 - (instancetype)init {
-    return [self initWithCollectionViewLayout:({
+    return [self initWithCollectionViewLayout:nil];
+}
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+    horLayout = ({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.itemSize = CGSizeMake(150, 124);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
         layout.minimumLineSpacing = 6;
         layout.minimumInteritemSpacing = 6;
         _RETURN layout;
-    })];
-}
-
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+    });
+    
+    verLayout = ({
+        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+        layout.itemSize = CGSizeMake(98, 135);
+        layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
+        layout.minimumLineSpacing = 6;
+        layout.minimumInteritemSpacing = 6;
+        _RETURN layout;
+    });
+    
+    layout = horLayout;
+    
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         self.navigationItem.title = @"display videos by oc or js";
@@ -142,6 +157,11 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
     self.view.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
     self.collectionView.backgroundColor = [UIColor clearColor];
     
+    UISegmentedControl *layoutSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Hor", @"Ver"]];
+    layoutSegmentedControl.selectedSegmentIndex = 0;
+    [layoutSegmentedControl addTarget:self action:@selector(layoutSegmentedControlValueDidChange:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = layoutSegmentedControl;
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlEventValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
@@ -158,6 +178,30 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark -
+
+- (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)layoutSegmentedControl {
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    
+    UICollectionViewLayout *nextLayout = nil;
+    if (layoutSegmentedControl.selectedSegmentIndex == 0) {
+        nextLayout = horLayout;
+    }
+    else {
+        nextLayout = verLayout;
+    }
+    
+    weakify(self);
+    [self.collectionView setCollectionViewLayout:nextLayout animated:YES completion:^(BOOL finished) {
+        strongify(self);
+        [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+        NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
+        if ([indexPaths count]) {
+            [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+        }
+    }];
 }
 
 - (void)refreshControlEventValueChanged:(UIRefreshControl *)refreshControl {
@@ -251,13 +295,18 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor]];
     });
     
+    BOOL isHor = self.collectionView.collectionViewLayout == horLayout;
+    
     NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.item];
     NSString *title = video[@"album_name"];
-    NSURL *imageURL = [NSURL URLWithString:video[@"hor_high_pic"]];
+    NSURL *imageURL = [NSURL URLWithString:video[isHor ? @"hor_high_pic" : @"ver_high_pic"]];
     
     UIImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UIImageCollectionViewCellIdentifier forIndexPath:indexPath];
     cell.textLabel.text = title;
-    [cell.imageView sd_setImageWithURL:imageURL placeholderImage:defaultImage options:SDWebImageRetryFailed completed:nil];
+    [cell.imageView sd_setImageWithURL:imageURL
+                      placeholderImage:defaultImage
+                               options:SDWebImageRetryFailed
+                             completed:nil];
     
     return cell;
 }
