@@ -419,9 +419,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = iwill;
 				TargetAttributes = {
-					DF69D2201967EA7E00B8C011 = {
-						DevelopmentTeam = 4AW78593E8;
-					};
 					DF69D23B1967EA7F00B8C011 = {
 						TestTargetID = DF69D2201967EA7E00B8C011;
 					};
