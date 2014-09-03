@@ -26,6 +26,8 @@
     self = [super initWithStyle:style];
     if (self) {
         self.navigationItem.title = @"M9DevTest";
+        
+        self.clearsSelectionOnViewWillAppear = YES;
     }
     return self;
 }
@@ -46,6 +48,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     /* pop view controller by gesture recognizer
     if (self.clearsSelectionOnViewWillAppear) {
         [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
