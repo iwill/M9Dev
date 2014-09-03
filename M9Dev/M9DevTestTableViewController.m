@@ -10,10 +10,9 @@
 
 #import "NSArray+.h"
 
-#import "VideosCollectionViewController.h"
-#import "VideosTableViewController.h"
-#import "JSLayoutViewController.h"
 #import "M9NetworkingViewController.h"
+#import "JSLayoutViewController.h"
+#import "VideosCollectionViewController.h"
 
 @interface M9DevTestTableViewController ()
 
@@ -39,8 +38,7 @@
     
     viewControllers =  @[ [M9NetworkingViewController new],
                           [JSLayoutViewController new],
-                          [VideosCollectionViewController new],
-                          [VideosTableViewController new] ];
+                          [VideosCollectionViewController new] ];
 }
 
 - (void)didReceiveMemoryWarning {

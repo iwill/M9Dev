@@ -41,7 +41,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self.contentView addSubview:({
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
             imageView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
             self.imageView = imageView;
             _RETURN imageView;
@@ -55,7 +55,7 @@
                 backgroundView = [UIView new];
                 backgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.93];
             }
-            backgroundView.frame = UIEdgeInsetsInsetRect(frame, UIEdgeInsetsMake(CGRectGetHeight(frame) - fontSize - textMargin * 2, 0, 0, 0));
+            backgroundView.frame = UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(CGRectGetHeight(self.bounds) - fontSize - textMargin * 2, 0, 0, 0));
             backgroundView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
             
             UILabel *textLabel = [[UILabel alloc] initWithFrame:backgroundView.bounds];
@@ -100,13 +100,15 @@
     BOOL isLoading;
 }
 
+static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollectionViewCellIdentifier";
+
 - (instancetype)init {
     return [self initWithCollectionViewLayout:({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.minimumLineSpacing = 0;
-        layout.minimumInteritemSpacing = 0;
         layout.itemSize = CGSizeMake(150, 124);
-        layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
+        layout.minimumLineSpacing = 7;
+        layout.minimumInteritemSpacing = 5;
         _RETURN layout;
     })];
 }
@@ -144,8 +146,7 @@
     [refreshControl addTarget:self action:@selector(refreshControlEventValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     [self.collectionView addSubview:refreshControl];
-    
-    [self.collectionView registerClass:[UIImageCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([UIImageCollectionViewCell class])];
+    [self.collectionView registerClass:[UIImageCollectionViewCell class] forCellWithReuseIdentifier:UIImageCollectionViewCellIdentifier];
     
     [self.refreshControl beginRefreshing];
     [self refreshControlEventValueChanged:self.refreshControl];
@@ -161,9 +162,7 @@
 
 - (void)refreshControlEventValueChanged:(UIRefreshControl *)refreshControl {
     if (refreshControl.isRefreshing) {
-        [networking cancelAllWithOwner:self];
-        [self clearData];
-        [self loadData];
+        [self reloadData];
     }
 }
 
@@ -201,24 +200,38 @@
         
         [allVideos addObjectsFromArray:videos];
         [self.collectionView reloadData];
-        [self.refreshControl endRefreshing];
-        isLoading = NO;
+        
+        [self stopLoading];
     } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
         // strongify(requestInfo);
         
         NSLog(@"page %ld: %@", page, error);
         
-        [self.refreshControl endRefreshing];
-        isLoading = NO;
+        [self stopLoading];
     }];
     
     [networking send:requestInfo];
+}
+
+- (void)stopLoading {
+    [self.refreshControl endRefreshing];
+    isLoading = NO;
+}
+
+- (void)cancelLoading {
+    [networking cancelAllWithOwner:self];
 }
 
 - (void)clearData {
     page = 0;
     [allVideos removeAllObjects];
     [self.collectionView reloadData];
+}
+
+- (void)reloadData {
+    [self cancelLoading];
+    [self clearData];
+    [self loadData];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -235,15 +248,14 @@
     static UIImage *defaultImage = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(120, 90)];
+        defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor]];
     });
     
-    UIImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([UIImageCollectionViewCell class]) forIndexPath:indexPath];
     NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.item];
-    
     NSString *title = video[@"album_name"];
     NSURL *imageURL = [NSURL URLWithString:video[@"hor_high_pic"]];
     
+    UIImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UIImageCollectionViewCellIdentifier forIndexPath:indexPath];
     cell.textLabel.text = title;
     [cell.imageView sd_setImageWithURL:imageURL placeholderImage:defaultImage options:SDWebImageRetryFailed completed:nil];
     

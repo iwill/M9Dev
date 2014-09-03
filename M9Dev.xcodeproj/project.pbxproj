@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
-		DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D32199D097800304E8E /* VideosTableViewController.m */; };
 		DF157D36199D12B600304E8E /* NSArray+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D35199D12B600304E8E /* NSArray+.m */; };
 		DF157D57199D53BF00304E8E /* UIImage+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D56199D53BF00304E8E /* UIImage+.m */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
@@ -35,6 +34,7 @@
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
 		DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7774771976D7C70011FB45 /* NSInvocation+.m */; };
+		DF82F32019B730D300599432 /* VideosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosCollectionViewController.m */; };
 		DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
@@ -49,7 +49,6 @@
 		DFD7AB7C1994C1140054CD55 /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7B1994C1140054CD55 /* NSObject+JS.m */; };
 		DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7E1994C5CD0054CD55 /* JSCore.m */; };
 		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
-		DFF23A1A19B5C9E8003E5361 /* VideosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 /* End PBXBuildFile section */
 
@@ -66,8 +65,6 @@
 /* Begin PBXFileReference section */
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		DF157D31199D097800304E8E /* VideosTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosTableViewController.h; sourceTree = "<group>"; };
-		DF157D32199D097800304E8E /* VideosTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosTableViewController.m; sourceTree = "<group>"; };
 		DF157D34199D12B600304E8E /* NSArray+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+.h"; sourceTree = "<group>"; };
 		DF157D35199D12B600304E8E /* NSArray+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+.m"; sourceTree = "<group>"; };
 		DF157D55199D53BF00304E8E /* UIImage+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+.h"; sourceTree = "<group>"; };
@@ -116,6 +113,8 @@
 		DF69D2A61968763B00B8C011 /* M9ResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseInfo.h; sourceTree = "<group>"; };
 		DF7774761976D7C70011FB45 /* NSInvocation+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+.h"; sourceTree = "<group>"; };
 		DF7774771976D7C70011FB45 /* NSInvocation+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+.m"; sourceTree = "<group>"; };
+		DF82F31E19B730D300599432 /* VideosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosCollectionViewController.h; sourceTree = "<group>"; };
+		DF82F31F19B730D300599432 /* VideosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosCollectionViewController.m; sourceTree = "<group>"; };
 		DFA2F8D9197542CA009706AD /* NSDictionary+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+.h"; sourceTree = "<group>"; };
 		DFA2F8DA197542CA009706AD /* NSDictionary+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+.m"; sourceTree = "<group>"; };
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
@@ -143,8 +142,6 @@
 		DFD7AB7E1994C5CD0054CD55 /* JSCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCore.m; sourceTree = "<group>"; };
 		DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfo.h; sourceTree = "<group>"; };
 		DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfo.m; sourceTree = "<group>"; };
-		DFF23A1819B5C9E8003E5361 /* VideosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosCollectionViewController.h; sourceTree = "<group>"; };
-		DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosCollectionViewController.m; sourceTree = "<group>"; };
 		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
 		DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CGRect.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,16 +211,14 @@
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
 				DFD6964D1998788B0089B2B5 /* JSLayoutViewController.h */,
 				DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */,
+				DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */,
+				DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */,
 				DF69D2531968490F00B8C011 /* M9NetworkingViewController.h */,
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
 				DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */,
 				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
-				DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */,
-				DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */,
-				DF157D31199D097800304E8E /* VideosTableViewController.h */,
-				DF157D32199D097800304E8E /* VideosTableViewController.m */,
-				DFF23A1819B5C9E8003E5361 /* VideosCollectionViewController.h */,
-				DFF23A1919B5C9E8003E5361 /* VideosCollectionViewController.m */,
+				DF82F31E19B730D300599432 /* VideosCollectionViewController.h */,
+				DF82F31F19B730D300599432 /* VideosCollectionViewController.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -509,7 +504,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DFF23A1A19B5C9E8003E5361 /* VideosCollectionViewController.m in Sources */,
 				DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */,
 				DFD273D91999D9340062462F /* UILabel+JS.m in Sources */,
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
@@ -517,8 +511,8 @@
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
-				DF157D33199D097800304E8E /* VideosTableViewController.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
+				DF82F32019B730D300599432 /* VideosCollectionViewController.m in Sources */,
 				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DFD696551998CF7F0089B2B5 /* NSString+.m in Sources */,
