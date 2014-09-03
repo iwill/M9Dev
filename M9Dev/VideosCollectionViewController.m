@@ -107,8 +107,8 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.itemSize = CGSizeMake(150, 124);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
-        layout.minimumLineSpacing = 7;
-        layout.minimumInteritemSpacing = 5;
+        layout.minimumLineSpacing = 6;
+        layout.minimumInteritemSpacing = 6;
         _RETURN layout;
     })];
 }
