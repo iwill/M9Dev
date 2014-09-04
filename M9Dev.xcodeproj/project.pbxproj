@@ -34,7 +34,7 @@
 		DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A01968763B00B8C011 /* M9Networking.m */; };
 		DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2A31968763B00B8C011 /* M9RequestRef.m */; };
 		DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7774771976D7C70011FB45 /* NSInvocation+.m */; };
-		DF82F32019B730D300599432 /* VideosCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosCollectionViewController.m */; };
+		DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */; };
 		DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
@@ -43,11 +43,22 @@
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
 		DFD69652199880F10089B2B5 /* UIColor+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD69651199880F10089B2B5 /* UIColor+.m */; };
 		DFD696551998CF7F0089B2B5 /* NSString+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD696541998CF7F0089B2B5 /* NSString+.m */; };
-		DFD696581998E1B10089B2B5 /* JSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD696571998E1B10089B2B5 /* JSView.m */; };
 		DFD7AB781994C0E10054CD55 /* UIColor+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB741994C0E10054CD55 /* UIColor+JS.m */; };
 		DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB761994C0E10054CD55 /* UIView+JS.m */; };
-		DFD7AB7C1994C1140054CD55 /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7B1994C1140054CD55 /* NSObject+JS.m */; };
 		DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD7AB7E1994C5CD0054CD55 /* JSCore.m */; };
+		DFF2339719B82F500045FDCE /* VideosJSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */; };
+		DFF2339A19B848C10045FDCE /* UIImageView+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339919B848C10045FDCE /* UIImageView+JS.m */; };
+		DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339C19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m */; };
+		DFF233A019B84D910045FDCE /* UICollectionViewCell+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339F19B84D910045FDCE /* UICollectionViewCell+JS.m */; };
+		DFF233AB19B85B140045FDCE /* jslayout in Resources */ = {isa = PBXBuildFile; fileRef = DFF233AA19B85B140045FDCE /* jslayout */; };
+		DFF233AF19B8759D0045FDCE /* NSURL+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233AE19B8759D0045FDCE /* NSURL+JS.m */; };
+		DFF233B219B876B50045FDCE /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B119B876B50045FDCE /* NSObject+JS.m */; };
+		DFF233B519B876C10045FDCE /* JSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B419B876C10045FDCE /* JSView.m */; };
+		DFF233B819B879E60045FDCE /* UIImage+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B719B879E60045FDCE /* UIImage+JS.m */; };
+		DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233BA19B87C2A0045FDCE /* NSString+JS.m */; };
+		DFF233BE19B89F970045FDCE /* UIScrollView+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233BD19B89F970045FDCE /* UIScrollView+.m */; };
+		DFF233C219B8AF560045FDCE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233C119B8AF560045FDCE /* JRSwizzle.m */; };
+		DFF233C519B8BB010045FDCE /* JSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */; };
 		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 /* End PBXBuildFile section */
@@ -113,8 +124,8 @@
 		DF69D2A61968763B00B8C011 /* M9ResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9ResponseInfo.h; sourceTree = "<group>"; };
 		DF7774761976D7C70011FB45 /* NSInvocation+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+.h"; sourceTree = "<group>"; };
 		DF7774771976D7C70011FB45 /* NSInvocation+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+.m"; sourceTree = "<group>"; };
-		DF82F31E19B730D300599432 /* VideosCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosCollectionViewController.h; sourceTree = "<group>"; };
-		DF82F31F19B730D300599432 /* VideosCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosCollectionViewController.m; sourceTree = "<group>"; };
+		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
+		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
 		DFA2F8D9197542CA009706AD /* NSDictionary+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+.h"; sourceTree = "<group>"; };
 		DFA2F8DA197542CA009706AD /* NSDictionary+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+.m"; sourceTree = "<group>"; };
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
@@ -130,16 +141,37 @@
 		DFD69651199880F10089B2B5 /* UIColor+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+.m"; sourceTree = "<group>"; };
 		DFD696531998CF7F0089B2B5 /* NSString+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+.h"; sourceTree = "<group>"; };
 		DFD696541998CF7F0089B2B5 /* NSString+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+.m"; sourceTree = "<group>"; };
-		DFD696561998E1B10089B2B5 /* JSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSView.h; sourceTree = "<group>"; };
-		DFD696571998E1B10089B2B5 /* JSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSView.m; sourceTree = "<group>"; };
 		DFD7AB731994C0E10054CD55 /* UIColor+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JS.h"; sourceTree = "<group>"; };
 		DFD7AB741994C0E10054CD55 /* UIColor+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JS.m"; sourceTree = "<group>"; };
 		DFD7AB751994C0E10054CD55 /* UIView+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JS.h"; sourceTree = "<group>"; };
 		DFD7AB761994C0E10054CD55 /* UIView+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JS.m"; sourceTree = "<group>"; };
-		DFD7AB7A1994C1140054CD55 /* NSObject+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JS.h"; sourceTree = "<group>"; };
-		DFD7AB7B1994C1140054CD55 /* NSObject+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JS.m"; sourceTree = "<group>"; };
 		DFD7AB7D1994C5CD0054CD55 /* JSCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCore.h; sourceTree = "<group>"; };
 		DFD7AB7E1994C5CD0054CD55 /* JSCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCore.m; sourceTree = "<group>"; };
+		DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosJSCollectionViewController.h; sourceTree = "<group>"; };
+		DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosJSCollectionViewController.m; sourceTree = "<group>"; };
+		DFF2339819B848C10045FDCE /* UIImageView+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+JS.h"; sourceTree = "<group>"; };
+		DFF2339919B848C10045FDCE /* UIImageView+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+JS.m"; sourceTree = "<group>"; };
+		DFF2339B19B84C490045FDCE /* UICollectionViewFlowLayout+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewFlowLayout+JS.h"; sourceTree = "<group>"; };
+		DFF2339C19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewFlowLayout+JS.m"; sourceTree = "<group>"; };
+		DFF2339E19B84D910045FDCE /* UICollectionViewCell+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+JS.h"; sourceTree = "<group>"; };
+		DFF2339F19B84D910045FDCE /* UICollectionViewCell+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+JS.m"; sourceTree = "<group>"; };
+		DFF233AA19B85B140045FDCE /* jslayout */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jslayout; sourceTree = "<group>"; };
+		DFF233AD19B8759D0045FDCE /* NSURL+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+JS.h"; sourceTree = "<group>"; };
+		DFF233AE19B8759D0045FDCE /* NSURL+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+JS.m"; sourceTree = "<group>"; };
+		DFF233B019B876B50045FDCE /* NSObject+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JS.h"; sourceTree = "<group>"; };
+		DFF233B119B876B50045FDCE /* NSObject+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JS.m"; sourceTree = "<group>"; };
+		DFF233B319B876C10045FDCE /* JSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSView.h; sourceTree = "<group>"; };
+		DFF233B419B876C10045FDCE /* JSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSView.m; sourceTree = "<group>"; };
+		DFF233B619B879E60045FDCE /* UIImage+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JS.h"; sourceTree = "<group>"; };
+		DFF233B719B879E60045FDCE /* UIImage+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JS.m"; sourceTree = "<group>"; };
+		DFF233B919B87C2A0045FDCE /* NSString+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JS.h"; sourceTree = "<group>"; };
+		DFF233BA19B87C2A0045FDCE /* NSString+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JS.m"; sourceTree = "<group>"; };
+		DFF233BC19B89F970045FDCE /* UIScrollView+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+.h"; sourceTree = "<group>"; };
+		DFF233BD19B89F970045FDCE /* UIScrollView+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+.m"; sourceTree = "<group>"; };
+		DFF233C019B8AF560045FDCE /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		DFF233C119B8AF560045FDCE /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		DFF233C319B8BB010045FDCE /* JSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCollectionViewCell.h; sourceTree = "<group>"; };
+		DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewCell.m; sourceTree = "<group>"; };
 		DFF235FE197658D500F0A7F0 /* M9RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfo.h; sourceTree = "<group>"; };
 		DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfo.m; sourceTree = "<group>"; };
 		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
@@ -177,6 +209,7 @@
 				DF69D2561968513300B8C011 /* Libraries */,
 				DF69D22A1967EA7E00B8C011 /* M9Dev */,
 				DF69D2431967EA7F00B8C011 /* M9DevTests */,
+				DFF233A919B85B060045FDCE /* Resources */,
 				DF69D2231967EA7E00B8C011 /* Frameworks */,
 				DF69D2221967EA7E00B8C011 /* Products */,
 				DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */,
@@ -209,6 +242,8 @@
 			children = (
 				DF69D2331967EA7E00B8C011 /* AppDelegate.h */,
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
+				DFF233C319B8BB010045FDCE /* JSCollectionViewCell.h */,
+				DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */,
 				DFD6964D1998788B0089B2B5 /* JSLayoutViewController.h */,
 				DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */,
 				DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */,
@@ -217,8 +252,10 @@
 				DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */,
 				DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */,
 				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
-				DF82F31E19B730D300599432 /* VideosCollectionViewController.h */,
-				DF82F31F19B730D300599432 /* VideosCollectionViewController.m */,
+				DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */,
+				DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */,
+				DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */,
+				DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */,
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
@@ -259,6 +296,7 @@
 			children = (
 				DF69D2571968513300B8C011 /* BlocksKit */,
 				DF69D25A1968513300B8C011 /* extobjc */,
+				DFF233BF19B8AF560045FDCE /* JRSwizzle */,
 				DF69D25E1968513300B8C011 /* M9 */,
 				DF69D28819685B6500B8C011 /* MKNetworkKit */,
 			);
@@ -307,6 +345,8 @@
 				DFD69651199880F10089B2B5 /* UIColor+.m */,
 				DF157D55199D53BF00304E8E /* UIImage+.h */,
 				DF157D56199D53BF00304E8E /* UIImage+.m */,
+				DFF233BC19B89F970045FDCE /* UIScrollView+.h */,
+				DFF233BD19B89F970045FDCE /* UIScrollView+.m */,
 				DF57B64419A7525500C374E8 /* UIScrollViewController.h */,
 				DF57B64519A7525500C374E8 /* UIScrollViewController.m */,
 				DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */,
@@ -346,8 +386,9 @@
 			children = (
 				DFD7AB7D1994C5CD0054CD55 /* JSCore.h */,
 				DFD7AB7E1994C5CD0054CD55 /* JSCore.m */,
-				DFD7AB7A1994C1140054CD55 /* NSObject+JS.h */,
-				DFD7AB7B1994C1140054CD55 /* NSObject+JS.m */,
+				DFF233B319B876C10045FDCE /* JSView.h */,
+				DFF233B419B876C10045FDCE /* JSView.m */,
+				DFF233AC19B8758C0045FDCE /* Foundation+JS */,
 				DFD7AB701994C0E10054CD55 /* UIKit+JS */,
 			);
 			path = JSCore;
@@ -356,18 +397,54 @@
 		DFD7AB701994C0E10054CD55 /* UIKit+JS */ = {
 			isa = PBXGroup;
 			children = (
-				DFD696561998E1B10089B2B5 /* JSView.h */,
-				DFD696571998E1B10089B2B5 /* JSView.m */,
 				DFD7AB731994C0E10054CD55 /* UIColor+JS.h */,
 				DFD7AB741994C0E10054CD55 /* UIColor+JS.m */,
 				DFD273DA1999DD890062462F /* UIFont+JS.h */,
 				DFD273DB1999DD890062462F /* UIFont+JS.m */,
+				DFF2339E19B84D910045FDCE /* UICollectionViewCell+JS.h */,
+				DFF2339F19B84D910045FDCE /* UICollectionViewCell+JS.m */,
+				DFF2339B19B84C490045FDCE /* UICollectionViewFlowLayout+JS.h */,
+				DFF2339C19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m */,
+				DFF233B619B879E60045FDCE /* UIImage+JS.h */,
+				DFF233B719B879E60045FDCE /* UIImage+JS.m */,
+				DFF2339819B848C10045FDCE /* UIImageView+JS.h */,
+				DFF2339919B848C10045FDCE /* UIImageView+JS.m */,
 				DFD273D71999D9340062462F /* UILabel+JS.h */,
 				DFD273D81999D9340062462F /* UILabel+JS.m */,
 				DFD7AB751994C0E10054CD55 /* UIView+JS.h */,
 				DFD7AB761994C0E10054CD55 /* UIView+JS.m */,
 			);
 			path = "UIKit+JS";
+			sourceTree = "<group>";
+		};
+		DFF233A919B85B060045FDCE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DFF233AA19B85B140045FDCE /* jslayout */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DFF233AC19B8758C0045FDCE /* Foundation+JS */ = {
+			isa = PBXGroup;
+			children = (
+				DFF233B019B876B50045FDCE /* NSObject+JS.h */,
+				DFF233B119B876B50045FDCE /* NSObject+JS.m */,
+				DFF233B919B87C2A0045FDCE /* NSString+JS.h */,
+				DFF233BA19B87C2A0045FDCE /* NSString+JS.m */,
+				DFF233AD19B8759D0045FDCE /* NSURL+JS.h */,
+				DFF233AE19B8759D0045FDCE /* NSURL+JS.m */,
+			);
+			path = "Foundation+JS";
+			sourceTree = "<group>";
+		};
+		DFF233BF19B8AF560045FDCE /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				DFF233C019B8AF560045FDCE /* JRSwizzle.h */,
+				DFF233C119B8AF560045FDCE /* JRSwizzle.m */,
+			);
+			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,6 +527,7 @@
 				DF69D22F1967EA7E00B8C011 /* InfoPlist.strings in Resources */,
 				DF69D2651968513300B8C011 /* readme.md in Resources */,
 				DF69D2371967EA7F00B8C011 /* Images.xcassets in Resources */,
+				DFF233AB19B85B140045FDCE /* jslayout in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,21 +582,27 @@
 				DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */,
 				DFD273D91999D9340062462F /* UILabel+JS.m in Sources */,
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
-				DFD7AB7C1994C1140054CD55 /* NSObject+JS.m in Sources */,
+				DFF233BE19B89F970045FDCE /* UIScrollView+.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
+				DFF233B219B876B50045FDCE /* NSObject+JS.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
+				DFF233A019B84D910045FDCE /* UICollectionViewCell+JS.m in Sources */,
+				DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */,
+				DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
-				DF82F32019B730D300599432 /* VideosCollectionViewController.m in Sources */,
+				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
+				DFF233B519B876C10045FDCE /* JSView.m in Sources */,
 				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DFD696551998CF7F0089B2B5 /* NSString+.m in Sources */,
 				DF69D2351967EA7E00B8C011 /* AppDelegate.m in Sources */,
 				DF69D2671968513300B8C011 /* NSObject+AssociatedValues.m in Sources */,
-				DFD696581998E1B10089B2B5 /* JSView.m in Sources */,
+				DFF2339719B82F500045FDCE /* VideosJSCollectionViewController.m in Sources */,
 				DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */,
 				DF7774781976D7C70011FB45 /* NSInvocation+.m in Sources */,
 				DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */,
+				DFF233B819B879E60045FDCE /* UIImage+JS.m in Sources */,
 				DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */,
 				DFD7AB7F1994C5CD0054CD55 /* JSCore.m in Sources */,
 				DFD69652199880F10089B2B5 /* UIColor+.m in Sources */,
@@ -529,8 +613,12 @@
 				DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
 				DF157D57199D53BF00304E8E /* UIImage+.m in Sources */,
+				DFF233C219B8AF560045FDCE /* JRSwizzle.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
+				DFF233C519B8BB010045FDCE /* JSCollectionViewCell.m in Sources */,
+				DFF233AF19B8759D0045FDCE /* NSURL+JS.m in Sources */,
+				DFF2339A19B848C10045FDCE /* UIImageView+JS.m in Sources */,
 				DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -651,7 +739,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9Dev/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9Dev/M9Dev-Info.plist";
@@ -667,7 +754,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9Dev/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9Dev/M9Dev-Info.plist";

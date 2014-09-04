@@ -10,7 +10,6 @@
 
 @interface M9RequestRef : NSObject
 
-// TODO: requestInfo & responseInfo and no owner?
 // @property(nonatomic, readonly, strong) M9RequestInfo *requestInfo;
 // @property(nonatomic, readonly, strong) id<M9ResponseInfo> responseInfo;
 

@@ -10,9 +10,6 @@
 
 @interface UIImage (M9Category)
 
-- (id)initWithName:(NSString *)name DEPRECATED_ATTRIBUTE;
-+ (UIImage *)imageWithName:(NSString *)name DEPRECATED_ATTRIBUTE;
-
 - (UIImage *)resizableImage;
 
 - (UIImage *)imageByResizing:(CGSize)size;
@@ -41,4 +38,3 @@
 + (instancetype)imageViewWithImageNamed:(NSString *)imageName;
 
 @end
-

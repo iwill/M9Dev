@@ -12,7 +12,8 @@
 
 #import "M9NetworkingViewController.h"
 #import "JSLayoutViewController.h"
-#import "VideosCollectionViewController.h"
+#import "VideosOCCollectionViewController.h"
+#import "VideosJSCollectionViewController.h"
 
 @interface M9DevTestTableViewController ()
 
@@ -40,7 +41,8 @@
     
     viewControllers = @[ [M9NetworkingViewController new],
                          [JSLayoutViewController new],
-                         [VideosCollectionViewController new] ];
+                         [VideosOCCollectionViewController new],
+                         [VideosJSCollectionViewController new] ];
 }
 
 - (void)didReceiveMemoryWarning {

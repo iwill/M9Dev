@@ -1,12 +1,12 @@
 //
-//  VideosCollectionViewController.m
+//  VideosJSCollectionViewController.m
 //  M9Dev
 //
 //  Created by MingLQ on 2014-09-02.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "VideosCollectionViewController.h"
+#import "VideosJSCollectionViewController.h"
 
 #import "EXTScope.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -15,82 +15,23 @@
 #import "M9Networking.h"
 #import "NSArray+.h"
 #import "NSDictionary+.h"
+#import "NSString+.h"
 #import "UIColor+.h"
 #import "UIImage+.h"
+#import "UIScrollView+.h"
 
 #import "JSCore.h"
 #import "JSView.h"
+#import "UICollectionViewFlowLayout+JS.h"
+#import "JSCollectionViewCell.h"
 
-@interface UIImageCollectionViewCell : UICollectionViewCell
-
-@property (nonatomic, strong, readonly) UILabel *textLabel;
-@property (nonatomic, strong, readonly) UIImageView *imageView;
-
-@end
-
-@interface UIImageCollectionViewCell ()
-
-@property (nonatomic, strong, readwrite) UILabel *textLabel;
-@property (nonatomic, strong, readwrite) UIImageView *imageView;
-
-@end
-
-@implementation UIImageCollectionViewCell
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self.contentView addSubview:({
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-            imageView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-            self.imageView = imageView;
-            _RETURN imageView;
-        })];
-        
-        [self.contentView addSubview:({
-            CGFloat fontSize = 14, textMargin = 5;
-            
-            UIView *backgroundView = [[UIVisualEffectView alloc] initWithEffect:[[UIBlurEffect alloc] init]];
-            if (!backgroundView) {
-                backgroundView = [UIView new];
-                backgroundView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.93];
-            }
-            backgroundView.frame = UIEdgeInsetsInsetRect(self.bounds, UIEdgeInsetsMake(CGRectGetHeight(self.bounds) - fontSize - textMargin * 2, 0, 0, 0));
-            backgroundView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
-            
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:backgroundView.bounds];
-            textLabel.backgroundColor = [UIColor clearColor];
-            textLabel.textAlignment = NSTextAlignmentCenter;
-            textLabel.font = [UIFont systemFontOfSize:fontSize];
-            textLabel.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-            
-            self.textLabel = textLabel;
-            [backgroundView addSubview:textLabel];
-            
-            _RETURN backgroundView;
-        })];
-    }
-    return self;
-}
-
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    self.textLabel.text = nil;
-    self.imageView.image = nil;
-    [self.imageView sd_cancelCurrentImageLoad];
-}
-
-@end
-
-#pragma mark -
-
-@interface VideosCollectionViewController ()
+@interface VideosJSCollectionViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
-@implementation VideosCollectionViewController {
+@implementation VideosJSCollectionViewController {
     M9Networking *networking;
     JSContext *context;
     
@@ -99,39 +40,21 @@
     
     BOOL isLoading;
     
-    UICollectionViewFlowLayout *horLayout, *verLayout;
+    UISegmentedControl *layoutSegmentedControl;
+    NSArray *jsLayouts, *ocLayouts;
 }
-
-static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollectionViewCellIdentifier";
 
 - (instancetype)init {
-    return [self initWithCollectionViewLayout:nil];
-}
-
-- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
-    horLayout = ({
+    self = [super initWithCollectionViewLayout:({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.itemSize = CGSizeMake(150, 124);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
         layout.minimumLineSpacing = 6;
         layout.minimumInteritemSpacing = 6;
         _RETURN layout;
-    });
-    
-    verLayout = ({
-        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.itemSize = CGSizeMake(98, 135);
-        layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
-        layout.minimumLineSpacing = 6;
-        layout.minimumInteritemSpacing = 6;
-        _RETURN layout;
-    });
-    
-    layout = horLayout;
-    
-    self = [super initWithCollectionViewLayout:layout];
+    })];
     if (self) {
-        self.navigationItem.title = @"display videos by oc or js";
+        self.navigationItem.title = @"display videos by js";
         
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
@@ -147,26 +70,32 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         
         context = [JSContext contextWithName:NSStringFromClass([self class])];
         [context setupAll];
+        context[@"JSCollectionViewCell"] = [JSCollectionViewCell class];
+        
+        NSString *file = [[NSBundle mainBundle] pathForResource:@"video-layout"
+                                                         ofType:@"js"
+                                                    inDirectory:@"jslayout"];
+        NSString *script = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+        [context evaluateScript:script];
     }
     return self;
+}
+
+- (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
-    self.collectionView.backgroundColor = [UIColor clearColor];
-    
-    UISegmentedControl *layoutSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Hor", @"Ver"]];
-    layoutSegmentedControl.selectedSegmentIndex = 0;
-    [layoutSegmentedControl addTarget:self action:@selector(layoutSegmentedControlValueDidChange:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = layoutSegmentedControl;
+    self.collectionView.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
+    self.collectionView.alwaysBounceVertical = YES;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlEventValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     [self.collectionView addSubview:refreshControl];
-    [self.collectionView registerClass:[UIImageCollectionViewCell class] forCellWithReuseIdentifier:UIImageCollectionViewCellIdentifier];
     
     [self.refreshControl beginRefreshing];
     [self refreshControlEventValueChanged:self.refreshControl];
@@ -182,16 +111,19 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 
 #pragma mark -
 
-- (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)layoutSegmentedControl {
-    [self.collectionView.collectionViewLayout invalidateLayout];
+- (NSString *)reuseIdentifierWithLayoutName:(NSString *)layoutName {
+    return [NSString stringWithFormat:@"JSCollectionViewCell"];
+    // TODO: WTF?
+    // return [NSString stringWithFormat:@"JSCollectionViewCell-%@", layoutName];
+}
+
+- (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)segmentedControl {
+    UICollectionViewLayout *nextLayout = [ocLayouts objectOrNilAtIndex:segmentedControl.selectedSegmentIndex];
+    if (!nextLayout) {
+        return;
+    }
     
-    UICollectionViewLayout *nextLayout = nil;
-    if (layoutSegmentedControl.selectedSegmentIndex == 0) {
-        nextLayout = horLayout;
-    }
-    else {
-        nextLayout = verLayout;
-    }
+    [nextLayout invalidateLayout];
     
     weakify(self);
     [self.collectionView setCollectionViewLayout:nextLayout animated:YES completion:^(BOOL finished) {
@@ -210,7 +142,40 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
     }
 }
 
+- (void)loadLayouts {
+    NSMutableArray *jsLayoutsArray = [NSMutableArray array];
+    NSMutableArray *ocLayoutsArray = [NSMutableArray array];
+    NSMutableArray *layoutNames = [NSMutableArray array];
+    jsLayouts = ({
+        JSValue *jsLayoutsValue = context[@"JSLayout"][@"jsLayouts"];
+        NSInteger jsLayoutsCount = [jsLayoutsValue[@"length"] toInt32];
+        for (NSInteger i = 0; i < jsLayoutsCount; i++) {
+            JSValue *jsLayout = jsLayoutsValue[@(i)];
+            UICollectionViewFlowLayout *ocLayout = [UICollectionViewFlowLayout new];
+            [jsLayout callMethod:@"layout_setUp" withArguments:@[ ocLayout ]];
+            NSString *layoutName = [jsLayout[@"name"] toString];
+            [jsLayoutsArray addObjectOrNil:jsLayout];
+            [ocLayoutsArray addObjectOrNil:ocLayout];
+            [layoutNames addObjectOrNil:layoutName];
+            
+            [self.collectionView registerClass:[JSCollectionViewCell class] forCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layoutName]];
+        }
+        _RETURN [jsLayoutsArray copy];
+    });
+    ocLayouts = [ocLayoutsArray copy];
+    
+    layoutSegmentedControl = [[UISegmentedControl alloc] initWithItems:layoutNames];
+    layoutSegmentedControl.selectedSegmentIndex = 0;
+    [layoutSegmentedControl addTarget:self action:@selector(layoutSegmentedControlValueDidChange:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.titleView = layoutSegmentedControl;
+    [self layoutSegmentedControlValueDidChange:layoutSegmentedControl];
+}
+
 - (void)loadData {
+    if (![jsLayouts count]) {
+        [self loadLayouts];
+    }
+    
     if (isLoading) {
         return;
     }
@@ -289,24 +254,25 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    static UIImage *defaultImage = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        defaultImage = [UIImage imageWithColor:[UIColor lightGrayColor]];
-    });
-    
-    BOOL isHor = self.collectionView.collectionViewLayout == horLayout;
+    JSValue *jsLayout = [jsLayouts objectOrNilAtIndex:layoutSegmentedControl.selectedSegmentIndex];
+    NSString *layoutName = [jsLayout[@"name"] toString];
     
     NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.item];
-    NSString *title = video[@"album_name"];
-    NSURL *imageURL = [NSURL URLWithString:video[isHor ? @"hor_high_pic" : @"ver_high_pic"]];
+    JSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layoutName]
+                                                                           forIndexPath:indexPath];
     
-    UIImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UIImageCollectionViewCellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = title;
-    [cell.imageView sd_setImageWithURL:imageURL
-                      placeholderImage:defaultImage
-                               options:SDWebImageRetryFailed
-                             completed:nil];
+    if (!cell.isSetUp) {
+        cell.isSetUp = YES;
+        [jsLayout callMethod:@"cell_setUp" withArguments:@[ cell ]];
+        
+        weakify(cell);
+        cell.prepareForReuseBlock = ^ {
+            strongify(cell);
+            [jsLayout callMethod:@"cell_prepareForReuse" withArguments:@[ cell ]];
+        };
+    }
+    
+    [jsLayout callMethod:@"cell_updateWithData" withArguments:@[ cell, video ]];
     
     return cell;
 }
@@ -323,9 +289,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         return;
     }
     
-    NSInteger currentOffset = scrollView.contentOffset.y;
-    NSInteger maximumOffset = scrollView.contentSize.height - CGRectGetHeight(scrollView.frame);
-    if (maximumOffset > 0 && currentOffset - maximumOffset >= 0) {
+    if ([scrollView scrolledToTheBottomEdge]) {
         [self loadData];
     }
 }

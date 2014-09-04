@@ -13,12 +13,12 @@
 
 @protocol UIColorExport <JSExport>
 
-#pragma mark - UIColor+
+#pragma mark UIColor+
 
 + (UIColor *)colorWithHexString:(NSString *)hexString;
 - (UIColor *)inverseColor;
 
-#pragma mark - UIColor
+#pragma mark UIColor
 
 + (UIColor *)colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
 + (UIColor *)colorWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha;
@@ -66,7 +66,7 @@
 
 @property(nonatomic,readonly) CIColor   *CIColor NS_AVAILABLE_IOS(5_0);
 
-#pragma mark - UIKitAdditions
+#pragma mark UIKitAdditions
 
 // - (id)initWithColor:(UIColor *)color NS_AVAILABLE_IOS(5_0);
 

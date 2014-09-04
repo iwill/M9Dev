@@ -39,7 +39,7 @@
 
 - (UIFontDescriptor *)fontDescriptor NS_AVAILABLE_IOS(7_0);
 
-#pragma mark - UIFontSystemFonts
+#pragma mark UIFontSystemFonts
 
 + (CGFloat)labelFontSize;
 + (CGFloat)buttonFontSize;

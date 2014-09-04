@@ -29,13 +29,99 @@
 
 @end
 
-#pragma mark -
+#pragma mark - Base64
 
 static char base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 @implementation NSString (Base64)
 
-- (NSData *)base64Data {
++ (instancetype)stringWithBase64Data:(NSData *)base64Data {
+    return [self stringWithBase64Data:base64Data lineLength:0];
+}
+
++ (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength {
+    return [self stringWithBase64Data:base64Data lineLength:lineLength lineFeed:@"\n"];
+}
+
++ (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength lineFeed:(NSString *)lineFeed {
+    unsigned long ixtext, lentext;
+    long ctremaining;
+    unsigned char input[3], output[4];
+    short i, charsonline = 0, ctcopy;
+    const unsigned char *raw;
+    NSMutableString *result;
+    
+    lentext = [base64Data length];
+    
+    if (lentext < 1) {
+        return @"";
+    }
+    
+    result = [NSMutableString stringWithCapacity:lentext];
+    
+    raw = [base64Data bytes];
+    
+    ixtext = 0;
+    
+    while (true) {
+        ctremaining = lentext - ixtext;
+        
+        if (ctremaining <= 0) {
+            break;
+        }
+        
+        for (i = 0; i < 3; i++) {
+            unsigned long ix = ixtext + i;
+            
+            if (ix < lentext) {
+                input[i] = raw[ix];
+            }
+            else {
+                input[i] = 0;
+            }
+        }
+        
+        output[0] = (input[0] & 0xFC) >> 2;
+        output[1] = ((input[0] & 0x03) << 4) | ((input[1] & 0xF0) >> 4);
+        output[2] = ((input[1] & 0x0F) << 2) | ((input[2] & 0xC0) >> 6);
+        output[3] = input[2] & 0x3F;
+        
+        ctcopy = 4;
+        
+        switch (ctremaining) {
+            case 1:
+                ctcopy = 2;
+                break;
+            case 2:
+                ctcopy = 3;
+                break;
+        }
+        
+        for (i = 0; i < ctcopy; i++) {
+            [result appendString:[NSString stringWithFormat:@"%c", base64EncodingTable[output[i]]]];
+        }
+        
+        for (i = ctcopy; i < 4; i++) {
+            [result appendString:@"="];
+        }
+        
+        ixtext += 3;
+        charsonline += 4;
+        
+        if (lineLength > 0 && charsonline >= lineLength && lineFeed.length) {
+            charsonline = 0;
+            [result appendString:lineFeed];
+        }
+    }
+    
+    return [self stringWithString:result];
+}
+
+@end
+
+@implementation NSData (Base64)
+
++ (instancetype)dataWithBase64String:(NSString *)base64String {
     unsigned long ixtext, lentext;
     unsigned char ch, input[4] = {}, output[3] = {};
     short i, ixinput;
@@ -43,13 +129,13 @@ static char base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmno
     const char *temporary;
     NSMutableData *result;
     
-    if (!self) {
+    if (!base64String) {
         return [NSData data];
     }
     
     ixtext = 0;
-    temporary = [self UTF8String];
-    lentext = [self length];
+    temporary = [base64String UTF8String];
+    lentext = [base64String length];
     result = [NSMutableData dataWithCapacity:lentext];
     ixinput = 0;
     
@@ -125,90 +211,7 @@ static char base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmno
         }
     }
     
-    return result;
-}
-
-+ (NSString *)stringWithBase64Data:(NSData *)base64Data {
-    return [self stringWithBase64Data:base64Data lineLength:0];
-}
-
-+ (NSString *)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength {
-    return [self stringWithBase64Data:base64Data lineLength:lineLength lineFeed:@"\n"];
-}
-
-+ (NSString *)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength lineFeed:(NSString *)lineFeed {
-    unsigned long ixtext, lentext;
-    long ctremaining;
-    unsigned char input[3], output[4];
-    short i, charsonline = 0, ctcopy;
-    const unsigned char *raw;
-    NSMutableString *result;
-    
-    lentext = [base64Data length];
-    
-    if (lentext < 1) {
-        return @"";
-    }
-    
-    result = [NSMutableString stringWithCapacity:lentext];
-    
-    raw = [base64Data bytes];
-    
-    ixtext = 0;
-    
-    while (true) {
-        ctremaining = lentext - ixtext;
-        
-        if (ctremaining <= 0) {
-            break;
-        }
-        
-        for (i = 0; i < 3; i++) {
-            unsigned long ix = ixtext + i;
-            
-            if (ix < lentext) {
-                input[i] = raw[ix];
-            }
-            else {
-                input[i] = 0;
-            }
-        }
-        
-        output[0] = (input[0] & 0xFC) >> 2;
-        output[1] = ((input[0] & 0x03) << 4) | ((input[1] & 0xF0) >> 4);
-        output[2] = ((input[1] & 0x0F) << 2) | ((input[2] & 0xC0) >> 6);
-        output[3] = input[2] & 0x3F;
-        
-        ctcopy = 4;
-        
-        switch (ctremaining) {
-            case 1:
-                ctcopy = 2;
-                break;
-            case 2:
-                ctcopy = 3;
-                break;
-        }
-        
-        for (i = 0; i < ctcopy; i++) {
-            [result appendString:[NSString stringWithFormat:@"%c", base64EncodingTable[output[i]]]];
-        }
-        
-        for (i = ctcopy; i < 4; i++) {
-            [result appendString:@"="];
-        }
-        
-        ixtext += 3;
-        charsonline += 4;
-        
-        if (lineLength > 0 && charsonline >= lineLength && lineFeed.length) {
-            charsonline = 0;
-            [result appendString:lineFeed];
-        }
-    }
-    
-    return result;
+    return [self dataWithData:result];
 }
 
 @end
-
