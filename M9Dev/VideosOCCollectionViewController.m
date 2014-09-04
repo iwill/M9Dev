@@ -147,8 +147,8 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
-    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
+    self.collectionView.alwaysBounceVertical = YES;
     
     UISegmentedControl *layoutSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Hor", @"Ver"]];
     layoutSegmentedControl.selectedSegmentIndex = 0;
@@ -176,8 +176,6 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 #pragma mark -
 
 - (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)layoutSegmentedControl {
-    [self.collectionView.collectionViewLayout invalidateLayout];
-    
     UICollectionViewLayout *nextLayout = nil;
     if (layoutSegmentedControl.selectedSegmentIndex == 0) {
         nextLayout = horLayout;
@@ -186,10 +184,15 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         nextLayout = verLayout;
     }
     
+    [nextLayout invalidateLayout];
+    
     weakify(self);
-    [self.collectionView setCollectionViewLayout:nextLayout animated:YES completion:^(BOOL finished) {
+    [self.collectionView performBatchUpdates:^{
         strongify(self);
+        [self.collectionView setCollectionViewLayout:nextLayout animated:YES];
         [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    } completion:^(BOOL finished) {
+        strongify(self);
         NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
         if ([indexPaths count]) {
             [self.collectionView reloadItemsAtIndexPaths:indexPaths];
@@ -233,7 +236,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         
         page++;
         
-        NSLog(@"page %ld: %ld", page, [videos count]);
+        NSLog(@"page %ld: %ld", (unsigned long)page, (unsigned long)[videos count]);
         
         [allVideos addObjectsFromArray:videos];
         [self.collectionView reloadData];
@@ -242,7 +245,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
     } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
         // strongify(requestInfo);
         
-        NSLog(@"page %ld: %@", page, error);
+        NSLog(@"page %ld: %@", (unsigned long)page, error);
         
         [self stopLoading];
     }];

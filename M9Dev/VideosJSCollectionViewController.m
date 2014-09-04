@@ -112,9 +112,7 @@
 #pragma mark -
 
 - (NSString *)reuseIdentifierWithLayoutName:(NSString *)layoutName {
-    return [NSString stringWithFormat:@"JSCollectionViewCell"];
-    // TODO: WTF?
-    // return [NSString stringWithFormat:@"JSCollectionViewCell-%@", layoutName];
+    return [NSString stringWithFormat:@"JSCollectionViewCell-%@", layoutName];
 }
 
 - (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)segmentedControl {
@@ -126,9 +124,12 @@
     [nextLayout invalidateLayout];
     
     weakify(self);
-    [self.collectionView setCollectionViewLayout:nextLayout animated:YES completion:^(BOOL finished) {
+    [self.collectionView performBatchUpdates:^{
         strongify(self);
+        [self.collectionView setCollectionViewLayout:nextLayout animated:YES];
         [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    } completion:^(BOOL finished) {
+        strongify(self);
         NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
         if ([indexPaths count]) {
             [self.collectionView reloadItemsAtIndexPaths:indexPaths];
@@ -205,7 +206,7 @@
         
         page++;
         
-        NSLog(@"page %ld: %ld", page, [videos count]);
+        NSLog(@"page %ld: %ld", (unsigned long)page, (unsigned long)[videos count]);
         
         [allVideos addObjectsFromArray:videos];
         [self.collectionView reloadData];
@@ -214,7 +215,7 @@
     } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
         // strongify(requestInfo);
         
-        NSLog(@"page %ld: %@", page, error);
+        NSLog(@"page %ld: %@", (unsigned long)page, error);
         
         [self stopLoading];
     }];
