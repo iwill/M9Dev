@@ -1,0 +1,26 @@
+//
+//  UIScrollView+.m
+//  M9Dev
+//
+//  Created by MingLQ on 2014-09-04.
+//  Copyright (c) 2014年 iwill. All rights reserved.
+//
+
+#import "UIScrollView+.h"
+
+@implementation UIScrollView (UIScrollViewScrolledToTheBottomEdge)
+
+- (BOOL)scrolledToTheBottomEdge {
+    if (!self.dragging && !self.decelerating) {
+        return NO;
+    }
+    if (self.contentOffset.y <= - self.contentInset.top) {
+        return NO;
+    }
+    
+    CGFloat bottomOffset = self.contentOffset.y + self.frame.size.height - self.contentSize.height;
+    CGFloat bottomViewHeight = 0;
+    return bottomOffset - bottomViewHeight >= 0;
+}
+
+@end

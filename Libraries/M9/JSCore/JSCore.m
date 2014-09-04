@@ -114,10 +114,41 @@
 }
 
 - (void)setupUIKit {
+    /* Foundation */
+    
+    self[@"NSString"] = [NSString class];
+    self[@"NSData"] = [NSData class];
+    self[@"NSURL"] = [NSURL class];
+    
+    /* UIKit */
+    
     self[@"UIColor"] = [UIColor class];
     self[@"UIFont"] = [UIFont class];
+    
     self[@"UIView"] = [UIView class];
     self[@"UILabel"] = [UILabel class];
+    self[@"UIImage"] = [UIImage class];
+    self[@"UIImageView"] = [UIImageView class];
+    self[@"UICollectionViewCell"] = [UICollectionViewCell class];
+    self[@"UICollectionViewFlowLayout"] = [UICollectionViewFlowLayout class];
+    
+    /* UIKit Values */
+    
+    self[@"UIViewAutoresizingNone"]                 = @(UIViewAutoresizingNone);
+    self[@"UIViewAutoresizingFlexibleLeftMargin"]   = @(UIViewAutoresizingFlexibleLeftMargin);
+    self[@"UIViewAutoresizingFlexibleWidth"]        = @(UIViewAutoresizingFlexibleWidth);
+    self[@"UIViewAutoresizingFlexibleRightMargin"]  = @(UIViewAutoresizingFlexibleRightMargin);
+    self[@"UIViewAutoresizingFlexibleTopMargin"]    = @(UIViewAutoresizingFlexibleTopMargin);
+    self[@"UIViewAutoresizingFlexibleHeight"]       = @(UIViewAutoresizingFlexibleHeight);
+    self[@"UIViewAutoresizingFlexibleBottomMargin"] = @(UIViewAutoresizingFlexibleBottomMargin);
+    
+    self[@"NSTextAlignmentLeft"]      = @(NSTextAlignmentLeft);
+    self[@"NSTextAlignmentCenter"]    = @(NSTextAlignmentCenter);
+    self[@"NSTextAlignmentRight"]     = @(NSTextAlignmentRight);
+    self[@"NSTextAlignmentJustified"] = @(NSTextAlignmentJustified);
+    self[@"NSTextAlignmentNatural"]   = @(NSTextAlignmentNatural);
+    
+    /* Custom */
     
     self[@"JSView"] = [JSView class];
 }

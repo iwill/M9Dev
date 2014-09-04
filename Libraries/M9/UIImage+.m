@@ -29,18 +29,6 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 
 @implementation UIImage (M9Category)
 
-#pragma mark image with name
-
-- (id)initWithName:(NSString *)name {
-    NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:name];
-    return [self initWithContentsOfFile:path];
-}
-
-+ (UIImage *)imageWithName:(NSString *)name {
-    NSString *path = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:name];
-    return [UIImage imageWithContentsOfFile:path];
-}
-
 #pragma mark resizable image
 
 - (UIImage *)resizableImage {
@@ -215,4 +203,3 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 }
 
 @end
-
