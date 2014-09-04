@@ -48,14 +48,15 @@
     self.scrollView.marginBottom = 10;
     self.scrollView.alwaysBounceVertical = YES;
     
-    CGRect frame = CGRectMake(- 1, 20, 320 + 2, 44);
+    CGRect frame = CGRectMake(- 1, 20, CGRectGetWidth(self.view.bounds) + 2, 44);
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.frame = frame;
-    [button setTitle:@"reload" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     button.layer.borderColor = [UIColor lightGrayColor].CGColor;
     button.layer.borderWidth = 0.5;
+    [button setTitle:@"reload" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
     self.top = CGRectGetMaxY(frame) + 20;

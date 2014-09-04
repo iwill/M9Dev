@@ -45,15 +45,16 @@
     self.scrollView.marginBottom = 10;
     self.scrollView.alwaysBounceVertical = YES;
     
-    CGRect frame = CGRectMake(- 1, 20, 320 + 2, 44);
+    CGRect frame = CGRectMake(- 1, 20, CGRectGetWidth(self.view.bounds) + 2, 44);
     
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
+        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
         [button setTitle:@"request" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped:) forControlEvents:UIControlEventTouchUpInside];
-        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        button.layer.borderWidth = 0.5;
         button;
     })];
     
@@ -61,10 +62,11 @@
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
+        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
         [button setTitle:@"request with callback" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped1:) forControlEvents:UIControlEventTouchUpInside];
-        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        button.layer.borderWidth = 0.5;
         button;
     })];
     
@@ -72,10 +74,11 @@
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
+        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        button.layer.borderWidth = 0.5;
         [button setTitle:@"request with custom callback" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped2:) forControlEvents:UIControlEventTouchUpInside];
-        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        button.layer.borderWidth = 0.5;
         button;
     })];
     
@@ -83,10 +86,11 @@
     [self.view addSubview:({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
         button.frame = frame;
-        [button setTitle:@"request with delegate" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonDidTapped3:) forControlEvents:UIControlEventTouchUpInside];
+        button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         button.layer.borderColor = [UIColor lightGrayColor].CGColor;
         button.layer.borderWidth = 0.5;
+        [button setTitle:@"request with delegate" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonDidTapped3:) forControlEvents:UIControlEventTouchUpInside];
         button;
     })];
 }
