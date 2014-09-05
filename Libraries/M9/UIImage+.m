@@ -18,6 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "UIImage+.h"
+#import "NSData+.h"
 
 static inline CGFloat DegreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;
@@ -194,7 +195,17 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 
 @end
 
-#pragma mark -
+#pragma mark - UIImage+Base64
+
+@implementation UIImage (Base64)
+
++ (instancetype)imageWithBase64String:(NSString *)base64String {
+    return [self imageWithData:[NSData dataWithBase64String:base64String]];
+}
+
+@end
+
+#pragma mark - UIImageView+M9Category
 
 @implementation UIImageView (M9Category)
 

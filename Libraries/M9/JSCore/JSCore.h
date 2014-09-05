@@ -26,10 +26,10 @@
 
 @property(nonatomic, copy) NSString *name;
 
-- (void)setupAll;
-// NOTE: Underscore?
-- (void)setupConsole;
-- (void)setupJSClass;
-- (void)setupUIKit;
+- (void)setUpAll;
+- (void)setUpConsole;
+- (void)setUpJSClass;
+- (void)setUpFoundation;
+- (void)setUpUIKit;
 
 @end

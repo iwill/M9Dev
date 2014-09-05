@@ -33,6 +33,16 @@
 
 @end
 
+#pragma mark - UIImage+Base64
+
+@interface UIImage (Base64)
+
++ (instancetype)imageWithBase64String:(NSString *)base64String;
+
+@end
+
+#pragma mark - UIImageView+M9Category
+
 @interface UIImageView (M9Category)
 
 + (instancetype)imageViewWithImageNamed:(NSString *)imageName;

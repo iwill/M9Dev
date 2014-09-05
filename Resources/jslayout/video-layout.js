@@ -71,7 +71,7 @@
         cell_updateWithData: function(cell, data) {
             JSLayout.prototype.cell_updateWithData.apply(this, arguments);
             var url = NSURL.URLWithString(data.hor_high_pic);
-            var image = UIImage.imageWithData(NSData.dataWithBase64String(this.placeholderImage || ""));
+            var image = UIImage.imageWithBase64String(this.placeholderImage);
             cell.subviewForKey("imageView").sd_setImageWithURLPlaceholderImage(url, image);
         }
     }, JSLayout);
@@ -85,7 +85,7 @@
         cell_updateWithData: function(cell, data) {
             JSLayout.prototype.cell_updateWithData.apply(this, arguments);
             var url = NSURL.URLWithString(data.ver_high_pic);
-            var image = UIImage.imageWithData(NSData.dataWithBase64String(this.placeholderImage || ""));
+            var image = UIImage.imageWithBase64String(this.placeholderImage);
             cell.subviewForKey("imageView").sd_setImageWithURLPlaceholderImage(url, image);
         }
     }, JSLayout);

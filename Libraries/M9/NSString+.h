@@ -15,18 +15,12 @@
 
 @end
 
-#pragma mark - Base64
+#pragma mark - NSString+Base64
 
 @interface NSString (Base64)
 
 + (instancetype)stringWithBase64Data:(NSData *)base64Data;
 + (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength;
 + (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength lineFeed:(NSString *)lineFeed;
-
-@end
-
-@interface NSData (Base64)
-
-+ (instancetype)dataWithBase64String:(NSString *)base64String;
 
 @end

@@ -69,7 +69,7 @@
         allVideos = [NSMutableArray array];
         
         context = [JSContext contextWithName:NSStringFromClass([self class])];
-        [context setupAll];
+        [context setUpAll];
         context[@"JSCollectionViewCell"] = [JSCollectionViewCell class];
         
         NSString *file = [[NSBundle mainBundle] pathForResource:@"video-layout"

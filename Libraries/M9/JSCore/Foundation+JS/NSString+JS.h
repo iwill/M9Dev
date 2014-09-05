@@ -29,15 +29,3 @@
 @interface NSString (JS) <NSStringExport>
 
 @end
-
-#pragma mark -
-
-@protocol NSDataExport_Base64 <JSExport>
-
-+ (instancetype)dataWithBase64String:(NSString *)base64String;
-
-@end
-
-@interface NSData (JS_Base64) <NSDataExport_Base64>
-
-@end

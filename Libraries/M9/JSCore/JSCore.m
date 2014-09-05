@@ -60,13 +60,14 @@
     return [NSString stringWithFormat:@"%@+%@", NSStringFromClass([JSContext class]), self.name];
 }
 
-- (void)setupAll {
-    [self setupConsole];
-    [self setupJSClass];
-    [self setupUIKit];
+- (void)setUpAll {
+    [self setUpConsole];
+    [self setUpJSClass];
+    [self setUpFoundation];
+    [self setUpUIKit];
 }
 
-- (void)setupConsole {
+- (void)setUpConsole {
     self.exceptionHandler = ^(JSContext *context, JSValue *exception) {
         NSLog(@"[%@ | EXCEPTION] %@\n%@\n\n", context, exception, [exception valueForProperty:@"stack"]);
     };
@@ -82,7 +83,7 @@
     } };
 }
 
-- (void)setupJSClass {
+- (void)setUpJSClass {
     [self evaluateScript:@(
      "/*!"
      " * Javascript library - $class v0.2"
@@ -113,15 +114,13 @@
      )];
 }
 
-- (void)setupUIKit {
-    /* Foundation */
-    
+- (void)setUpFoundation {
     self[@"NSString"] = [NSString class];
     self[@"NSData"] = [NSData class];
     self[@"NSURL"] = [NSURL class];
-    
-    /* UIKit */
-    
+}
+
+- (void)setUpUIKit {
     self[@"UIColor"] = [UIColor class];
     self[@"UIFont"] = [UIFont class];
     
@@ -134,6 +133,12 @@
     
     /* UIKit Values */
     
+    self[@"NSTextAlignmentLeft"]      = @(NSTextAlignmentLeft);
+    self[@"NSTextAlignmentCenter"]    = @(NSTextAlignmentCenter);
+    self[@"NSTextAlignmentRight"]     = @(NSTextAlignmentRight);
+    self[@"NSTextAlignmentJustified"] = @(NSTextAlignmentJustified);
+    self[@"NSTextAlignmentNatural"]   = @(NSTextAlignmentNatural);
+    
     self[@"UIViewAutoresizingNone"]                 = @(UIViewAutoresizingNone);
     self[@"UIViewAutoresizingFlexibleLeftMargin"]   = @(UIViewAutoresizingFlexibleLeftMargin);
     self[@"UIViewAutoresizingFlexibleWidth"]        = @(UIViewAutoresizingFlexibleWidth);
@@ -141,12 +146,6 @@
     self[@"UIViewAutoresizingFlexibleTopMargin"]    = @(UIViewAutoresizingFlexibleTopMargin);
     self[@"UIViewAutoresizingFlexibleHeight"]       = @(UIViewAutoresizingFlexibleHeight);
     self[@"UIViewAutoresizingFlexibleBottomMargin"] = @(UIViewAutoresizingFlexibleBottomMargin);
-    
-    self[@"NSTextAlignmentLeft"]      = @(NSTextAlignmentLeft);
-    self[@"NSTextAlignmentCenter"]    = @(NSTextAlignmentCenter);
-    self[@"NSTextAlignmentRight"]     = @(NSTextAlignmentRight);
-    self[@"NSTextAlignmentJustified"] = @(NSTextAlignmentJustified);
-    self[@"NSTextAlignmentNatural"]   = @(NSTextAlignmentNatural);
     
     /* Custom */
     

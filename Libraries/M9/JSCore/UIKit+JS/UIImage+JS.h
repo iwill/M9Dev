@@ -100,6 +100,10 @@
 
 + (UIImage *)screenshot;
 
+#pragma mark - UIImage+Base64
+
++ (instancetype)imageWithBase64String:(NSString *)base64String;
+
 @end
 
 @interface UIImage (JS) <UIImageExport>

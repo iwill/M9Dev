@@ -35,7 +35,7 @@
         self.automaticallyAdjustsScrollViewInsets = YES;
         
         context = [JSContext contextWithName:NSStringFromClass([self class])];
-        [context setupAll];
+        [context setUpAll];
     }
     return self;
 }

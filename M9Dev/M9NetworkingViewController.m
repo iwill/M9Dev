@@ -32,7 +32,7 @@
         self.extendedLayoutIncludesOpaqueBars = YES;
         self.automaticallyAdjustsScrollViewInsets = YES;
         
-        [self setupRequestConfig];
+        [self setUpRequestConfig];
     }
     return self;
 }
@@ -99,7 +99,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)setupRequestConfig {
+- (void)setUpRequestConfig {
     // testURLString = @"/hello.txt";
     // testURLString = @"/static/index.html";
     testURLString = @"/route/path/file.json?a=1&b=2";
