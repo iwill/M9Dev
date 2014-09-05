@@ -62,6 +62,7 @@
 		DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF235FF197658D500F0A7F0 /* M9RequestInfo.m */; };
 		DFF3C3CA19B9A26700E8F0DA /* NSData+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3C919B9A26700E8F0DA /* NSData+.m */; };
 		DFF3C3CD19B9A44100E8F0DA /* NSData+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */; };
+		DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +181,8 @@
 		DFF3C3C919B9A26700E8F0DA /* NSData+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+.m"; sourceTree = "<group>"; };
 		DFF3C3CB19B9A44100E8F0DA /* NSData+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+JS.h"; sourceTree = "<group>"; };
 		DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JS.m"; sourceTree = "<group>"; };
+		DFF3C3DC19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
 		DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CGRect.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -250,6 +253,8 @@
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
 				DFF233C319B8BB010045FDCE /* JSCollectionViewCell.h */,
 				DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */,
+				DFF3C3DC19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.h */,
+				DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */,
 				DFD6964D1998788B0089B2B5 /* JSLayoutViewController.h */,
 				DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */,
 				DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */,
@@ -598,6 +603,7 @@
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DFF233A019B84D910045FDCE /* UICollectionViewCell+JS.m in Sources */,
+				DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */,
 				DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */,
 				DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,

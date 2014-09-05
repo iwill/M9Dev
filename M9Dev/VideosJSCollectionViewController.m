@@ -23,6 +23,7 @@
 #import "JSCore.h"
 #import "JSView.h"
 #import "UICollectionViewFlowLayout+JS.h"
+#import "JSCollectionViewFlowLayout.h"
 #import "JSCollectionViewCell.h"
 
 @interface VideosJSCollectionViewController ()
@@ -41,7 +42,7 @@
     BOOL isLoading;
     
     UISegmentedControl *layoutSegmentedControl;
-    NSArray *jsLayouts, *ocLayouts;
+    NSArray *layouts;
 }
 
 - (instancetype)init {
@@ -116,7 +117,7 @@
 }
 
 - (void)layoutSegmentedControlValueDidChange:(UISegmentedControl *)segmentedControl {
-    UICollectionViewLayout *nextLayout = [ocLayouts objectOrNilAtIndex:segmentedControl.selectedSegmentIndex];
+    UICollectionViewLayout *nextLayout = [layouts objectOrNilAtIndex:segmentedControl.selectedSegmentIndex];
     if (!nextLayout) {
         return;
     }
@@ -144,26 +145,22 @@
 }
 
 - (void)loadLayouts {
-    NSMutableArray *jsLayoutsArray = [NSMutableArray array];
-    NSMutableArray *ocLayoutsArray = [NSMutableArray array];
     NSMutableArray *layoutNames = [NSMutableArray array];
-    jsLayouts = ({
-        JSValue *jsLayoutsValue = context[@"JSLayout"][@"jsLayouts"];
-        NSInteger jsLayoutsCount = [jsLayoutsValue[@"length"] toInt32];
+    layouts = ({
+        NSMutableArray *mLayouts = [NSMutableArray array];
+        JSValue *jsLayouts = context[@"JSLayout"][@"jsLayouts"];
+        NSInteger jsLayoutsCount = [jsLayouts[@"length"] toInt32];
         for (NSInteger i = 0; i < jsLayoutsCount; i++) {
-            JSValue *jsLayout = jsLayoutsValue[@(i)];
-            UICollectionViewFlowLayout *ocLayout = [UICollectionViewFlowLayout new];
-            [jsLayout callMethod:@"layout_setUp" withArguments:@[ ocLayout ]];
-            NSString *layoutName = [jsLayout[@"name"] toString];
-            [jsLayoutsArray addObjectOrNil:jsLayout];
-            [ocLayoutsArray addObjectOrNil:ocLayout];
-            [layoutNames addObjectOrNil:layoutName];
-            
-            [self.collectionView registerClass:[JSCollectionViewCell class] forCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layoutName]];
+            JSValue *jsLayout = jsLayouts[@(i)];
+            JSCollectionViewFlowLayout *layout = [JSCollectionViewFlowLayout new];
+            layout.jsLayout = jsLayout;
+            [mLayouts addObjectOrNil:layout];
+            [layoutNames addObjectOrNil:layout.name];
+            [self.collectionView registerClass:[JSCollectionViewCell class]
+                    forCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layout.name]];
         }
-        _RETURN [jsLayoutsArray copy];
+        _RETURN [mLayouts copy];
     });
-    ocLayouts = [ocLayoutsArray copy];
     
     layoutSegmentedControl = [[UISegmentedControl alloc] initWithItems:layoutNames];
     layoutSegmentedControl.selectedSegmentIndex = 0;
@@ -173,7 +170,7 @@
 }
 
 - (void)loadData {
-    if (![jsLayouts count]) {
+    if (![layouts count]) {
         [self loadLayouts];
     }
     
@@ -255,25 +252,24 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    JSValue *jsLayout = [jsLayouts objectOrNilAtIndex:layoutSegmentedControl.selectedSegmentIndex];
-    NSString *layoutName = [jsLayout[@"name"] toString];
+    JSCollectionViewFlowLayout *layout = [layouts objectOrNilAtIndex:layoutSegmentedControl.selectedSegmentIndex];
     
     NSDictionary *video = [allVideos objectOrNilAtIndex:indexPath.item];
-    JSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layoutName]
+    JSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[self reuseIdentifierWithLayoutName:layout.name]
                                                                            forIndexPath:indexPath];
     
     if (!cell.isSetUp) {
         cell.isSetUp = YES;
-        [jsLayout callMethod:@"cell_setUp" withArguments:@[ cell ]];
+        [layout cell_setUp:cell];
         
         weakify(cell);
         cell.prepareForReuseBlock = ^ {
             strongify(cell);
-            [jsLayout callMethod:@"cell_prepareForReuse" withArguments:@[ cell ]];
+            [layout cell_prepareForReuse:cell];
         };
     }
     
-    [jsLayout callMethod:@"cell_updateWithData" withArguments:@[ cell, video ]];
+    [layout cell_update:cell withData:video];
     
     return cell;
 }
