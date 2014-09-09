@@ -37,9 +37,6 @@
 @property(nonatomic) UIBaselineAdjustment baselineAdjustment;
 @property(nonatomic) CGFloat minimumScaleFactor NS_AVAILABLE_IOS(6_0);
 
-- (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines;
-- (void)drawTextInRect:(CGRect)rect;
-
 @property(nonatomic) CGFloat preferredMaxLayoutWidth NS_AVAILABLE_IOS(6_0);
 
 @end

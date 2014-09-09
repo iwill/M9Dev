@@ -27,9 +27,7 @@
 
 - (BOOL)isEqualToAttributedString:(NSAttributedString *)other;
 
-- (instancetype)initWithString:(NSString *)str;
 - (instancetype)initWithString:(NSString *)str attributes:(NSDictionary *)attrs;
-- (instancetype)initWithAttributedString:(NSAttributedString *)attrStr;
 
 - (void)enumerateAttributesInRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (^)(NSDictionary *attrs, NSRange range, BOOL *stop))block NS_AVAILABLE(10_6, 4_0);
 - (void)enumerateAttribute:(NSString *)attrName inRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (^)(id value, NSRange range, BOOL *stop))block NS_AVAILABLE(10_6, 4_0);

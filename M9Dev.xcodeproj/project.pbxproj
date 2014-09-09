@@ -53,7 +53,6 @@
 		DFF233A019B84D910045FDCE /* UICollectionViewCell+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339F19B84D910045FDCE /* UICollectionViewCell+JS.m */; };
 		DFF233AB19B85B140045FDCE /* jslayout in Resources */ = {isa = PBXBuildFile; fileRef = DFF233AA19B85B140045FDCE /* jslayout */; };
 		DFF233AF19B8759D0045FDCE /* NSURL+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233AE19B8759D0045FDCE /* NSURL+JS.m */; };
-		DFF233B219B876B50045FDCE /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B119B876B50045FDCE /* NSObject+JS.m */; };
 		DFF233B519B876C10045FDCE /* JSView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B419B876C10045FDCE /* JSView.m */; };
 		DFF233B819B879E60045FDCE /* UIImage+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233B719B879E60045FDCE /* UIImage+JS.m */; };
 		DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233BA19B87C2A0045FDCE /* NSString+JS.m */; };
@@ -164,8 +163,6 @@
 		DFF233AA19B85B140045FDCE /* jslayout */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jslayout; sourceTree = "<group>"; };
 		DFF233AD19B8759D0045FDCE /* NSURL+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+JS.h"; sourceTree = "<group>"; };
 		DFF233AE19B8759D0045FDCE /* NSURL+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+JS.m"; sourceTree = "<group>"; };
-		DFF233B019B876B50045FDCE /* NSObject+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JS.h"; sourceTree = "<group>"; };
-		DFF233B119B876B50045FDCE /* NSObject+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JS.m"; sourceTree = "<group>"; };
 		DFF233B319B876C10045FDCE /* JSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSView.h; sourceTree = "<group>"; };
 		DFF233B419B876C10045FDCE /* JSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSView.m; sourceTree = "<group>"; };
 		DFF233B619B879E60045FDCE /* UIImage+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JS.h"; sourceTree = "<group>"; };
@@ -448,8 +445,6 @@
 				DFB8480E19BF0B3D000D3B26 /* NSAttributedString+JS.m */,
 				DFF3C3CB19B9A44100E8F0DA /* NSData+JS.h */,
 				DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */,
-				DFF233B019B876B50045FDCE /* NSObject+JS.h */,
-				DFF233B119B876B50045FDCE /* NSObject+JS.m */,
 				DFF233B919B87C2A0045FDCE /* NSString+JS.h */,
 				DFF233BA19B87C2A0045FDCE /* NSString+JS.m */,
 				DFF233AD19B8759D0045FDCE /* NSURL+JS.h */,
@@ -604,7 +599,6 @@
 				DFF23600197658D500F0A7F0 /* M9RequestInfo.m in Sources */,
 				DFF233BE19B89F970045FDCE /* UIScrollView+.m in Sources */,
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
-				DFF233B219B876B50045FDCE /* NSObject+JS.m in Sources */,
 				DF69D2A81968763B00B8C011 /* M9Networking.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DFF233A019B84D910045FDCE /* UICollectionViewCell+JS.m in Sources */,

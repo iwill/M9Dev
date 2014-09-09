@@ -43,13 +43,6 @@
 @property(nonatomic,readonly) NSArray       *images   NS_AVAILABLE_IOS(5_0);
 @property(nonatomic,readonly) NSTimeInterval duration NS_AVAILABLE_IOS(5_0);
 
-- (void)drawAtPoint:(CGPoint)point;
-- (void)drawAtPoint:(CGPoint)point blendMode:(CGBlendMode)blendMode alpha:(CGFloat)alpha;
-- (void)drawInRect:(CGRect)rect;
-- (void)drawInRect:(CGRect)rect blendMode:(CGBlendMode)blendMode alpha:(CGFloat)alpha;
-
-- (void)drawAsPatternInRect:(CGRect)rect;
-
 // ???: is UIEdgeInsets available in js?
 - (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets NS_AVAILABLE_IOS(5_0);
 - (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets resizingMode:(UIImageResizingMode)resizingMode NS_AVAILABLE_IOS(6_0);

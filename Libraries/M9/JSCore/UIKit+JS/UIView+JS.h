@@ -62,14 +62,6 @@
 - (void)bringSubviewToFront:(UIView *)view;
 - (void)sendSubviewToBack:(UIView *)view;
 
-- (void)didAddSubview:(UIView *)subview;
-- (void)willRemoveSubview:(UIView *)subview;
-
-- (void)willMoveToSuperview:(UIView *)newSuperview;
-- (void)didMoveToSuperview;
-- (void)willMoveToWindow:(UIWindow *)newWindow;
-- (void)didMoveToWindow;
-
 - (BOOL)isDescendantOfView:(UIView *)view;
 - (UIView *)viewWithTag:(NSInteger)tag;
 
@@ -79,8 +71,6 @@
 - (void)layoutSubviews;
 
 #pragma mark UIViewRendering
-
-- (void)drawRect:(CGRect)rect;
 
 - (void)setNeedsDisplay;
 - (void)setNeedsDisplayInRect:(CGRect)rect;
@@ -97,8 +87,6 @@
 @property(nonatomic,retain) UIColor *tintColor NS_AVAILABLE_IOS(7_0);
 
 @property(nonatomic) UIViewTintAdjustmentMode tintAdjustmentMode NS_AVAILABLE_IOS(7_0);
-
-- (void)tintColorDidChange NS_AVAILABLE_IOS(7_0);
 
 #pragma mark UIViewAnimation
 
