@@ -26,13 +26,7 @@
 + (UIImage *)imageWithCIImage:(CIImage *)ciImage NS_AVAILABLE_IOS(5_0);
 + (UIImage *)imageWithCIImage:(CIImage *)ciImage scale:(CGFloat)scale orientation:(UIImageOrientation)orientation NS_AVAILABLE_IOS(6_0);
 
-// - (instancetype)initWithContentsOfFile:(NSString *)path;
-// - (instancetype)initWithData:(NSData *)data;
 - (instancetype)initWithData:(NSData *)data scale:(CGFloat)scale NS_AVAILABLE_IOS(6_0);
-// - (instancetype)initWithCGImage:(CGImageRef)cgImage;
-// - (instancetype)initWithCGImage:(CGImageRef)cgImage scale:(CGFloat)scale orientation:(UIImageOrientation)orientation NS_AVAILABLE_IOS(4_0);
-// - (instancetype)initWithCIImage:(CIImage *)ciImage NS_AVAILABLE_IOS(5_0);
-// - (instancetype)initWithCIImage:(CIImage *)ciImage scale:(CGFloat)scale orientation:(UIImageOrientation)orientation NS_AVAILABLE_IOS(6_0);
 
 @property(nonatomic,readonly) CGSize             size;
 @property(nonatomic,readonly) CGImageRef         CGImage;
@@ -56,12 +50,15 @@
 
 - (void)drawAsPatternInRect:(CGRect)rect;
 
+// ???: is UIEdgeInsets available in js?
 - (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets NS_AVAILABLE_IOS(5_0);
 - (UIImage *)resizableImageWithCapInsets:(UIEdgeInsets)capInsets resizingMode:(UIImageResizingMode)resizingMode NS_AVAILABLE_IOS(6_0);
 
+// ???: is UIEdgeInsets available in js?
 @property(nonatomic,readonly) UIEdgeInsets capInsets               NS_AVAILABLE_IOS(5_0);
 @property(nonatomic,readonly) UIImageResizingMode resizingMode NS_AVAILABLE_IOS(6_0);
 
+// ???: is UIEdgeInsets available in js?
 - (UIImage *)imageWithAlignmentRectInsets:(UIEdgeInsets)alignmentInsets NS_AVAILABLE_IOS(6_0);
 @property(nonatomic,readonly) UIEdgeInsets alignmentRectInsets NS_AVAILABLE_IOS(6_0);
 

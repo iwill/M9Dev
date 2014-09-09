@@ -38,6 +38,7 @@
 		DFA2F8DB197542CA009706AD /* NSDictionary+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA2F8DA197542CA009706AD /* NSDictionary+.m */; };
 		DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB335ED197FC33D002060E7 /* M9Utilities.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
+		DFB8480F19BF0B3D000D3B26 /* NSAttributedString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB8480E19BF0B3D000D3B26 /* NSAttributedString+JS.m */; };
 		DFD273D91999D9340062462F /* UILabel+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD273D81999D9340062462F /* UILabel+JS.m */; };
 		DFD273DC1999DD890062462F /* UIFont+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD273DB1999DD890062462F /* UIFont+JS.m */; };
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
@@ -134,6 +135,8 @@
 		DFB335ED197FC33D002060E7 /* M9Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Utilities.m; sourceTree = "<group>"; };
 		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
 		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
+		DFB8480D19BF0B3D000D3B26 /* NSAttributedString+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+JS.h"; sourceTree = "<group>"; };
+		DFB8480E19BF0B3D000D3B26 /* NSAttributedString+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+JS.m"; sourceTree = "<group>"; };
 		DFD273D71999D9340062462F /* UILabel+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+JS.h"; sourceTree = "<group>"; };
 		DFD273D81999D9340062462F /* UILabel+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+JS.m"; sourceTree = "<group>"; };
 		DFD273DA1999DD890062462F /* UIFont+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+JS.h"; sourceTree = "<group>"; };
@@ -441,6 +444,8 @@
 		DFF233AC19B8758C0045FDCE /* Foundation+JS */ = {
 			isa = PBXGroup;
 			children = (
+				DFB8480D19BF0B3D000D3B26 /* NSAttributedString+JS.h */,
+				DFB8480E19BF0B3D000D3B26 /* NSAttributedString+JS.m */,
 				DFF3C3CB19B9A44100E8F0DA /* NSData+JS.h */,
 				DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */,
 				DFF233B019B876B50045FDCE /* NSObject+JS.h */,
@@ -607,6 +612,7 @@
 				DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */,
 				DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
+				DFB8480F19BF0B3D000D3B26 /* NSAttributedString+JS.m in Sources */,
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
 				DFF233B519B876C10045FDCE /* JSView.m in Sources */,
 				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,

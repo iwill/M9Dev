@@ -84,6 +84,7 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
     return [self imageByRotateDegrees:degrees size:CGSizeZero];
 }
 
+// @see http://stackoverflow.com/questions/11667565/how-to-rotate-an-image-90-degrees-on-ios
 - (UIImage *)imageByRotateDegrees:(CGFloat)degrees size:(CGSize)size {
     if (CGSizeEqualToSize(size, CGSizeZero)) {
         UIView *rotatedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, self.size.height)];
@@ -94,12 +95,10 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
     
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    // 先上移一个图像高度，图像对y轴反转=>恢复成原图。
     CGContextTranslateCTM(context, 0, size.height);
-    CGContextScaleCTM(context, 1, -1);
-    // 再设定坐标系原点到图片中心，进行旋转操作。
+    CGContextScaleCTM(context, 1, - 1);
     CGContextTranslateCTM(context, size.width / 2, size.height / 2);
-    CGContextRotateCTM(context, -DegreesToRadians(degrees)); // 这里也需要反向一次。
+    CGContextRotateCTM(context, - DegreesToRadians(degrees));
     CGContextDrawImage(context,
                        CGRectMake(- size.width / 2,
                                   - size.height / 2,

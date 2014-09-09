@@ -116,8 +116,15 @@
 
 - (void)setUpFoundation {
     self[@"NSString"] = [NSString class];
+    self[@"NSAttributedString"] = [NSAttributedString class];
+    self[@"NSMutableAttributedString"] = [NSMutableAttributedString class];
     self[@"NSData"] = [NSData class];
     self[@"NSURL"] = [NSURL class];
+    
+    /* Values */
+    
+    self[@"NSAttributedStringEnumerationReverse"] = @(NSAttributedStringEnumerationReverse);
+    self[@"NSAttributedStringEnumerationLongestEffectiveRangeNotRequired"] = @(NSAttributedStringEnumerationLongestEffectiveRangeNotRequired);
 }
 
 - (void)setUpUIKit {
@@ -131,7 +138,7 @@
     self[@"UICollectionViewCell"] = [UICollectionViewCell class];
     self[@"UICollectionViewFlowLayout"] = [UICollectionViewFlowLayout class];
     
-    /* UIKit Values */
+    /* Values */
     
     self[@"NSTextAlignmentLeft"]      = @(NSTextAlignmentLeft);
     self[@"NSTextAlignmentCenter"]    = @(NSTextAlignmentCenter);
