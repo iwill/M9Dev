@@ -15,10 +15,6 @@ typedef id (^NSArrayObjectValidator)(id object);
  */
 @interface NSArray (Shortcuts)
 
-@property(nonatomic, readonly, assign) NSUInteger count;
-@property(nonatomic, readonly, retain) id firstObject;
-@property(nonatomic, readonly, retain) id lastObject;
-
 - (id)objectOrNilAtIndex:(NSUInteger)index;
 - (BOOL)containsIndex:(NSUInteger)index;
 

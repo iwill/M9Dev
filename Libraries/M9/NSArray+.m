@@ -19,19 +19,12 @@
 
 @implementation NSArray (Shortcuts)
 
-@dynamic count;
-@dynamic firstObject, lastObject;
-
-- (id)firstObject {
-    return [self objectOrNilAtIndex:0];
-}
-
 - (id)objectOrNilAtIndex:(NSUInteger)index {
     return [self containsIndex:index] ? [self objectAtIndex:index] : nil;
 }
 
 - (BOOL)containsIndex:(NSUInteger)index {
-    return index < self.count;
+    return index < [self count];
 }
 
 @end
@@ -47,7 +40,7 @@
 }
 
 - (BOOL)insertObjectOrNil:(id)anObject atIndex:(NSUInteger)index {
-    if (anObject && index <= self.count) {
+    if (anObject && index <= [self count]) {
         [self insertObject:anObject atIndex:index];
         return YES;
     }
@@ -55,7 +48,7 @@
 }
 
 - (BOOL)replaceObjectAtIndex:(NSUInteger)index withObjectOrNil:(id)anObject {
-    if (anObject && index < self.count) {
+    if (anObject && index < [self count]) {
         [self replaceObjectAtIndex:index withObject:anObject];
         return YES;
     }
