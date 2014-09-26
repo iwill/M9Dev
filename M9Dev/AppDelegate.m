@@ -12,7 +12,18 @@
 
 #import "M9DevTestTableViewController.h"
 
+#define APP_VERSION_KEY @"CFBundleShortVersionString"
+#define APP_VERSION [[[NSBundle mainBundle] objectForInfoDictionaryKey:APP_VERSION_KEY] description]
+
+#define APP_BUILD_VERSION_KEY @"CFBundleVersion"
+#define APP_BUILD_VERSION [[[NSBundle mainBundle] objectForInfoDictionaryKey:APP_BUILD_VERSION_KEY] description]
+
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSLog(@"<#format#>： %@ - %@", APP_VERSION, APP_BUILD_VERSION);
+    return YES;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
