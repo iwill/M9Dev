@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
+		DF141F171A00C01200F03F0B /* NSAttributedString+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF141F161A00C01200F03F0B /* NSAttributedString+.m */; };
+		DF142B6A1A10BF2D00939F21 /* M9Promise.m in Sources */ = {isa = PBXBuildFile; fileRef = DF142B691A10BF2D00939F21 /* M9Promise.m */; };
 		DF157D36199D12B600304E8E /* NSArray+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D35199D12B600304E8E /* NSArray+.m */; };
 		DF157D57199D53BF00304E8E /* UIImage+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF157D56199D53BF00304E8E /* UIImage+.m */; };
 		DF1AF121196C56AB00238C77 /* AFNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1AF120196C56AB00238C77 /* AFNResponseInfo.m */; };
@@ -79,6 +81,10 @@
 /* Begin PBXFileReference section */
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		DF141F151A00C01200F03F0B /* NSAttributedString+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+.h"; sourceTree = "<group>"; };
+		DF141F161A00C01200F03F0B /* NSAttributedString+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+.m"; sourceTree = "<group>"; };
+		DF142B681A10BF2D00939F21 /* M9Promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Promise.h; sourceTree = "<group>"; };
+		DF142B691A10BF2D00939F21 /* M9Promise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9Promise.m; sourceTree = "<group>"; };
 		DF157D34199D12B600304E8E /* NSArray+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+.h"; sourceTree = "<group>"; };
 		DF157D35199D12B600304E8E /* NSArray+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+.m"; sourceTree = "<group>"; };
 		DF157D55199D53BF00304E8E /* UIImage+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+.h"; sourceTree = "<group>"; };
@@ -338,10 +344,14 @@
 			children = (
 				DFD7AB6F1994C0E10054CD55 /* JSCore */,
 				DF69D29C1968763B00B8C011 /* M9Networking */,
+				DF142B681A10BF2D00939F21 /* M9Promise.h */,
+				DF142B691A10BF2D00939F21 /* M9Promise.m */,
 				DF69D2611968513300B8C011 /* M9Utilities.h */,
 				DFB335ED197FC33D002060E7 /* M9Utilities.m */,
 				DF157D34199D12B600304E8E /* NSArray+.h */,
 				DF157D35199D12B600304E8E /* NSArray+.m */,
+				DF141F151A00C01200F03F0B /* NSAttributedString+.h */,
+				DF141F161A00C01200F03F0B /* NSAttributedString+.m */,
 				DFF3C3C819B9A26700E8F0DA /* NSData+.h */,
 				DFF3C3C919B9A26700E8F0DA /* NSData+.m */,
 				DF69D28C1968605800B8C011 /* NSDate+.h */,
@@ -606,6 +616,7 @@
 				DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */,
 				DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
+				DF141F171A00C01200F03F0B /* NSAttributedString+.m in Sources */,
 				DFB8480F19BF0B3D000D3B26 /* NSAttributedString+JS.m in Sources */,
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
 				DFF233B519B876C10045FDCE /* JSView.m in Sources */,
@@ -630,6 +641,7 @@
 				DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */,
 				DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */,
 				DF69D28E1968605800B8C011 /* NSDate+.m in Sources */,
+				DF142B6A1A10BF2D00939F21 /* M9Promise.m in Sources */,
 				DF157D57199D53BF00304E8E /* UIImage+.m in Sources */,
 				DFF233C219B8AF560045FDCE /* JRSwizzle.m in Sources */,
 				DF69D2A91968763B00B8C011 /* M9RequestRef.m in Sources */,
