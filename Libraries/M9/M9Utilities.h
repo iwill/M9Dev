@@ -42,6 +42,13 @@
         va_end(arg_list); \
     } \
 }
+#define va_array(type, first) ({ \
+    NSMutableArray *array = [NSMutableArray array]; \
+    va_each(type, first, ^(type arg) { \
+        if (arg) [array addObject:arg]; \
+    }); \
+    _RETURN array; \
+})
 
 
 /**
