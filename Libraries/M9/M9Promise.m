@@ -16,7 +16,7 @@
 
 @interface M9Promise ()
 
-@property(nonatomic, copy) NSMutableArray *tasks;
+@property(nonatomic, copy) Task task;
 
 @end
 
@@ -53,43 +53,25 @@
         };
         _reject = ^void (id reason) {
         };
-        
-        self.tasks = [NSMutableArray new];
     }
     return self;
 }
 
 + (instancetype)promise:(Task)task {
     M9Promise *promise = [self new];
-    [promise.tasks addObjectOrNil:task];
+    promise.task = task;
     return promise;
 }
 
 + (instancetype)all:(Task)first, ... {
     M9Promise *promise = [self new];
-    va_each(Task, first, ^(Task task) {
-        [promise.tasks addObject:task];
-    });
-    /*
-    Task arg;
-    va_list arg_list;
-    if (first) {
-        [promise.tasks addObject: first];
-        
-        va_start(arg_list, first);
-        while ((arg = va_arg(arg_list, Task))) {
-            [promise.tasks addObject: arg];
-        }
-        va_end(arg_list);
-    } */
+    // TODO: NSMutableArray *tasks = va_array(M9Promise *, first);
     return promise;
 }
 
 + (instancetype)any:(Task)first, ... {
     M9Promise *promise = [self new];
-    va_each(Task, first, ^(Task task) {
-        [promise.tasks addObject:task];
-    });
+    // TODO: NSMutableArray *tasks = va_array(M9Promise *, first);
     return promise;
 }
 
