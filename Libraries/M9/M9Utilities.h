@@ -28,6 +28,23 @@
 
 
 /**
+ * va_each
+ */
+#define va_each(type, first, block) { \
+    type arg; \
+    va_list arg_list; \
+    if (first) { \
+        block(first); \
+        va_start(arg_list, first); \
+        while((arg = va_arg(arg_list, type))) { \
+            block(arg); \
+        } \
+        va_end(arg_list); \
+    } \
+}
+
+
+/**
  * NSLocking
  * Allows return everywhere between LOCK and UNLOCK, no need extra unlock
  */
