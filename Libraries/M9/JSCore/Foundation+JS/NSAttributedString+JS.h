@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
+#import "NSAttributedString+.h"
+
 @protocol NSAttributedStringExport <JSExport>
 
 #pragma mark NSAttributedString
@@ -32,6 +34,11 @@
 - (void)enumerateAttributesInRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (^)(NSDictionary *attrs, NSRange range, BOOL *stop))block NS_AVAILABLE(10_6, 4_0);
 - (void)enumerateAttribute:(NSString *)attrName inRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (^)(id value, NSRange range, BOOL *stop))block NS_AVAILABLE(10_6, 4_0);
 
+#pragma mark NSAttributedString+
+
++ (instancetype)attributedStringWithHTMLString:(NSString *)string NS_AVAILABLE_IOS(7_0); // use NSUTF8StringEncoding
++ (instancetype)attributedStringWithHTMLString:(NSString *)string encoding:(NSStringEncoding)encoding error:(NSError **)error NS_AVAILABLE_IOS(7_0);
+
 @end
 
 @interface NSAttributedString (JS) <NSAttributedStringExport>
@@ -42,12 +49,12 @@
 
 @protocol NSMutableAttributedStringExport <JSExport>
 
-#pragma mark NSMutableAttributedStringExport
+#pragma mark NSAttributedString
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str;
 - (void)setAttributes:(NSDictionary *)attrs range:(NSRange)range;
 
-#pragma mark NSMutableAttributedStringExport+NSExtendedMutableAttributedString
+#pragma mark NSAttributedString+NSExtendedMutableAttributedString
 
 @property (readonly, retain) NSMutableString *mutableString;
 
