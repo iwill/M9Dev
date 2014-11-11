@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+/* TODO: Thenable?
+@protocol M9Thenable <NSObject>
+
+@property(nonatomic, copy, readonly) id<M9Thenable> (^then)(id (^fulfillCallback)(id value), id (^rejectCallback)(id value));
+
+@end */
+
 /**
  * M9Promise
  *  a simple implementation Promises/A+ with Objective-C
@@ -23,6 +30,9 @@
  */
 @class M9Promise;
 
+typedef void (^M9PromiseCall)(id value);
+typedef void (^M9PromiseTask)(M9PromiseCall fulfill, M9PromiseCall reject);
+
 /**
  * M9PromiseCallback
  *  callback type for fulfill/reject
@@ -36,10 +46,9 @@
  *  or a new promise before the next-promise in the chain
  */
 typedef id (^M9PromiseCallback)(id value);
-
-typedef M9Promise *(^M9Then)(M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback);
-typedef M9Promise *(^M9Done)(M9PromiseCallback fulfillCallback);
-typedef M9Promise *(^M9Catch)(M9PromiseCallback rejectCallback);
+typedef M9Promise *(^M9PromiseThen)(M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback);
+typedef M9Promise *(^M9PromiseDone)(M9PromiseCallback fulfillCallback);
+typedef M9Promise *(^M9PromiseCatch)(M9PromiseCallback rejectCallback);
 
 typedef NS_ENUM(NSInteger, M9PromiseState) {
     M9PromiseStatePending = 0,
@@ -52,20 +61,17 @@ typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
     M9PromiseErrorCode_TypeError
 };
 
-#define M9PromiseException @"M9PromiseException"
-
 #pragma mark -
 
 @interface M9Promise : NSObject
 
 @property(nonatomic) M9PromiseState state;
 
-typedef void (^M9PromiseTask)(M9PromiseCallback fulfill, M9PromiseCallback reject);
 + (instancetype)promise:(M9PromiseTask)task;
 
-@property(nonatomic, copy, readonly) M9Then then/* (M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback) */;
-@property(nonatomic, copy, readonly) M9Done done/* (M9PromiseCallback fulfillCallback) */;
-@property(nonatomic, copy, readonly) M9Catch catch/* (M9PromiseCallback rejectCallback) */;
+@property(nonatomic, copy, readonly) M9PromiseThen then/* (M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback) */;
+@property(nonatomic, copy, readonly) M9PromiseDone done/* (M9PromiseCallback fulfillCallback) */;
+@property(nonatomic, copy, readonly) M9PromiseCatch catch/* (M9PromiseCallback rejectCallback) */;
 
 // ???: M9Promise or M9PromiseTask
 + (instancetype)all:(id)task, ...;

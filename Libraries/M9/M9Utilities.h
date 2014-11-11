@@ -23,7 +23,6 @@
  * NSString
  */
 #define NSStringFromValue(value)                [@(value) description]
-#define NSStringFromValue(value, selector)      [@(value) performSelector:selector]
 #define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
 #define NSStringFromVariableName(variableName)  @(#variableName) // #variableName - variableName to CString
 
