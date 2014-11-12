@@ -43,7 +43,7 @@
 
 #pragma mark -
 
-SpecBegin(M9Promise);
+SpecBegin(M9Promise)
 
 describe(@"promise", ^{
     M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
@@ -67,5 +67,5 @@ describe(@"resolver", ^{
     });
 });
 
-SpecEnd;
+SpecEnd
 
