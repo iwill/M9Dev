@@ -76,22 +76,24 @@ describe(@"resolver", ^{
 describe(@"Calling resolve(x)", ^{
     describe(@"if promise is resolved", ^{
         it(@"nothing happens", ^{
-            // TODO: 0.3.0.beta1
-            // waitUntil(^(DoneCallback done) {
-            // });
-            
-            id<M9Thenable> thenable = [TestThenable new];
-            [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                dispatch_async_main_queue(^{
-                    fulfill(thenable);
-                    fulfill(nil);
+            waitUntil(^(DoneCallback done) {
+                id<M9Thenable> thenable = [TestThenable new];
+                [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    dispatch_async_main_queue(^{
+                        fulfill(thenable);
+                        fulfill(nil);
+                    });
+                }].done(^id (id value) {
+                    expect(value).equal(sentinel);
+                    return nil;
+                }).then(^id (id value) {
+                    done();
+                    return nil;
+                }, ^id (id value) {
+                    expect(value).raise(value);
+                    done();
+                    return nil;
                 });
-            }].done(^id (id value) {
-                expect(value).equal(sentinel);
-                return nil;
-            }).catch(^id (id value) {
-                expect(value).raise(value);
-                return nil;
             });
         });
     });
