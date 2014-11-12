@@ -21,7 +21,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"<#format#>： %@ - %@", APP_VERSION, APP_BUILD_VERSION);
+    NSLog(@"<#format#>: %@ - %@", APP_VERSION, APP_BUILD_VERSION);
     return YES;
 }
 
