@@ -76,6 +76,7 @@ describe(@"resolver", ^{
 describe(@"Calling resolve(x)", ^{
     describe(@"if promise is resolved", ^{
         it(@"nothing happens", ^{
+            // TODO: 0.3.0.beta1
             // waitUntil(^(DoneCallback done) {
             // });
             
