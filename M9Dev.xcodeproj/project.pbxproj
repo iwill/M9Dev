@@ -66,6 +66,7 @@
 		DFF3C3CD19B9A44100E8F0DA /* NSData+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */; };
 		DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
+		DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,8 +80,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A02700F95B054A18079D484 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		318ADFA57C73C4C8D7A30130 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DF141F151A00C01200F03F0B /* NSAttributedString+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+.h"; sourceTree = "<group>"; };
 		DF141F161A00C01200F03F0B /* NSAttributedString+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+.m"; sourceTree = "<group>"; };
 		DF142B681A10BF2D00939F21 /* M9Promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Promise.h; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
 		DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CGRect.m"; sourceTree = "<group>"; };
+		DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9PromiseTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +221,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25F5EB7B7A00199AA682E364 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2A02700F95B054A18079D484 /* Pods.debug.xcconfig */,
+				318ADFA57C73C4C8D7A30130 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DF69D2181967EA7E00B8C011 = {
 			isa = PBXGroup;
 			children = (
@@ -227,7 +239,7 @@
 				DFF233A919B85B060045FDCE /* Resources */,
 				DF69D2231967EA7E00B8C011 /* Frameworks */,
 				DF69D2221967EA7E00B8C011 /* Products */,
-				DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */,
+				25F5EB7B7A00199AA682E364 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				DF69D2491967EA7F00B8C011 /* M9DevTests.m */,
+				DFFA08BF1A134D3A003168E1 /* M9Promise */,
 				DF69D2441967EA7F00B8C011 /* Supporting Files */,
 			);
 			path = M9DevTests;
@@ -472,6 +485,14 @@
 			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
+		DFFA08BF1A134D3A003168E1 /* M9Promise */ = {
+			isa = PBXGroup;
+			children = (
+				DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */,
+			);
+			path = M9Promise;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -594,7 +615,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -658,6 +679,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF69D24A1967EA7F00B8C011 /* M9DevTests.m in Sources */,
+				DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +787,7 @@
 		};
 		DF69D24E1967EA7F00B8C011 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */;
+			baseConfigurationReference = 2A02700F95B054A18079D484 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -780,7 +802,7 @@
 		};
 		DF69D24F1967EA7F00B8C011 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD703BB70BAB4E7DADA69FB9 /* Pods.xcconfig */;
+			baseConfigurationReference = 318ADFA57C73C4C8D7A30130 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -795,6 +817,7 @@
 		};
 		DF69D2511967EA7F00B8C011 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A02700F95B054A18079D484 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -817,6 +840,7 @@
 		};
 		DF69D2521967EA7F00B8C011 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 318ADFA57C73C4C8D7A30130 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
 				FRAMEWORK_SEARCH_PATHS = (
