@@ -12,6 +12,7 @@
 #import "M9Utilities.h"
 #import "NSInvocation+.h"
 #import "M9Networking.h"
+#import "NSAttributedString+.h"
 
 #import "M9RequestInfoExt.h"
 
@@ -92,6 +93,22 @@
         [button setTitle:@"request with delegate" forState:UIControlStateNormal];
         [button addTarget:self action:@selector(buttonDidTapped3:) forControlEvents:UIControlEventTouchUpInside];
         button;
+    })];
+    
+    frame.origin.y = CGRectGetMaxY(frame) + 20;
+    [self.view addSubview:({
+        UILabel *label = [[UILabel alloc] initWithFrame:frame];
+        label.attributedText = [NSAttributedString attributedStringWithHTMLString:@(
+                                "<span>test label with html: </span>"
+                                "<span style='color: green;'>IMDb </span>"
+                                "<span style='color: red;'><span style='font-size: larger;'>9</span>.8</span>"
+                                "<img style='width: 32px; height: 32px;' src='https://avatars1.githubusercontent.com/u/188828?v=2&amp;s=40'>"
+                                )];
+        label.textAlignment = NSTextAlignmentCenter; // MUST after label.attributedText
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        label.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        label.layer.borderWidth = 0.5;
+        _RETURN label;
     })];
 }
 
