@@ -8,84 +8,76 @@
 
 #import <Foundation/Foundation.h>
 
-/* TODO: Thenable?
-@protocol M9Thenable <NSObject>
-
-@property(nonatomic, copy, readonly) id<M9Thenable> (^then)(id (^fulfillCallback)(id value), id (^rejectCallback)(id value));
-
-@end */
-
 /**
- * M9Promise
- *  a simple implementation Promises/A+ with Objective-C
+ * M9Thenable
+ *  Thenable from Promises/A+
  *
  * @see
  *  Promises/A+
  *  https://promisesaplus.com/
  *  http://www.ituring.com.cn/article/66566
+ */
+
+/**
+ * M9ThenableCallback
+ *  callback type for fulfill/reject
+ *
+ * @param id value
+ *  value to fulfill/reject the current-promise
+ *
+ * @return
+ *  nil if nothing to do
+ *  a value to fulfill the next-promise from then
+ *  a thenable to fulfill/reject the next-promise
+ */
+typedef id (^M9ThenableCallback)(id value);
+
+@protocol M9Thenable <NSObject>
+
+@property(nonatomic, copy, readonly) id<M9Thenable> (^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+
+@end
+
+#pragma mark -
+
+/**
+ * M9Promise
+ *  a simple implementation Promises/A+ with Objective-C without exception handling
+ *
+ * @see
  *  PromiseJS Implementing
  *  https://www.promisejs.org/
  *  https://www.promisejs.org/implementing/
  *  https://github.com/then/promise/
  */
+
 @class M9Promise;
 
-typedef void (^M9PromiseCall)(id value);
-typedef void (^M9PromiseTask)(M9PromiseCall fulfill, M9PromiseCall reject);
-
-/**
- * M9PromiseCallback
- *  callback type for fulfill/reject
- *
- * @param id value
- *  value/reason to fulfill/reject the current-promise
- *
- * @return
- *  nil if nothing to do,
- *  a value/reason to fulfill/reject the next promise from then,
- *  or a new promise before the next-promise in the chain
- */
-typedef id (^M9PromiseCallback)(id value);
-typedef M9Promise *(^M9PromiseThen)(M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback);
-typedef M9Promise *(^M9PromiseDone)(M9PromiseCallback fulfillCallback);
-typedef M9Promise *(^M9PromiseCatch)(M9PromiseCallback rejectCallback);
-
-typedef NS_ENUM(NSInteger, M9PromiseState) {
-    M9PromiseStatePending = 0,
-    M9PromiseStateFulfilled,
-    M9PromiseStateRejected
-};
+typedef void (^M9PromiseCallback)(id value);
+typedef void (^M9PromiseBlock)(M9PromiseCallback fulfill, M9PromiseCallback reject);
 
 #define M9PromiseError @"M9PromiseError"
 typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
     M9PromiseErrorCode_TypeError
 };
 
-#pragma mark -
+@interface M9Promise : NSObject <M9Thenable>
 
-@interface M9Promise : NSObject
+#pragma mark <M9Thenable>
 
-@property(nonatomic) M9PromiseState state;
+@property(nonatomic, copy, readonly) M9Promise *(^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 
-+ (instancetype)promise:(M9PromiseTask)task;
+#pragma mark helper
 
-@property(nonatomic, copy, readonly) M9PromiseThen then/* (M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback) */;
-@property(nonatomic, copy, readonly) M9PromiseDone done/* (M9PromiseCallback fulfillCallback) */;
-@property(nonatomic, copy, readonly) M9PromiseCatch catch/* (M9PromiseCallback rejectCallback) */;
+@property(nonatomic, copy, readonly) M9Promise *(^done)(M9ThenableCallback fulfillCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^catch)(M9ThenableCallback rejectCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^finally)(M9ThenableCallback fulfillCallback);
 
-// ???: M9Promise or M9PromiseTask
-+ (instancetype)all:(id)task, ...;
-+ (instancetype)any:(id)task, ...;
++ (instancetype)promise:(M9PromiseBlock)task;
 
-@end
-
-#pragma mark -
-
-#define _then(done, catch)   done:done catch:catch
-
-@interface M9Promise (ObjC)
-
-- (instancetype)done:(M9PromiseCallback)done catch:(M9PromiseCallback)catch;
++ (instancetype)all:(M9PromiseBlock)task, ...;
++ (instancetype)any:(M9PromiseBlock)task, ...;
+// !!!: if (howMany <= 0 || howMany > count) howMany = count;
++ (instancetype)some:(NSInteger)howMany :(M9PromiseBlock)task, ...;
 
 @end
-

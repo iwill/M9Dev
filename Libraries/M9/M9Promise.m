@@ -14,20 +14,24 @@
 
 @class M9Deferred;
 
-typedef void (^M9PromiseHandle)(M9Deferred *deferred);
-typedef void (^M9PromiseFinale)();
+typedef NS_ENUM(NSInteger, M9PromiseState) {
+    M9PromiseStatePending = 0,
+    M9PromiseStateFulfilled,
+    M9PromiseStateRejected
+};
 
 #pragma mark -
 
 @interface M9Promise ()
 
+@property(nonatomic) M9PromiseState state;
 @property(nonatomic, strong) id value;
 
-@property(nonatomic, copy, readonly) M9PromiseCall fulfill;
-@property(nonatomic, copy, readonly) M9PromiseCall reject;
+@property(nonatomic, copy, readonly) void (^handle)(M9Deferred *deferred);
+@property(nonatomic, copy, readonly) void (^finale)();
 
-@property(nonatomic, copy, readonly) M9PromiseHandle handle;
-@property(nonatomic, copy, readonly) M9PromiseFinale finale;
+@property(nonatomic, copy, readonly) M9PromiseCallback fulfill;
+@property(nonatomic, copy, readonly) M9PromiseCallback reject;
 
 @property(nonatomic, strong) NSMutableArray *deferreds;
 
@@ -35,39 +39,40 @@ typedef void (^M9PromiseFinale)();
 
 @interface M9Deferred : NSObject
 
-@property(nonatomic, copy) M9PromiseCallback fulfillCallback, rejectCallback;
-@property(nonatomic, copy) M9PromiseCall fulfill, reject;
+@property(nonatomic, copy) M9ThenableCallback fulfillCallback, rejectCallback;
+@property(nonatomic, copy) M9PromiseCallback nextFulfill, nextReject;
 
-+ (instancetype)deferred:(M9PromiseCallback)fulfillCallback
-                        :(M9PromiseCallback)rejectCallback
-                        :(M9PromiseCall)fulfill
-                        :(M9PromiseCall)reject;
++ (instancetype)deferred:(M9ThenableCallback)fulfillCallback
+                        :(M9ThenableCallback)rejectCallback
+                        :(M9PromiseCallback)nextFulfill
+                        :(M9PromiseCallback)nextReject;
 
 @end
 
 #pragma mark -
 
 @implementation M9Promise {
-    M9PromiseThen _then;
-    M9PromiseDone _done;
-    M9PromiseCatch _catch;
+    void (^_handle)(M9Deferred *deferred);
+    void (^_finale)();
     
-    M9PromiseCall _fulfill;
-    M9PromiseCall _reject;
+    M9Promise *(^_then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+    M9Promise *(^_done)(M9ThenableCallback fulfillCallback);
+    M9Promise *(^_catch)(M9ThenableCallback rejectCallback);
+    M9Promise *(^_finally)(M9ThenableCallback fulfillCallback);
     
-    M9PromiseHandle _handle;
-    M9PromiseFinale _finale;
+    M9PromiseCallback _fulfill;
+    M9PromiseCallback _reject;
 }
 
-+ (instancetype)promise:(M9PromiseTask)task {
-    return [[self alloc] initWithTask:task];
++ (instancetype)promise:(M9PromiseBlock)block {
+    return [[self alloc] initWithBlock:block];
 }
 
 - (instancetype)init {
-    return [self initWithTask:nil];
+    return [self initWithBlock:nil];
 }
 
-- (instancetype)initWithTask:(M9PromiseTask)task {
+- (instancetype)initWithBlock:(M9PromiseBlock)block {
     self = [super init];
     if (self) {
         weakify(self);
@@ -79,19 +84,19 @@ typedef void (^M9PromiseFinale)();
                 return;
             }
             dispatch_async_main_queue(^() {
-                M9PromiseCallback callback = nil;
-                M9PromiseCall call = nil;
+                M9ThenableCallback callback = nil;
+                M9PromiseCallback call = nil;
                 if (self.state == M9PromiseStateFulfilled) {
                     callback = deferred.fulfillCallback;
-                    call = deferred.fulfill;
+                    call = deferred.nextFulfill;
                 }
                 else if (self.state == M9PromiseStateRejected) {
                     callback = deferred.rejectCallback;
-                    call = deferred.reject;
+                    call = deferred.nextReject;
                 }
                 if (callback) {
                     id value = callback(self.value);
-                    deferred.fulfill(value);
+                    deferred.nextFulfill(value);
                 }
                 else {
                     call(self.value);
@@ -106,21 +111,26 @@ typedef void (^M9PromiseFinale)();
             self.deferreds = nil;
         };
         
-        _then = ^M9Promise *(M9PromiseCallback fulfillCallback, M9PromiseCallback rejectCallback) {
-            return [M9Promise promise:^(M9PromiseCall fulfill, M9PromiseCall reject) {
+        _then = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
+            return [M9Promise promise:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
                 strongify(self);
-                self.handle([M9Deferred deferred:fulfillCallback :rejectCallback :fulfill :reject]);
+                self.handle([M9Deferred deferred:fulfillCallback :rejectCallback :nextFulfill :nextReject]);
             }];
         };
         
-        _done = ^M9Promise *(M9PromiseCallback fulfillCallback) {
+        _done = ^M9Promise *(M9ThenableCallback fulfillCallback) {
             strongify(self);
             return self.then(fulfillCallback, nil);
         };
         
-        _catch = ^M9Promise *(M9PromiseCallback rejectCallback) {
+        _catch = ^M9Promise *(M9ThenableCallback rejectCallback) {
             strongify(self);
             return self.then(nil, rejectCallback);
+        };
+        
+        _finally = ^M9Promise *(M9ThenableCallback callback) {
+            strongify(self);
+            return self.then(callback, callback);
         };
         
         _fulfill = ^void (id value) {
@@ -132,14 +142,14 @@ typedef void (^M9PromiseFinale)();
                 self.reject([NSError errorWithDomain:M9PromiseError code:M9PromiseErrorCode_TypeError userInfo:nil]);
                 return;
             }
-            if ([value isKindOfClass:[M9Promise class]]) {
-                M9Promise *newPromise = (M9Promise *)value;
-                newPromise.then(^id (id value) {
+            if ([value conformsToProtocol:@protocol(M9Thenable)]) {
+                id<M9Thenable> thanable = (id<M9Thenable>)value;
+                thanable.then(^id (id value) {
                     self.fulfill(value);
-                    return nil; // ???:
+                    return nil;
                 }, ^id (id value) {
                     self.reject(value);
-                    return nil; // ???:
+                    return nil;
                 });
                 return;
             }
@@ -161,36 +171,70 @@ typedef void (^M9PromiseFinale)();
             self.finale();
         };
         
-        task(self.fulfill, self.reject);
+        block(self.fulfill, self.reject);
     }
     return self;
 }
 
-+ (instancetype)all:(id)first, ... {
++ (M9Promise *)some:(NSInteger)howMany of:(va_list)arg_list {
     M9Promise *promise = [self new];
-    // TODO: NSMutableArray *tasks = va_array(id, first);
+    NSMutableDictionary *values = [NSMutableDictionary new];
+    __block NSInteger count = 0, fulfilled = 0, rejected = 0;
+    
+    M9PromiseBlock block;
+    while ((block = va_arg(arg_list, M9PromiseBlock))) {
+        [M9Promise promise:block].then(^id (id value) {
+            [values setObject:value forKey:@(count)];
+            fulfilled++;
+            if ((fulfilled >= howMany || fulfilled >= count)
+                && rejected == 0) {
+                promise.fulfill(values);
+            }
+            return nil;
+        }, ^id (id value) {
+            if (howMany <= 0 || howMany >= count || rejected >= count - howMany) {
+                promise.reject(value);
+            }
+            rejected++;
+            return nil;
+        });
+        count++;
+    }
+    
     return promise;
 }
 
-+ (instancetype)any:(id)first, ... {
-    M9Promise *promise = [self new];
-    // TODO: NSMutableArray *tasks = va_array(id, first);
-    return promise;
++ (instancetype)all:(M9PromiseBlock)first, ... {
+    va_make(arg_list, first, {
+        return [self some:0 of:arg_list];
+    });
+}
+
++ (instancetype)any:(M9PromiseBlock)first, ... {
+    va_make(arg_list, first, {
+        return [self some:1 of:arg_list];
+    });
+}
+
++ (instancetype)some:(NSInteger)howMany :(M9PromiseBlock)first, ... {
+    va_make(arg_list, first, {
+        return [self some:howMany of:arg_list];
+    });
 }
 
 @end
 
 @implementation M9Deferred
 
-+ (instancetype)deferred:(M9PromiseCallback)fulfillCallback
-                        :(M9PromiseCallback)rejectCallback
-                        :(M9PromiseCall)fulfill
-                        :(M9PromiseCall)reject {
++ (instancetype)deferred:(M9ThenableCallback)fulfillCallback
+                        :(M9ThenableCallback)rejectCallback
+                        :(M9PromiseCallback)nextFulfill
+                        :(M9PromiseCallback)nextReject {
     M9Deferred *deferred = [self new];
     deferred.fulfillCallback = fulfillCallback;
     deferred.rejectCallback = rejectCallback;
-    deferred.fulfill = fulfill;
-    deferred.reject = reject;
+    deferred.nextFulfill = nextFulfill;
+    deferred.nextReject = nextReject;
     return deferred;
 }
 
