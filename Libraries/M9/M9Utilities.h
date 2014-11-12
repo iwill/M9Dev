@@ -22,13 +22,27 @@
 /**
  * NSString
  */
-#define NSStringFromValue(value)                [@(value) description]
-#define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
-#define NSStringFromVariableName(variableName)  @(#variableName) // #variableName - variableName to CString
+
+#define NSObjectFromValue(value)                                @(value)
+#define NSStringFromValue(value)                                [@(value) description]
+#define NSStringFromBOOL(value)                                 (value ? @"YES" : @"NO")
+#define NSStringFromVariableName(variableName)                  @(#variableName) // #variableName - variableName to CString
+
+#define NSStringFromLiteral(literal)                            @(#literal)
+// !!!: use defaultValue if preprocessor is undefined or its value is same to itself
+#define NSStringFromPreprocessor(preprocessor, defaultValue)    ({ \
+    NSString *string = NSStringFromLiteral(preprocessor); \
+    [string isEqualToString:@#preprocessor] ? defaultValue : string; \
+})
+// !!!: use defaultValue if preprocessor is undefined or its value is same to itself
+#define NSIntegerFromPreprocessor(preprocessor, defaultValue)   ({ \
+    NSString *string = NSStringFromLiteral(preprocessor); \
+    [string isEqualToString:@#preprocessor] ? defaultValue : [string integerValue]; \
+})
 
 
 /**
- * va_each
+ * va - variable arguments
  */
 #define va_each(type, first, block) { \
     type arg; \
@@ -42,13 +56,31 @@
         va_end(arg_list); \
     } \
 }
-#define va_array(type, first) ({ \
+#define va_each_if_yes(type, first, block) { \
+    type arg; \
+    va_list arg_list; \
+    if (first) { \
+        block(first); \
+        va_start(arg_list, first); \
+        while((arg = va_arg(arg_list, type)) && block(arg)) { \
+        } \
+        va_end(arg_list); \
+    } \
+}
+#define va_to_array(type, first) ({ \
     NSMutableArray *array = [NSMutableArray array]; \
     va_each(type, first, ^(type arg) { \
         if (arg) [array addObject:arg]; \
     }); \
     _RETURN array; \
 })
+#define va_make(arg_list, first, statements) \
+    va_list arg_list; \
+    va_start(arg_list, first); \
+    @try statements \
+    @finally { \
+        va_end(arg_list); \
+    }
 
 
 /**
@@ -63,10 +95,8 @@
  *  });
  */
 #define LOCKED($lock, $statements) \
-    @try { \
-        [$lock lock]; \
-        $statements \
-    } \
+    [$lock lock]; \
+    @try $statements \
     @finally { \
         [$lock unlock]; \
     }
@@ -76,11 +106,12 @@
  *  UNLOCK(id<NSLocking> lock);
 #define LOCK($lock) \
     @try { \
-        [$lock lock];
+        [$lock lock]; \
+        // statements
 #define UNLOCK($lock) \
+        [$lock unlock]; \
     } \
     @finally { \
-        [$lock unlock]; \
     }
  */
 
@@ -89,14 +120,15 @@
  *  UNLOCK();
  */
 #define LOCK($lock) \
-    {id<NSLocking> $$lock$$ = $lock; \
     @try { \
+        id<NSLocking> $$lock$$ = $lock; \
         [$$lock$$ lock];
+        // statements
 #define UNLOCK() \
+        [$$lock$$ unlock]; \
     } \
     @finally { \
-        [$$lock$$ unlock]; \
-    }}
+    }
 
 /* TODO: @synchronized without indent
  *  SYNCHRONIZED(object)
@@ -104,6 +136,7 @@
  *  SYNCHRONIZED_END
 #define SYNCHRONIZED(object) { \
     @synchronized(object) {
+        // statements
 #define END \
     }
  */
@@ -130,13 +163,16 @@
 #define dispatch_async_main_queue(block) \
     dispatch_async(dispatch_get_main_queue(), block)
 
+#define dispatch_async_background_queue(block) \
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block)
+
 
 /**
  * if: return self if condition is YES
  * as: return self if self is kind of class
  */
 
-@interface NSObject (SelfIf)
+@interface NSObject (ReturnSelf)
 
 - (id)if:(BOOL)condition;
 
