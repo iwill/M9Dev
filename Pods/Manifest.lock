@@ -20,12 +20,14 @@ PODS:
   - SDWebImage (3.7.1):
     - SDWebImage/Core
   - SDWebImage/Core (3.7.1)
+  - Specta (0.2.1)
   - TMCache (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (from `https://github.com/iwill/AFNetworking.git`, commit `5764f5400908b480bdb413b3b2a900916b62d7cc`)
   - Expecta (~> 0.3)
   - SDWebImage (~> 3.7)
+  - Specta (~> 0.2)
   - TMCache (~> 1.2)
 
 EXTERNAL SOURCES:
@@ -37,6 +39,7 @@ SPEC CHECKSUMS:
   AFNetworking: 14d22373b6972efcca8c560c2ad76d719f6c8367
   Expecta: 03aabd0a89d8dea843baecb19a7fd7466a69a31d
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
+  Specta: 9141310f46b1f68b676650ff2854e1ed0b74163a
   TMCache: ea1c509badaf9a1245422aabf3c975b3277ab138
 
 COCOAPODS: 0.34.4

@@ -8,6 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
+#ifndef EXP_SHORTHAND
+#define EXP_SHORTHAND
+#endif
+#import <Expecta/Expecta.h>
+
 @interface M9DevTests : XCTestCase
 
 @end
@@ -25,7 +30,16 @@
 }
 
 - (void)testExample {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    XCTAssert(YES, @"Pass");
+}
+
+- (void)testPerformanceExample {
+    [self measureBlock:^{
+    }];
+}
+
+- (void)testExpect {
+    expect(YES).to.equal(YES);
 }
 
 @end
