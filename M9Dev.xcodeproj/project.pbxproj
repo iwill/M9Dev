@@ -69,6 +69,7 @@
 		DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */; };
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 		DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */; };
+		DFFA08C71A136060003168E1 /* Specta+Expecta.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C61A136060003168E1 /* Specta+Expecta.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,7 @@
 		DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9PromiseTests.m; sourceTree = "<group>"; };
 		DFFA08C21A135AD7003168E1 /* Pods-M9Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		DFFA08C31A135AD7003168E1 /* Pods-M9Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.release.xcconfig"; sourceTree = "<group>"; };
+		DFFA08C61A136060003168E1 /* Specta+Expecta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Specta+Expecta.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				DF69D2491967EA7F00B8C011 /* M9DevTests.m */,
+				DFFA08C61A136060003168E1 /* Specta+Expecta.m */,
 				DFFA08BF1A134D3A003168E1 /* M9Promise */,
 				DF69D2441967EA7F00B8C011 /* Supporting Files */,
 			);
@@ -722,6 +725,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFFA08C71A136060003168E1 /* Specta+Expecta.m in Sources */,
 				DF69D24A1967EA7F00B8C011 /* M9DevTests.m in Sources */,
 				DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */,
 			);

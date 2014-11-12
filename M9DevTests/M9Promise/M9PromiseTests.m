@@ -16,27 +16,32 @@
 #endif
 #import <Expecta/Expecta.h>
 
+#import "M9Utilities.h"
 #import "M9Promise.h"
 
-@interface M9PromiseTests : XCTestCase
+static NSString *sentinel = @"sentinel";
+
+@interface TestThenable : NSObject <M9Thenable>
 
 @end
 
-@implementation M9PromiseTests
+@implementation TestThenable {
+    id<M9Thenable> (^_then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+}
 
-- (void)testM9Promise {
-    expect([M9Promise class]).conformTo(@protocol(M9Thenable));
-    
-    M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        fulfill(nil);
-    }];
-    expect(promise).beInstanceOf([M9Promise class]);
-    
-    __block BOOL called = NO;
-    [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        called = YES;
-    }];
-    expect(called).equal(YES);
+@synthesize then;
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _then = ^id<M9Thenable> (M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
+            dispatch_after_seconds(0.05, ^{
+                fulfillCallback(sentinel);
+            });
+            return nil;
+        };
+    }
+    return self;
 }
 
 @end
@@ -49,6 +54,7 @@ describe(@"promise", ^{
     M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
         fulfill(nil);
     }];
+    
     it(@"must conform protocol M9Thenable", ^{
         expect(promise).conformTo(@protocol(M9Thenable));
     });
@@ -64,6 +70,43 @@ describe(@"resolver", ^{
             called = YES;
         }];
         expect(called).equal(YES);
+    });
+});
+
+describe(@"Calling resolve(x)", ^{
+    describe(@"if promise is resolved", ^{
+        it(@"nothing happens", ^{
+            // waitUntil(^(DoneCallback done) {
+            // });
+            
+            id<M9Thenable> thenable = [TestThenable new];
+            [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_async_main_queue(^{
+                    fulfill(thenable);
+                    fulfill(nil);
+                });
+            }].done(^id (id value) {
+                expect(value).equal(sentinel);
+                return nil;
+            }).catch(^id (id value) {
+                expect(value).raise(value);
+                return nil;
+            });
+        });
+    });
+    
+    describe(@"otherwise", ^{
+        
+    });
+});
+
+describe(@"Calling reject(x)", ^{
+    describe(@"if promise is resolved", ^{
+        
+    });
+    
+    describe(@"otherwise", ^{
+        
     });
 });
 
