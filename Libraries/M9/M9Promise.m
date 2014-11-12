@@ -51,18 +51,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 #pragma mark -
 
-@implementation M9Promise {
-    void (^_handle)(M9Deferred *deferred);
-    void (^_finale)();
-    
-    M9Promise *(^_then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
-    M9Promise *(^_done)(M9ThenableCallback fulfillCallback);
-    M9Promise *(^_catch)(M9ThenableCallback rejectCallback);
-    M9Promise *(^_finally)(M9ThenableCallback fulfillCallback);
-    
-    M9PromiseCallback _fulfill;
-    M9PromiseCallback _reject;
-}
+@implementation M9Promise
 
 + (instancetype)promise:(M9PromiseBlock)block {
     return [[self alloc] initWithBlock:block];
