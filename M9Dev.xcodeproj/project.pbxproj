@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A14546C2D944995B00F8204 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99F85B4578904FC4A7C2B0CB /* libPods.a */; };
 		5F07CE80CFC38A9413CC8739 /* libPods-M9Dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C40F5709482EB90422698E21 /* libPods-M9Dev.a */; };
 		60D9A2532435B9F0EB6F2351 /* libPods-M9DevTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD668994EC447AAC47A2B14 /* libPods-M9DevTests.a */; };
 		DF141F171A00C01200F03F0B /* NSAttributedString+.m in Sources */ = {isa = PBXBuildFile; fileRef = DF141F161A00C01200F03F0B /* NSAttributedString+.m */; };
@@ -212,7 +211,6 @@
 				DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */,
 				DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */,
 				DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */,
-				5A14546C2D944995B00F8204 /* libPods.a in Frameworks */,
 				5F07CE80CFC38A9413CC8739 /* libPods-M9Dev.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
