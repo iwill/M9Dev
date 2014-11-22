@@ -77,7 +77,8 @@
 #define va_make(arg_list, first, statements) \
     va_list arg_list; \
     va_start(arg_list, first); \
-    @try statements \
+    @try \
+        statements \
     @finally { \
         va_end(arg_list); \
     }
@@ -96,24 +97,11 @@
  */
 #define LOCKED($lock, $statements) \
     [$lock lock]; \
-    @try $statements \
+    @try \
+        $statements \
     @finally { \
         [$lock unlock]; \
     }
-
-/*  LOCK(id<NSLocking> lock);
- *  // statements
- *  UNLOCK(id<NSLocking> lock);
-#define LOCK($lock) \
-    @try { \
-        [$lock lock]; \
-        // statements
-#define UNLOCK($lock) \
-        [$lock unlock]; \
-    } \
-    @finally { \
-    }
- */
 
 /*  LOCK(id<NSLocking> lock);
  *  // statements
@@ -121,13 +109,12 @@
  */
 #define LOCK($lock) \
     @try { \
-        id<NSLocking> $$lock$$ = $lock; \
-        [$$lock$$ lock];
+        [$lock lock];
         // statements
-#define UNLOCK() \
-        [$$lock$$ unlock]; \
+#define UNLOCK($lock) \
     } \
     @finally { \
+        [$lock unlock]; \
     }
 
 /* TODO: @synchronized without indent
