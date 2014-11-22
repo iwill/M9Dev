@@ -164,6 +164,8 @@
 - (id)if:(BOOL)condition;
 
 - (id)as:(Class)class;
+- (id)asArray;
+- (id)asDictionary;
 - (id)asMemberOfClass:(Class)class;
 - (id)asProtocol:(Protocol *)protocol;
 - (id)ifRespondsToSelector:(SEL)selector;
