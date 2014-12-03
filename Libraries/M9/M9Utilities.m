@@ -19,6 +19,14 @@
     return [self if:[self isKindOfClass:class]];
 }
 
+- (id)asArray {
+    return [self as:[NSArray class]];
+}
+
+- (id)asDictionary {
+    return [self as:[NSDictionary class]];
+}
+
 - (id)asMemberOfClass:(Class)class {
     return [self if:[self isMemberOfClass:class]];
 }
