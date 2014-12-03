@@ -30,8 +30,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 @property(nonatomic, copy, readonly) void (^handle)(M9Deferred *deferred);
 @property(nonatomic, copy, readonly) void (^finale)();
 
-@property(nonatomic, copy, readonly) M9PromiseCallback fulfill;
-@property(nonatomic, copy, readonly) M9PromiseCallback reject;
+@property(nonatomic, weak, readonly) M9PromiseCallback fulfill, reject;
 
 @property(nonatomic, strong) NSMutableArray *deferreds;
 
@@ -40,7 +39,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 @interface M9Deferred : NSObject
 
 @property(nonatomic, copy) M9ThenableCallback fulfillCallback, rejectCallback;
-@property(nonatomic, strong) M9Promise *promise;
+@property(nonatomic, strong) M9Promise *nextPromise;
 
 + (instancetype)deferred:(M9ThenableCallback)fulfillCallback :(M9ThenableCallback)rejectCallback;
 
@@ -71,24 +70,25 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             }
             dispatch_async_main_queue(^() {
                 M9ThenableCallback callback = nil;
-                M9PromiseCallback call = nil;
+                M9PromiseCallback callNext = nil;
                 if (self.state == M9PromiseStateFulfilled) {
                     callback = deferred.fulfillCallback;
-                    call = deferred.promise.fulfill;
+                    callNext = deferred.nextPromise.fulfill;
                 }
                 else if (self.state == M9PromiseStateRejected) {
                     callback = deferred.rejectCallback;
-                    call = deferred.promise.reject;
+                    callNext = deferred.nextPromise.reject;
                 }
                 if (callback) {
                     id value = callback(self.value);
-                    deferred.promise.fulfill(value);
+                    if (deferred.nextPromise.fulfill) deferred.nextPromise.fulfill(value);
                 }
                 else {
-                    call(self.value);
+                    if (callNext) callNext(self.value);
                 }
             });
         };
+        
         _finale = ^void () {
             strongify(self);
             for (M9Deferred *deferred in self.deferreds) {
@@ -100,11 +100,13 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
         _then = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
             M9Deferred *deferred = [M9Deferred deferred:fulfillCallback :rejectCallback];
             weakify(deferred);
-            return [M9Promise promise:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
+            M9Promise *nextPromise = [M9Promise promise:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
                 strongify(self, deferred);
-                deferred.promise = self;
+                // ???: deferred will be nil
+                deferred.nextPromise = nextPromise;
                 self.handle(deferred);
             }];
+            return nextPromise;
         };
         
         _done = ^M9Promise *(M9ThenableCallback fulfillCallback) {
@@ -122,8 +124,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             return self.then(callback, callback);
         };
         
-        _fulfill = ^void (id value) {
-            strongify(self);
+        M9PromiseCallback fulfill = ^void (id value) {
             if (self.state != M9PromiseStatePending) {
                 return;
             }
@@ -147,8 +148,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             self.finale();
         };
         
-        _reject = ^void (id value) {
-            strongify(self);
+        M9PromiseCallback reject = ^void (id value) {
             if (self.state != M9PromiseStatePending) {
                 return;
             }
@@ -160,7 +160,10 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             self.finale();
         };
         
-        block(self.fulfill, self.reject);
+        _fulfill = fulfill;
+        _reject = reject;
+        
+        block(fulfill, reject);
     }
     return self;
 }
