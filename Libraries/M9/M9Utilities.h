@@ -117,7 +117,7 @@
         [$lock unlock]; \
     }
 
-/* TODO: @synchronized without indent
+/* NOTE: @synchronized without indent
  *  SYNCHRONIZED(object)
  *  // statements
  *  SYNCHRONIZED_END
@@ -215,6 +215,31 @@ static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
 // UIAnimationCompletion
 typedef void (^UIAnimationCompletion)();
 typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
+
+
+/**
+ * custom NSLog
+ */
+
+// #define AT __FILE__ ":" #__LINE__
+#define M9_HERE ({ \
+    NSString *file = [[NSString stringWithUTF8String:__FILE__] lastPathComponent]; \
+    NSString *class = NSStringFromClass([self class]); \
+    NSString *method = [NSString stringWithUTF8String:__func__]; \
+    method = [method stringByReplacingOccurrencesOfString:[file substringToIndex:file.length - 2] withString:class]; \
+    [NSString stringWithFormat:@"%@@%@:%d", method, file, __LINE__]; \
+})
+
+// __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
+#ifndef __OPTIMIZE__
+    #define NSLogHere() { \
+        NSLog(@"%@", M9_HERE); \
+    }
+#else
+    #define NSLogHere()
+    #define NSLog(fmt, ...) { if (NO) [NSString stringWithFormat:fmt, ##__VA_ARGS__]; }
+    #define NSLogv(fmt, ...) { if (NO) [NSString stringWithFormat:fmt, ##__VA_ARGS__]; }
+#endif
 
 
 /**
