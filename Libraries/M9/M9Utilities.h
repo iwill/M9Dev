@@ -85,6 +85,16 @@
 
 
 /**
+ * strongify var, or call $statements if $var is nil
+ */
+#define strongifyOr($var, $statements) \
+    strongify($var); \
+    if (!$var) { \
+        $statements \
+    }
+
+
+/**
  * NSLocking
  * Allows return everywhere between LOCK and UNLOCK, no need extra unlock
  */
@@ -222,7 +232,7 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
  */
 
 // #define AT __FILE__ ":" #__LINE__
-#define M9_HERE ({ \
+#define M9HERE ({ \
     NSString *file = [[NSString stringWithUTF8String:__FILE__] lastPathComponent]; \
     NSString *class = NSStringFromClass([self class]); \
     NSString *method = [NSString stringWithUTF8String:__func__]; \
@@ -233,7 +243,7 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
 // __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
 #ifndef __OPTIMIZE__
     #define NSLogHere() { \
-        NSLog(@"%@", M9_HERE); \
+        NSLog(@"%@", M9HERE); \
     }
 #else
     #define NSLogHere()
