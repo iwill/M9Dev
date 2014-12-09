@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import <Kiwi/Kiwi.h>
-// #import <Specta/Specta.h>
+// #import <Kiwi/Kiwi.h>
+#import <Specta/Specta.h>
 
 #ifndef EXP_SHORTHAND
     #define EXP_SHORTHAND
@@ -44,8 +44,8 @@
 
 #pragma mark -
 
-SPEC_BEGIN(KiwiAndExpectaTests)
-// SpecBegin(SpectaAndExpectaTests)
+// SPEC_BEGIN(KiwiAndExpectaTests)
+SpecBegin(SpectaAndExpectaTests)
 
 describe(@"promise", ^{
     M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
@@ -69,6 +69,6 @@ describe(@"resolver", ^{
     });
 });
 
-SPEC_END
-// SpecEnd
+// SPEC_END
+SpecEnd
 
