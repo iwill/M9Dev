@@ -232,7 +232,7 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
  */
 
 // #define AT __FILE__ ":" #__LINE__
-#define M9HERE ({ \
+#define _HERE ({ \
     NSString *file = [[NSString stringWithUTF8String:__FILE__] lastPathComponent]; \
     NSString *class = NSStringFromClass([self class]); \
     NSString *method = [NSString stringWithUTF8String:__func__]; \
@@ -243,7 +243,7 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
 // __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
 #ifndef __OPTIMIZE__
     #define NSLogHere() { \
-        NSLog(@"%@", M9HERE); \
+        NSLog(@"%@", _HERE); \
     }
 #else
     #define NSLogHere()

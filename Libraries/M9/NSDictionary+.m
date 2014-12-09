@@ -162,11 +162,11 @@
     return (NSURL *)[self objectForKey:aKey class:[NSURL class] defaultValue:defaultValue];
 }
 
-- (id)objectForKey:(id)aKey class:(Class)class {
-    return [self objectForKey:aKey class:class defaultValue:nil];
+- (id)objectForKey:(id)aKey class:(Class)clazz {
+    return [self objectForKey:aKey class:clazz defaultValue:nil];
 }
-- (id)objectForKey:(id)aKey class:(Class)class defaultValue:(id)defaultValue {
-    return [self objectForKey:aKey class:class protocol:nil defaultValue:defaultValue];
+- (id)objectForKey:(id)aKey class:(Class)clazz defaultValue:(id)defaultValue {
+    return [self objectForKey:aKey class:clazz protocol:nil defaultValue:defaultValue];
 }
 
 - (id)objectForKey:(id)aKey protocol:(Protocol *)protocol {
@@ -176,12 +176,12 @@
     return [self objectForKey:aKey class:nil protocol:protocol defaultValue:defaultValue];
 }
 
-- (id)objectForKey:(id)aKey class:(Class)class protocol:(Protocol *)protocol {
-    return [self objectForKey:aKey class:class protocol:protocol defaultValue:nil];
+- (id)objectForKey:(id)aKey class:(Class)clazz protocol:(Protocol *)protocol {
+    return [self objectForKey:aKey class:clazz protocol:protocol defaultValue:nil];
 }
-- (id)objectForKey:(id)aKey class:(Class)class protocol:(Protocol *)protocol defaultValue:(id)defaultValue {
+- (id)objectForKey:(id)aKey class:(Class)clazz protocol:(Protocol *)protocol defaultValue:(id)defaultValue {
     id object = [self objectForKey:aKey];
-    if ((!class || [object isKindOfClass:class])
+    if ((!clazz || [object isKindOfClass:clazz])
         && (!protocol || [object conformsToProtocol:protocol])) {
         return object;
     }
@@ -189,7 +189,7 @@
     
     /* DEMO: use block
     return [self objectForKey:aKey callback:^id(id object) {
-        if ((!class || [object isKindOfClass:class])
+        if ((!clazz || [object isKindOfClass:clazz])
             && (!protocol || [object conformsToProtocol:protocol])) {
             return object;
         }

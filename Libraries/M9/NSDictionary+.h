@@ -70,7 +70,7 @@ typedef id (^NSDictionaryObjectValidator)(id object);
 
 /* OC Object More */
 /* !!!:
- *  @param class: Be careful when using this method on objects represented by a class cluster...
+ *  @param clazz: Be careful when using this method on objects represented by a class cluster...
  *
  *      // DO NOT DO THIS! Use - objectForKey:callback: instead
  *      if ([myArray isKindOfClass:[NSMutableArray class]]) {
@@ -79,12 +79,12 @@ typedef id (^NSDictionaryObjectValidator)(id object);
  *
  *      @see NSObject - isKindOfClass:
  */
-- (id)objectForKey:(id)aKey class:(Class)class;
-- (id)objectForKey:(id)aKey class:(Class)class defaultValue:(id)defaultValue;
+- (id)objectForKey:(id)aKey class:(Class)clazz;
+- (id)objectForKey:(id)aKey class:(Class)clazz defaultValue:(id)defaultValue;
 - (id)objectForKey:(id)aKey protocol:(Protocol *)protocol;
 - (id)objectForKey:(id)aKey protocol:(Protocol *)protocol defaultValue:(id)defaultValue;
-- (id)objectForKey:(id)aKey class:(Class)class protocol:(Protocol *)protocol;
-- (id)objectForKey:(id)aKey class:(Class)class protocol:(Protocol *)protocol defaultValue:(id)defaultValue;
+- (id)objectForKey:(id)aKey class:(Class)clazz protocol:(Protocol *)protocol;
+- (id)objectForKey:(id)aKey class:(Class)clazz protocol:(Protocol *)protocol defaultValue:(id)defaultValue;
 - (id)objectForKey:(id)aKey callback:(NSDictionaryObjectValidator)callback;
 
 @end

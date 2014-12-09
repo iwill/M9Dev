@@ -82,10 +82,10 @@ typedef BOOL (^PromiseIsNil)();
         });
         
         promise.then(^(id value) {
-            NSLog(@"%@ - %@", M9HERE, value);
+            NSLog(@"%@ - %@", _HERE, value);
             return (id)nil;
         }, ^(id value) {
-            NSLog(@"%@ - %@", M9HERE, value);
+            NSLog(@"%@ - %@", _HERE, value);
             return (id)nil;
         });
         
