@@ -85,7 +85,17 @@
 
 
 /**
- * strongify var, or call $statements if $var is nil
+ * strongify with block
+ */
+
+/* strongify var, and call $statements if $var is not nil
+ */
+#define strongifyAnd($var, $statements) \
+    strongify($var); \
+    if ($var) { \
+        $statements \
+    }
+/* strongify var, or call $statements if $var is nil
  */
 #define strongifyOr($var, $statements) \
     strongify($var); \
