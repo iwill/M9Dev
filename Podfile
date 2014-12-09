@@ -13,8 +13,8 @@ end
 # target :M9DevTests, :exclusive => true do
 
 target :M9DevTests do
-  pod 'Kiwi',     '~> 2.3'
+  # pod 'Kiwi',     '~> 2.3'
   # pod 'Specta',   '~> 0.2'
-  # pod 'Specta',   :git => 'https://github.com/specta/specta.git', :tag => 'v0.3.0.beta1'
+  pod 'Specta',   :git => 'https://github.com/specta/specta.git', :tag => 'v0.3.0.beta1'
   pod 'Expecta',  '~> 0.3'
 end

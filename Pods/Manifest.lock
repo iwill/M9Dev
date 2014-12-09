@@ -17,29 +17,37 @@ PODS:
   - AFNetworking/Security (2.3.1)
   - AFNetworking/Serialization (2.3.1)
   - Expecta (0.3.1)
-  - Kiwi (2.3.1)
   - SDWebImage (3.7.1):
     - SDWebImage/Core (= 3.7.1)
   - SDWebImage/Core (3.7.1)
+  - Specta (0.3.0.beta1)
   - TMCache (1.2.0)
 
 DEPENDENCIES:
   - AFNetworking (from `https://github.com/iwill/AFNetworking.git`, commit `5764f5400908b480bdb413b3b2a900916b62d7cc`)
   - Expecta (~> 0.3)
-  - Kiwi (~> 2.3)
   - SDWebImage (~> 3.7)
+  - Specta (from `https://github.com/specta/specta.git`, tag `v0.3.0.beta1`)
   - TMCache (~> 1.2)
 
 EXTERNAL SOURCES:
   AFNetworking:
     :commit: 5764f5400908b480bdb413b3b2a900916b62d7cc
     :git: https://github.com/iwill/AFNetworking.git
+  Specta:
+    :git: https://github.com/specta/specta.git
+    :tag: v0.3.0.beta1
+
+CHECKOUT OPTIONS:
+  Specta:
+    :git: https://github.com/specta/specta.git
+    :tag: v0.3.0.beta1
 
 SPEC CHECKSUMS:
   AFNetworking: 14d22373b6972efcca8c560c2ad76d719f6c8367
   Expecta: 03aabd0a89d8dea843baecb19a7fd7466a69a31d
-  Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
+  Specta: 63e8ac8e07db6675c7096d37f77a266a1be4c02d
   TMCache: ea1c509badaf9a1245422aabf3c975b3277ab138
 
 COCOAPODS: 0.35.0
