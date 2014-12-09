@@ -49,6 +49,10 @@ static NSString *sentinel = @"sentinel";
 
 #pragma mark -
 
+// !!!: bug, some cases failed
+// SpecBegin(M9Promise)
+// SpecEnd
+
 typedef BOOL (^PromiseIsNil)();
 
 @interface M9PromiseTestCase : XCTestCase
@@ -105,10 +109,10 @@ typedef BOOL (^PromiseIsNil)();
         }];
         
         it(@"must conform protocol M9Thenable", ^{
-            expect(promise).conformTo(@protocol(M9Thenable));
+            expect(promise).to.conformTo(@protocol(M9Thenable));
         });
         it(@"must be instance of M9Promise", ^{
-            expect(promise).beInstanceOf([M9Promise class]);
+            expect(promise).to.beInstanceOf([M9Promise class]);
         });
     });
     
@@ -118,7 +122,7 @@ typedef BOOL (^PromiseIsNil)();
             [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                 called = YES;
             }];
-            expect(called).equal(YES);
+            expect(called).to.equal(YES);
         });
     });
     
@@ -139,13 +143,13 @@ typedef BOOL (^PromiseIsNil)();
                             fulfill(nil);
                         });
                     }].done(^id (id value) {
-                        expect(value).equal(sentinel);
+                        expect(value).to.equal(sentinel);
                         return nil;
                     }).then(^id (id value) {
                         done();
                         return nil;
                     }, ^id (id value) {
-                        expect(value).raise(value);
+                        expect(value).to.raise(value);
                         done();
                         return nil;
                     });
@@ -154,7 +158,33 @@ typedef BOOL (^PromiseIsNil)();
         });
         
         describe(@"otherwise", ^{
-            
+            describe(@"if x is a thenable", ^{
+                it(@"assimilates the thenable", ^{
+                });
+            });
+            describe(@"otherwise", ^{
+                // !!!: bug, this it does not work
+                // it(@"is fulfilled with x as the fulfillment value", ^{
+                    waitUntil(^(DoneCallback done) {
+                        [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                            fulfill(sentinel);
+                        }].done(^id (id value) {
+                            expect(value).to.equal(sentinel);
+                            NSLog(@"fulfill with value: %@", value);
+                            return @"new value";
+                        }).then(^id (id value) {
+                            NSLog(@"fulfill with value: %@", value);
+                            done();
+                            return nil;
+                        }, ^id (id value) {
+                            NSLog(@"reject with error: %@", value OR @"Promise rejected");
+                            expect(YES).to.equal(NO);
+                            done();
+                            return nil;
+                        });
+                    });
+                // });
+            });
         });
     });
     
