@@ -26,7 +26,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (from `https://github.com/iwill/AFNetworking.git`, commit `5764f5400908b480bdb413b3b2a900916b62d7cc`)
   - Expecta (~> 0.3)
-  - Kiwi (~> 2.3.1)
+  - Kiwi (~> 2.3)
   - SDWebImage (~> 3.7)
   - TMCache (~> 1.2)
 

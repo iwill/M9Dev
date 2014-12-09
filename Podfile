@@ -11,9 +11,8 @@ end
 
 # Add podspecs as an exclusive dependency for the M9DevTests target
 target :M9DevTests, :exclusive => true do
-  pod 'Kiwi', '~> 2.3.1'
+  pod 'Kiwi', '~> 2.3'
   # pod 'Specta',   '~> 0.2'
-  # pod 'Specta',   '~> 0.3.0.beta1'
   # pod 'Specta', :git => 'https://github.com/specta/specta.git', :tag => 'v0.3.0.beta1'
   pod 'Expecta',  '~> 0.3'
 end
