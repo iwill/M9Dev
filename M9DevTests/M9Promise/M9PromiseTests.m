@@ -62,7 +62,7 @@ typedef BOOL (^PromiseIsNil)();
         
         static PromiseIsNil isPromiseNil = nil;
         
-        __weak M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        __weak M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 it(@"should NOT be nil before calling fulfill or reject", ^{
                     expect(isPromiseNil()).to.beFalsy();
@@ -100,7 +100,7 @@ typedef BOOL (^PromiseIsNil)();
     });
     
     describe(@"promise", ^{
-        M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
             fulfill(nil);
         }];
         
@@ -115,7 +115,7 @@ typedef BOOL (^PromiseIsNil)();
     describe(@"resolver", ^{
         it(@"must be called immediately, before `Promise` returns", ^{
             __block BOOL called = NO;
-            [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                 called = YES;
             }];
             expect(called).equal(YES);
@@ -128,12 +128,12 @@ typedef BOOL (^PromiseIsNil)();
                 waitUntil(^(DoneCallback done) {
                     // id<M9Thenable> thenable = [TestThenable new];
                     /* temp */
-                    id<M9Thenable> thenable = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    id<M9Thenable> thenable = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                         dispatch_after_seconds(0.05, ^{
                             fulfill(sentinel);
                         });
                     }];
-                    [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                         dispatch_async_main_queue(^{
                             fulfill(thenable);
                             fulfill(nil);

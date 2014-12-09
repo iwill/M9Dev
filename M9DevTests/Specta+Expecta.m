@@ -27,13 +27,13 @@
 - (void)testM9Promise {
     expect([M9Promise class]).conformTo(@protocol(M9Thenable));
     
-    M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+    M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
         fulfill(nil);
     }];
     expect(promise).beInstanceOf([M9Promise class]);
     
     __block BOOL called = NO;
-    [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+    [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
         called = YES;
     }];
     expect(called).equal(YES);
@@ -46,7 +46,7 @@
 SpecBegin(SpectaAndExpectaTests);
 
 describe(@"promise", ^{
-    M9Promise *promise = [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+    M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
         fulfill(nil);
     }];
     it(@"must conform protocol M9Thenable", ^{
@@ -60,7 +60,7 @@ describe(@"promise", ^{
 describe(@"resolver", ^{
     it(@"must be called immediately, before `Promise` returns", ^{
         __block BOOL called = NO;
-        [M9Promise promise:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
             called = YES;
         }];
         expect(called).equal(YES);

@@ -52,6 +52,7 @@ typedef id (^M9ThenableCallback)(id value);
  */
 
 @class M9Promise;
+@compatibility_alias PROMISE M9Promise;
 
 typedef void (^M9PromiseCallback)(id value);
 typedef void (^M9PromiseBlock)(M9PromiseCallback fulfill, M9PromiseCallback reject);
@@ -67,14 +68,21 @@ typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
 
 @property(nonatomic, copy, readonly) M9Promise *(^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 
-#pragma mark helper
-
 @property(nonatomic, copy, readonly) M9Promise *(^done)(M9ThenableCallback fulfillCallback);
 @property(nonatomic, copy, readonly) M9Promise *(^catch)(M9ThenableCallback rejectCallback);
-@property(nonatomic, copy, readonly) M9Promise *(^finally)(M9ThenableCallback fulfillCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^finally)(M9ThenableCallback callback);
 
-+ (instancetype)promise:(M9PromiseBlock)task;
+#pragma mark oc-style
 
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback :(M9ThenableCallback)rejectCallback;
+
+- (M9Promise *)done:(M9ThenableCallback)fulfillCallback;
+- (M9Promise *)catch:(M9ThenableCallback)rejectCallback;
+- (M9Promise *)finally:(M9ThenableCallback)callback;
+
+#pragma mark when
+
++ (instancetype)when:(M9PromiseBlock)task;
 + (instancetype)all:(M9PromiseBlock)task, ...;
 + (instancetype)any:(M9PromiseBlock)task, ...;
 // !!!: if (howMany <= 0 || howMany > count) howMany = count;

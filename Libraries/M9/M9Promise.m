@@ -52,7 +52,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 @implementation M9Promise
 
-+ (instancetype)promise:(M9PromiseBlock)block {
++ (instancetype)when:(M9PromiseBlock)block {
     return [[self alloc] initWithBlock:block];
 }
 
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
         };
         
         _then = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
-            return [M9Promise promise:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
+            return [M9Promise when:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
                 strongify(self);
                 self.handle([M9Deferred deferred:fulfillCallback :rejectCallback :nextFulfill :nextReject]);
             }];
@@ -167,6 +167,26 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     return self;
 }
 
+#pragma mark oc-style
+
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback :(M9ThenableCallback)rejectCallback {
+    return self.then(fulfillCallback, rejectCallback);
+}
+
+- (M9Promise *)done:(M9ThenableCallback)fulfillCallback {
+    return self.done(fulfillCallback);
+}
+
+- (M9Promise *)catch:(M9ThenableCallback)rejectCallback {
+    return self.catch(rejectCallback);
+}
+
+- (M9Promise *)finally:(M9ThenableCallback)callback {
+    return self.finally(callback);
+}
+
+#pragma mark helper
+
 + (M9Promise *)some:(NSInteger)howMany of:(va_list)arg_list {
     M9Promise *promise = [self new];
     NSMutableDictionary *values = [NSMutableDictionary new];
@@ -174,7 +194,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     
     M9PromiseBlock block;
     while ((block = va_arg(arg_list, M9PromiseBlock))) {
-        [M9Promise promise:block].then(^id (id value) {
+        [M9Promise when:block].then(^id (id value) {
             [values setObject:value forKey:@(count)];
             fulfilled++;
             if ((fulfilled >= howMany || fulfilled >= count)
