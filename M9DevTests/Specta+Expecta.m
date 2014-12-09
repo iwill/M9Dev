@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import <Specta/Specta.h>
+#import <Kiwi/Kiwi.h>
+// #import <Specta/Specta.h>
 
 #ifndef EXP_SHORTHAND
     #define EXP_SHORTHAND
@@ -18,11 +19,11 @@
 
 #import "M9Promise.h"
 
-@interface SpectaAndExpectaTests : XCTestCase
+@interface ExpectaTests : XCTestCase
 
 @end
 
-@implementation SpectaAndExpectaTests
+@implementation ExpectaTests
 
 - (void)testM9Promise {
     expect([M9Promise class]).conformTo(@protocol(M9Thenable));
@@ -43,7 +44,8 @@
 
 #pragma mark -
 
-SpecBegin(SpectaAndExpectaTests);
+SPEC_BEGIN(KiwiAndExpectaTests)
+// SpecBegin(SpectaAndExpectaTests)
 
 describe(@"promise", ^{
     M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
@@ -67,5 +69,6 @@ describe(@"resolver", ^{
     });
 });
 
-SpecEnd;
+SPEC_END
+// SpecEnd
 
