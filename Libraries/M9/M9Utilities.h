@@ -153,25 +153,49 @@
  * dispatch
  */
 
-#define dispatch_time_in_seconds(seconds) \
-    dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC))
+static inline dispatch_time_t dispatch_time_in_seconds(NSTimeInterval seconds) {
+    return dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC));
+}
 
-#define dispatch_after_seconds(seconds, block) \
-    dispatch_after(dispatch_time_in_seconds(seconds), dispatch_get_main_queue(), block)
+typedef void (^dispatch_semaphore_wait_callback)(void);
 
-#define dispatch_sync_main_queue(block) \
-    if ([NSThread isMainThread]) { \
-        block(); \
-    } \
-    else { \
-        dispatch_sync(dispatch_get_main_queue(), block); \
+static inline long dispatch_semaphore_wait_for(void (^block)(dispatch_semaphore_wait_callback callback), NSTimeInterval timeout) {
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    if (block) block(^{
+        dispatch_semaphore_signal(semaphore);
+    });
+    return dispatch_semaphore_wait(semaphore, dispatch_time_in_seconds(timeout > 0.0 ? timeout : DISPATCH_TIME_FOREVER));
+}
+
+static inline long dispatch_semaphore_wait_for_block(void (^block)(dispatch_semaphore_wait_callback callback)) {
+    return dispatch_semaphore_wait_for(block, - 1.0);
+}
+
+static inline long dispatch_semaphore_wait_for_seconds(seconds) {
+    return dispatch_semaphore_wait_for(nil, seconds);
+}
+
+
+static inline void dispatch_after_seconds(NSTimeInterval seconds, dispatch_block_t block) {
+    dispatch_after(dispatch_time_in_seconds(seconds), dispatch_get_main_queue(), block);
+}
+
+static inline void dispatch_sync_main_queue(dispatch_block_t block) {
+    if ([NSThread isMainThread]) {
+        block();
     }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
 
-#define dispatch_async_main_queue(block) \
-    dispatch_async(dispatch_get_main_queue(), block)
+static inline void dispatch_async_main_queue(dispatch_block_t block) {
+    dispatch_async(dispatch_get_main_queue(), block);
+}
 
-#define dispatch_async_background_queue(block) \
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block)
+static inline void dispatch_async_background_queue(dispatch_block_t block) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), block);
+}    
 
 
 /**
