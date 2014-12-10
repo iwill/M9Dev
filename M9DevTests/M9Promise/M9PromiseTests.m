@@ -21,6 +21,26 @@
 #import "M9Utilities.h"
 #import "M9Promise.h"
 
+#import "NSDate+.h"
+
+static inline void waitForSeconds(seconds) {
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:seconds]];
+}
+
+static inline void waitFor(void (^block)(DoneCallback done), NSTimeInterval timeout) {
+    __block BOOL complete = NO;
+    if (block) block(^{
+        complete = YES;
+    });
+    NSTimeInterval expiredTimeInterval = [NSDate timeIntervalSinceReferenceDate] + timeout;
+    while (!complete && [NSDate timeIntervalSinceReferenceDate] > expiredTimeInterval) {
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    }
+    if (!complete) {
+        NSLog(@"wait timeout with seconds: %f", timeout);
+    }
+}
+
 static NSString *sentinel = @"sentinel";
 
 //@interface TestThenable : NSObject <M9Thenable>
@@ -59,48 +79,79 @@ typedef BOOL (^PromiseIsNil)();
 
 @interface M9PromiseTestCase : XCTestCase
 
-@property(nonatomic, weak) M9Promise *promise;
+@property(nonatomic, weak) M9Promise *promise1;
+@property(nonatomic, weak) M9Promise *promise2;
+@property(nonatomic, weak) M9Promise *promise3;
 
 @end
 
 @implementation M9PromiseTestCase
 
+- (void)setUpReferenceCounting {
+    self.promise1 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        fulfill(nil); // or reject
+    }];
+    self.promise2 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            fulfill(nil); // or reject
+        });
+    }];
+    self.promise3 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            fulfill(nil); // or reject
+        });
+    }];
+}
+
 - (void)testReferenceCounting {
 // describe(@"promise reference counting", ^{
     
-    weakify(self);
+    [self setUpReferenceCounting];
     
-    self.promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        // it(@"should NOT be nil before calling fulfill or reject", ^{
-            waitUntil(^(DoneCallback done) {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    strongify(self);
-                    expect(self.promise).notTo.beNil();
-                    fulfill(nil); // or reject
-                    done();
-                });
-            });
-        // });
-    }];
-    
-    // it(@"should NOT be nil after define promise", ^{
-        expect(self.promise).notTo.beNil();
+    // it(@"should be nil after fulfill or reject immediately", ^{
+    expect(self.promise1).to.beNil();
     // });
     
-    self.promise.then(^(id value) {
-        NSLog(@"%@ - %@", _HERE, value);
-        return (id)nil;
-    }, ^(id value) {
-        NSLog(@"%@ - %@", _HERE, value);
-        return (id)nil;
-    });
+    // it(@"should be nil before fulfill or reject with delay", ^{
+    expect(self.promise2).notTo.beNil();
+    // });
     
-    // it(@"should be nil after all", ^{
-        expect(self.promise).after(1).to.beNil();
+    // it(@"should be nil after fulfill or reject with delay", ^{
+    waitForSeconds(2);
+    expect(self.promise3).to.beNil();
     // });
     
 // });
 }
+
+
+- (void)testThen {
+// describe(@"then callback should be called after fulfill or reject", ^{
+    
+    M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        // it(@"should NOT be nil before calling fulfill or reject", ^{
+        waitFor(^(DoneCallback done) {
+            reject(sentinel); // or reject
+            // done();
+        }, 10);
+        // });
+    }];
+    
+    __block id result = nil;
+    promise.then(^(id value) {
+        result = value;
+        return (id)nil;
+    }, ^(id value) {
+        result = value;
+        return (id)nil;
+    });
+    expect(result).after(2).to.equal(sentinel);
+    
+    // });
+}
+
+#pragma mark - then/promise test cases
+// @see https://github.com/then/promise/blob/master/test/resolver-tests.js
 
 - (void)testPromise {
 // describe(@"promise", ^{
