@@ -69,6 +69,7 @@
 		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 		DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */; };
 		DFFA08C71A136060003168E1 /* Specta+Expecta.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C61A136060003168E1 /* Specta+Expecta.m */; };
+		DFFCA3E51A398B61009BDE46 /* SpectaAlternative.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFCA3E41A398B61009BDE46 /* SpectaAlternative.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +202,8 @@
 		DFFA08C21A135AD7003168E1 /* Pods-M9Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		DFFA08C31A135AD7003168E1 /* Pods-M9Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.release.xcconfig"; sourceTree = "<group>"; };
 		DFFA08C61A136060003168E1 /* Specta+Expecta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Specta+Expecta.m"; sourceTree = "<group>"; };
+		DFFCA3E31A398B61009BDE46 /* SpectaAlternative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpectaAlternative.h; sourceTree = "<group>"; };
+		DFFCA3E41A398B61009BDE46 /* SpectaAlternative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpectaAlternative.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +320,8 @@
 		DF69D2431967EA7F00B8C011 /* M9DevTests */ = {
 			isa = PBXGroup;
 			children = (
+				DFFCA3E31A398B61009BDE46 /* SpectaAlternative.h */,
+				DFFCA3E41A398B61009BDE46 /* SpectaAlternative.m */,
 				DF69D2491967EA7F00B8C011 /* M9DevTests.m */,
 				DFFA08C61A136060003168E1 /* Specta+Expecta.m */,
 				DFFA08BF1A134D3A003168E1 /* M9Promise */,
@@ -724,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFFA08C71A136060003168E1 /* Specta+Expecta.m in Sources */,
+				DFFCA3E51A398B61009BDE46 /* SpectaAlternative.m in Sources */,
 				DF69D24A1967EA7F00B8C011 /* M9DevTests.m in Sources */,
 				DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */,
 			);

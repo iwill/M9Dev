@@ -34,9 +34,15 @@
     expect(promise).beInstanceOf([M9Promise class]);
     
     __block BOOL called = NO;
-    [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        called = YES;
-    }];
+    waitUntil(^(DoneCallback done) {
+        [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                called = YES;
+                fulfill(nil);
+                done();
+            });
+        }];
+    });
     expect(called).equal(YES);
 }
 
@@ -61,11 +67,18 @@ describe(@"promise", ^{
 
 describe(@"resolver", ^{
     it(@"must be called immediately, before `Promise` returns", ^{
-        __block BOOL called = NO;
+        __block NSString *result = nil;
         [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-            called = YES;
-        }];
-        expect(called).equal(YES);
+            fulfill(@"done");
+            reject(@"error");
+        }].then(^id (id value) {
+            result = value;
+            return nil;
+        }, ^id (id value) {
+            result = value;
+            return nil;
+        });
+        expect(result).will.equal(@"done");
     });
 });
 
