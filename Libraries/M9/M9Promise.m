@@ -124,20 +124,19 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
         };
         
         M9PromiseCallback fulfill = ^void (id value) {
-            if (self.state != M9PromiseStatePending) {
-                return;
-            }
             if (value == self) {
                 self.reject([NSError errorWithDomain:M9PromiseError code:M9PromiseErrorCode_TypeError userInfo:nil]);
                 return;
             }
             if ([value conformsToProtocol:@protocol(M9Thenable)]) {
                 id<M9Thenable> thanable = (id<M9Thenable>)value;
+                // !!!: then callbacks needs capture fulfill and reject callback, because they are not captured by self
+                M9PromiseCallback fulfill = self.fulfill, reject = self.reject;
                 thanable.then(^id (id value) {
-                    self.fulfill(value);
+                    fulfill(value);
                     return nil;
                 }, ^id (id value) {
-                    self.reject(value);
+                    reject(value);
                     return nil;
                 });
                 return;
@@ -145,12 +144,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             self.state = M9PromiseStateFulfilled;
             self.value = value;
             self.finale();
-        };
-        
-        M9PromiseCallback reject = ^void (id value) {
-            if (self.state != M9PromiseStatePending) {
-                return;
-            }
+        }, reject = ^void (id value) {
             if (value == self) {
                 self.reject([NSError errorWithDomain:M9PromiseError code:M9PromiseErrorCode_TypeError userInfo:nil]);
             }
@@ -162,7 +156,16 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
         _fulfill = fulfill;
         _reject = reject;
         
-        block(fulfill, reject);
+        __block BOOL done = NO;
+        block(^void (id value) {
+            if (done) return;
+            done = YES;
+            fulfill(value);
+        }, ^void (id value) {
+            if (done) return;
+            done = YES;
+            reject(value);
+        });
     }
     return self;
 }
