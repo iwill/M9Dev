@@ -68,20 +68,22 @@
 }
 
 - (void)testAll {
-    _describe(@"all", ^{
+    _describe(@"if all fulfilled", ^{
         
         __block NSInteger state = 0;
         __block id result = nil;
-        _it(@"should be fulfilled if all fulfilled", ^{
+        _it(@"should be fulfilled", ^{
             [M9Promise all:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                 fulfill(@"a");
             }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                fulfill(@"b");
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    fulfill(@"b");
+                });
             }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                 fulfill(@"c");
             }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                 fulfill(@"d");
-            }].then(^id (id value) {
+            }, nil].then(^id (id value) {
                 state = 1;
                 result = value;
                 return nil;
@@ -91,16 +93,164 @@
                 return nil;
             });
         });
-        expect(state).after(1).equal(1);
-        expect(result).after(1).equal(@[ @"a", @"b", @"c", @"d" ]);
+        expect(state).after(2).equal(1);
+        expect(result).after(2).equal(@{ @0: @"a", @1: @"b", @2: @"c", @3: @"d" });
+        
+    });
+    
+    _describe(@"if any reject", ^{
+        
+        __block NSInteger state = 0;
+        __block id result = nil;
+        _it(@"should be rejected", ^{
+            [M9Promise all:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                fulfill(@"a");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    reject(@"b");
+                });
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                fulfill(@"c");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                fulfill(@"d");
+            }, nil].then(^id (id value) {
+                state = 1;
+                result = value;
+                return nil;
+            }, ^id (id value) {
+                state = - 1;
+                result = value;
+                return nil;
+            });
+        });
+        expect(state).after(2).equal(- 1);
+        expect(result).after(2).equal(@{ @1: @"b" });
         
     });
 }
 
 - (void)testAny {
+    _describe(@"if any fulfilled", ^{
+        
+        __block NSInteger state = 0;
+        __block id result = nil;
+        _it(@"should be fulfilled", ^{
+            [M9Promise any:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"a");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    fulfill(@"b");
+                });
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"c");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"d");
+            }, nil].then(^id (id value) {
+                state = 1;
+                result = value;
+                return nil;
+            }, ^id (id value) {
+                state = - 1;
+                result = value;
+                return nil;
+            });
+        });
+        expect(state).after(2).equal(1);
+        expect(result).after(2).haveCountOf(1);
+        
+    });
+    
+    _describe(@"if all rejected", ^{
+        
+        __block NSInteger state = 0;
+        __block id result = nil;
+        _it(@"should be rejected", ^{
+            [M9Promise any:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"a");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    reject(@"b");
+                });
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"c");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"d");
+            }, nil].then(^id (id value) {
+                state = 1;
+                result = value;
+                return nil;
+            }, ^id (id value) {
+                state = - 1;
+                result = value;
+                return nil;
+            });
+        });
+        expect(state).after(2).equal(- 1);
+        expect(result).after(2).equal(@{ @0: @"a", @1: @"b", @2: @"c", @3: @"d" });
+        
+    });
 }
 
 - (void)testSome {
+    _describe(@"if fulfilled >= 2", ^{
+        
+        __block NSInteger state = 0;
+        __block id result = nil;
+        _it(@"should be fulfilled", ^{
+            [M9Promise some:2 :^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                fulfill(@"a");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    fulfill(@"b");
+                });
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                fulfill(@"c");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"d");
+            }, nil].then(^id (id value) {
+                state = 1;
+                result = value;
+                return nil;
+            }, ^id (id value) {
+                state = - 1;
+                result = value;
+                return nil;
+            });
+        });
+        expect(state).after(2).equal(1);
+        expect(result).after(2).equal(@{ @0: @"a", @2: @"c" });
+        
+    });
+    
+    _describe(@"if fulfilled < 2", ^{
+        
+        __block NSInteger state = 0;
+        __block id result = nil;
+        _it(@"should be rejected", ^{
+            [M9Promise some:2 :^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"a");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    fulfill(@"b");
+                });
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"c");
+            }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                reject(@"d");
+            }, nil].then(^id (id value) {
+                state = 1;
+                result = value;
+                return nil;
+            }, ^id (id value) {
+                state = - 1;
+                result = value;
+                return nil;
+            });
+        });
+        expect(state).after(2).equal(- 1);
+        expect(result).after(2).equal(@{ @0: @"a", @2: @"c", @3: @"d" });
+        
+    });
 }
 
 @end
