@@ -190,72 +190,69 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     return [[self alloc] initWithBlock:block];
 }
 
-+ (M9Promise *)some:(NSInteger)howMany of:(va_list)_arg_list {
-    __block va_list arg_list = _arg_list;
++ (M9Promise *)some:(NSInteger)minFulfilled of:(NSArray *)blocks {
+    NSInteger count = [blocks count];
+    
+    if (minFulfilled > count) {
+        return [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            reject(nil);
+        }];
+    }
+    
+    if (minFulfilled <= 0) {
+        minFulfilled = count;
+    }
+    NSInteger maxRejected = count - minFulfilled;
     
     return [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        // ???: fulfill with fulfilledValues, reject with rejectedValues
         NSMutableDictionary *fulfilledValues = [NSMutableDictionary new], *rejectedValues = [NSMutableDictionary new];
-        __block NSInteger count = 0, fulfilled = 0, rejected = 0;
-        BOOL reachedEnd = NO;
+        __block NSInteger fulfilled = 0, rejected = 0;
         
-        void (^check)(void) = ^void (void) {
-            if (howMany <= 0) {
-                if (reachedEnd) {
-                    if (fulfilled >= count) {
-                        fulfill(fulfilledValues);
-                    }
-                    else {
-                        reject(rejectedValues);
-                    }
-                }
-            }
-            else if (fulfilled >= howMany) {
-                fulfill(fulfilledValues);
-            }
-            else if (reachedEnd && rejected > count - howMany) {
-                reject(rejectedValues);
-            }
-            // else wait for callback
-        };
-        
-        M9PromiseBlock block;
-        while ((block = va_arg(arg_list, M9PromiseBlock))) {
-            NSInteger index = count;
+        NSInteger index = 0;
+        for (M9PromiseBlock block in blocks) {
             [M9Promise when:block].then(^id (id value) {
                 [fulfilledValues setObject:value forKey:@(index)];
                 fulfilled++;
-                check();
+                if (fulfilled >= minFulfilled) {
+                    fulfill([fulfilledValues copy]);
+                }
                 return nil;
             }, ^id (id value) {
                 [rejectedValues setObject:value forKey:@(index)];
                 rejected++;
-                check();
+                if (rejected > maxRejected) {
+                    reject([rejectedValues copy]);
+                }
                 return nil;
             });
-            count++;
+            index++;
         }
-        
-        reachedEnd = YES;
-        check();
     }];
 }
 
 + (instancetype)all:(M9PromiseBlock)first, ... {
-    va_make(arg_list, first, {
-        return [self some:0 of:arg_list];
+    NSMutableArray *blocks = [NSMutableArray new];
+    va_each(M9PromiseBlock, first, ^void (M9PromiseBlock block) {
+        [blocks addObject:[block copy]];
     });
+    return [self some:0 of:blocks];
 }
 
 + (instancetype)any:(M9PromiseBlock)first, ... {
-    va_make(arg_list, first, {
-        return [self some:1 of:arg_list];
+    NSMutableArray *blocks = [NSMutableArray new];
+    va_each(M9PromiseBlock, first, ^ (M9PromiseBlock block) {
+        [blocks addObject:[block copy]];
     });
+    return [self some:1 of:blocks];
 }
 
 + (instancetype)some:(NSInteger)howMany :(M9PromiseBlock)first, ... {
-    va_make(arg_list, first, {
-        return [self some:howMany of:arg_list];
+    NSMutableArray *blocks = [NSMutableArray new];
+    va_each(M9PromiseBlock, first, ^ (M9PromiseBlock block) {
+        [blocks addObject:[block copy]];
     });
+    return [self some:howMany of:blocks];
 }
 
 @end
