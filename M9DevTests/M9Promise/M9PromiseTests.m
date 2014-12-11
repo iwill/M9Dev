@@ -41,6 +41,32 @@ static inline void waitFor(void (^block)(DoneCallback done), NSTimeInterval time
     }
 }
 
+void _describe(NSString *name, void (^block)()) {
+    if (block) block();
+}
+
+void _it(NSString *name, void (^block)()) {
+    if (block) block();
+}
+
+typedef void (^WillCallback)(id got);
+void itWill(NSString *name, void (^block)(WillCallback done), id expected) {
+    it(name, ^{
+        waitUntil(^(DoneCallback done) {
+            if (block) block(^ (id got) {
+                // expect(got).to.equal(expected);
+                done();
+            });
+        });
+    });
+}
+
+void _itWill(NSString *name, void (^block)(DoneCallback done)) {
+    waitUntil(^(DoneCallback done) {
+        if (block) block(done);
+    });
+}
+
 static NSString *sentinel = @"sentinel";
 
 @interface TestThenable : NSObject <M9Thenable>
@@ -90,218 +116,206 @@ typedef BOOL (^PromiseIsNil)();
 @implementation M9PromiseTestCase
 
 - (void)testReferenceCounting {
-// describe(@"promise reference counting", ^{
+    _describe(@"promise reference counting", ^{
     
-    self.promise1 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        fulfill(nil); // or reject
-    }];
-    self.promise2 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.promise1 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
             fulfill(nil); // or reject
+        }];
+        self.promise2 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                fulfill(nil); // or reject
+            });
+        }];
+        self.promise3 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                fulfill(nil); // or reject
+            });
+        }];
+        
+        _it(@"should be nil after fulfill or reject immediately", ^{
+            expect(self.promise1).to.beNil();
         });
-    }];
-    self.promise3 = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            fulfill(nil); // or reject
+        
+        _it(@"should be nil before fulfill or reject with delay", ^{
+            expect(self.promise2).notTo.beNil();
         });
-    }];
+        
+        _it(@"should be nil after fulfill or reject with delay", ^{
+            waitForSeconds(2);
+            expect(self.promise3).to.beNil();
+        });
     
-    // it(@"should be nil after fulfill or reject immediately", ^{
-    expect(self.promise1).to.beNil();
-    // });
-    
-    // it(@"should be nil before fulfill or reject with delay", ^{
-    expect(self.promise2).notTo.beNil();
-    // });
-    
-    // it(@"should be nil after fulfill or reject with delay", ^{
-    waitForSeconds(2);
-    expect(self.promise3).to.beNil();
-    // });
-    
-// });
+    });
 }
 
 - (void)testThen {
-// describe(@"then callback should be called after fulfill or reject", ^{
+    _describe(@"then callback should be called after fulfill or reject", ^{
+        
+        M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            _it(@"should NOT be nil before calling fulfill or reject", ^{
+                waitFor(^(DoneCallback done) {
+                    reject(sentinel); // or reject
+                    // done();
+                }, 10);
+            });
+        }];
+        
+        __block id result = nil;
+        promise.then(^(id value) {
+            result = value;
+            return (id)nil;
+        }, ^(id value) {
+            result = value;
+            return (id)nil;
+        });
+        expect(result).after(2).to.equal(sentinel);
     
-    M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        // it(@"should NOT be nil before calling fulfill or reject", ^{
-        waitFor(^(DoneCallback done) {
-            reject(sentinel); // or reject
-            // done();
-        }, 10);
-        // });
-    }];
-    
-    __block id result = nil;
-    promise.then(^(id value) {
-        result = value;
-        return (id)nil;
-    }, ^(id value) {
-        result = value;
-        return (id)nil;
     });
-    expect(result).after(2).to.equal(sentinel);
-    
-    // });
 }
 
 #pragma mark - then/promise test cases
 // @see https://github.com/then/promise/blob/master/test/resolver-tests.js
 
 - (void)testPromise {
-// describe(@"promise", ^{
-    M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        fulfill(nil);
-    }];
-    
-    // it(@"must conform protocol M9Thenable", ^{
-    expect(promise).to.conformTo(@protocol(M9Thenable));
-    // });
-    // it(@"must be instance of M9Promise", ^{
-    expect(promise).to.beInstanceOf([M9Promise class]);
-    // });
-// });
+    _describe(@"promise", ^{
+        
+        M9Promise *promise = [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+            fulfill(nil);
+        }];
+        
+        _it(@"must conform protocol M9Thenable", ^{
+            expect(promise).to.conformTo(@protocol(M9Thenable));
+        });
+        _it(@"must be instance of M9Promise", ^{
+            expect(promise).to.beInstanceOf([M9Promise class]);
+        });
+        
+    });
 }
 
 - (void)testResolver {
-// describe(@"resolver", ^{
-    // it(@"must be called immediately, before `Promise` returns", ^{
-    __block BOOL called = NO;
-    [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-        called = YES;
-    }];
-    expect(called).to.beTruthy();
-    // });
-// });
+    _describe(@"resolver", ^{
+        
+        _it(@"must be called immediately, before `Promise` returns", ^{
+            __block BOOL called = NO;
+            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                called = YES;
+            }];
+            expect(called).to.beTruthy();
+        });
+        
+    });
 }
 
 - (void)testCallingResolveX {
-// describe(@"Calling resolve(x)", ^{
-    
-    // describe(@"if promise is resolved", ^{
-        // it(@"nothing happens", ^{
-    {
-        __block BOOL did = 0;
-        waitUntil(^(DoneCallback done) {
-            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                dispatch_async_main_queue(^{
-                    fulfill([TestThenable new]);
-                    fulfill(nil);
+    _describe(@"Calling resolve(x)", ^{
+        
+        _describe(@"if promise is resolved", ^{
+            __block BOOL did = 0;
+            _itWill(@"nothing happens", ^(DoneCallback done) {
+                [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    dispatch_async_main_queue(^{
+                        fulfill([TestThenable new]);
+                        fulfill(nil);
+                    });
+                }].done(^id (id value) {
+                    expect(value).to.equal(sentinel);
+                    return [NSString stringWithFormat:@"new-%@", sentinel];
+                }).then(^id (id value) {
+                    expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
+                    did = 1;
+                    done();
+                    return nil;
+                }, ^id (id value) {
+                    did = - 1;
+                    done();
+                    return nil;
                 });
-            }].done(^id (id value) {
-                expect(value).to.equal(sentinel);
-                return [NSString stringWithFormat:@"new-%@", sentinel];
-            }).then(^id (id value) {
-                expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
-                did = 1;
-                done();
-                return nil;
-            }, ^id (id value) {
-                did = - 1;
-                done();
-                return nil;
+            });
+            expect(did).to.equal(1);
+        });
+        
+        _describe(@"otherwise", ^{
+            _describe(@"if x is a thenable", ^{
+                _it(@"assimilates the thenable", ^{
+                });
+            });
+            _describe(@"otherwise", ^{
+                // !!!: Specta BUG, this it does not work
+                __block BOOL did = 0;
+                _itWill(@"is fulfilled with x as the fulfillment value", ^(DoneCallback done) {
+                    [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                        fulfill(sentinel);
+                    }].done(^id (id value) {
+                        expect(value).to.equal(sentinel);
+                        return [NSString stringWithFormat:@"new-%@", sentinel];
+                    }).then(^id (id value) {
+                        expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
+                        did = 1;
+                        done();
+                        return nil;
+                    }, ^id (id value) {
+                        did = - 1;
+                        done();
+                        return nil;
+                    });
+                });
+                expect(did).to.equal(1);
             });
         });
-        expect(did).to.equal(1);
-    }
-        // });
-    // });
-    
-    // describe(@"otherwise", ^{
-        // describe(@"if x is a thenable", ^{
-            // it(@"assimilates the thenable", ^{
-            // });
-        // });
-        // describe(@"otherwise", ^{
-            // !!!: Specta BUG, this it does not work
-            // it(@"is fulfilled with x as the fulfillment value", ^{
-    {
-        __block BOOL did = 0;
-        waitUntil(^(DoneCallback done) {
-            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                fulfill(sentinel);
-            }].done(^id (id value) {
-                expect(value).to.equal(sentinel);
-                return [NSString stringWithFormat:@"new-%@", sentinel];
-            }).then(^id (id value) {
-                expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
-                did = 1;
-                done();
-                return nil;
-            }, ^id (id value) {
-                did = - 1;
-                done();
-                return nil;
-            });
-        });
-        expect(did).to.equal(1);
-    }
-            // });
-        // });
-    // });
-    
-// });
+        
+    });
 }
 
 - (void)testCallingRejectX {
-// describe(@"Calling reject(x)", ^{
-    // describe(@"if promise is resolved", ^{
-        // it(@"nothing happens", ^{
-    {
-        __block BOOL did = 0;
-        waitUntil(^(DoneCallback done) {
-            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                dispatch_async_main_queue(^{
-                    fulfill([TestThenable new]);
-                    reject(@"foo");
+    _describe(@"Calling reject(x)", ^{
+        _describe(@"if promise is resolved", ^{
+            __block BOOL did = 0;
+            _itWill(@"nothing happens", ^(DoneCallback done) {
+                [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    dispatch_async_main_queue(^{
+                        fulfill([TestThenable new]);
+                        reject(@"foo");
+                    });
+                }].done(^id (id value) {
+                    expect(value).to.equal(sentinel);
+                    return [NSString stringWithFormat:@"new-%@", sentinel];
+                }).then(^id (id value){
+                    expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
+                    did = 1;
+                    done();
+                    return nil;
+                }, ^id (id error) {
+                    did = - 1;
+                    done();
+                    return nil;
                 });
-            }].done(^id (id value) {
-                expect(value).to.equal(sentinel);
-                return [NSString stringWithFormat:@"new-%@", sentinel];
-            }).then(^id (id value){
-                expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
-                did = 1;
-                done();
-                return nil;
-            }, ^id (id error) {
-                did = - 1;
-                done();
-                return nil;
             });
+            expect(did).to.equal(1);
         });
-        expect(did).to.equal(1);
-    }
-        // });
-    // });
-    
-    // describe(@"otherwise", ^{
-        // it(@"is rejected with x as the rejection reason", ^{
-    {
-        __block BOOL did = 0;
-        waitUntil(^(DoneCallback done) {
-            [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
-                reject(sentinel);
-            }].then(nil, ^id (id value) {
-                expect(value).to.equal(sentinel);
-                return [NSString stringWithFormat:@"new-%@", sentinel];
-            }).then(^id (id value){
-                expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
-                did = 1;
-                done();
-                return nil;
-            }, ^id (id error) {
-                did = - 1;
-                done();
-                return nil;
+        
+        _describe(@"otherwise", ^{
+            __block BOOL did = 0;
+            _itWill(@"is rejected with x as the rejection reason", ^(DoneCallback done) {
+                [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                    reject(sentinel);
+                }].then(nil, ^id (id value) {
+                    expect(value).to.equal(sentinel);
+                    return [NSString stringWithFormat:@"new-%@", sentinel];
+                }).then(^id (id value){
+                    expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
+                    did = 1;
+                    done();
+                    return nil;
+                }, ^id (id error) {
+                    did = - 1;
+                    done();
+                    return nil;
+                });
             });
+            expect(did).to.equal(1);
         });
-        expect(did).to.equal(1);
-    }
-        // });
-    // });
-// });
+    });
 }
 
 @end
