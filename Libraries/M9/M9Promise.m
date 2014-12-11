@@ -52,10 +52,6 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 @implementation M9Promise
 
-+ (instancetype)when:(M9PromiseBlock)block {
-    return [[self alloc] initWithBlock:block];
-}
-
 - (instancetype)init {
     return [self initWithBlock:nil];
 }
@@ -188,34 +184,60 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     return self.finally(callback);
 }
 
-#pragma mark helper
+#pragma mark when
 
-+ (M9Promise *)some:(NSInteger)howMany of:(va_list)arg_list {
-    M9Promise *promise = [self new];
-    NSMutableDictionary *values = [NSMutableDictionary new];
-    __block NSInteger count = 0, fulfilled = 0, rejected = 0;
++ (instancetype)when:(M9PromiseBlock)block {
+    return [[self alloc] initWithBlock:block];
+}
+
++ (M9Promise *)some:(NSInteger)howMany of:(va_list)_arg_list {
+    __block va_list arg_list = _arg_list;
     
-    M9PromiseBlock block;
-    while ((block = va_arg(arg_list, M9PromiseBlock))) {
-        [M9Promise when:block].then(^id (id value) {
-            [values setObject:value forKey:@(count)];
-            fulfilled++;
-            if ((fulfilled >= howMany || fulfilled >= count)
-                && rejected == 0) {
-                promise.fulfill(values);
+    return [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+        NSMutableDictionary *fulfilledValues = [NSMutableDictionary new], *rejectedValues = [NSMutableDictionary new];
+        __block NSInteger count = 0, fulfilled = 0, rejected = 0;
+        BOOL reachedEnd = NO;
+        
+        void (^check)(void) = ^void (void) {
+            if (howMany <= 0) {
+                if (reachedEnd) {
+                    if (fulfilled >= count) {
+                        fulfill(fulfilledValues);
+                    }
+                    else {
+                        reject(rejectedValues);
+                    }
+                }
             }
-            return nil;
-        }, ^id (id value) {
-            if (howMany <= 0 || howMany >= count || rejected >= count - howMany) {
-                promise.reject(value);
+            else if (fulfilled >= howMany) {
+                fulfill(fulfilledValues);
             }
-            rejected++;
-            return nil;
-        });
-        count++;
-    }
-    
-    return promise;
+            else if (reachedEnd && rejected > count - howMany) {
+                reject(rejectedValues);
+            }
+            // else wait for callback
+        };
+        
+        M9PromiseBlock block;
+        while ((block = va_arg(arg_list, M9PromiseBlock))) {
+            NSInteger index = count;
+            [M9Promise when:block].then(^id (id value) {
+                [fulfilledValues setObject:value forKey:@(index)];
+                fulfilled++;
+                check();
+                return nil;
+            }, ^id (id value) {
+                [rejectedValues setObject:value forKey:@(index)];
+                rejected++;
+                check();
+                return nil;
+            });
+            count++;
+        }
+        
+        reachedEnd = YES;
+        check();
+    }];
 }
 
 + (instancetype)all:(M9PromiseBlock)first, ... {
