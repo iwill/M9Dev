@@ -45,27 +45,19 @@
  * va - variable arguments
  */
 #define va_each(type, first, block) { \
-    type arg; \
-    va_list arg_list; \
-    if (first) { \
-        block(first); \
-        va_start(arg_list, first); \
-        while((arg = va_arg(arg_list, type))) { \
-            block(arg); \
-        } \
-        va_end(arg_list); \
+    va_list args; \
+    va_start(args, first); \
+    for (type arg = first; !!arg; arg = va_arg(args, type)) { \
+        block(arg); \
     } \
+    va_end(args); \
 }
 #define va_each_if_yes(type, first, block) { \
-    type arg; \
-    va_list arg_list; \
-    if (first) { \
-        block(first); \
-        va_start(arg_list, first); \
-        while((arg = va_arg(arg_list, type)) && block(arg)) { \
-        } \
-        va_end(arg_list); \
+    va_list args; \
+    va_start(args, first); \
+    for (type arg = first; arg && block(arg); arg = va_arg(args, type)) { \
     } \
+    va_end(args); \
 }
 #define va_to_array(type, first) ({ \
     NSMutableArray *array = [NSMutableArray array]; \
@@ -74,13 +66,13 @@
     }); \
     _RETURN array; \
 })
-#define va_make(arg_list, first, statements) \
-    va_list arg_list; \
-    va_start(arg_list, first); \
+#define va_make(args, first, statements) \
+    va_list args; \
+    va_start(args, first); \
     @try \
         statements \
     @finally { \
-        va_end(arg_list); \
+        va_end(args); \
     }
 
 
