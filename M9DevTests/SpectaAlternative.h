@@ -18,8 +18,4 @@ void _it(NSString *name, void (^block)());
 
 typedef void (^StateCallback)(NSInteger state);
 typedef void (^ValidateCallback)(NSInteger got);
-#define validateState(expected) \
-    ^(NSInteger got) { \
-        expect(got).equal(expected); \
-    }
 void _itWill(NSString *name, void (^block)(StateCallback doneWithState), ValidateCallback validate);

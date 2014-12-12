@@ -160,7 +160,9 @@ typedef BOOL (^PromiseIsNil)();
                     doneWithState(- 1);
                     return nil;
                 });
-            }, validateState(1));
+            }, ^(NSInteger state) {
+                expect(state).equal(1);
+            });
         });
         
         _describe(@"otherwise", ^{
@@ -184,7 +186,9 @@ typedef BOOL (^PromiseIsNil)();
                         doneWithState(- 1);
                         return nil;
                     });
-                }, validateState(1));
+                }, ^(NSInteger state) {
+                    expect(state).equal(1);
+                });
             });
         });
         
@@ -211,7 +215,9 @@ typedef BOOL (^PromiseIsNil)();
                     doneWithState(- 1);
                     return nil;
                 });
-            }, validateState(1));
+            }, ^(NSInteger state) {
+                expect(state).equal(1);
+            });
         });
         
         _describe(@"otherwise", ^{
@@ -229,7 +235,9 @@ typedef BOOL (^PromiseIsNil)();
                     doneWithState(- 1);
                     return nil;
                 });
-            }, validateState(1));
+            }, ^(NSInteger state) {
+                expect(state).equal(1);
+            });
         });
     });
 }
