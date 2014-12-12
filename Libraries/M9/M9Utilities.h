@@ -199,10 +199,10 @@ static inline void dispatch_async_background_queue(dispatch_block_t block) {
 
 - (id)if:(BOOL)condition;
 
-- (id)as:(Class)class;
+- (id)as:(Class)clazz;
 - (id)asArray;
 - (id)asDictionary;
-- (id)asMemberOfClass:(Class)class;
+- (id)asMemberOfClass:(Class)clazz;
 - (id)asProtocol:(Protocol *)protocol;
 - (id)ifRespondsToSelector:(SEL)selector;
 

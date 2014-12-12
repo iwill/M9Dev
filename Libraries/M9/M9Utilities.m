@@ -15,8 +15,8 @@
     return condition ? self : nil;
 }
 
-- (instancetype)as:(Class)class {
-    return [self if:[self isKindOfClass:class]];
+- (instancetype)as:(Class)clazz {
+    return [self if:[self isKindOfClass:clazz]];
 }
 
 - (id)asArray {
@@ -27,8 +27,8 @@
     return [self as:[NSDictionary class]];
 }
 
-- (id)asMemberOfClass:(Class)class {
-    return [self if:[self isMemberOfClass:class]];
+- (id)asMemberOfClass:(Class)clazz {
+    return [self if:[self isMemberOfClass:clazz]];
 }
 
 - (id)asProtocol:(Protocol *)protocol {
