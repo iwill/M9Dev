@@ -163,10 +163,9 @@ static inline long dispatch_semaphore_wait_for_block(void (^block)(dispatch_sema
     return dispatch_semaphore_wait_for(block, - 1.0);
 }
 
-static inline long dispatch_semaphore_wait_for_seconds(seconds) {
+static inline long dispatch_semaphore_wait_for_seconds(NSTimeInterval seconds) {
     return dispatch_semaphore_wait_for(nil, seconds);
 }
-
 
 static inline void dispatch_after_seconds(NSTimeInterval seconds, dispatch_block_t block) {
     dispatch_after(dispatch_time_in_seconds(seconds), dispatch_get_main_queue(), block);
