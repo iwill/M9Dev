@@ -86,6 +86,6 @@ typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
 + (instancetype)all:(M9PromiseBlock)task, ...;
 + (instancetype)any:(M9PromiseBlock)task, ...;
 // !!!: if (howMany <= 0 || howMany > count) howMany = count;
-+ (instancetype)some:(NSInteger)howMany :(M9PromiseBlock)task, ...;
++ (instancetype)some:(NSInteger)howMany of:(M9PromiseBlock)task, ...;
 
 @end

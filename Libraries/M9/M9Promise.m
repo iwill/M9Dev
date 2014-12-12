@@ -190,7 +190,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     return [[self alloc] initWithBlock:block];
 }
 
-+ (M9Promise *)some:(NSInteger)minFulfilled of:(NSArray *)blocks {
++ (M9Promise *)some:(NSInteger)minFulfilled ofBlocks:(NSArray *)blocks {
     NSInteger count = [blocks count];
     
     if (minFulfilled > count) {
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     va_each(M9PromiseBlock, first, ^void (M9PromiseBlock block) {
         [blocks addObject:[block copy]];
     });
-    return [self some:0 of:blocks];
+    return [self some:0 ofBlocks:blocks];
 }
 
 + (instancetype)any:(M9PromiseBlock)first, ... {
@@ -244,15 +244,15 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     va_each(M9PromiseBlock, first, ^ (M9PromiseBlock block) {
         [blocks addObject:[block copy]];
     });
-    return [self some:1 of:blocks];
+    return [self some:1 ofBlocks:blocks];
 }
 
-+ (instancetype)some:(NSInteger)howMany :(M9PromiseBlock)first, ... {
++ (instancetype)some:(NSInteger)howMany of:(M9PromiseBlock)first, ... {
     NSMutableArray *blocks = [NSMutableArray new];
     va_each(M9PromiseBlock, first, ^ (M9PromiseBlock block) {
         [blocks addObject:[block copy]];
     });
-    return [self some:howMany of:blocks];
+    return [self some:howMany ofBlocks:blocks];
 }
 
 @end

@@ -211,7 +211,7 @@
             __block NSInteger state = 0;
             __block id result = nil;
             _it(@"should be fulfilled", ^{
-                [M9Promise some:2 :^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                [M9Promise some:2 of:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     fulfill(@"a");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -241,7 +241,7 @@
             __block NSInteger state = 0;
             __block id result = nil;
             _it(@"should be rejected", ^{
-                [M9Promise some:2 :^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
+                [M9Promise some:2 of:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"a");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
