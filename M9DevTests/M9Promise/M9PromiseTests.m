@@ -33,7 +33,6 @@
 @end
 
 @implementation TestThenable {
-    id<M9Thenable> (^_then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 }
 
 @synthesize then;

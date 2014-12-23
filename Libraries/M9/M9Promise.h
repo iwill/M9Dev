@@ -69,16 +69,17 @@ typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
 @property(nonatomic, copy, readonly) M9Promise *(^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 
 @property(nonatomic, copy, readonly) M9Promise *(^done)(M9ThenableCallback fulfillCallback);
-@property(nonatomic, copy, readonly) M9Promise *(^catch)(M9ThenableCallback rejectCallback);
-@property(nonatomic, copy, readonly) M9Promise *(^finally)(M9ThenableCallback callback);
+@property(nonatomic, copy, readonly) M9Promise *(^fail)(M9ThenableCallback rejectCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^always)(M9ThenableCallback callback);
 
 #pragma mark oc-style
 
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback :(M9ThenableCallback)rejectCallback;
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback;
 
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback;
 - (M9Promise *)done:(M9ThenableCallback)fulfillCallback;
-- (M9Promise *)catch:(M9ThenableCallback)rejectCallback;
-- (M9Promise *)finally:(M9ThenableCallback)callback;
+- (M9Promise *)fail:(M9ThenableCallback)rejectCallback;
+- (M9Promise *)always:(M9ThenableCallback)callback;
 
 #pragma mark when
 

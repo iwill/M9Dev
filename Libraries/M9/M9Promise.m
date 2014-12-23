@@ -109,12 +109,12 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
             return self.then(fulfillCallback, nil);
         };
         
-        _catch = ^M9Promise *(M9ThenableCallback rejectCallback) {
+        _fail = ^M9Promise *(M9ThenableCallback rejectCallback) {
             strongify(self);
             return self.then(nil, rejectCallback);
         };
         
-        _finally = ^M9Promise *(M9ThenableCallback callback) {
+        _always = ^M9Promise *(M9ThenableCallback callback) {
             strongify(self);
             return self.then(callback, callback);
         };
@@ -168,20 +168,24 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 #pragma mark oc-style
 
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback :(M9ThenableCallback)rejectCallback {
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
     return self.then(fulfillCallback, rejectCallback);
+}
+
+- (M9Promise *)then:(M9ThenableCallback)fulfillCallback {
+    return self.done(fulfillCallback);
 }
 
 - (M9Promise *)done:(M9ThenableCallback)fulfillCallback {
     return self.done(fulfillCallback);
 }
 
-- (M9Promise *)catch:(M9ThenableCallback)rejectCallback {
-    return self.catch(rejectCallback);
+- (M9Promise *)fail:(M9ThenableCallback)rejectCallback {
+    return self.fail(rejectCallback);
 }
 
-- (M9Promise *)finally:(M9ThenableCallback)callback {
-    return self.finally(callback);
+- (M9Promise *)always:(M9ThenableCallback)callback {
+    return self.always(callback);
 }
 
 #pragma mark when
