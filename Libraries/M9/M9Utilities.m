@@ -9,7 +9,7 @@
 #import "M9Utilities.h"
 
 
-@implementation NSObject (ReturnSelf)
+@implementation NSObject (ReturnSelfIf)
 
 - (id)if:(BOOL)condition {
     return condition ? self : nil;
