@@ -34,7 +34,7 @@
                 __block id result = nil;
                 [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     fulfill(@"done");
-                }].then(^id(id value) {
+                }].afterwards(^id(id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -54,7 +54,7 @@
                 __block id result = nil;
                 [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"error");
-                }].then(^id(id value) {
+                }].afterwards(^id(id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -89,7 +89,7 @@
                     fulfill(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     fulfill(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -119,7 +119,7 @@
                     fulfill(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     fulfill(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -155,7 +155,7 @@
                     reject(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -185,7 +185,7 @@
                     reject(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -221,7 +221,7 @@
                     fulfill(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;
@@ -251,7 +251,7 @@
                     reject(@"c");
                 }, ^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(@"d");
-                }, nil].then(^id (id value) {
+                }, nil].afterwards(^id (id value) {
                     state = 1;
                     result = value;
                     return nil;

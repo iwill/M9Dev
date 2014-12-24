@@ -2,11 +2,11 @@
 //  M9Promise.h
 //  M9Dev
 //
-//  Created by MingLQ on 2014-11-10.
+//  Created by MingLQ on 2014-12-24.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "M9Promise.h"
 
 /**
  * M9Thenable
@@ -34,7 +34,7 @@ typedef id (^M9ThenableCallback)(id value);
 
 @protocol M9Thenable <NSObject>
 
-@property(nonatomic, copy, readonly) id<M9Thenable> (^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+- (id<M9Thenable>)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback;
 
 @end
 
@@ -64,22 +64,20 @@ typedef NS_ENUM(NSInteger, M9PromiseErrorCode) {
 
 @interface M9Promise : NSObject <M9Thenable>
 
-#pragma mark <M9Thenable>
+#pragma mark block-style
 
-@property(nonatomic, copy, readonly) M9Promise *(^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^afterwards)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 
-@property(nonatomic, copy, readonly) M9Promise *(^done)(M9ThenableCallback fulfillCallback);
+@property(nonatomic, copy, readonly) M9Promise *(^then)(M9ThenableCallback fulfillCallback);
 @property(nonatomic, copy, readonly) M9Promise *(^fail)(M9ThenableCallback rejectCallback);
 @property(nonatomic, copy, readonly) M9Promise *(^always)(M9ThenableCallback callback);
 
 #pragma mark oc-style
 
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback;
-
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback;
-- (M9Promise *)done:(M9ThenableCallback)fulfillCallback;
-- (M9Promise *)fail:(M9ThenableCallback)rejectCallback;
-- (M9Promise *)always:(M9ThenableCallback)callback;
+- (instancetype)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback;
+- (instancetype)then:(M9ThenableCallback)fulfillCallback;
+- (instancetype)fail:(M9ThenableCallback)rejectCallback;
+- (instancetype)always:(M9ThenableCallback)callback;
 
 #pragma mark when
 

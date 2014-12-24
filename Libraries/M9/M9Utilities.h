@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "EXTScope.h"
+
 
 #define OR          ? :
 

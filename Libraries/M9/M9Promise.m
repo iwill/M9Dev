@@ -2,13 +2,11 @@
 //  M9Promise.m
 //  M9Dev
 //
-//  Created by MingLQ on 2014-11-10.
+//  Created by MingLQ on 2014-12-24.
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
 #import "M9Promise.h"
-
-#import "EXTScope.h"
 
 #import "M9Utilities.h"
 
@@ -26,9 +24,6 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 @property(nonatomic) M9PromiseState state;
 @property(nonatomic, strong) id value;
-
-@property(nonatomic, copy, readonly) void (^handle)(M9Deferred *deferred);
-@property(nonatomic, copy, readonly) void (^finale)();
 
 @property(nonatomic, weak, readonly) M9PromiseCallback fulfill, reject;
 
@@ -52,71 +47,29 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 @implementation M9Promise
 
-- (instancetype)init {
-    return [self initWithBlock:nil];
-}
-
 - (instancetype)initWithBlock:(M9PromiseBlock)block {
     self = [super init];
     if (self) {
         weakify(self);
         
-        _handle = ^void (M9Deferred *deferred) {
+        _afterwards = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
             strongify(self);
-            if (self.state == M9PromiseStatePending) {
-                self.deferreds = self.deferreds OR [NSMutableArray new];
-                [self.deferreds addObject:deferred];
-                return;
-            }
-            dispatch_async_main_queue(^() {
-                M9ThenableCallback callback = nil;
-                M9PromiseCallback nextCall = nil;
-                if (self.state == M9PromiseStateFulfilled) {
-                    callback = deferred.fulfillCallback;
-                    nextCall = deferred.nextFulfill;
-                }
-                else if (self.state == M9PromiseStateRejected) {
-                    callback = deferred.rejectCallback;
-                    nextCall = deferred.nextReject;
-                }
-                if (callback) {
-                    id value = callback(self.value);
-                    if (deferred.nextFulfill) deferred.nextFulfill(value);
-                }
-                else {
-                    if (nextCall) nextCall(self.value);
-                }
-            });
+            return [self then:fulfillCallback fail:rejectCallback];
         };
         
-        _finale = ^void () {
+        _then = ^M9Promise *(M9ThenableCallback fulfillCallback) {
             strongify(self);
-            for (M9Deferred *deferred in self.deferreds) {
-                self.handle(deferred);
-            }
-            self.deferreds = nil;
-        };
-        
-        _then = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
-            return [M9Promise when:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
-                strongify(self);
-                self.handle([M9Deferred deferred:fulfillCallback :rejectCallback :nextFulfill :nextReject]);
-            }];
-        };
-        
-        _done = ^M9Promise *(M9ThenableCallback fulfillCallback) {
-            strongify(self);
-            return self.then(fulfillCallback, nil);
+            return [self then:fulfillCallback];
         };
         
         _fail = ^M9Promise *(M9ThenableCallback rejectCallback) {
             strongify(self);
-            return self.then(nil, rejectCallback);
+            return [self fail:rejectCallback];
         };
         
         _always = ^M9Promise *(M9ThenableCallback callback) {
             strongify(self);
-            return self.then(callback, callback);
+            return [self then:callback fail:callback];
         };
         
         M9PromiseCallback fulfill = ^void (id value) {
@@ -128,25 +81,25 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
                 id<M9Thenable> thanable = (id<M9Thenable>)value;
                 // !!!: then callbacks needs capture fulfill and reject callback, because they are not captured by self
                 M9PromiseCallback fulfill = self.fulfill, reject = self.reject;
-                thanable.then(^id (id value) {
+                [thanable then:^id (id value) {
                     fulfill(value);
                     return nil;
-                }, ^id (id value) {
+                } fail:^id (id value) {
                     reject(value);
                     return nil;
-                });
+                }];
                 return;
             }
             self.state = M9PromiseStateFulfilled;
             self.value = value;
-            self.finale();
+            [self finale];
         }, reject = ^void (id value) {
             if (value == self) {
                 self.reject([NSError errorWithDomain:M9PromiseError code:M9PromiseErrorCode_TypeError userInfo:nil]);
             }
             self.state = M9PromiseStateRejected;
             self.value = value;
-            self.finale();
+            [self finale];
         };
         
         _fulfill = fulfill;
@@ -168,24 +121,59 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 
 #pragma mark oc-style
 
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
-    return self.then(fulfillCallback, rejectCallback);
+- (instancetype)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
+    weakify(self);
+    return [M9Promise when:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
+        strongify(self);
+        [self handle:[M9Deferred deferred:fulfillCallback :rejectCallback :nextFulfill :nextReject]];
+    }];
 }
 
-- (M9Promise *)then:(M9ThenableCallback)fulfillCallback {
-    return self.done(fulfillCallback);
+- (instancetype)then:(M9ThenableCallback)fulfillCallback {
+    return [self then:fulfillCallback fail:nil];
 }
 
-- (M9Promise *)done:(M9ThenableCallback)fulfillCallback {
-    return self.done(fulfillCallback);
+- (instancetype)fail:(M9ThenableCallback)rejectCallback {
+    return [self then:nil fail:rejectCallback];
 }
 
-- (M9Promise *)fail:(M9ThenableCallback)rejectCallback {
-    return self.fail(rejectCallback);
+- (instancetype)always:(M9ThenableCallback)callback {
+    return [self then:callback fail:callback];
 }
 
-- (M9Promise *)always:(M9ThenableCallback)callback {
-    return self.always(callback);
+- (void)finale {
+    for (M9Deferred *deferred in self.deferreds) {
+        [self handle:deferred];
+    }
+    self.deferreds = nil;
+}
+
+- (void)handle:(M9Deferred *)deferred {
+    if (self.state == M9PromiseStatePending) {
+        self.deferreds = self.deferreds OR [NSMutableArray new];
+        [self.deferreds addObject:deferred];
+        return;
+    }
+    
+    dispatch_async_main_queue(^() {
+        M9ThenableCallback callback = nil;
+        M9PromiseCallback nextCall = nil;
+        if (self.state == M9PromiseStateFulfilled) {
+            callback = deferred.fulfillCallback;
+            nextCall = deferred.nextFulfill;
+        }
+        else if (self.state == M9PromiseStateRejected) {
+            callback = deferred.rejectCallback;
+            nextCall = deferred.nextReject;
+        }
+        if (callback) {
+            id value = callback(self.value);
+            if (deferred.nextFulfill) deferred.nextFulfill(value);
+        }
+        else {
+            if (nextCall) nextCall(self.value);
+        }
+    });
 }
 
 #pragma mark when
@@ -194,7 +182,7 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
     return [[self alloc] initWithBlock:block];
 }
 
-+ (M9Promise *)some:(NSInteger)minFulfilled ofBlocks:(NSArray *)blocks {
++ (instancetype)some:(NSInteger)minFulfilled ofBlocks:(NSArray *)blocks {
     NSInteger count = [blocks count];
     
     if (minFulfilled > count) {
@@ -215,21 +203,21 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
         
         NSInteger index = 0;
         for (M9PromiseBlock block in blocks) {
-            [M9Promise when:block].then(^id (id value) {
+            [[M9Promise when:block] then:^id (id value) {
                 [fulfilledValues setObject:value forKey:@(index)];
                 fulfilled++;
                 if (fulfilled >= minFulfilled) {
                     fulfill([fulfilledValues copy]);
                 }
                 return nil;
-            }, ^id (id value) {
+            } fail:^id (id value) {
                 [rejectedValues setObject:value forKey:@(index)];
                 rejected++;
                 if (rejected > maxRejected) {
                     reject([rejectedValues copy]);
                 }
                 return nil;
-            });
+            }];
             index++;
         }
     }];

@@ -71,7 +71,7 @@ describe(@"resolver", ^{
         [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
             fulfill(@"done");
             reject(@"error");
-        }].then(^id (id value) {
+        }].afterwards(^id (id value) {
             result = value;
             return nil;
         }, ^id (id value) {

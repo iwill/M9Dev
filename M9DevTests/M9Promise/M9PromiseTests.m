@@ -28,26 +28,32 @@
 
 @interface TestThenable : NSObject <M9Thenable>
 
-@property(nonatomic, copy, readwrite) id<M9Thenable> (^then)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
+@property(nonatomic, copy, readwrite) id<M9Thenable> (^afterwards)(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback);
 
 @end
 
 @implementation TestThenable {
 }
 
-@synthesize then;
+@synthesize afterwards;
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.then = ^id<M9Thenable> (M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
-            dispatch_after_seconds(0.05, ^{
-                fulfillCallback(sentinel);
-            });
-            return nil;
+        weakify(self);
+        self.afterwards = ^id<M9Thenable> (M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
+            strongify(self);
+            return [self then:fulfillCallback fail:rejectCallback];
         };
     }
     return self;
+}
+
+- (id<M9Thenable>)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
+    dispatch_after_seconds(0.05, ^{
+        fulfillCallback(sentinel);
+    });
+    return nil;
 }
 
 @end
@@ -148,10 +154,10 @@ typedef BOOL (^PromiseIsNil)();
                         fulfill([TestThenable new]);
                         fulfill(nil);
                     });
-                }].done(^id (id value) {
+                }].then(^id (id value) {
                     expect(value).to.equal(sentinel);
                     return [NSString stringWithFormat:@"new-%@", sentinel];
-                }).then(^id (id value) {
+                }).afterwards(^id (id value) {
                     expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
                     doneWithState(1);
                     return nil;
@@ -174,10 +180,10 @@ typedef BOOL (^PromiseIsNil)();
                 _itWill(@"is fulfilled with x as the fulfillment value", ^(StateCallback doneWithState) {
                     [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                         fulfill(sentinel);
-                    }].done(^id (id value) {
+                    }].then(^id (id value) {
                         expect(value).to.equal(sentinel);
                         return [NSString stringWithFormat:@"new-%@", sentinel];
-                    }).then(^id (id value) {
+                    }).afterwards(^id (id value) {
                         expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
                         doneWithState(1);
                         return nil;
@@ -203,10 +209,10 @@ typedef BOOL (^PromiseIsNil)();
                         fulfill([TestThenable new]);
                         reject(@"foo");
                     });
-                }].done(^id (id value) {
+                }].then(^id (id value) {
                     expect(value).to.equal(sentinel);
                     return [NSString stringWithFormat:@"new-%@", sentinel];
-                }).then(^id (id value){
+                }).afterwards(^id (id value){
                     expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
                     doneWithState(1);
                     return nil;
@@ -223,10 +229,10 @@ typedef BOOL (^PromiseIsNil)();
             _itWill(@"is rejected with x as the rejection reason", ^(StateCallback doneWithState) {
                 [M9Promise when:^(M9PromiseCallback fulfill, M9PromiseCallback reject) {
                     reject(sentinel);
-                }].then(nil, ^id (id value) {
+                }].afterwards(nil, ^id (id value) {
                     expect(value).to.equal(sentinel);
                     return [NSString stringWithFormat:@"new-%@", sentinel];
-                }).then(^id (id value){
+                }).afterwards(^id (id value){
                     expect(value).to.equal([NSString stringWithFormat:@"new-%@", sentinel]);
                     doneWithState(1);
                     return nil;
