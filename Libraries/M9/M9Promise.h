@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #import "M9Promise.h"
 
 /**
