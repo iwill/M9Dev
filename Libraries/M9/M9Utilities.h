@@ -11,6 +11,10 @@
 #import "EXTScope.h"
 
 
+// @see SpectaUtility.h - https://github.com/specta/specta
+#define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
+
+
 #define OR          ? :
 
 // for compound statement
