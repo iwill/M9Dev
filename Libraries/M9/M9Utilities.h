@@ -196,6 +196,7 @@ static inline void dispatch_async_background_queue(dispatch_block_t block) {
  * as: return self if self is kind of class
  */
 
+// TODO: asString, asNumber
 @interface NSObject (ReturnSelfIf)
 
 - (id)if:(BOOL)condition;
