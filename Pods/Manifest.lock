@@ -1,39 +1,42 @@
 PODS:
-  - AFNetworking (2.3.1):
-    - AFNetworking/NSURLConnection (= 2.3.1)
-    - AFNetworking/NSURLSession (= 2.3.1)
-    - AFNetworking/Reachability (= 2.3.1)
-    - AFNetworking/Security (= 2.3.1)
-    - AFNetworking/Serialization (= 2.3.1)
-  - AFNetworking/NSURLConnection (2.3.1):
+  - AFNetworking (2.5.3):
+    - AFNetworking/NSURLConnection (= 2.5.3)
+    - AFNetworking/NSURLSession (= 2.5.3)
+    - AFNetworking/Reachability (= 2.5.3)
+    - AFNetworking/Security (= 2.5.3)
+    - AFNetworking/Serialization (= 2.5.3)
+    - AFNetworking/UIKit (= 2.5.3)
+  - AFNetworking/NSURLConnection (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.3.1):
+  - AFNetworking/NSURLSession (2.5.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.3.1)
-  - AFNetworking/Security (2.3.1)
-  - AFNetworking/Serialization (2.3.1)
-  - Expecta (0.3.1)
-  - SDWebImage (3.7.1):
-    - SDWebImage/Core (= 3.7.1)
-  - SDWebImage/Core (3.7.1)
+  - AFNetworking/Reachability (2.5.3)
+  - AFNetworking/Security (2.5.3)
+  - AFNetworking/Serialization (2.5.3)
+  - AFNetworking/UIKit (2.5.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - Expecta (0.4.2)
+  - Masonry (0.6.1)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
   - Specta (0.3.0.beta1)
-  - TMCache (1.2.0)
+  - TMCache (1.2.4)
 
 DEPENDENCIES:
-  - AFNetworking (from `https://github.com/iwill/AFNetworking.git`, commit `5764f5400908b480bdb413b3b2a900916b62d7cc`)
+  - AFNetworking (~> 2.5)
   - Expecta (~> 0.3)
+  - Masonry (~> 0.6)
   - SDWebImage (~> 3.7)
   - Specta (from `https://github.com/specta/specta.git`, tag `v0.3.0.beta1`)
   - TMCache (~> 1.2)
 
 EXTERNAL SOURCES:
-  AFNetworking:
-    :commit: 5764f5400908b480bdb413b3b2a900916b62d7cc
-    :git: https://github.com/iwill/AFNetworking.git
   Specta:
     :git: https://github.com/specta/specta.git
     :tag: v0.3.0.beta1
@@ -44,10 +47,11 @@ CHECKOUT OPTIONS:
     :tag: v0.3.0.beta1
 
 SPEC CHECKSUMS:
-  AFNetworking: 14d22373b6972efcca8c560c2ad76d719f6c8367
-  Expecta: 03aabd0a89d8dea843baecb19a7fd7466a69a31d
-  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
-  Specta: 63e8ac8e07db6675c7096d37f77a266a1be4c02d
-  TMCache: ea1c509badaf9a1245422aabf3c975b3277ab138
+  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
+  Expecta: 78b4e8b0c8291fa4524d7f74016b6065c2e391ec
+  Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  Specta: d2158a483ad179e5f8d3a29f75ff4fc0ff6fab16
+  TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.36.4

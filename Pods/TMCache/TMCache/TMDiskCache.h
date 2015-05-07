@@ -23,6 +23,8 @@
  <ageLimit> will trigger a GCD timer to periodically to trim the cache with <trimToDate:>.
  */
 
+#import <Foundation/Foundation.h>
+
 @class TMDiskCache;
 
 typedef void (^TMDiskCacheBlock)(TMDiskCache *cache);
@@ -133,7 +135,13 @@ typedef void (^TMDiskCacheObjectBlock)(TMDiskCache *cache, NSString *key, id <NS
 + (dispatch_queue_t)sharedQueue;
 
 /**
- The designated initializer. Multiple instances with the same name are allowed and can safely access
+ Empties the trash with `DISPATCH_QUEUE_PRIORITY_BACKGROUND`. Does not block the <sharedQueue>.
+ */
++ (void)emptyTrash;
+
+
+/**
+ Multiple instances with the same name are allowed and can safely access
  the same data on disk thanks to the magic of seriality.
  
  @see name
@@ -141,6 +149,17 @@ typedef void (^TMDiskCacheObjectBlock)(TMDiskCache *cache, NSString *key, id <NS
  @result A new cache with the specified name.
  */
 - (instancetype)initWithName:(NSString *)name;
+
+/**
+ The designated initializer. Multiple instances with the same name are allowed and can safely access
+ the same data on disk thanks to the magic of seriality.
+ 
+ @see name
+ @param name The name of the cache.
+ @param rootPath The path of the cache.
+ @result A new cache with the specified name.
+ */
+- (instancetype)initWithName:(NSString *)name rootPath:(NSString *)rootPath;
 
 #pragma mark -
 /// @name Asynchronous Methods

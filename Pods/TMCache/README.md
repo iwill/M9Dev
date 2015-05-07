@@ -1,14 +1,19 @@
-# TMCache #
+# TMCache
 
-## Fast parallel object cache for iOS and OS X. ##
+## Fast parallel object cache for iOS and OS X.
+
+[![Build Status](https://img.shields.io/travis/tumblr/TMCache.svg?style=flat)](https://travis-ci.org/tumblr/XExtensionItem)
+[![Version](http://img.shields.io/cocoapods/v/TMCache.svg?style=flat)](http://cocoapods.org/?q=XExtensionItem)
+[![Platform](http://img.shields.io/cocoapods/p/TMCache.svg?style=flat)]()
+[![License](http://img.shields.io/cocoapods/l/TMCache.svg?style=flat)](https://github.com/tumblr/XExtensionItem/blob/master/LICENSE)
 
 [TMCache](TMCache/TMCache.h) is a key/value store designed for persisting temporary objects that are expensive to reproduce, such as downloaded data or the results of slow processing. It is comprised of two self-similar stores, one in memory ([TMMemoryCache](TMCache/TMMemoryCache.h)) and one on disk ([TMDiskCache](TMCache/TMDiskCache.h)), all backed by GCD and safe to access from multiple threads simultaneously. On iOS, `TMMemoryCache` will clear itself when the app receives a memory warning or goes into the background. Objects stored in `TMDiskCache` remain until you trim the cache yourself, either manually or by setting a byte or age limit.
 
 `TMCache` and `TMDiskCache` accept any object conforming to [NSCoding](https://developer.apple.com/library/ios/#documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/Reference/Reference.html). Put things in like this:
 
 ```objective-c
-UIImage *image = [[UIImage alloc] initWithData:data scale:[[UIScreen mainScreen] scale]];
-[[TMCache sharedCache] setObject:image forKey:@"image" block:nil]; // returns immediately
+UIImage *img = [[UIImage alloc] initWithData:data scale:[[UIScreen mainScreen] scale]];
+[[TMCache sharedCache] setObject:img forKey:@"image" block:nil]; // returns immediately
 ```
     
 Get them back out like this:
@@ -28,39 +33,39 @@ Collections work too. Thanks to the magic of `NSKeyedArchiver`, objects repeated
 ```objective-c
 NSArray *images = @[ image, image, image ];
 [[TMCache sharedCache] setObject:images forKey:@"images"];
-NSLog(@"three for the price of one: %d", [[[TMCache sharedCache] diskCache] byteCount]);
+NSLog(@"3 for the price of 1: %d", [[[TMCache sharedCache] diskCache] byteCount]);
 ```
 
-## Installation  ##
+## Installation
 
-### Manually ####
+### Manually
 
 [Download the latest tag](https://github.com/tumblr/TMCache/tags) and drag the `TMCache` folder into your Xcode project.
 
 Install the docs by double clicking the `.docset` file under `docs/`, or view them online at [cocoadocs.org](http://cocoadocs.org/docsets/TMCache/)
 
-### Git Submodule ###
+### Git Submodule
 
     git submodule add https://github.com/tumblr/TMCache.git
     git submodule update --init
 
-### CocoaPods ###
+### CocoaPods
 
 Add [TMCache](http://cocoapods.org/?q=name%3ATMCache) to your `Podfile` and run `pod install`.
 
-## Build Status ##
-
-[![Build Status](https://travis-ci.org/tumblr/TMCache.png?branch=master)](https://travis-ci.org/tumblr/TMCache)
-
-## Requirements ##
+## Requirements
 
 __TMCache__ requires iOS 5.0 or OS X 10.7 and greater.
 
-## Contact ##
+## Contributing
 
-[Justin Ouellette](mailto:jstn@tumblr.com)
+Please see [CONTRIBUTING.md](https://github.com/tumblr/XExtensionItem/blob/master/CONTRIBUTING.md) for information on how to help out.
 
-## License ##
+## Contact
+
+[Bryan Irace](mailto:bryan@tumblr.com)
+
+## License
 
 Copyright 2013 Tumblr, Inc.
 

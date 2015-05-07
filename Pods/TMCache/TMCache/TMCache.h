@@ -13,6 +13,8 @@
  separately if necessary. See the docs for <TMMemoryCache> and <TMDiskCache> for more details.
  */
 
+#import <Foundation/Foundation.h>
+
 #import "TMDiskCache.h"
 #import "TMMemoryCache.h"
 
@@ -62,7 +64,7 @@ typedef void (^TMCacheObjectBlock)(TMCache *cache, NSString *key, id object);
 + (instancetype)sharedCache;
 
 /**
- The designated initializer. Multiple instances with the same name are allowed and can safely access
+ Multiple instances with the same name are allowed and can safely access
  the same data on disk thanks to the magic of seriality. Also used to create the <diskCache>.
  
  @see name
@@ -70,6 +72,17 @@ typedef void (^TMCacheObjectBlock)(TMCache *cache, NSString *key, id object);
  @result A new cache with the specified name.
  */
 - (instancetype)initWithName:(NSString *)name;
+
+/**
+ The designated initializer. Multiple instances with the same name are allowed and can safely access
+ the same data on disk thanks to the magic of seriality. Also used to create the <diskCache>.
+ 
+ @see name
+ @param name The name of the cache.
+ @param rootPath The path of the cache on disk.
+ @result A new cache with the specified name.
+ */
+- (instancetype)initWithName:(NSString *)name rootPath:(NSString *)rootPath;
 
 #pragma mark -
 /// @name Asynchronous Methods
