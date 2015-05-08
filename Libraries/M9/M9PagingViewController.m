@@ -37,22 +37,20 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     
+    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:NULL];
+    
     self.numberOfPages = self.numberOfPages;
     [self scrollToPage:0 animated:NO];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    self.scrollView.contentSize = ({
-        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
-        size.width *= self.numberOfPages OR 1;
-        _RETURN size;
-    });
+    [self updateScrollViewContentSize];
+}
+
+- (void)dealloc {
+    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:NULL];
 }
 
 #pragma mark -
@@ -64,11 +62,7 @@
 - (void)setNumberOfPages:(NSUInteger)numberOfPages {
     _numberOfPages = numberOfPages;
     
-    self.scrollView.contentSize = ({
-        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
-        size.width *= self.numberOfPages OR 1;
-        _RETURN size;
-    });
+    [self updateScrollViewContentSize];
     
     for (UIViewController *viewController in self.viewControllers) {
         [[viewController as:[UIViewController class]] removeFromParentViewControllerAndSuperiew];
@@ -78,6 +72,14 @@
     for (NSUInteger index = 0; index < numberOfPages; index++) {
         [self.viewControllers addObject:[NSNull null]];
     }
+}
+
+- (void)updateScrollViewContentSize {
+    self.scrollView.contentSize = ({
+        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
+        size.width *= self.numberOfPages OR 1;
+        _RETURN size;
+    });
 }
 
 - (void)setCurrentPage:(NSUInteger)page {
@@ -138,11 +140,12 @@
             CGFloat offset = self.scrollView.contentInset.top + self.scrollView.contentInset.bottom;
             make.height.equalTo(self.scrollView).with.offset(- offset);
         }];
-        [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:NULL];
     }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    [self updateScrollViewContentSize];
+    
     if (object == self.scrollView && [keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
         for (UIViewController *viewController in self.viewControllers) {
             if (![viewController isKindOfClass:[UIViewController class]]) {
