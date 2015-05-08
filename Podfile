@@ -8,6 +8,7 @@ target :M9Dev do
   pod 'TMCache',        '~> 1.2'
   pod 'Masonry',        '~> 0.6'
   pod 'SDWebImage',     '~> 3.7'
+  pod 'FLEX',           '~> 2.0', :configurations => ['Debug']
 end
 
 # Add podspecs as an exclusive dependency for the M9DevTests target

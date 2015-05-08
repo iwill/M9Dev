@@ -72,3 +72,13 @@
 #define COCOAPODS_VERSION_MINOR_TMCache 2
 #define COCOAPODS_VERSION_PATCH_TMCache 4
 
+// Debug build configuration
+#ifdef DEBUG
+
+  // FLEX
+  #define COCOAPODS_POD_AVAILABLE_FLEX
+  #define COCOAPODS_VERSION_MAJOR_FLEX 2
+  #define COCOAPODS_VERSION_MINOR_FLEX 0
+  #define COCOAPODS_VERSION_PATCH_FLEX 2
+
+#endif
