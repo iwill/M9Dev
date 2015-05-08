@@ -14,7 +14,7 @@
 #import "JSLayoutViewController.h"
 #import "VideosOCCollectionViewController.h"
 #import "VideosJSCollectionViewController.h"
-#import "M9PagingViewController.h"
+#import "TestPagingViewController.h"
 
 // #if DEBUG
 #import <FLEX/FLEXManager.h>
@@ -51,8 +51,8 @@
                          [VideosOCCollectionViewController new],
                          [VideosJSCollectionViewController new],
                          ({
-                             UIViewController *vc = [M9PagingViewController new];
-                             vc.navigationItem.title = @"M9PagingViewController";
+                             UIViewController *vc = [TestPagingViewController new];
+                             vc.navigationItem.title = @"TestPagingViewController";
                              _RETURN vc;
                          }) ];
 }
