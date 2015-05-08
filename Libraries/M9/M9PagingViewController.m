@@ -8,14 +8,7 @@
 
 #import "M9PagingViewController.h"
 
-@protocol UIScrollViewEndScrollingDelegate <UITableViewDelegate>
-
-@optional
-- (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView;
-
-@end
-
-@interface M9PagingViewController () <UIScrollViewEndScrollingDelegate>
+@interface M9PagingViewController ()
 
 @property(nonatomic, readwrite) NSUInteger numberOfPages;
 @property(nonatomic, strong) NSMutableArray *viewControllers;
@@ -166,24 +159,6 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    CGFloat width = CGRectGetWidth(scrollView.bounds);
-    CGFloat position = self.scrollView.contentOffset.x;
-    self.currentPage = round(position / width);
-    
-    if (!decelerate) {
-        if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
-            [(id<UIScrollViewEndScrollingDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
-        }
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
-        [(id<UIScrollViewEndScrollingDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
-    }
-}
-
-- (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView {
     CGFloat width = CGRectGetWidth(scrollView.bounds);
     CGFloat position = self.scrollView.contentOffset.x;
     self.currentPage = round(position / width);

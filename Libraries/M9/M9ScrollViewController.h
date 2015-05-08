@@ -11,6 +11,12 @@
 
 #import "M9Utilities.h"
 
+/*
+@protocol M9ScrollViewDelegate <UITableViewDelegate>
+@optional
+- (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView;
+@end */
+
 @interface M9ScrollViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, readonly, retain) UIScrollView *scrollView;

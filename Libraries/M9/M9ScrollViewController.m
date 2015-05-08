@@ -54,4 +54,21 @@
 - (void)dealloc {
 }
 
+#pragma mark -
+
+/*
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
+            [(id<M9ScrollViewDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
+        }
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
+        [(id<M9ScrollViewDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
+    }
+} */
+
 @end
