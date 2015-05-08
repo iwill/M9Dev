@@ -14,6 +14,11 @@
 #import "JSLayoutViewController.h"
 #import "VideosOCCollectionViewController.h"
 #import "VideosJSCollectionViewController.h"
+#import "M9PagingViewController.h"
+
+// #if DEBUG
+#import <FLEX/FLEXManager.h>
+// #endif
 
 @interface M9DevTestTableViewController ()
 
@@ -38,11 +43,18 @@
     
     Class tableViewCellClass = [UITableViewCell class];
     [self.tableView registerClass:tableViewCellClass forCellReuseIdentifier:NSStringFromClass(tableViewCellClass)];
+    self.tableView.rowHeight = 50;
     
-    viewControllers = @[ [M9NetworkingViewController new],
+    viewControllers = @[ [FLEXManager sharedManager],
+                         [M9NetworkingViewController new],
                          [JSLayoutViewController new],
                          [VideosOCCollectionViewController new],
-                         [VideosJSCollectionViewController new] ];
+                         [VideosJSCollectionViewController new],
+                         ({
+                             UIViewController *vc = [M9PagingViewController new];
+                             vc.navigationItem.title = @"M9PagingViewController";
+                             _RETURN vc;
+                         }) ];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,15 +86,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
-    UIViewController *viewController = [viewControllers objectOrNilAtIndex:indexPath.row];
-    cell.textLabel.text = viewController.navigationItem.title;
+    UIViewController *viewController = [[viewControllers objectOrNilAtIndex:indexPath.row] as:[UIViewController class]];
+    cell.textLabel.text = viewController ? viewController.navigationItem.title : @"FLEX";
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController:[viewControllers objectOrNilAtIndex:indexPath.row] animated:YES];
+    UIViewController *viewController = [[viewControllers objectOrNilAtIndex:indexPath.row] as:[UIViewController class]];
+    if (viewController) {
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+    else {
+        // #if DEBUG
+        FLEXManager *flex = [FLEXManager sharedManager];
+        if (flex.isHidden) {
+            [flex showExplorer];
+        }
+        else {
+            [flex hideExplorer];
+        }
+        // #endif
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 @end
