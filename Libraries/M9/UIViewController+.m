@@ -38,7 +38,9 @@
     [fromViewController willMoveToParentViewController:nil];
     [self addChildViewController:toViewController];
     
-    // 2, This method automatically adds the new view, performs the animation, and then removes the old view.
+    // 2
+    /* This method automatically adds the new view, performs the animation, and then removes the old view.
+     */
     [self transitionFromViewController:fromViewController
                       toViewController:toViewController
                               duration:duration
