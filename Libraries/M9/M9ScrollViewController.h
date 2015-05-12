@@ -19,6 +19,26 @@
 
 @interface M9ScrollViewController : UIViewController <UIScrollViewDelegate>
 
-@property (nonatomic, readonly, retain) UIScrollView *scrollView;
+@property(nonatomic, readonly, retain) UIScrollView *scrollView;
+
+// !!!: @protected
+/**
+ *  Creates the scrollView and add to the view controller's view.
+ *
+ *  The view controller calls this method in - viewDidLoad.
+ *
+ *  You should never call this method directly.
+ *  You can override this method in order to create your scrollView.
+ *  Your custom implementation of this method should not call super.
+ */
+- (void)loadScrollView;
+
+@end
+
+#pragma mark - UIScrollView+M9Category
+
+@interface UIScrollView (M9Category)
+
+- (void)scrollToTopAnimated:(BOOL)animated;
 
 @end

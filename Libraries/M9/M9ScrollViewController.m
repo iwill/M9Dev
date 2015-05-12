@@ -10,7 +10,7 @@
 
 @interface M9ScrollViewController ()
 
-@property (nonatomic, readwrite, retain) UIScrollView *scrollView;
+@property(nonatomic, readwrite, retain) UIScrollView *scrollView;
 
 @end
 
@@ -34,24 +34,24 @@
     self.view = scrollView;
 } //*/
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    weakify(self);
-    
-    //* B: addSubview: - [self.view addSubview:scrollView]
+//* B: loadScrollView - self.view == self.scrollView.superview
+- (void)loadScrollView {
     UIScrollView *scrollView = [UIScrollView new];
     scrollView.delegate = self;
     self.scrollView = scrollView;
     [self.view addSubview:scrollView];
     
+    weakify(self);
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         strongify(self);
         make.left.top.width.height.equalTo(self.view);
-    }]; //*/
-}
+    }];
+} //*/
 
-- (void)dealloc {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self loadScrollView];
 }
 
 #pragma mark -
@@ -70,5 +70,15 @@
         [(id<M9ScrollViewDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
     }
 } */
+
+@end
+
+#pragma mark - UIScrollView+M9Category
+
+@implementation UIScrollView (M9Category)
+
+- (void)scrollToTopAnimated:(BOOL)animated {
+    [self scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:animated];
+}
 
 @end
