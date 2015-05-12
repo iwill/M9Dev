@@ -21,4 +21,8 @@
 // subclasses MUST override
 - (UIViewController *)viewControllerOfPage:(NSUInteger)page;
 
+// TODO: scroll position 1 > 2: 1.1, 1.2 ....
+- (void)willScrollToPage:(NSUInteger)page;
+- (void)didScrollToPage:(NSUInteger)page;
+
 @end

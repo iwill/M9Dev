@@ -8,6 +8,8 @@
 
 #import "M9PagingViewController.h"
 
+#define PreloadViewControllers 1
+
 @interface M9PagingViewController ()
 
 @property(nonatomic, readwrite) NSUInteger numberOfPages;
@@ -40,13 +42,32 @@
     [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:NULL];
     
     self.numberOfPages = self.numberOfPages;
-    [self scrollToPage:0 animated:NO];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self scrollToPage:0 animated:NO];
+    });
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
     [self updateScrollViewContentSize];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+    for (NSInteger i = 0; i < [self.viewControllers count]; i++) {
+        if (i >= self.currentPage - PreloadViewControllers
+            && i <= self.currentPage + PreloadViewControllers) {
+            continue;
+        }
+        UIViewController *viewController = [[self.viewControllers objectOrNilAtIndex:i] as:[UIViewController class]];
+        if (viewController) {
+            [[viewController as:[UIViewController class]] removeFromParentViewControllerAndSuperiew];
+            [self.viewControllers replaceObjectAtIndex:i withObjectOrNil:[NSNull null]];
+        }
+    }
 }
 
 - (void)dealloc {
@@ -87,11 +108,17 @@
         return;
     }
     
+    [self willScrollToPage:page];
+    
     _currentPage = page;
     
-    [self loadViewControllerOfPage:self.currentPage - 1];
-    [self loadViewControllerOfPage:self.currentPage];
-    [self loadViewControllerOfPage:self.currentPage + 1];
+    [self loadViewControllerOfPage:page];
+    for (NSInteger i = 1; i <= PreloadViewControllers; i++) {
+        [self loadViewControllerOfPage:page + i];
+        [self loadViewControllerOfPage:page - i];
+    }
+    
+    [self didScrollToPage:page];
 }
 
 - (void)scrollToPage:(NSUInteger)page animated:(BOOL)animated {
@@ -102,6 +129,12 @@
         bounds.origin.y = 0;
         _RETURN bounds;
     }) animated:animated];
+}
+
+- (void)willScrollToPage:(NSUInteger)page {
+}
+
+- (void)didScrollToPage:(NSUInteger)page {
 }
 
 - (UIViewController *)viewControllerOfPage:(NSUInteger)page {
@@ -162,6 +195,12 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    CGFloat width = CGRectGetWidth(scrollView.bounds);
+    CGFloat position = self.scrollView.contentOffset.x;
+    self.currentPage = round(position / width);
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat width = CGRectGetWidth(scrollView.bounds);
     CGFloat position = self.scrollView.contentOffset.x;
     self.currentPage = round(position / width);
