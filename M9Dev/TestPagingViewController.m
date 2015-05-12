@@ -15,7 +15,7 @@
 }
 
 - (UIViewController *)viewControllerOfPage:(NSUInteger)page {
-    UIViewController *viewController  = [UIViewController new];
+    UIViewController *viewController = [UIViewController new];
     viewController.view.backgroundColor = [UIColor colorWithWhite:(10.0 - page - 1) / 10 alpha:1.0];
     
     UILabel *label = [UILabel new];
