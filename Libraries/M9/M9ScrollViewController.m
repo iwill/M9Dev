@@ -54,6 +54,10 @@
     [self loadScrollView];
 }
 
+- (void)dealloc {
+    self.scrollView.delegate = nil;
+}
+
 #pragma mark -
 
 /*

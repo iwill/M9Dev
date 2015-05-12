@@ -35,4 +35,9 @@
     }];
 }
 
+- (void)dealloc {
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
+}
+
 @end
