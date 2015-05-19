@@ -217,30 +217,33 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (scrollView == self.scrollView) {
-        [self addChildViewControllerOfPage:self.currentPage - 1];
-        [self addChildViewControllerOfPage:self.currentPage + 1];
+    if (scrollView != self.scrollView) {
+        return;
     }
+    [self addChildViewControllerOfPage:self.currentPage - 1];
+    [self addChildViewControllerOfPage:self.currentPage + 1];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.scrollView) {
-        [self addChildViewControllerOfPage:self.currentPage - 1];
-        [self addChildViewControllerOfPage:self.currentPage + 1];
+        return;
     }
+    [self addChildViewControllerOfPage:self.currentPage - 1];
+    [self addChildViewControllerOfPage:self.currentPage + 1];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (scrollView == self.scrollView) {
-        CGFloat width = CGRectGetWidth(scrollView.bounds);
-        CGFloat position = self.scrollView.contentOffset.x;
-        self.currentPage = round(position / width);
-        
-        if (!decelerate) {
-            for (NSUInteger i = 0; i < self.numberOfPages; i++) {
-                if (i != self.currentPage) {
-                    [self removeChildViewControllerOfPage:i];
-                }
+        return;
+    }
+    CGFloat width = CGRectGetWidth(scrollView.bounds);
+    CGFloat position = self.scrollView.contentOffset.x;
+    self.currentPage = round(position / width);
+    
+    if (!decelerate) {
+        for (NSUInteger i = 0; i < self.numberOfPages; i++) {
+            if (i != self.currentPage) {
+                [self removeChildViewControllerOfPage:i];
             }
         }
     }
@@ -248,14 +251,15 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView == self.scrollView) {
-        CGFloat width = CGRectGetWidth(scrollView.bounds);
-        CGFloat position = self.scrollView.contentOffset.x;
-        self.currentPage = round(position / width);
-        
-        for (NSUInteger i = 0; i < self.numberOfPages; i++) {
-            if (i != self.currentPage) {
-                [self removeChildViewControllerOfPage:i];
-            }
+        return;
+    }
+    CGFloat width = CGRectGetWidth(scrollView.bounds);
+    CGFloat position = self.scrollView.contentOffset.x;
+    self.currentPage = round(position / width);
+    
+    for (NSUInteger i = 0; i < self.numberOfPages; i++) {
+        if (i != self.currentPage) {
+            [self removeChildViewControllerOfPage:i];
         }
     }
 }
