@@ -16,13 +16,20 @@
 @interface M9PagingViewController : M9ScrollViewController
 
 @property(nonatomic, readonly) NSUInteger numberOfPages;
-@property(nonatomic, readwrite) NSUInteger currentPage;
+@property(nonatomic, readonly) NSUInteger currentPage;
 
-// subclasses MUST override
-- (UIViewController *)viewControllerOfPage:(NSUInteger)page;
+/**
+ *  call refreshPages or scrollToPage:animated: in viewDidLoad
+ */
+- (void)refreshPages;
+- (void)scrollToPage:(NSUInteger)page animated:(BOOL)animated;
 
-// TODO: scroll position 1 > 2: 1.1, 1.2 ....
+// TODO: scroll progress - 1, 1.1, 1.2 ..., 2
 - (void)willScrollToPage:(NSUInteger)page;
 - (void)didScrollToPage:(NSUInteger)page;
+
+- (UIViewController *)viewControllerOfPage:(NSUInteger)page;
+// subclasses MUST override
+- (UIViewController *)generateViewControllerOfPage:(NSUInteger)page;
 
 @end

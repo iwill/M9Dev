@@ -19,7 +19,7 @@
 
 @interface M9ScrollViewController : UIViewController <UIScrollViewDelegate>
 
-@property(nonatomic, readonly, retain) UIScrollView *scrollView;
+@property(nonatomic, readonly, strong) UIScrollView *scrollView;
 
 // !!!: @protected
 /**

@@ -13,6 +13,8 @@
 @interface M9PagingViewController ()
 
 @property(nonatomic, readwrite) NSUInteger numberOfPages;
+@property(nonatomic, readwrite) NSUInteger currentPage;
+
 @property(nonatomic, strong) NSMutableArray *viewControllers;
 
 @end
@@ -40,12 +42,6 @@
     self.scrollView.showsVerticalScrollIndicator = NO;
     
     [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:NULL];
-    
-    self.numberOfPages = self.numberOfPages;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToPage:0 animated:NO];
-    });
 }
 
 - (void)viewDidLayoutSubviews {
@@ -62,11 +58,7 @@
             && i <= self.currentPage + PreloadViewControllers) {
             continue;
         }
-        UIViewController *viewController = [[self.viewControllers objectOrNilAtIndex:i] as:[UIViewController class]];
-        if (viewController) {
-            [[viewController as:[UIViewController class]] removeFromParentViewControllerAndSuperiew];
-            [self.viewControllers replaceObjectAtIndex:i withObjectOrNil:[NSNull null]];
-        }
+        [self unloadChildViewControllerOfPage:i];
     }
 }
 
@@ -95,30 +87,9 @@
     }
 }
 
-- (void)updateScrollViewContentSize {
-    self.scrollView.contentSize = ({
-        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
-        size.width *= self.numberOfPages OR 1;
-        _RETURN size;
-    });
-}
-
-- (void)setCurrentPage:(NSUInteger)page {
-    if (page >= self.numberOfPages) {
-        return;
-    }
-    
-    [self willScrollToPage:page];
-    
-    _currentPage = page;
-    
-    [self loadViewControllerOfPage:page];
-    for (NSInteger i = 1; i <= PreloadViewControllers; i++) {
-        [self loadViewControllerOfPage:page + i];
-        [self loadViewControllerOfPage:page - i];
-    }
-    
-    [self didScrollToPage:page];
+- (void)refreshPages {
+    self.numberOfPages = self.numberOfPages;
+    [self scrollToPage:self.currentPage animated:YES];
 }
 
 - (void)scrollToPage:(NSUInteger)page animated:(BOOL)animated {
@@ -131,43 +102,72 @@
     }) animated:animated];
 }
 
+- (void)setCurrentPage:(NSUInteger)page {
+    if ((page == self.currentPage && [self viewControllerOfPage:page])
+        || page >= self.numberOfPages) {
+        return;
+    }
+    
+    [self willScrollToPage:page];
+    
+    _currentPage = page;
+    
+    [self loadChildViewControllerOfPage:page];
+    [self addChildViewControllerOfPage:page];
+    
+    for (NSInteger i = 1; i <= PreloadViewControllers; i++) {
+        [self loadChildViewControllerOfPage:page + i];
+        [self loadChildViewControllerOfPage:page - i];
+    }
+    
+    [self didScrollToPage:page];
+}
+
 - (void)willScrollToPage:(NSUInteger)page {
 }
 
 - (void)didScrollToPage:(NSUInteger)page {
 }
 
-- (UIViewController *)viewControllerOfPage:(NSUInteger)page {
+- (UIViewController *)generateViewControllerOfPage:(NSUInteger)page {
     [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
 
-- (void)loadViewControllerOfPage:(NSUInteger)page {
+- (UIViewController *)viewControllerOfPage:(NSUInteger)page {
+    return [[self.viewControllers objectOrNilAtIndex:page] as:[UIViewController class]];
+}
+
+- (void)loadChildViewControllerOfPage:(NSUInteger)page {
     if (page >= self.numberOfPages) {
         return;
     }
     
-    weakify(self);
-    
-    UIViewController *viewController = [[self.viewControllers objectOrNilAtIndex:page] as:[UIViewController class]];
+    UIViewController *viewController = [self viewControllerOfPage:page];
     if (!viewController) {
-        viewController = [self viewControllerOfPage:page];
+        viewController = [self generateViewControllerOfPage:page];
         if (!viewController) {
             return;
         }
+        if (!viewController.isViewLoaded) {
+            [viewController view];
+        }
         [self.viewControllers replaceObjectAtIndex:page withObjectOrNil:viewController];
     }
-    
-    if (viewController.view.superview != self.scrollView) {
+}
+
+- (void)addChildViewControllerOfPage:(NSUInteger)page {
+    UIViewController *viewController = [self viewControllerOfPage:page];
+    if (viewController && viewController.view.superview != self.scrollView) {
         [self addChildViewController:viewController superview:self.scrollView];
         
         // UIScrollView And Autolayout
         // @see Technical Note TN2154 - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
         // @see http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/#4-_[中级]_在UIScrollView顺序排列一些view并自动计算contentSize
+        weakify(self);
         [viewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
             strongify(self);
             make.left.mas_equalTo(CGRectGetWidth(self.view.bounds) * page);
-            // ???: make.left.equalTo(self.view.mas_width).multipliedBy(page);
             make.width.width.equalTo(self.scrollView);
             make.top.equalTo(self.scrollView);
             CGFloat offset = self.scrollView.contentInset.top + self.scrollView.contentInset.bottom;
@@ -176,12 +176,26 @@
     }
 }
 
+- (void)removeChildViewControllerOfPage:(NSUInteger)page {
+    UIViewController *viewController = [self viewControllerOfPage:page];
+    [viewController removeFromParentViewControllerAndSuperiew];
+}
+
+- (void)unloadChildViewControllerOfPage:(NSUInteger)page {
+    UIViewController *viewController = [self viewControllerOfPage:page];
+    if (viewController) {
+        [viewController removeFromParentViewControllerAndSuperiew];
+        [self.viewControllers replaceObjectAtIndex:page withObjectOrNil:[NSNull null]];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     [self updateScrollViewContentSize];
     
     if (object == self.scrollView && [keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
         for (UIViewController *viewController in self.viewControllers) {
-            if (![viewController isKindOfClass:[UIViewController class]]) {
+            if (![viewController isKindOfClass:[UIViewController class]]
+                || viewController.view.superview != self.scrollView) {
                 continue;
             }
             [viewController.view mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -192,18 +206,58 @@
     }
 }
 
+- (void)updateScrollViewContentSize {
+    self.scrollView.contentSize = ({
+        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
+        size.width *= self.numberOfPages OR 1;
+        _RETURN size;
+    });
+}
+
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (scrollView == self.scrollView) {
+        [self addChildViewControllerOfPage:self.currentPage - 1];
+        [self addChildViewControllerOfPage:self.currentPage + 1];
+    }
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if (scrollView == self.scrollView) {
+        [self addChildViewControllerOfPage:self.currentPage - 1];
+        [self addChildViewControllerOfPage:self.currentPage + 1];
+    }
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    CGFloat width = CGRectGetWidth(scrollView.bounds);
-    CGFloat position = self.scrollView.contentOffset.x;
-    self.currentPage = round(position / width);
+    if (scrollView == self.scrollView) {
+        CGFloat width = CGRectGetWidth(scrollView.bounds);
+        CGFloat position = self.scrollView.contentOffset.x;
+        self.currentPage = round(position / width);
+        
+        if (!decelerate) {
+            for (NSUInteger i = 0; i < self.numberOfPages; i++) {
+                if (i != self.currentPage) {
+                    [self removeChildViewControllerOfPage:i];
+                }
+            }
+        }
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat width = CGRectGetWidth(scrollView.bounds);
-    CGFloat position = self.scrollView.contentOffset.x;
-    self.currentPage = round(position / width);
+    if (scrollView == self.scrollView) {
+        CGFloat width = CGRectGetWidth(scrollView.bounds);
+        CGFloat position = self.scrollView.contentOffset.x;
+        self.currentPage = round(position / width);
+        
+        for (NSUInteger i = 0; i < self.numberOfPages; i++) {
+            if (i != self.currentPage) {
+                [self removeChildViewControllerOfPage:i];
+            }
+        }
+    }
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @interface M9ScrollViewController ()
 
-@property(nonatomic, readwrite, retain) UIScrollView *scrollView;
+@property(nonatomic, readwrite, strong) UIScrollView *scrollView;
 
 @end
 
