@@ -226,7 +226,7 @@
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if (scrollView == self.scrollView) {
+    if (scrollView != self.scrollView) {
         return;
     }
     
@@ -235,7 +235,7 @@
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView == self.scrollView) {
+    if (scrollView != self.scrollView) {
         return;
     }
     
@@ -253,7 +253,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if (scrollView == self.scrollView) {
+    if (scrollView != self.scrollView) {
         return;
     }
     
