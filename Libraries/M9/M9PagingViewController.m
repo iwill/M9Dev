@@ -93,7 +93,12 @@
 }
 
 - (void)scrollToPage:(NSUInteger)page animated:(BOOL)animated {
+    NSUInteger lastPage = self.currentPage;
     self.currentPage = page;
+    if (page != lastPage) {
+        [self removeChildViewControllerOfPage:lastPage];
+    }
+    
     [self.scrollView scrollRectToVisible:({
         CGRect bounds = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset);
         bounds.origin.x = CGRectGetWidth(bounds) * page;
