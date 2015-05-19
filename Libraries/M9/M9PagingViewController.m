@@ -220,6 +220,7 @@
     if (scrollView != self.scrollView) {
         return;
     }
+    
     [self addChildViewControllerOfPage:self.currentPage - 1];
     [self addChildViewControllerOfPage:self.currentPage + 1];
 }
@@ -228,6 +229,7 @@
     if (scrollView == self.scrollView) {
         return;
     }
+    
     [self addChildViewControllerOfPage:self.currentPage - 1];
     [self addChildViewControllerOfPage:self.currentPage + 1];
 }
@@ -236,6 +238,7 @@
     if (scrollView == self.scrollView) {
         return;
     }
+    
     CGFloat width = CGRectGetWidth(scrollView.bounds);
     CGFloat position = self.scrollView.contentOffset.x;
     self.currentPage = round(position / width);
@@ -253,6 +256,7 @@
     if (scrollView == self.scrollView) {
         return;
     }
+    
     CGFloat width = CGRectGetWidth(scrollView.bounds);
     CGFloat position = self.scrollView.contentOffset.x;
     self.currentPage = round(position / width);

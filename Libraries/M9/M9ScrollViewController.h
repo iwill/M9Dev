@@ -14,6 +14,7 @@
 /*
 @protocol M9ScrollViewDelegate <UITableViewDelegate>
 @optional
+- (void)scrollViewWillBeginScrolling:(UIScrollView *)scrollView;
 - (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView;
 @end */
 
