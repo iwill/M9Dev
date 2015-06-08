@@ -34,7 +34,8 @@
     M9NETWORKING.requestConfig.baseURL = [NSURL URLWithString:@"http://10.2.10.187:3000"];
     M9NETWORKING.requestConfig.dataParser = M9ResponseDataParser_All;
     
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[M9DevTestTableViewController alloc] initWithStyle:UITableViewStylePlain]];
+    UIViewController *rootViewController = [[M9DevTestTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
     [self.window makeKeyAndVisible];
     return YES;
