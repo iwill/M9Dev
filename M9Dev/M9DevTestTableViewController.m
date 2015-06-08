@@ -16,9 +16,40 @@
 #import "VideosJSCollectionViewController.h"
 #import "TestPagingViewController.h"
 
+#import "JRSwizzle.h"
+
 // #if DEBUG
 #import <FLEX/FLEXManager.h>
 // #endif
+
+/**
+ * @see https://corecocoa.wordpress.com/2011/09/17/how-to-disable-floating-header-in-uitableview/
+ */
+/*
+@interface UITableView (private)
+
+@property(nonatomic, readonly) BOOL allowsHeaderViewsToFloat, allowsFooterViewsToFloat;
+
+@end
+
+@implementation UITableView (private)
+
+@dynamic allowsHeaderViewsToFloat, allowsFooterViewsToFloat;
+
++ (void)load {
+    [self jr_swizzleMethod:@selector(allowsHeaderViewsToFloat) withMethod:@selector(jr_swizzle_allowsHeaderViewsToFloat) error:nil];
+    [self jr_swizzleMethod:@selector(allowsFooterViewsToFloat) withMethod:@selector(jr_swizzle_allowsFooterViewsToFloat) error:nil];
+}
+
+- (BOOL)jr_swizzle_allowsHeaderViewsToFloat {
+    return NO;
+}
+
+- (BOOL)jr_swizzle_allowsFooterViewsToFloat {
+    return NO;
+}
+
+@end //*/
 
 @interface M9DevTestTableViewController ()
 
