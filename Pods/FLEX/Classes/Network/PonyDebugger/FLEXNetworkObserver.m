@@ -102,7 +102,7 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
 
 + (void)setShouldEnableOnLaunch:(BOOL)shouldEnableOnLaunch
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:kFLEXNetworkObserverEnableOnLaunchDefaultsKey];
+    [[NSUserDefaults standardUserDefaults] setBool:shouldEnableOnLaunch forKey:kFLEXNetworkObserverEnableOnLaunchDefaultsKey];
 }
 
 + (BOOL)shouldEnableOnLaunch
@@ -149,6 +149,14 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
 /// The superclass implementation (and implementations in classes above that) will be executed without inteference if called from the original implementation.
 + (void)sniffWithoutDuplicationForObject:(NSObject *)object selector:(SEL)selector sniffingBlock:(void (^)(void))sniffingBlock originalImplementationBlock:(void (^)(void))originalImplementationBlock
 {
+    // If we don't have an object to detect nested calls on, just run the original implmentation and bail.
+    // This case can happen if someone besides the URL loading system calls the delegate methods directly.
+    // See https://github.com/Flipboard/FLEX/issues/61 for an example.
+    if (!object) {
+        originalImplementationBlock();
+        return;
+    }
+
     const void *key = selector;
 
     // Don't run the sniffing block if we're inside a nested call
@@ -479,7 +487,10 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
 
             NSURLSessionTask *(^asyncDataOrDownloadSwizzleBlock)(Class, id, NSURLSessionAsyncCompletion) = ^NSURLSessionTask *(Class slf, id argument, NSURLSessionAsyncCompletion completion) {
                 NSURLSessionTask *task = nil;
-                if ([FLEXNetworkObserver isEnabled]) {
+                // If completion block was not provided sender expect to receive delegated methods or does not
+                // interested in callback at all. In this case we should just call original method implementation
+                // with nil completion block.
+                if ([FLEXNetworkObserver isEnabled] && completion) {
                     NSString *requestID = [self nextRequestID];
                     NSString *mechanism = [self mechansimFromClassMethod:selector onClass:class];
                     NSURLSessionAsyncCompletion completionWrapper = [self asyncCompletionWrapperForRequestID:requestID mechanism:mechanism completion:completion];

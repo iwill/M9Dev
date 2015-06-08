@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Editing/Argument Input Views/FLEXArgumentInputColorView.h
+../../../FLEX/Classes/Editing/ArgumentInputViews/FLEXArgumentInputColorView.h

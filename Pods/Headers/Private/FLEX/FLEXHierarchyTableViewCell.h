@@ -1,1 +1,1 @@
-../../../FLEX/Classes/View Hierarchy/FLEXHierarchyTableViewCell.h
+../../../FLEX/Classes/ViewHierarchy/FLEXHierarchyTableViewCell.h

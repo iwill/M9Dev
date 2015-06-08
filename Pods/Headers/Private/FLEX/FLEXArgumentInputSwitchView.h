@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Editing/Argument Input Views/FLEXArgumentInputSwitchView.h
+../../../FLEX/Classes/Editing/ArgumentInputViews/FLEXArgumentInputSwitchView.h

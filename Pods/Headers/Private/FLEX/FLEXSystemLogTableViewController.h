@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Global State Explorers/System Log/FLEXSystemLogTableViewController.h
+../../../FLEX/Classes/GlobalStateExplorers/SystemLog/FLEXSystemLogTableViewController.h

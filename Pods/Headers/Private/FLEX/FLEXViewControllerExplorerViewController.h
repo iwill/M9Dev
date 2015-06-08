@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Object Explorers/FLEXViewControllerExplorerViewController.h
+../../../FLEX/Classes/ObjectExplorers/FLEXViewControllerExplorerViewController.h

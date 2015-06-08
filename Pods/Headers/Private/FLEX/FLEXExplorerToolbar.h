@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Explorer Toolbar/FLEXExplorerToolbar.h
+../../../FLEX/Classes/ExplorerToolbar/FLEXExplorerToolbar.h

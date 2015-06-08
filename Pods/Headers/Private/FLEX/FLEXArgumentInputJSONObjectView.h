@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Editing/Argument Input Views/FLEXArgumentInputJSONObjectView.h
+../../../FLEX/Classes/Editing/ArgumentInputViews/FLEXArgumentInputJSONObjectView.h

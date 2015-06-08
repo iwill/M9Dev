@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Explorer Toolbar/FLEXManager+Private.h
+../../../FLEX/Classes/ExplorerToolbar/FLEXManager+Private.h

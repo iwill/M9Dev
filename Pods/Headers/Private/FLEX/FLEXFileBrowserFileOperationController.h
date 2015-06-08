@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Global State Explorers/FLEXFileBrowserFileOperationController.h
+../../../FLEX/Classes/GlobalStateExplorers/FLEXFileBrowserFileOperationController.h

@@ -1,1 +1,1 @@
-../../../FLEX/Classes/Object Explorers/FLEXGlobalsTableViewControllerEntry.h
+../../../FLEX/Classes/ObjectExplorers/FLEXGlobalsTableViewControllerEntry.h

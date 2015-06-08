@@ -1,1 +1,1 @@
-../../../FLEX/Classes/View Hierarchy/FLEXImagePreviewViewController.h
+../../../FLEX/Classes/ViewHierarchy/FLEXImagePreviewViewController.h
