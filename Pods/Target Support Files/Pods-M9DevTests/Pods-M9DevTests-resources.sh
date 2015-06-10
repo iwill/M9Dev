@@ -57,14 +57,6 @@ install_resource()
       ;;
   esac
 }
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "KZPlayground/Pod/Assets/KZPPlaygroundMain.storyboard"
-  install_resource "KZPlayground/Pod/Assets/KZPPresenterInfoViewController.xib"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "KZPlayground/Pod/Assets/KZPPlaygroundMain.storyboard"
-  install_resource "KZPlayground/Pod/Assets/KZPPresenterInfoViewController.xib"
-fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then
