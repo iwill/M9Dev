@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#import "M9Utilities.h"
+
 @interface UIViewController (M9Category)
+
+/**
+ *  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES/NO completion:^{
+ *      [rootViewController presentViewController:viewController animated:YES/NO completion:nil];
+ *  }];
+ */
++ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
+- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
 /**
  *  Adding and Removing a Child

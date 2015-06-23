@@ -10,6 +10,26 @@
 
 @implementation UIViewController (M9Category)
 
++ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UITabBarController *tabController = [rootViewController as:[UITabBarController class]];
+    UINavigationController *nav = [tabController.selectedViewController OR rootViewController as:[UINavigationController class]];
+    [nav popToRootViewControllerAnimated:animated];
+    [rootViewController dismissAllViewControllersAnimated:animated completion:completion];
+    return rootViewController;
+}
+
+- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    if (!self.presentedViewController) {
+        if (completion) completion();
+        return;
+    }
+    
+    [self dismissViewControllerAnimated:animated completion:^{
+        [self dismissAllViewControllersAnimated:NO completion:completion];
+    }];
+}
+
 - (void)addChildViewController:(UIViewController *)childViewController superview:(UIView *)superview {
     /* The addChildViewController: method automatically calls the willMoveToParentViewController: method
      * of the view controller to be added as a child before adding it.
