@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "EXTScope.h"
-
-
 // @see SpectaUtility.h - https://github.com/specta/specta
 #define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
 
@@ -48,6 +45,15 @@
 
 
 /**
+ * NSMerge
+ */
+
+#define NSMergeString(a, b)     [a OR @"" stringByAppendingString:b OR @""]
+#define NSMergeArray(a, b)      [a OR @[] arrayByAddingObjectsFromArray:b OR @[]]
+#define NSMergeDictionary(a, b) [a OR @{} dictionaryByAddingObjectsFromDictionary:b OR @{}]
+
+
+/**
  * va - variable arguments
  */
 #define va_each(type, first, block) { \
@@ -72,6 +78,7 @@
     }); \
     _RETURN array; \
 })
+/*
 #define va_make(args, first, statements) \
     va_list args; \
     va_start(args, first); \
@@ -79,7 +86,7 @@
         statements \
     @finally { \
         va_end(args); \
-    }
+    } */
 
 
 /**
@@ -260,16 +267,68 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
 
 
 /**
+ * NSRange
+ */
+static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
+    if (range.location > length) {
+        range.location = length;
+    }
+    if (range.location + range.length > length) {
+        range.length = length - range.location;
+    }
+    return range;
+}
+
+
+/**
+ * CGRectSet
+ */
+#define CGRectSetX(_rect, _x) ({ \
+    CGRect rect = _rect; \
+    rect.origin.x = _x; \
+    _RETURN rect; \
+})
+#define CGRectSetY(_rect, _y) ({ \
+    CGRect rect = _rect; \
+    rect.origin.y = _y; \
+    _RETURN rect; \
+})
+#define CGRectSetWidth(_rect, _width) ({ \
+    CGRect rect = _rect; \
+    rect.size.width = _width; \
+    _RETURN rect; \
+})
+#define CGRectSetHeight(_rect, _height) ({ \
+    CGRect rect = _rect; \
+    rect.size.height = _height; \
+    _RETURN rect; \
+})
+#define CGRectSetOrigin(_rect, _origin) ({ \
+    CGRect rect = _rect; \
+    rect.origin = _origin; \
+    _RETURN rect; \
+})
+#define CGRectSetSize(_rect, _size) ({ \
+    CGRect rect = _rect; \
+    rect.size = _size; \
+    _RETURN rect; \
+})
+#define CGRectSet(_rect, statements) ({ \
+    CGFloat x = _rect.origin.x, y = _rect.origin.y; \
+    CGFloat width = _rect.size.width, height = _rect.size.height; \
+    statements \
+    _RETURN CGRectMake(x, y, width, height); \
+})
+
+
+/**
  * custom NSLog
  */
 
 // #define AT __FILE__ ":" #__LINE__
 #define _HERE ({ \
     NSString *file = [[NSString stringWithUTF8String:__FILE__] lastPathComponent]; \
-    NSString *class = NSStringFromClass([self class]); \
-    NSString *method = [NSString stringWithUTF8String:__func__]; \
-    method = [method stringByReplacingOccurrencesOfString:[file substringToIndex:file.length - 2] withString:class]; \
-    [NSString stringWithFormat:@"%@@%@:%d", method, file, __LINE__]; \
+    [NSString stringWithFormat:@"%s (%@:%d)", __PRETTY_FUNCTION__, file, __LINE__]; \
 })
 
 // __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
@@ -278,9 +337,10 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
         NSLog(@"%@", _HERE); \
     }
 #else
+    void __NO_NSLog__(NSString *format, ...);
     #define NSLogHere()
-    #define NSLog(fmt, ...) { if (NO) [NSString stringWithFormat:fmt, ##__VA_ARGS__]; }
-    #define NSLogv(fmt, ...) { if (NO) [NSString stringWithFormat:fmt, ##__VA_ARGS__]; }
+    #define NSLog(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
+    #define NSLogv(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
 #endif
 
 

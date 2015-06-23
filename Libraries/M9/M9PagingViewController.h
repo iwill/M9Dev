@@ -16,21 +16,21 @@
 // TODO: MingLQ - UIPageViewController
 @interface M9PagingViewController : M9ScrollViewController
 
-@property(nonatomic, readonly) NSUInteger numberOfPages;
-@property(nonatomic, readonly) NSUInteger currentPage;
+@property(nonatomic, readonly) NSInteger numberOfPages;
+@property(nonatomic, readonly) NSInteger currentPage;
 
 /**
  *  call refreshPages or scrollToPage:animated: in viewDidLoad
  */
 - (void)refreshPages;
-- (void)scrollToPage:(NSUInteger)page animated:(BOOL)animated;
+- (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 
 // TODO: scroll progress - 1, 1.1, 1.2 ..., 2
-- (void)willScrollToPage:(NSUInteger)page;
-- (void)didScrollToPage:(NSUInteger)page;
+- (void)willScrollToPage:(NSInteger)page animated:(BOOL)animated;
+- (void)didScrollToPage:(NSInteger)page animated:(BOOL)animated;
 
-- (UIViewController *)viewControllerOfPage:(NSUInteger)page;
+- (UIViewController *)viewControllerOfPage:(NSInteger)page;
 // subclasses MUST override
-- (UIViewController *)generateViewControllerOfPage:(NSUInteger)page;
+- (UIViewController *)generateViewControllerOfPage:(NSInteger)page;
 
 @end

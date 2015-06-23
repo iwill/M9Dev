@@ -59,3 +59,10 @@
 
 @end
 
+
+/**
+ * custom NSLog
+ */
+
+void __NO_NSLog__(NSString *format, ...) {}
+
