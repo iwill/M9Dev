@@ -12,6 +12,8 @@
 #import "M9Networking.h"
 
 #import "M9DevTestTableViewController.h"
+#import "URLAction.h"
+#import "NSURL+M9Categories.h"
 
 #define APP_VERSION_KEY @"CFBundleShortVersionString"
 #define APP_VERSION [[[NSBundle mainBundle] objectForInfoDictionaryKey:APP_VERSION_KEY] description]
@@ -37,6 +39,22 @@
     UIViewController *rootViewController = [[M9DevTestTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
+    [URLAction setActionSettings:@{ @"action.hello":
+                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+                                         {
+                                             NSLog(@"%@ : %@ ? %@ # %@",
+                                                   action.actionKey,
+                                                   action.actionURL,
+                                                   action.parameters,
+                                                   action.nextActionURL);
+                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                                             return nil;
+                                         }],
+                                    @"action.test":
+                                        [URLActionSetting actionSettingWithTarget:self
+                                                                   actionSelector:@selector(testWithAction:completion:)]
+                                    }];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -54,6 +72,29 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if ([url.host isEqualToString:@"action"]) {
+        NSString *actionString = [url.queryDictionary stringForKey:@"url"];
+        NSURL *actionURL = [NSURL URLWithString:actionString];
+        if ([actionURL.scheme isEqualToString:@"act"]) {
+            [URLAction performActionWithURLString:actionString source:self];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (id)testWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
+    NSLog(@"%@ : %@ ? %@ # %@ - %@",
+          action.actionKey,
+          action.actionURL,
+          action.parameters,
+          action.nextActionURL,
+          action.prevActionResult);
+    if (completion) completion(YES, nil);
+    return nil;
 }
 
 @end
