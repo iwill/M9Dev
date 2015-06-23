@@ -8,68 +8,66 @@
 
 #import <Foundation/Foundation.h>
 
-@class URLAction;
+#import "EXTScope.h"
+#import "M9Utilities.h"
+#import "UIViewController+.h"
 
-typedef NS_ENUM(NSInteger, URLActionNavigationType) {
-    URLActionNavigationTypeGoto,
-    URLActionNavigationTypeOpen,
-    URLActionNavigationTypeReload
-};
-
-@protocol URLActionSource <NSObject>
-@optional
-- (UINavigationController *)navigationControllerWithActionURL:(NSString *)actionURL targetViewController:(UIViewController *)targetViewController;
-- (UIViewController *)presentingViewControllerWithActionURL:(NSString *)actionURL targetViewController:(UIViewController *)targetViewController;
-- (void)gotoRootViewControllerWithActionURL:(NSString *)actionURL targetViewController:(UIViewController *)targetViewController;
-@end
-
-@protocol URLActionTarget <NSObject>
-@optional
-- (URLActionNavigationType)navigationTypeWithActionURL:(NSString *)actionURL sourceViewController:(UIViewController *)sourceViewController;
-@end
-
-#pragma mark -
-
-@interface URLActionInfo : NSObject
-
-@property(nonatomic, strong) id/* <URLActionSource> */ source;
-@property(nonatomic) BOOL success;
-@property(nonatomic, strong) id result;
-@property(nonatomic, strong) NSString *nextAction;
-
-@end
-
-@interface URLActionSetting : NSObject
-
-@property(nonatomic, readonly) Class clazz;
-// selector of method to get instance, @selector(self) for class
-@property(nonatomic, readonly) SEL target;
-// selector of method with two parameters URLAction *action and URLActionInfo *actionInfo, returning ....
-// ???: return what
-@property(nonatomic, readonly) SEL action;
-
-// class-target-action first
-@property(nonatomic, copy) void (^block)(URLAction *action, URLActionInfo *actionInfo);
-
-+ (instancetype)actionSettingWithClass:(Class)clazz target:(SEL)target action:(SEL)action;
-+ (instancetype)actionSettingWithBlock:(void (^)(URLAction *action, URLActionInfo *actionInfo))block;
-
-@end
+@class URLActionSetting;
 
 @interface URLAction : NSObject
 
 + (NSDictionary *)actionSettings;
 + (void)setActionSettings:(NSDictionary *)actionSettings;
 
-/* private
-+ (instancetype)actionWithURL:(NSString *)actionURL actionInfo:(URLActionInfo *)actionInfo;
-+ (void)performActionWithURL:(NSString *)actionURL actionInfo:(URLActionInfo *)actionInfo completion:(void (^)(void))completion; */
++ (void)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
++ (void)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
 
-+ (void)performActionWithURL:(NSString *)actionURL completion:(void (^)(void))completion;
+@property(nonatomic, copy, readonly) NSURL *actionURL;
+@property(nonatomic, copy, readonly) NSString *actionKey;
+@property(nonatomic, copy, readonly) NSDictionary *parameters;
+@property(nonatomic, copy, readonly) NSString *nextActionURL;
 
-@property(nonatomic, copy, readonly) NSString *actionURL, *nextActionURL;
 @property(nonatomic, copy, readonly) URLActionSetting *actionSetting;
+@property(nonatomic, weak, readonly) id/* <URLActionSource> */ source; // (id<URLActionSource>) OR (UIViewController *)
 
-- (void)actionWithCompletion:(void (^)(void))completion;
+@property(nonatomic, strong, readonly) URLAction *prevAction;
+@property(nonatomic, copy, readonly) NSDictionary *prevActionResult;
+
+@end
+
+#pragma mark -
+
+typedef void (^URLActionCompletionBlock)(BOOL success, NSDictionary *result);
+// @return source of the next action, (id<URLActionSource>) OR (UIViewController *)
+typedef id/* <URLActionSource> */ (^URLActionBlock)(URLAction *action, URLActionCompletionBlock completion);
+
+@interface URLActionSetting : NSObject <M9MakeCopy>
+
+// ignore class-target-action if has actionBlock
+@property(nonatomic, copy, readonly) URLActionBlock actionBlock;
+
++ (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
+
+@property(nonatomic, readonly) id target;
+// selector of class method to get instance, or @selector(self) to get itself
+@property(nonatomic, readonly) SEL instanceSelector;
+// selector of method with two parameters URLAction *action and URLActionCompletionBlock completion
+// @return source of the next action, (id<URLActionSource>) OR (UIViewController *)
+// + (id)performAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
+// - (id)performAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
+@property(nonatomic, readonly) SEL actionSelector;
+
++ (instancetype)actionSettingWithTarget:(id)target actionSelector:(SEL)actionSelector;
++ (instancetype)actionSettingWithTarget:(id)target instanceSelector:(SEL)instanceSelector actionSelector:(SEL)actionSelector;
+
+@end
+
+#pragma mark -
+
+@protocol URLActionSource <NSObject>
+
+@optional
+- (UIViewController *)sourceViewControllerForActionURL:(NSString *)actionURL targetViewController:(UIViewController *)targetViewController;
+- (void)closeViewControllerForActionURL:(NSString *)actionURL targetViewController:(UIViewController *)targetViewController;
 
 @end
