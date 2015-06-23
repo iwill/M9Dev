@@ -19,8 +19,8 @@
 + (NSDictionary *)actionSettings;
 + (void)setActionSettings:(NSDictionary *)actionSettings;
 
-+ (void)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
-+ (void)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
++ (BOOL)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
++ (BOOL)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
 
 @property(nonatomic, copy, readonly) NSURL *actionURL;
 @property(nonatomic, copy, readonly) NSString *actionKey;

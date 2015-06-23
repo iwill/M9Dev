@@ -47,14 +47,14 @@ static NSDictionary *ActionSettings = nil;
     ActionSettings = [actionSettings copy];
 }}
 
-+ (void)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
++ (BOOL)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
     URLAction *action = [self actionWithURL:actionURL source:source];
-    [action perform];
+    return [action perform];
 }
 
-+ (void)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source {
++ (BOOL)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source {
     NSURL *url = [NSURL URLWithString:actionURLString];
-    [self performActionWithURL:url source:source];
+    return [self performActionWithURL:url source:source];
 }
 
 + (instancetype)actionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
@@ -76,7 +76,7 @@ static NSDictionary *ActionSettings = nil;
     return action;
 }
 
-- (void)perform {
+- (BOOL)perform {
     weakify(self);
     __block id target = [self.actionSetting performActionWithObject:self withObject:^(BOOL success, NSDictionary *result) {
         strongify(self);
@@ -84,14 +84,15 @@ static NSDictionary *ActionSettings = nil;
             [self performNextWithResult:result source:target];
         }
     }];
+    return self.actionSetting.actionBlock || self.actionSetting.target;
 }
 
-- (void)performNextWithResult:(NSDictionary *)result source:(id/* <URLActionSource> */)source {
+- (BOOL)performNextWithResult:(NSDictionary *)result source:(id/* <URLActionSource> */)source {
     NSURL *nextActionURL = [NSURL URLWithString:self.nextActionURL];
     URLAction *nextAction = [URLAction actionWithURL:nextActionURL source:source];
     nextAction.prevAction = self;
     nextAction.prevActionResult = result;
-    [nextAction perform];
+    return [nextAction perform];
 }
 
 @end
