@@ -270,12 +270,8 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
  * NSRange
  */
 static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
-    if (range.location > length) {
-        range.location = length;
-    }
-    if (range.location + range.length > length) {
-        range.length = length - range.location;
-    }
+    range.location = MIN(range.location, length);
+    range.length = MIN(range.length, length - range.location);
     return range;
 }
 
