@@ -10,6 +10,8 @@
 
 #import "M9Promise.h"
 
+#import "EXTScope.h"
+
 /**
  * M9Thenable
  *  Thenable from Promises/A+

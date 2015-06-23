@@ -8,13 +8,15 @@
 
 #import "TestPagingViewController.h"
 
+#import "EXTScope.h"
+
 @implementation TestPagingViewController
 
-- (NSUInteger)numberOfPages {
+- (NSInteger)numberOfPages {
     return 6;
 }
 
-- (UIViewController *)viewControllerOfPage:(NSUInteger)page {
+- (UIViewController *)viewControllerOfPage:(NSInteger)page {
     UIViewController *viewController = [UIViewController new];
     viewController.view.backgroundColor = [UIColor colorWithWhite:(10.0 - page - 1) / 10 alpha:1.0];
     
