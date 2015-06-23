@@ -77,9 +77,25 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if ([url.host isEqualToString:@"action"]) {
         NSString *actionString = [url.queryDictionary stringForKey:@"url"];
+        
+        // !!!: do this in action 1.0 manager
+        
         NSURL *actionURL = [NSURL URLWithString:actionString];
         if ([actionURL.scheme isEqualToString:@"act"]) {
-            [URLAction performActionWithURLString:actionString source:self];
+            NSString *actionVersion = [actionURL.queryDictionary stringForKey:@"-av-"];
+            // TODO: version compare
+            if (!actionVersion.length) {
+                actionURL = nil; // TODO: translate to action 2.0 if action 1.0
+            }
+            
+            // filter action 2.0
+            if ([URLAction performActionWithURLString:actionString source:self]) {
+                NSLog(@"action 2.0: %@", actionString);
+            }
+            // forward action 1.0
+            else {
+                NSLog(@"action 1.0: %@", actionString);
+            }
             return YES;
         }
     }
