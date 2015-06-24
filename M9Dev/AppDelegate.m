@@ -13,7 +13,7 @@
 
 #import "M9DevTestTableViewController.h"
 #import "URLAction.h"
-#import "NSURL+M9Categories.h"
+#import "URLAction+1.0.h"
 
 #define APP_VERSION_KEY @"CFBundleShortVersionString"
 #define APP_VERSION [[[NSBundle mainBundle] objectForInfoDictionaryKey:APP_VERSION_KEY] description]
@@ -52,7 +52,29 @@
                                          }],
                                     @"action.test":
                                         [URLActionSetting actionSettingWithTarget:self
-                                                                   actionSelector:@selector(testWithAction:completion:)]
+                                                                   actionSelector:@selector(testWithAction:completion:)],
+                                    @"webview.open":
+                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+                                         {
+                                             NSLog(@"%@ : %@ ? %@ # %@",
+                                                   action.actionKey,
+                                                   action.actionURL,
+                                                   action.parameters,
+                                                   action.nextActionURL);
+                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                                             return nil;
+                                         }],
+                                    @"channel.goto":
+                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+                                         {
+                                             NSLog(@"%@ : %@ ? %@ # %@",
+                                                   action.actionKey,
+                                                   action.actionURL,
+                                                   action.parameters,
+                                                   action.nextActionURL);
+                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                                             return nil;
+                                         }]
                                     }];
     
     [self.window makeKeyAndVisible];
@@ -75,31 +97,32 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    NSLog(@"got url: %@", url);
+    
+    NSURL *actionURL = nil;
     if ([url.host isEqualToString:@"action"]) {
         NSString *actionString = [url.queryDictionary stringForKey:@"url"];
-        
-        // !!!: do this in action 1.0 manager
-        
-        NSURL *actionURL = [NSURL URLWithString:actionString];
-        if ([actionURL.scheme isEqualToString:@"act"]) {
-            NSString *actionVersion = [actionURL.queryDictionary stringForKey:@"-av-"];
-            // TODO: version compare
-            if (!actionVersion.length) {
-                actionURL = nil; // TODO: translate to action 2.0 if action 1.0
-            }
-            
-            // filter action 2.0
-            if ([URLAction performActionWithURLString:actionString source:self]) {
-                NSLog(@"action 2.0: %@", actionString);
-            }
-            // forward action 1.0
-            else {
-                NSLog(@"action 1.0: %@", actionString);
-            }
-            return YES;
-        }
+        actionURL = [NSURL URLWithString:actionString];
+        NSLog(@"action 2.0: %@", actionURL);
     }
-    return NO;
+    else if ([[actionURL.host lowercaseString] isEqualToString:@"action.cmd"]) {
+        actionURL = [URLAction actionURLFrom_1_0:[url absoluteString]];
+        NSLog(@"translate to action 2.0: %@", actionURL);
+    }
+    
+    // !!!: do this in action 1.0 manager
+    
+    // filter action 2.0
+    if ([actionURL.scheme isEqualToString:@"sva"]
+        && [URLAction performActionWithURL:actionURL source:self]) {
+        NSLog(@"action 2.0");
+    }
+    // forward action 1.0, a new method without translating
+    else {
+        NSLog(@"action 1.0");
+    }
+    
+    return YES;
 }
 
 - (id)testWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {

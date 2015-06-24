@@ -15,6 +15,7 @@
 #import "VideosOCCollectionViewController.h"
 #import "VideosJSCollectionViewController.h"
 #import "TestPagingViewController.h"
+#import "TestActionViewController.h"
 
 #import "JRSwizzle.h"
 
@@ -76,16 +77,17 @@
     [self.tableView registerClass:tableViewCellClass forCellReuseIdentifier:NSStringFromClass(tableViewCellClass)];
     self.tableView.rowHeight = 50;
     
-    viewControllers = @[ [FLEXManager sharedManager],
-                         [M9NetworkingViewController new],
-                         [JSLayoutViewController new],
-                         [VideosOCCollectionViewController new],
-                         [VideosJSCollectionViewController new],
+    viewControllers = @[ [TestActionViewController new],
                          ({
                              UIViewController *vc = [TestPagingViewController new];
                              vc.navigationItem.title = @"TestPagingViewController";
                              _RETURN vc;
-                         }) ];
+                         }),
+                         [M9NetworkingViewController new],
+                         [JSLayoutViewController new],
+                         [VideosOCCollectionViewController new],
+                         [VideosJSCollectionViewController new],
+                         [FLEXManager sharedManager] ];
 }
 
 - (void)didReceiveMemoryWarning {
