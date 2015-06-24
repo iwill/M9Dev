@@ -46,6 +46,16 @@ static inline NSString * _AFPercentEscapedQueryStringValueFromStringWithEncoding
                                                                                   CFStringConvertNSStringEncodingToEncoding(encoding));
 }
 
+static inline NSString * URLEncodedFieldWithEncoding(id field, NSStringEncoding stringEncoding) {
+    return _AFPercentEscapedQueryStringKeyFromStringWithEncoding([field description], stringEncoding);
+}
+
+static inline NSString * URLEncodedValueWithEncoding(id value, NSStringEncoding stringEncoding) {
+    if (!value || [value isEqual:[NSNull null]]) return @"";
+    return _AFPercentEscapedQueryStringValueFromStringWithEncoding([value description], stringEncoding);
+}
+
+// ???: decode
 static inline NSString * AFBase64EncodedStringFromString(NSString *string) {
     NSData *data = [NSData dataWithBytes:[string UTF8String] length:[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
     NSUInteger length = [data length];
@@ -73,13 +83,4 @@ static inline NSString * AFBase64EncodedStringFromString(NSString *string) {
     }
     
     return [[NSString alloc] initWithData:mutableData encoding:NSASCIIStringEncoding];
-}
-
-static inline NSString * URLEncodedFieldWithEncoding(id field, NSStringEncoding stringEncoding) {
-    return _AFPercentEscapedQueryStringKeyFromStringWithEncoding([field description], stringEncoding);
-}
-
-static inline NSString * URLEncodedValueWithEncoding(id value, NSStringEncoding stringEncoding) {
-    if (!value || [value isEqual:[NSNull null]]) return @"";
-    return _AFPercentEscapedQueryStringValueFromStringWithEncoding([value description], stringEncoding);
 }
