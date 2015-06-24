@@ -84,7 +84,7 @@ static NSDictionary *ActionSettings = nil;
             [self performNextWithResult:result source:target];
         }
     }];
-    return self.actionSetting.actionBlock || self.actionSetting.target;
+    return !!self.actionSetting;
 }
 
 - (BOOL)performNextWithResult:(NSDictionary *)result source:(id/* <URLActionSource> */)source {
