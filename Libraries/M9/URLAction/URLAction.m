@@ -95,6 +95,14 @@ static NSDictionary *ActionSettings = nil;
     return [nextAction perform];
 }
 
+- (UIViewController *)sourceViewControllerForTargetViewController:(UIViewController *)targetViewController {
+    if ([self.source respondsToSelector:@selector(sourceViewControllerForActionURL:targetViewController:)]) {
+        return [self.source sourceViewControllerForActionURL:[self.actionURL absoluteString]
+                                        targetViewController:targetViewController];
+    }
+    return [self.source as:[UIViewController class]];
+}
+
 @end
 
 #pragma mark -

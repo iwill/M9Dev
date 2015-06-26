@@ -33,6 +33,8 @@
 @property(nonatomic, strong, readonly) URLAction *prevAction;
 @property(nonatomic, copy, readonly) NSDictionary *prevActionResult;
 
+- (UIViewController *)sourceViewControllerForTargetViewController:(UIViewController *)targetViewController;
+
 @end
 
 #pragma mark -
