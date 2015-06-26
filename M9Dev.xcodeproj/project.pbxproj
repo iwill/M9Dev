@@ -62,6 +62,8 @@
 		DFE66CBB1B3A929300124656 /* JSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CB81B3A929300124656 /* JSONObject.m */; };
 		DFE66CBC1B3A929300124656 /* NSString+JSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CBA1B3A929300124656 /* NSString+JSONObject.m */; };
 		DFE66CC11B3AC59600124656 /* TestActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC01B3AC59600124656 /* TestActionViewController.m */; };
+		DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */; };
+		DFE66CC71B3D686C00124656 /* UINavigationController+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC61B3D686C00124656 /* UINavigationController+.m */; };
 		DFF2339719B82F500045FDCE /* VideosJSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */; };
 		DFF2339A19B848C10045FDCE /* UIImageView+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339919B848C10045FDCE /* UIImageView+JS.m */; };
 		DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339C19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m */; };
@@ -203,6 +205,10 @@
 		DFE66CBD1B3AA5CB00124656 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		DFE66CBF1B3AC59600124656 /* TestActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestActionViewController.h; sourceTree = "<group>"; };
 		DFE66CC01B3AC59600124656 /* TestActionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestActionViewController.m; sourceTree = "<group>"; };
+		DFE66CC21B3D650500124656 /* VideosJSCollectionViewController+action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VideosJSCollectionViewController+action.h"; sourceTree = "<group>"; };
+		DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideosJSCollectionViewController+action.m"; sourceTree = "<group>"; };
+		DFE66CC51B3D686C00124656 /* UINavigationController+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+.h"; sourceTree = "<group>"; };
+		DFE66CC61B3D686C00124656 /* UINavigationController+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+.m"; sourceTree = "<group>"; };
 		DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosJSCollectionViewController.h; sourceTree = "<group>"; };
 		DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosJSCollectionViewController.m; sourceTree = "<group>"; };
 		DFF2339819B848C10045FDCE /* UIImageView+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+JS.h"; sourceTree = "<group>"; };
@@ -340,6 +346,8 @@
 				DFE66CC01B3AC59600124656 /* TestActionViewController.m */,
 				DFDF47FF1AFC965100F6E31C /* TestPagingViewController.h */,
 				DFDF48001AFC965100F6E31C /* TestPagingViewController.m */,
+				DFE66CC21B3D650500124656 /* VideosJSCollectionViewController+action.h */,
+				DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */,
 				DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */,
 				DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */,
 				DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */,
@@ -452,6 +460,8 @@
 				DFD69651199880F10089B2B5 /* UIColor+.m */,
 				DF157D55199D53BF00304E8E /* UIImage+.h */,
 				DF157D56199D53BF00304E8E /* UIImage+.m */,
+				DFE66CC51B3D686C00124656 /* UINavigationController+.h */,
+				DFE66CC61B3D686C00124656 /* UINavigationController+.m */,
 				DFF233BC19B89F970045FDCE /* UIScrollView+.h */,
 				DFF233BD19B89F970045FDCE /* UIScrollView+.m */,
 				DF57B64419A7525500C374E8 /* UIScrollViewController.h */,
@@ -777,6 +787,7 @@
 				DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */,
 				DFF233BB19B87C2A0045FDCE /* NSString+JS.m in Sources */,
 				DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */,
+				DFE66CC71B3D686C00124656 /* UINavigationController+.m in Sources */,
 				DFD7AB791994C0E10054CD55 /* UIView+JS.m in Sources */,
 				DF141F171A00C01200F03F0B /* NSAttributedString+.m in Sources */,
 				DFB8480F19BF0B3D000D3B26 /* NSAttributedString+JS.m in Sources */,
@@ -785,6 +796,7 @@
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
 				DFF233B519B876C10045FDCE /* JSView.m in Sources */,
 				DF68086F1B01DBC100F0E9E3 /* M9TableViewController.m in Sources */,
+				DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */,
 				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
 				DF0116551A4ABEBA00AF7F3A /* M9Promise.m in Sources */,

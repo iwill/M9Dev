@@ -74,7 +74,15 @@
                                                    action.nextActionURL);
                                              if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
                                              return nil;
-                                         }]
+                                         }],
+                                    @"videos.open":
+                                        [URLActionSetting actionSettingWithTarget:NSClassFromString(@"VideosJSCollectionViewController")
+                                                                 instanceSelector:@selector(new)
+                                                                   actionSelector:@selector(openWithAction:completion:)],
+                                    @"videos.goto":
+                                        [URLActionSetting actionSettingWithTarget:NSClassFromString(@"VideosJSCollectionViewController")
+                                                                 instanceSelector:@selector(new)
+                                                                   actionSelector:@selector(gotoWithAction:completion:)]
                                     }];
     
     [self.window makeKeyAndVisible];
