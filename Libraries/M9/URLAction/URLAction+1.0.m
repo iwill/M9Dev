@@ -50,7 +50,7 @@
 + (NSURL *)actionURLFromString:(NSString *)actionURLString {
     NSString *scheme = @"sva", *host = nil, *query = nil, *fragment = nil;
     
-    // !!!: 搜索 // 而不是 ://，因为原来这样的 sohuvideo://sva://xxxx 转成 NSURL 之后会变成 sohuvideo://sva//xxxx
+    // !!!: 查找 // 而不是 :// - 因为 sohuvideo://sva://xxxx 转成 NSURL 之后会变成 sohuvideo://sva//xxxx
     NSRange range = [actionURLString rangeOfString:@"//" options:NSBackwardsSearch];
     if (range.location == NSNotFound) {
         // 兼容 sva:xxxx
