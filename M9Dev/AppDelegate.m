@@ -105,7 +105,8 @@
         actionURL = [NSURL URLWithString:actionString];
         NSLog(@"action 2.0: %@", actionURL);
     }
-    else if ([[actionURL.host lowercaseString] isEqualToString:@"action.cmd"]) {
+    else if ([[url.host lowercaseString] isEqualToString:@"action.cmd"]
+             || [[url.path lowercaseString] isEqualToString:@"//action.cmd"]) {
         actionURL = [URLAction actionURLFrom_1_0:[url absoluteString]];
         NSLog(@"translate to action 2.0: %@", actionURL);
     }
