@@ -77,13 +77,18 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (BOOL)perform {
+    if ([self.source respondsToSelector:@selector(willPerformAction:)]) {
+        [self.source willPerformAction:self];
+    }
+    
     weakify(self);
-    __block id target = [self.actionSetting performActionWithObject:self withObject:^(BOOL success, NSDictionary *result) {
+    __block id source = [self.actionSetting performActionWithObject:self withObject:^(BOOL success, NSDictionary *result) {
         strongify(self);
         if (success) {
-            [self performNextWithResult:result source:target];
+            [self performNextWithResult:result source:source];
         }
     }];
+    
     return !!self.actionSetting;
 }
 
@@ -96,9 +101,9 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (UIViewController *)sourceViewControllerForTargetViewController:(UIViewController *)targetViewController {
-    if ([self.source respondsToSelector:@selector(sourceViewControllerForActionURL:targetViewController:)]) {
-        return [self.source sourceViewControllerForActionURL:[self.actionURL absoluteString]
-                                        targetViewController:targetViewController];
+    if ([self.source respondsToSelector:@selector(sourceViewControllerForAction:targetViewController:)]) {
+        return [self.source sourceViewControllerForAction:self
+                                     targetViewController:targetViewController];
     }
     return [self.source as:[UIViewController class]];
 }
