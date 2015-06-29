@@ -15,7 +15,7 @@
 @property(nonatomic) id target;
 @property(nonatomic) SEL instanceSelector;
 @property(nonatomic) SEL actionSelector;
-- (id)performActionWithObject:(id)object1 withObject:(id)object2;
+- (id)performWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
 @end
 
 #pragma mark -
@@ -68,7 +68,7 @@ static NSDictionary *ActionSettings = nil;
     
     action.actionKey = [actionURL.host lowercaseString];
     action.parameters = actionURL.queryDictionary;
-    action.nextActionURL = actionURL.fragment;
+    action.nextActionURL = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     action.actionSetting = [[URLAction actionSettings] objectForKey:action.actionKey class:[URLActionSetting class]];
     action.source = source;
@@ -81,9 +81,8 @@ static NSDictionary *ActionSettings = nil;
         [self.source willPerformAction:self];
     }
     
-    weakify(self);
-    __block id source = [self.actionSetting performActionWithObject:self withObject:^(BOOL success, NSDictionary *result) {
-        strongify(self);
+    // !!!: DONOT weakify self
+    __block id source = [self.actionSetting performWithAction:self completion:^(BOOL success, NSDictionary *result) {
         if (success) {
             [self performNextWithResult:result source:source];
         }
@@ -140,9 +139,9 @@ static NSDictionary *ActionSettings = nil;
     copy.actionSelector = self.actionSelector;
 }
 
-- (id)performActionWithObject:(id)object1 withObject:(id)object2 {
+- (id)performWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
     if (self.actionBlock) {
-        return self.actionBlock(object1, object2);
+        return self.actionBlock(action, completion);
     }
     
 #pragma clang diagnostic push
@@ -151,10 +150,10 @@ static NSDictionary *ActionSettings = nil;
     SEL instanceSelector = self.instanceSelector OR @selector(self);
     if ([target respondsToSelector:instanceSelector]) {
         target = [target performSelector:instanceSelector];
-        SEL actionSelector = self.actionSelector;
-        if ([target respondsToSelector:actionSelector]) {
-            return [target performSelector:actionSelector withObject:object1 withObject:object2] OR target;
-        }
+    }
+    SEL actionSelector = self.actionSelector;
+    if ([target respondsToSelector:actionSelector]) {
+        return [target performSelector:actionSelector withObject:action withObject:completion] OR target;
     }
     return target;
 #pragma clang diagnostic pop

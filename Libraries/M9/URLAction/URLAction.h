@@ -68,6 +68,9 @@ typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock complet
 
 #pragma mark - action setting with target[-instance]-action
 
+/**
+ *  class or object
+ */
 @property(nonatomic, readonly) id target;
 /**
  *  selector of class method to get instance, or @selector(self) to get itself
