@@ -15,8 +15,10 @@
 
 - (id)openWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
     UIViewController *sourceViewController = [action sourceViewControllerForTargetViewController:self];
-    if (sourceViewController.navigationController) {
-        [sourceViewController.navigationController pushViewController:self animated:YES completion:^{
+    UINavigationController *navigationController = (sourceViewController.navigationController
+                                                    OR [sourceViewController as:[UINavigationController class]]);
+    if (navigationController) {
+        [navigationController pushViewController:self animated:YES completion:^{
             if (completion) completion(YES, nil);
         }];
     }
