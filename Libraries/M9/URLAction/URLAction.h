@@ -23,8 +23,11 @@
 
 #pragma mark - perform action
 
-+ (BOOL)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
-+ (BOOL)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
+/**
+ *  @return URLAction if perform success
+ */
++ (instancetype)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
++ (instancetype)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
 
 #pragma mark - parameters
 
@@ -93,7 +96,7 @@ typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock complet
  */
 - (void)willPerformAction:(URLAction *)action;
 /**
- * use source if does not implement this method
+ *  use source if does not implement this method
  */
 - (UIViewController *)sourceViewControllerForAction:(URLAction *)action targetViewController:(UIViewController *)targetViewController;
 

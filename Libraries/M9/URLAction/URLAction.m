@@ -47,12 +47,12 @@ static NSDictionary *ActionSettings = nil;
     ActionSettings = [actionSettings copy];
 }}
 
-+ (BOOL)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
++ (instancetype)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
     URLAction *action = [self actionWithURL:actionURL source:source];
-    return [action perform];
+    return [action perform] ? action : nil;
 }
 
-+ (BOOL)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source {
++ (instancetype)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source {
     NSURL *url = [NSURL URLWithString:actionURLString];
     return [self performActionWithURL:url source:source];
 }
