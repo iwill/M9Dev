@@ -14,6 +14,7 @@
 #import "M9DevTestTableViewController.h"
 #import "URLAction.h"
 #import "URLAction+1.0.h"
+#import "VideosJSCollectionViewController+action.h"
 
 #define APP_VERSION_KEY @"CFBundleShortVersionString"
 #define APP_VERSION [[[NSBundle mainBundle] objectForInfoDictionaryKey:APP_VERSION_KEY] description]
@@ -76,11 +77,11 @@
                                              return nil;
                                          }],
                                     @"videos.open":
-                                        [URLActionSetting actionSettingWithTarget:NSClassFromString(@"VideosJSCollectionViewController")
+                                        [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                                                  instanceSelector:@selector(new)
                                                                    actionSelector:@selector(openWithAction:completion:)],
                                     @"videos.goto":
-                                        [URLActionSetting actionSettingWithTarget:NSClassFromString(@"VideosJSCollectionViewController")
+                                        [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                                                  instanceSelector:@selector(new)
                                                                    actionSelector:@selector(gotoWithAction:completion:)]
                                     }];
