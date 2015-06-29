@@ -40,51 +40,60 @@
     UIViewController *rootViewController = [[M9DevTestTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
-    [URLAction setActionSettings:@{ @"action.hello":
-                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
-                                         {
-                                             NSLog(@"%@ : %@ ? %@ # %@",
-                                                   action.actionKey,
-                                                   action.actionURL,
-                                                   action.parameters,
-                                                   action.nextActionURL);
-                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                                             return nil;
-                                         }],
-                                    @"action.test":
-                                        [URLActionSetting actionSettingWithTarget:self
-                                                                   actionSelector:@selector(testWithAction:completion:)],
-                                    @"webview.open":
-                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
-                                         {
-                                             NSLog(@"%@ : %@ ? %@ # %@",
-                                                   action.actionKey,
-                                                   action.actionURL,
-                                                   action.parameters,
-                                                   action.nextActionURL);
-                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                                             return nil;
-                                         }],
-                                    @"channel.goto":
-                                        [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
-                                         {
-                                             NSLog(@"%@ : %@ ? %@ # %@",
-                                                   action.actionKey,
-                                                   action.actionURL,
-                                                   action.parameters,
-                                                   action.nextActionURL);
-                                             if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                                             return nil;
-                                         }],
-                                    @"videos.open":
-                                        [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
-                                                                 instanceSelector:@selector(new)
-                                                                   actionSelector:@selector(openWithAction:completion:)],
-                                    @"videos.goto":
-                                        [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
-                                                                 instanceSelector:@selector(new)
-                                                                   actionSelector:@selector(gotoWithAction:completion:)]
-                                    }];
+    [URLAction setActionSettings:
+     @{ @"action.hello":
+            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+             {
+                 NSLog(@"%@ : %@ ? %@ # %@",
+                       action.actionKey,
+                       action.actionURL,
+                       action.parameters,
+                       action.nextActionURL);
+                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                 return nil;
+             }],
+        @"action.test":
+            [URLActionSetting actionSettingWithTarget:self
+                                       actionSelector:@selector(testWithAction:completion:)],
+        @"webview.open":
+            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+             {
+                 NSLog(@"%@ : %@ ? %@ # %@",
+                       action.actionKey,
+                       action.actionURL,
+                       action.parameters,
+                       action.nextActionURL);
+                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                 return nil;
+             }],
+        @"channel.goto":
+            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+             {
+                 NSLog(@"%@ : %@ ? %@ # %@",
+                       action.actionKey,
+                       action.actionURL,
+                       action.parameters,
+                       action.nextActionURL);
+                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
+                 return nil;
+             }],
+        @"videos.open":
+            [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
+                                     instanceSelector:@selector(new)
+                                       actionSelector:@selector(openWithAction:completion:)],
+        @"videos.goto":
+            [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
+                                     instanceSelector:@selector(new)
+                                       actionSelector:@selector(gotoWithAction:completion:)],
+        @"root.goto":
+            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+             {
+                 __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
+                     if (completion) completion(YES, @{ @"key": @"value" });
+                 }];
+                 return [rootViewController as:[UINavigationController class]];
+             }]
+        }];
     
     [self.window makeKeyAndVisible];
     return YES;

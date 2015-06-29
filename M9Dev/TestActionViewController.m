@@ -39,7 +39,8 @@
                                       @"sohuvideo://sva://action.cmd?action=1.25&cateCode=8888&channel_id=88880001&cid=8888&ex2=%e6%90%9c%e7%8b%90%e5%bd%b1%e9%99%a2",
                                       @"sohuvideo://sva://action.cmd?action=1.18&urls=http%3A%2F%2Ftv.sohu.com%2Fupload%2Ftouch%2Ffeedback.html&more=%7B%22sourcedata%22%3A%7B%22params%22%3A%22plat%22%7D%7D",
                                       @"sva://videos.open",
-                                      @"sva://videos.goto#sva%3A%2F%2Fvideos.open" ]) {
+                                      @"sva://videos.goto",
+                                      @"sva://root.goto#sva%3A%2F%2Fvideos.open" ]) {
         UIButton *button = [UIButton new];
         button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         button.backgroundColor = [UIColor lightGrayColor];
