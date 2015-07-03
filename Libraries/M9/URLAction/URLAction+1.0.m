@@ -23,22 +23,35 @@
     if ([action isEqualToString:@"1.18"]) {
         host = @"webview.open";
         parameters = @{ @"url":     [queryDictionary stringForKey:@"urls"] OR @"",
+                        @"share":   [queryDictionary stringForKey:@"share"] OR @"",
                         @"params":  [sourceDataDictionary stringForKey:@"params"] OR @"" };
+    }
+    else if ([action isEqualToString:@"1.25"]) {
+        host = @"columns.open";
+        parameters = @{ @"cate_code":   [queryDictionary stringForKey:@"cateCode"] OR @"",
+                        @"channel_id":  [queryDictionary stringForKey:@"channel_id"] OR [queryDictionary stringForKey:@"ex3"] OR @"",
+                        @"tag_id":      [queryDictionary stringForKey:@"tag_id"] OR @"",
+                        @"channeled":   [queryDictionary stringForKey:@"channeled"] OR @"",
+                        @"title":       [queryDictionary stringForKey:@"ex2"] OR @"",
+                        @"can_add":     [queryDictionary stringForKey:@"can_add"] OR @"" };
     }
     else if ([action isEqualToString:@"2.4"]) {
         host = @"channel.goto";
-        parameters = @{ @"cid":             [queryDictionary stringForKey:@"cid"] OR @"",
-                        @"cateCode":        [queryDictionary stringForKey:@"cateCode"] OR @"",
-                        @"columnID":        [queryDictionary stringForKey:@"ex2"] OR @"",
-                        @"subChannelID":    [queryDictionary stringForKey:@"ex3"] OR @"",
-                        @"channelListType": [queryDictionary stringForKey:@"channel_list_type"] OR @"",
-                        @"channelID":       [queryDictionary stringForKey:@"channel_id"] OR @"" };
+        parameters = @{ @"channel_list_type":   [queryDictionary stringForKey:@"channel_list_type"] OR @"",
+                        @"cid":                 [queryDictionary stringForKey:@"cid"] OR @"",
+                        @"cate_code":           [queryDictionary stringForKey:@"cateCode"] OR @"",
+                        @"channel_id":          [queryDictionary stringForKey:@"channel_id"] OR @"",
+                        @"subchannel_id":       [queryDictionary stringForKey:@"ex3"] OR @"",
+                        @"column_id":           [queryDictionary stringForKey:@"ex2"] OR @"" };
+    }
+    
+    if (!host.length) {
+        return nil;
     }
     
     NSString *scheme = @"sva";
     NSString *query = [NSURL queryStringFromParameters:parameters];
     NSString *fragment = nil;
-    
     return [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@?%@#%@",
                                  scheme,
                                  host OR @"",

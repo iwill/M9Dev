@@ -62,6 +62,7 @@ typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock complet
 
 /**
  *  ignore class-target-action if has actionBlock
+ *  !!!: MUST call completion - if (completion) completion(YES, <#result#>);
  */
 @property(nonatomic, copy, readonly) URLActionBlock actionBlock;
 + (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
@@ -78,6 +79,7 @@ typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock complet
 @property(nonatomic, readonly) SEL instanceSelector;
 /**
  *  selector of method with two parameters URLAction *action and URLActionCompletionBlock completion
+ *  !!!: MUST call completion - if (completion) completion(YES, <#result#>);
  *  @return source of the next action, (id<URLActionSource>) OR (UIViewController *)
  *  e.g.
  *      + (id)performAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;

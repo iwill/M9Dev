@@ -107,6 +107,15 @@ static NSDictionary *ActionSettings = nil;
     return [self.source as:[UIViewController class]];
 }
 
+- (NSString *)description {
+    return [[super description] stringByAppendingFormat:@" : %@ > %@ ? %@ # %@",
+            self.actionURL,
+            self.actionKey,
+            self.parameters,
+            self.nextActionURL];
+
+}
+
 @end
 
 #pragma mark -
@@ -148,7 +157,12 @@ static NSDictionary *ActionSettings = nil;
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     id target = self.target;
     SEL instanceSelector = self.instanceSelector OR @selector(self);
-    if ([target respondsToSelector:instanceSelector]) {
+    // #import <objc/runtime.h>
+    // class_isMetaClass(object_getClass(target))
+    if (target == [target class] && [[target class] instancesRespondToSelector:instanceSelector]) {
+        target = [[[target class] alloc] performSelector:instanceSelector withObject:nil];
+    }
+    else if ([target respondsToSelector:instanceSelector]) {
         target = [target performSelector:instanceSelector];
     }
     SEL actionSelector = self.actionSelector;
