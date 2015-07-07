@@ -20,11 +20,8 @@
                                                     OR sourceViewController.navigationController);
     if (navigationController) {
         [navigationController pushViewController:self animated:YES completion:^{
-            if (next) next(YES, nil);
+            if (next) next(nil);
         }];
-    }
-    else {
-        if (next) next(NO, nil);
     }
 }
 
@@ -33,11 +30,8 @@
         UINavigationController *navigationController = [rootViewController as:[UINavigationController class]];
         if (navigationController) {
             [navigationController pushViewController:self animated:YES completion:^{
-                if (next) next(YES, nil);
+                if (next) next(nil);
             }];
-        }
-        else {
-            if (next) next(NO, nil);
         }
     }];
 }

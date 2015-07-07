@@ -22,13 +22,13 @@
 
 @interface URLAction ()
 
-@property(nonatomic, copy) NSURL *actionURL;
-@property(nonatomic, copy) NSString *actionScheme;
-@property(nonatomic, copy) NSString *actionKey;
+@property(nonatomic, copy) NSURL *URL;
+@property(nonatomic, copy) NSString *scheme;
+@property(nonatomic, copy) NSString *key;
 @property(nonatomic, copy) NSDictionary *parameters;
-@property(nonatomic, copy) NSString *nextActionURL;
+@property(nonatomic, copy) NSString *nextURLString;
 
-@property(nonatomic, copy) URLActionSetting *actionSetting;
+@property(nonatomic, copy) URLActionSetting *setting;
 @property(nonatomic, weak) id/* <URLActionSource> */ source; // <URLActionSource> OR UIViewController
 
 @property(nonatomic, strong) URLAction *prevAction;
@@ -80,13 +80,13 @@ static NSDictionary *ActionSettings = nil;
     
     URLAction *action = [self new];
     
-    action.actionURL = actionURL;
-    action.actionScheme = actionURL.scheme;
-    action.actionKey = [actionURL.host lowercaseString];
+    action.URL = actionURL;
+    action.scheme = actionURL.scheme;
+    action.key = [actionURL.host lowercaseString];
     action.parameters = actionURL.queryDictionary;
-    action.nextActionURL = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    action.nextURLString = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    action.actionSetting = [[URLAction actionSettings] objectForKey:action.actionKey class:[URLActionSetting class]];
+    action.setting = [[URLAction actionSettings] objectForKey:action.key class:[URLActionSetting class]];
     action.source = source;
     
     return action;
@@ -94,24 +94,22 @@ static NSDictionary *ActionSettings = nil;
 
 - (BOOL)perform {
     NSArray *validSchemes = [URLAction validSchemes];
-    if (validSchemes.count && ![validSchemes containsObject:self.actionScheme]) {
+    if (validSchemes.count && ![validSchemes containsObject:self.scheme]) {
         return NO;
     }
     
     // !!!: DONOT weakify self
-    [self.actionSetting performWithAction:self next:^(BOOL success, NSDictionary *result) {
-        if (success) {
-            // !!!: NO source for next
-            [self performNextWithResult:result source:nil];
-        }
+    [self.setting performWithAction:self next:^(NSDictionary *result) {
+        // !!!: NO source for next
+        [self performNextWithResult:result source:nil];
         // NOTE: else perform another action here
     }];
     
-    return !!self.actionSetting;
+    return !!self.setting;
 }
 
 - (BOOL)performNextWithResult:(NSDictionary *)result source:(id/* <URLActionSource> */)source {
-    NSURL *nextActionURL = [NSURL URLWithString:self.nextActionURL];
+    NSURL *nextActionURL = [NSURL URLWithString:self.nextURLString];
     URLAction *nextAction = [URLAction actionWithURL:nextActionURL source:source];
     nextAction.prevAction = self;
     nextAction.prevActionResult = result;
@@ -127,8 +125,7 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (NSString *)description {
-    return [[super description] stringByAppendingFormat:@" : %@ > %@ ? %@ # %@", self.actionURL, self.actionKey, self.parameters, self.nextActionURL];
-
+    return [[super description] stringByAppendingFormat:@" : %@ > %@ ? %@ # %@", self.URL, self.key, self.parameters, self.nextURLString];
 }
 
 @end

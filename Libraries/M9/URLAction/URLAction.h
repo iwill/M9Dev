@@ -34,13 +34,13 @@
 
 #pragma mark - parameters
 
-@property(nonatomic, copy, readonly) NSURL *actionURL;
-@property(nonatomic, copy, readonly) NSString *actionScheme;
-@property(nonatomic, copy, readonly) NSString *actionKey;
+@property(nonatomic, copy, readonly) NSURL *URL;
+@property(nonatomic, copy, readonly) NSString *scheme;
+@property(nonatomic, copy, readonly) NSString *key;
 @property(nonatomic, copy, readonly) NSDictionary *parameters;
-@property(nonatomic, copy, readonly) NSString *nextActionURL;
+@property(nonatomic, copy, readonly) NSString *nextURLString;
 
-@property(nonatomic, copy, readonly) URLActionSetting *actionSetting;
+@property(nonatomic, copy, readonly) URLActionSetting *setting;
 @property(nonatomic, weak, readonly) id/* <URLActionSource> */ source; // (id<URLActionSource>) OR (UIViewController *)
 
 @property(nonatomic, strong, readonly) URLAction *prevAction;
@@ -56,15 +56,16 @@
 
 @interface URLActionSetting : NSObject <M9MakeCopy>
 
-typedef void (^URLActionNextBlock)(BOOL success, NSDictionary *result);
+typedef void (^URLActionNextBlock)(NSDictionary *result);
 typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
 
 #pragma mark - action setting with block
 
 /**
  *  ignore class-target-action if has actionBlock
- *  !!!: MUST call next when completed
- *      if (next) next(YES, <#result#>);
+ *  
+ *  call next when completed
+ *      if (next) next(<#result#>);
  */
 @property(nonatomic, copy, readonly) URLActionBlock actionBlock;
 + (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
@@ -81,11 +82,12 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
 @property(nonatomic, readonly) SEL instanceSelector;
 /**
  *  selector of method with two parameters URLAction *action and URLActionNextBlock next
- *  !!!: MUST call next when completed
- *      if (next) next(YES, <#result#>);
  *  e.g.
  *      + (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
  *      - (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
+ *  
+ *  call next when completed
+ *      if (next) next(<#result#>);
  */
 @property(nonatomic, readonly) SEL actionSelector;
 + (instancetype)actionSettingWithTarget:(id)target actionSelector:(SEL)actionSelector;

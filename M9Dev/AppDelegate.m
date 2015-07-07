@@ -44,12 +44,8 @@
      @{ @"action.hello":
             [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
-                 NSLog(@"%@ : %@ ? %@ # %@",
-                       action.actionKey,
-                       action.actionURL,
-                       action.parameters,
-                       action.nextActionURL);
-                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
+                 NSLog(@"%@", action);
+                 if (next) next(@{ @"x": @1, @"y": @2 });
              }],
         @"action.test":
             [URLActionSetting actionSettingWithTarget:self
@@ -57,22 +53,14 @@
         @"webview.open":
             [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
-                 NSLog(@"%@ : %@ ? %@ # %@",
-                       action.actionKey,
-                       action.actionURL,
-                       action.parameters,
-                       action.nextActionURL);
-                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
+                 NSLog(@"%@", action);
+                 if (next) next(@{ @"x": @1, @"y": @2 });
              }],
         @"channel.goto":
             [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
-                 NSLog(@"%@ : %@ ? %@ # %@",
-                       action.actionKey,
-                       action.actionURL,
-                       action.parameters,
-                       action.nextActionURL);
-                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
+                 NSLog(@"%@", action);
+                 if (next) next(@{ @"x": @1, @"y": @2 });
              }],
         @"videos.open":
             [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
@@ -87,7 +75,7 @@
              {
                  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
                      NSLog(@"rootViewController: %@", rootViewController);
-                     if (next) next(YES, @{ @"key": @"value" });
+                     if (next) next(@{ @"key": @"value" });
                  }];
              }]
         }];
@@ -142,13 +130,8 @@
 }
 
 - (void)testWithAction:(URLAction *)action next:(URLActionNextBlock)next {
-    NSLog(@"%@ : %@ ? %@ # %@ - %@",
-          action.actionKey,
-          action.actionURL,
-          action.parameters,
-          action.nextActionURL,
-          action.prevActionResult);
-    if (next) next(YES, nil);
+    NSLog(@"%@ / %@", action, action.prevActionResult);
+    if (next) next(nil);
 }
 
 @end
