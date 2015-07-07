@@ -13,6 +13,7 @@
 #import "UIViewController+.h"
 
 @class URLActionSetting;
+@protocol URLActionDelegate;
 
 @interface URLAction : NSObject
 
@@ -29,8 +30,8 @@
 /**
  *  @return URLAction if perform success
  */
-+ (instancetype)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source;
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source;
++ (instancetype)performActionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate;
++ (instancetype)performActionWithURLString:(NSString *)actionURLString delegate:(id<URLActionDelegate>)delegate;
 
 #pragma mark - parameters
 
@@ -41,14 +42,10 @@
 @property(nonatomic, copy, readonly) NSString *nextURLString;
 
 @property(nonatomic, copy, readonly) URLActionSetting *setting;
-@property(nonatomic, weak, readonly) id/* <URLActionSource> */ source; // (id<URLActionSource>) OR (UIViewController *)
+@property(nonatomic, weak, readonly) id<URLActionDelegate> delegate;
 
 @property(nonatomic, strong, readonly) URLAction *prevAction;
 @property(nonatomic, copy, readonly) NSDictionary *prevActionResult;
-
-#pragma mark - helper
-
-- (UIViewController *)sourceViewControllerForTargetViewController:(UIViewController *)targetViewController;
 
 @end
 
@@ -97,16 +94,12 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
 
 #pragma mark -
 
-@protocol URLActionSource <NSObject>
-@optional
+@protocol URLActionDelegate <NSObject>
+// @optional
 
 /**
  *  do clear or log with action url/parameters
  */
 - (void)willPerformAction:(URLAction *)action;
-/**
- *  use source if does not implement this method
- */
-- (UIViewController *)sourceViewControllerForAction:(URLAction *)action targetViewController:(UIViewController *)targetViewController;
 
 @end

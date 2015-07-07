@@ -29,7 +29,7 @@
 @property(nonatomic, copy) NSString *nextURLString;
 
 @property(nonatomic, copy) URLActionSetting *setting;
-@property(nonatomic, weak) id/* <URLActionSource> */ source; // <URLActionSource> OR UIViewController
+@property(nonatomic, weak) id<URLActionDelegate> delegate;
 
 @property(nonatomic, strong) URLAction *prevAction;
 @property(nonatomic, copy) NSDictionary *prevActionResult;
@@ -62,17 +62,17 @@ static NSDictionary *ActionSettings = nil;
     ActionSettings = [actionSettings copy];
 }}
 
-+ (instancetype)performActionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
-    URLAction *action = [self actionWithURL:actionURL source:source];
++ (instancetype)performActionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate {
+    URLAction *action = [self actionWithURL:actionURL delegate:delegate];
     return [action perform] ? action : nil;
 }
 
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString source:(id/* <URLActionSource> */)source {
++ (instancetype)performActionWithURLString:(NSString *)actionURLString delegate:(id<URLActionDelegate>)delegate {
     NSURL *url = [NSURL URLWithString:actionURLString];
-    return [self performActionWithURL:url source:source];
+    return [self performActionWithURL:url delegate:delegate];
 }
 
-+ (instancetype)actionWithURL:(NSURL *)actionURL source:(id/* <URLActionSource> */)source {
++ (instancetype)actionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate {
     if (!actionURL) {
         NSLog(@"NO Action URL @ %@", _HERE);
         return nil;
@@ -87,7 +87,7 @@ static NSDictionary *ActionSettings = nil;
     action.nextURLString = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     action.setting = [[URLAction actionSettings] objectForKey:action.key class:[URLActionSetting class]];
-    action.source = source;
+    action.delegate = delegate;
     
     return action;
 }
@@ -100,28 +100,19 @@ static NSDictionary *ActionSettings = nil;
     
     // !!!: DONOT weakify self
     [self.setting performWithAction:self next:^(NSDictionary *result) {
-        // !!!: NO source for next
-        [self performNextWithResult:result source:nil];
-        // NOTE: else perform another action here
+        // ?: another delegate method for next
+        [self performNextWithResult:result delegate:nil];
     }];
     
     return !!self.setting;
 }
 
-- (BOOL)performNextWithResult:(NSDictionary *)result source:(id/* <URLActionSource> */)source {
+- (BOOL)performNextWithResult:(NSDictionary *)result delegate:(id<URLActionDelegate>)delegate {
     NSURL *nextActionURL = [NSURL URLWithString:self.nextURLString];
-    URLAction *nextAction = [URLAction actionWithURL:nextActionURL source:source];
+    URLAction *nextAction = [URLAction actionWithURL:nextActionURL delegate:delegate];
     nextAction.prevAction = self;
     nextAction.prevActionResult = result;
     return [nextAction perform];
-}
-
-- (UIViewController *)sourceViewControllerForTargetViewController:(UIViewController *)targetViewController {
-    if ([self.source respondsToSelector:@selector(sourceViewControllerForAction:targetViewController:)]) {
-        return [self.source sourceViewControllerForAction:self
-                                     targetViewController:targetViewController];
-    }
-    return [self.source as:[UIViewController class]];
 }
 
 - (NSString *)description {
@@ -161,8 +152,8 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (void)performWithAction:(URLAction *)action next:(URLActionNextBlock)next {
-    if ([action.source respondsToSelector:@selector(willPerformAction:)]) {
-        [action.source willPerformAction:action];
+    if ([action.delegate respondsToSelector:@selector(willPerformAction:)]) {
+        [action.delegate willPerformAction:action];
     }
     
     if (self.actionBlock) {

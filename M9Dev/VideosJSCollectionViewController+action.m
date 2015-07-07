@@ -14,10 +14,9 @@
 @implementation VideosJSCollectionViewController (action)
 
 - (void)openWithAction:(URLAction *)action next:(URLActionNextBlock)next {
-    UIViewController *sourceViewController = ([action sourceViewControllerForTargetViewController:self]
-                                              OR [UIApplication sharedApplication].keyWindow.rootViewController);
-    UINavigationController *navigationController = ([sourceViewController as:[UINavigationController class]]
-                                                    OR sourceViewController.navigationController);
+    UIViewController *topViewController = [UIViewController topViewController];
+    UINavigationController *navigationController = ([topViewController as:[UINavigationController class]]
+                                                    OR topViewController.navigationController);
     if (navigationController) {
         [navigationController pushViewController:self animated:YES completion:^{
             if (next) next(nil);

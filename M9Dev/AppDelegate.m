@@ -118,7 +118,7 @@
     
     // filter action 2.0
     if ([actionURL.scheme isEqualToString:@"sva"]
-        && [URLAction performActionWithURL:actionURL source:self]) {
+        && [URLAction performActionWithURL:actionURL delegate:nil]) {
         NSLog(@"action 2.0");
     }
     // forward action 1.0, a new method without translating
