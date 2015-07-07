@@ -18,6 +18,9 @@
 
 #pragma mark - settings
 
++ (NSArray *)validSchemes;
++ (void)setValidSchemes:(NSArray *)validSchemes;
+
 + (NSDictionary *)actionSettings;
 + (void)setActionSettings:(NSDictionary *)actionSettings;
 
@@ -32,6 +35,7 @@
 #pragma mark - parameters
 
 @property(nonatomic, copy, readonly) NSURL *actionURL;
+@property(nonatomic, copy, readonly) NSString *actionScheme;
 @property(nonatomic, copy, readonly) NSString *actionKey;
 @property(nonatomic, copy, readonly) NSDictionary *parameters;
 @property(nonatomic, copy, readonly) NSString *nextActionURL;
@@ -52,17 +56,15 @@
 
 @interface URLActionSetting : NSObject <M9MakeCopy>
 
-typedef void (^URLActionCompletionBlock)(BOOL success, NSDictionary *result);
-/**
- *  @return source of the next action, (id<URLActionSource>) OR (UIViewController *)
- */
-typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock completion);
+typedef void (^URLActionNextBlock)(BOOL success, NSDictionary *result);
+typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
 
 #pragma mark - action setting with block
 
 /**
  *  ignore class-target-action if has actionBlock
- *  !!!: MUST call completion - if (completion) completion(YES, <#result#>);
+ *  !!!: MUST call next when completed
+ *      if (next) next(YES, <#result#>);
  */
 @property(nonatomic, copy, readonly) URLActionBlock actionBlock;
 + (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
@@ -78,12 +80,12 @@ typedef id (^URLActionBlock)(URLAction *action, URLActionCompletionBlock complet
  */
 @property(nonatomic, readonly) SEL instanceSelector;
 /**
- *  selector of method with two parameters URLAction *action and URLActionCompletionBlock completion
- *  !!!: MUST call completion - if (completion) completion(YES, <#result#>);
- *  @return source of the next action, (id<URLActionSource>) OR (UIViewController *)
+ *  selector of method with two parameters URLAction *action and URLActionNextBlock next
+ *  !!!: MUST call next when completed
+ *      if (next) next(YES, <#result#>);
  *  e.g.
- *      + (id)performAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
- *      - (id)performAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
+ *      + (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
+ *      - (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
  */
 @property(nonatomic, readonly) SEL actionSelector;
 + (instancetype)actionSettingWithTarget:(id)target actionSelector:(SEL)actionSelector;

@@ -15,7 +15,7 @@
 @property(nonatomic) id target;
 @property(nonatomic) SEL instanceSelector;
 @property(nonatomic) SEL actionSelector;
-- (id)performWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion;
+- (void)performWithAction:(URLAction *)action next:(URLActionNextBlock)next;
 @end
 
 #pragma mark -
@@ -23,6 +23,7 @@
 @interface URLAction ()
 
 @property(nonatomic, copy) NSURL *actionURL;
+@property(nonatomic, copy) NSString *actionScheme;
 @property(nonatomic, copy) NSString *actionKey;
 @property(nonatomic, copy) NSDictionary *parameters;
 @property(nonatomic, copy) NSString *nextActionURL;
@@ -37,13 +38,27 @@
 
 @implementation URLAction
 
+static NSArray *ValidSchemes = nil;
+
++ (NSArray *)validSchemes
+{ @synchronized(self) {
+    return ValidSchemes;
+}}
+
++ (void)setValidSchemes:(NSArray *)validSchemes
+{ @synchronized(self) {
+    ValidSchemes = [validSchemes copy];
+}}
+
 static NSDictionary *ActionSettings = nil;
 
-+ (NSDictionary *)actionSettings {@synchronized(self) {
++ (NSDictionary *)actionSettings
+{ @synchronized(self) {
     return ActionSettings;
 }}
 
-+ (void)setActionSettings:(NSDictionary *)actionSettings {@synchronized(self) {
++ (void)setActionSettings:(NSDictionary *)actionSettings
+{ @synchronized(self) {
     ActionSettings = [actionSettings copy];
 }}
 
@@ -64,8 +79,9 @@ static NSDictionary *ActionSettings = nil;
     }
     
     URLAction *action = [self new];
-    action.actionURL = actionURL;
     
+    action.actionURL = actionURL;
+    action.actionScheme = actionURL.scheme;
     action.actionKey = [actionURL.host lowercaseString];
     action.parameters = actionURL.queryDictionary;
     action.nextActionURL = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -77,15 +93,18 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (BOOL)perform {
-    if ([self.source respondsToSelector:@selector(willPerformAction:)]) {
-        [self.source willPerformAction:self];
+    NSArray *validSchemes = [URLAction validSchemes];
+    if (validSchemes.count && ![validSchemes containsObject:self.actionScheme]) {
+        return NO;
     }
     
     // !!!: DONOT weakify self
-    __block id source = [self.actionSetting performWithAction:self completion:^(BOOL success, NSDictionary *result) {
+    [self.actionSetting performWithAction:self next:^(BOOL success, NSDictionary *result) {
         if (success) {
-            [self performNextWithResult:result source:source];
+            // !!!: NO source for next
+            [self performNextWithResult:result source:nil];
         }
+        // NOTE: else perform another action here
     }];
     
     return !!self.actionSetting;
@@ -108,11 +127,7 @@ static NSDictionary *ActionSettings = nil;
 }
 
 - (NSString *)description {
-    return [[super description] stringByAppendingFormat:@" : %@ > %@ ? %@ # %@",
-            self.actionURL,
-            self.actionKey,
-            self.parameters,
-            self.nextActionURL];
+    return [[super description] stringByAppendingFormat:@" : %@ > %@ ? %@ # %@", self.actionURL, self.actionKey, self.parameters, self.nextActionURL];
 
 }
 
@@ -148,9 +163,14 @@ static NSDictionary *ActionSettings = nil;
     copy.actionSelector = self.actionSelector;
 }
 
-- (id)performWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
+- (void)performWithAction:(URLAction *)action next:(URLActionNextBlock)next {
+    if ([action.source respondsToSelector:@selector(willPerformAction:)]) {
+        [action.source willPerformAction:action];
+    }
+    
     if (self.actionBlock) {
-        return self.actionBlock(action, completion);
+        self.actionBlock(action, next);
+        return;
     }
     
 #pragma clang diagnostic push
@@ -167,9 +187,8 @@ static NSDictionary *ActionSettings = nil;
     }
     SEL actionSelector = self.actionSelector;
     if ([target respondsToSelector:actionSelector]) {
-        return [target performSelector:actionSelector withObject:action withObject:completion] OR target;
+        [target performSelector:actionSelector withObject:action withObject:next];
     }
-    return target;
 #pragma clang diagnostic pop
 }
 
