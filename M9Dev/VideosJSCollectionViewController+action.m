@@ -13,34 +13,33 @@
 
 @implementation VideosJSCollectionViewController (action)
 
-- (id)openWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
-    UIViewController *sourceViewController = [action sourceViewControllerForTargetViewController:self];
+- (void)openWithAction:(URLAction *)action next:(URLActionNextBlock)next {
+    UIViewController *sourceViewController = ([action sourceViewControllerForTargetViewController:self]
+                                              OR [UIApplication sharedApplication].keyWindow.rootViewController);
     UINavigationController *navigationController = ([sourceViewController as:[UINavigationController class]]
                                                     OR sourceViewController.navigationController);
     if (navigationController) {
         [navigationController pushViewController:self animated:YES completion:^{
-            if (completion) completion(YES, nil);
+            if (next) next(YES, nil);
         }];
     }
     else {
-        if (completion) completion(YES, nil);
+        if (next) next(NO, nil);
     }
-    return self;
 }
 
-- (id)gotoWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
+- (void)gotoWithAction:(URLAction *)action next:(URLActionNextBlock)next {
     __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
         UINavigationController *navigationController = [rootViewController as:[UINavigationController class]];
         if (navigationController) {
             [navigationController pushViewController:self animated:YES completion:^{
-                if (completion) completion(YES, nil);
+                if (next) next(YES, nil);
             }];
         }
         else {
-            if (completion) completion(YES, nil);
+            if (next) next(NO, nil);
         }
     }];
-    return self;
 }
 
 @end

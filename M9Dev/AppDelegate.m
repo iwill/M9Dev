@@ -42,56 +42,53 @@
     
     [URLAction setActionSettings:
      @{ @"action.hello":
-            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
                  NSLog(@"%@ : %@ ? %@ # %@",
                        action.actionKey,
                        action.actionURL,
                        action.parameters,
                        action.nextActionURL);
-                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                 return nil;
+                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
              }],
         @"action.test":
             [URLActionSetting actionSettingWithTarget:self
-                                       actionSelector:@selector(testWithAction:completion:)],
+                                       actionSelector:@selector(testWithAction:next:)],
         @"webview.open":
-            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
                  NSLog(@"%@ : %@ ? %@ # %@",
                        action.actionKey,
                        action.actionURL,
                        action.parameters,
                        action.nextActionURL);
-                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                 return nil;
+                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
              }],
         @"channel.goto":
-            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
                  NSLog(@"%@ : %@ ? %@ # %@",
                        action.actionKey,
                        action.actionURL,
                        action.parameters,
                        action.nextActionURL);
-                 if (completion) completion(YES, @{ @"x": @1, @"y": @2 });
-                 return nil;
+                 if (next) next(YES, @{ @"x": @1, @"y": @2 });
              }],
         @"videos.open":
             [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
-                                       actionSelector:@selector(openWithAction:completion:)],
+                                       actionSelector:@selector(openWithAction:next:)],
         @"videos.goto":
             [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
-                                       actionSelector:@selector(gotoWithAction:completion:)],
+                                       actionSelector:@selector(gotoWithAction:next:)],
         @"root.goto":
-            [URLActionSetting actionSettingWithBlock:^id(URLAction *action, URLActionCompletionBlock completion)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
              {
                  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
-                     if (completion) completion(YES, @{ @"key": @"value" });
+                     NSLog(@"rootViewController: %@", rootViewController);
+                     if (next) next(YES, @{ @"key": @"value" });
                  }];
-                 return [rootViewController as:[UINavigationController class]];
              }]
         }];
     
@@ -144,15 +141,14 @@
     return YES;
 }
 
-- (id)testWithAction:(URLAction *)action completion:(URLActionCompletionBlock)completion {
+- (void)testWithAction:(URLAction *)action next:(URLActionNextBlock)next {
     NSLog(@"%@ : %@ ? %@ # %@ - %@",
           action.actionKey,
           action.actionURL,
           action.parameters,
           action.nextActionURL,
           action.prevActionResult);
-    if (completion) completion(YES, nil);
-    return nil;
+    if (next) next(YES, nil);
 }
 
 @end
