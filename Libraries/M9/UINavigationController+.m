@@ -20,7 +20,7 @@
 /**
  *  为 interactivePopGestureRecognizer-BUG 而生：解决自定义 NavBar、backBarButtonItem 导致的返回手势、动画相关的问题
  */
-@interface _UINavigationController : UINavigationController <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface UINavigationController_M9Category : UINavigationController <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 /* !!!: 解决 interactivePopGestureRecognizer-BUG
  */
@@ -28,7 +28,97 @@
 
 @end
 
-@implementation _UINavigationController
+#pragma mark -
+
+@implementation UINavigationController (M9Category)
+
+@dynamic rootViewController;
+
+- (UIViewController *)rootViewController {
+    return self.viewControllers.firstObject;
+}
+
++ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController {
+    UINavigationController *navigationController = [[UINavigationController_M9Category alloc]
+                                                    initWithNavigationBarClass:[UINavigationBar class]
+                                                    toolbarClass:[UIToolbar class]];
+    [navigationController pushViewController:rootViewController animated:NO];
+    return navigationController;
+}
+
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        if (completion) completion();
+    }];
+    [self pushViewController:viewController animated:animated];
+    [CATransaction commit];
+}
+
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    // !!!: iOS7 BUG
+    // @see http://jira.sohu-inc.com/browse/IPHONE-3756
+    if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"7."]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(([CATransaction animationDuration] + 0.01) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion) completion();
+        });
+        return [self popViewControllerAnimated:animated];
+    }
+    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        if (completion) completion();
+    }];
+    UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
+    [CATransaction commit];
+    return poppedViewController;
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        if (completion) completion();
+    }];
+    NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
+    [CATransaction commit];
+    return poppedViewControllers;
+}
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        if (completion) completion();
+    }];
+    NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
+    [CATransaction commit];
+    return poppedViewControllers;
+}
+
+- (UIViewController *)popViewControllerAnimated {
+    return [self popViewControllerAnimated:YES];
+}
+
+- (UIViewController *)popViewControllerNonAnimated {
+    return [self popViewControllerAnimated:NO];
+}
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
+@end
+
+#pragma mark -
+
+@implementation UINavigationController_M9Category
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -93,7 +183,7 @@
 
 - (void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated {
     [super setViewControllers:viewControllers animated:animated];
-} */
+} // */
 
 #pragma mark UINavigationControllerDelegate
 
@@ -140,93 +230,6 @@
     return NO; // 解决播放器大小窗，statusBar不旋转问题
 }
 #endif
-
-@end
-
-#pragma mark -
-
-@implementation UINavigationController (M9Category)
-
-@dynamic rootViewController;
-
-- (UIViewController *)rootViewController {
-    return self.viewControllers.firstObject;
-}
-
-+ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController {
-    UINavigationController *navigationController = [[_UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class]
-                                                                                                  toolbarClass:[UIToolbar class]];
-    [navigationController pushViewController:rootViewController animated:NO];
-    return navigationController;
-}
-
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
-    [self pushViewController:viewController animated:animated];
-    [CATransaction commit];
-}
-
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    // !!!: iOS7 BUG
-    // @see http://jira.sohu-inc.com/browse/IPHONE-3756
-    if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"7."]) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(([CATransaction animationDuration] + 0.1) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (completion) completion();
-        });
-        return [self popViewControllerAnimated:animated];
-    }
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
-    UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
-    [CATransaction commit];
-    return poppedViewController;
-}
-
-- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
-    NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
-    [CATransaction commit];
-    return poppedViewControllers;
-}
-
-- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
-    NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
-    [CATransaction commit];
-    return poppedViewControllers;
-}
-
-- (UIViewController *)popViewControllerAnimated {
-    return [self popViewControllerAnimated:YES];
-}
-
-- (UIViewController *)popViewControllerNonAnimated {
-    return [self popViewControllerAnimated:NO];
-}
-
-- (BOOL)shouldAutorotate {
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
 
 @end
 
