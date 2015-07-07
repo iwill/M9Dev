@@ -12,6 +12,9 @@
 
 @interface UIViewController (M9Category)
 
++ (UIViewController *)rootViewController;
++ (UIViewController *)topViewController;
+
 /**
  *  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES/NO completion:^{
  *      [rootViewController presentViewController:viewController animated:YES/NO completion:nil];

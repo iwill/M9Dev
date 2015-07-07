@@ -8,14 +8,42 @@
 
 #import "UIViewController+.h"
 
+#import "UINavigationController+.h"
+
 @implementation UIViewController (M9Category)
+
++ (UIViewController *)rootViewController {
+    return [UIApplication sharedApplication].keyWindow.rootViewController;
+}
+
++ (UIViewController *)topViewController {
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UITabBarController *tabBarController = [topViewController as:[UITabBarController class]];
+    if (tabBarController.selectedViewController) {
+        topViewController = tabBarController.selectedViewController;
+    }
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    UINavigationController *navigationController = [topViewController as:[UINavigationController class]];
+    if ([navigationController.viewControllers count]) {
+        topViewController = navigationController.viewControllers.lastObject;
+    }
+    return topViewController;
+}
 
 + (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    UITabBarController *tabController = [rootViewController as:[UITabBarController class]];
-    UINavigationController *nav = [tabController.selectedViewController OR rootViewController as:[UINavigationController class]];
-    [nav popToRootViewControllerAnimated:animated];
-    [rootViewController dismissAllViewControllersAnimated:animated completion:completion];
+    UITabBarController *tabBarController = [rootViewController as:[UITabBarController class]];
+    [rootViewController dismissAllViewControllersAnimated:animated completion:^{
+        UINavigationController *navigationController = [tabBarController.selectedViewController OR rootViewController as:[UINavigationController class]];
+        if (navigationController) {
+            [navigationController popToRootViewControllerAnimated:animated completion:completion];
+        }
+        else {
+            if (completion) completion();
+        }
+    }];
     return rootViewController;
 }
 
