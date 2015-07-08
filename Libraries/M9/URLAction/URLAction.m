@@ -167,11 +167,11 @@ static NSDictionary *ActionSettings = nil;
     SEL instanceSelector = self.instanceSelector OR @selector(self);
     // #import <objc/runtime.h>
     // class_isMetaClass(object_getClass(target))
-    if (target == [target class] && [[target class] instancesRespondToSelector:instanceSelector]) {
-        target = [[[target class] alloc] performSelector:instanceSelector withObject:nil];
-    }
-    else if ([target respondsToSelector:instanceSelector]) {
+    if ([target respondsToSelector:instanceSelector]) {
         target = [target performSelector:instanceSelector];
+    }
+    else if (target == [target class] && [[target class] instancesRespondToSelector:instanceSelector]) {
+        target = [[[target class] alloc] performSelector:instanceSelector withObject:nil];
     }
     SEL actionSelector = self.actionSelector;
     if ([target respondsToSelector:actionSelector]) {
