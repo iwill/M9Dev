@@ -17,6 +17,9 @@
 
 @interface URLAction : NSObject
 
+// TODO: MingLQ - <#task#>
+typedef void (^URLActionCompletion)(URLAction *action);
+
 #pragma mark - settings
 
 + (NSArray *)validSchemes;
@@ -97,6 +100,7 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
 @protocol URLActionDelegate <NSObject>
 // @optional
 
+// TODO: MingLQ - <#task#>
 /**
  *  do clear or log with action url/parameters
  */
