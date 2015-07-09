@@ -101,5 +101,9 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
  *  do clear or log with action url/parameters
  */
 - (void)willPerformAction:(URLAction *)action;
+// - (void)willPerformNextAction:(URLAction *)action;
+// - (void)willPerformNextNextAction:(URLAction *)action;
+
+// - (void)didPerformAction:(URLAction *)action;
 
 @end
