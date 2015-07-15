@@ -20,9 +20,9 @@
 @property(nonatomic, readonly) NSInteger currentPage;
 
 /**
- *  call setUpWithNumberOfPages: when viewDidLoad
+ *  call setupWithNumberOfPages: when viewDidLoad
  */
-- (void)setUpWithNumberOfPages:(NSInteger)numberOfPages;
+- (void)setupWithNumberOfPages:(NSInteger)numberOfPages;
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 
 // TODO: scroll progress - 1, 1.1, 1.2 ..., 2

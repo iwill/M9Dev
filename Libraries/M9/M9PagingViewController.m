@@ -67,7 +67,7 @@
 
 #pragma mark -
 
-- (void)setUpWithNumberOfPages:(NSInteger)numberOfPages {
+- (void)setupWithNumberOfPages:(NSInteger)numberOfPages {
     _numberOfPages = numberOfPages;
     
     [self updateScrollViewContentSize];

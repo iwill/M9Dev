@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setUpWithNumberOfPages:6];
+    [self setupWithNumberOfPages:6];
 }
 
 - (void)didReceiveMemoryWarning {
