@@ -20,9 +20,9 @@
 @property(nonatomic, readonly) NSInteger currentPage;
 
 /**
- *  call refreshPages or scrollToPage:animated: in viewDidLoad
+ *  call setUpWithNumberOfPages: when viewDidLoad
  */
-- (void)refreshPages;
+- (void)setUpWithNumberOfPages:(NSInteger)numberOfPages;
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 
 // TODO: scroll progress - 1, 1.1, 1.2 ..., 2

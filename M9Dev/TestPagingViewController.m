@@ -12,6 +12,7 @@
 
 @interface TestPagingViewController ()
 
+// @optional
 @property(nonatomic, strong) NSMutableDictionary *viewControllersPool;
 
 @end
@@ -28,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self refreshPages];
+    [self setUpWithNumberOfPages:6];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,10 +39,6 @@
 
 #pragma mark - M9PagingViewController
 
-- (NSInteger)numberOfPages {
-    return 6;
-}
-
 - (UIViewController *)generateViewControllerOfPage:(NSInteger)page {
     UIViewController *viewController = [self.viewControllersPool objectForKey:@(page)];
     if (viewController) {
@@ -50,8 +47,6 @@
     
     viewController = [UIViewController new];
     {
-        viewController.view.backgroundColor = [UIColor colorWithWhite:(10.0 - page - 1) / 10 alpha:1.0];
-        
         UILabel *label = [UILabel new];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         label.font = [UIFont boldSystemFontOfSize:32];
@@ -63,6 +58,8 @@
             strongify(viewController);
             make.edges.equalTo(viewController.view).with.insets(UIEdgeInsetsMake(2, 2, - 2, 2));
         }];
+        
+        viewController.view.backgroundColor = [UIColor colorWithWhite:(10.0 - page - 1) / 10 alpha:1.0];
     }
     
     [self.viewControllersPool setObject:viewController forKey:@(page)];
