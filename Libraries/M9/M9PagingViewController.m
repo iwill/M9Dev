@@ -12,7 +12,6 @@
 
 @interface M9PagingViewController ()
 
-@property(nonatomic, readwrite) NSInteger numberOfPages;
 @property(nonatomic, readwrite) NSInteger currentPage;
 
 @property(nonatomic, strong) NSMutableArray *viewControllers;
@@ -20,8 +19,6 @@
 @end
 
 @implementation M9PagingViewController
-
-@synthesize numberOfPages = _numberOfPages;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nil bundle:nil];
@@ -74,9 +71,7 @@
     return 1;
 }
 
-- (void)setNumberOfPages:(NSInteger)numberOfPages {
-    _numberOfPages = numberOfPages;
-    
+- (void)refreshPages {
     [self updateScrollViewContentSize];
     
     for (UIViewController *viewController in self.viewControllers) {
@@ -84,13 +79,9 @@
     }
     
     self.viewControllers = [NSMutableArray array];
-    for (NSInteger index = 0; index < numberOfPages; index++) {
+    for (NSInteger index = 0; index < self.numberOfPages; index++) {
         [self.viewControllers addObject:[NSNull null]];
     }
-}
-
-- (void)refreshPages {
-    self.numberOfPages = self.numberOfPages;
     [self scrollToPage:self.currentPage animated:NO];
 }
 
