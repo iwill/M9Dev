@@ -349,6 +349,10 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     }];
 }
 
+/* TODO:
+ *  @see http://nshipster.com/nsurlcache/
+ *  @see ASIDownloadCache
+ */
 - (BOOL)isResponseExpired:(NSHTTPURLResponse *)response {
     NSString *expiresOn = [[response allHeaderFields] stringForKey:HTTPExpires];
     NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];

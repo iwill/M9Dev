@@ -12,7 +12,7 @@
 
 @interface VideosJSCollectionViewController (action)
 
-- (void)openWithAction:(URLAction *)action next:(URLActionNextBlock)next;
-- (void)gotoWithAction:(URLAction *)action next:(URLActionNextBlock)next;
+- (void)openWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
+- (void)gotoWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
 
 @end

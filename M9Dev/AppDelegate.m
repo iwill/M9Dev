@@ -42,40 +42,40 @@
     
     [URLAction setActionSettings:
      @{ @"action.hello":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
-                 if (next) next(@{ @"x": @1, @"y": @2 });
+                 if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"action.test":
             [URLActionSetting actionSettingWithTarget:self
-                                       actionSelector:@selector(testWithAction:next:)],
+                                       actionSelector:@selector(testWithAction:finish:)],
         @"webview.open":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
-                 if (next) next(@{ @"x": @1, @"y": @2 });
+                 if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"channel.goto":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
-                 if (next) next(@{ @"x": @1, @"y": @2 });
+                 if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"videos.open":
             [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
-                                       actionSelector:@selector(openWithAction:next:)],
+                                       actionSelector:@selector(openWithAction:finish:)],
         @"videos.goto":
             [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
-                                       actionSelector:@selector(gotoWithAction:next:)],
+                                       actionSelector:@selector(gotoWithAction:finish:)],
         @"root.goto":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionNextBlock next)
+            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
              {
                  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
                      NSLog(@"rootViewController: %@", rootViewController);
-                     if (next) next(@{ @"key": @"value" });
+                     if (finish) finish(@{ @"key": @"value" });
                  }];
              }]
         }];
@@ -117,8 +117,7 @@
     // !!!: do this in action 1.0 manager
     
     // filter action 2.0
-    if ([actionURL.scheme isEqualToString:@"sva"]
-        && [URLAction performActionWithURL:actionURL delegate:nil]) {
+    if ([URLAction performActionWithURL:actionURL completion:nil]) {
         NSLog(@"action 2.0");
     }
     // forward action 1.0, a new method without translating
@@ -129,9 +128,9 @@
     return YES;
 }
 
-- (void)testWithAction:(URLAction *)action next:(URLActionNextBlock)next {
+- (void)testWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
     NSLog(@"%@ / %@", action, action.prevActionResult);
-    if (next) next(nil);
+    if (finish) finish(nil);
 }
 
 @end

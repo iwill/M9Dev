@@ -13,12 +13,12 @@
 #import "UIViewController+.h"
 
 @class URLActionSetting;
-@protocol URLActionDelegate;
 
 @interface URLAction : NSObject
 
 // TODO: MingLQ - <#task#>
-typedef void (^URLActionCompletion)(URLAction *action);
+// typedef void (^URLActionProccess)(URLAction *action, NSInteger depth);
+typedef void (^URLActionCompletion)(/* BOOL success */);
 
 #pragma mark - settings
 
@@ -33,8 +33,8 @@ typedef void (^URLActionCompletion)(URLAction *action);
 /**
  *  @return URLAction if perform success
  */
-+ (instancetype)performActionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate;
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString delegate:(id<URLActionDelegate>)delegate;
++ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion;
++ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(URLActionCompletion)completion;
 
 #pragma mark - parameters
 
@@ -45,7 +45,7 @@ typedef void (^URLActionCompletion)(URLAction *action);
 @property(nonatomic, copy, readonly) NSString *nextURLString;
 
 @property(nonatomic, copy, readonly) URLActionSetting *setting;
-@property(nonatomic, weak, readonly) id<URLActionDelegate> delegate;
+@property(nonatomic, copy, readonly) URLActionCompletion completion;
 
 @property(nonatomic, strong, readonly) URLAction *prevAction;
 @property(nonatomic, copy, readonly) NSDictionary *prevActionResult;
@@ -56,16 +56,16 @@ typedef void (^URLActionCompletion)(URLAction *action);
 
 @interface URLActionSetting : NSObject <M9MakeCopy>
 
-typedef void (^URLActionNextBlock)(NSDictionary *result);
-typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
+typedef void (^URLActionFinishBlock)(/* BOOL success, */NSDictionary *result);
+typedef void (^URLActionBlock)(URLAction *action, URLActionFinishBlock finish);
 
 #pragma mark - action setting with block
 
 /**
  *  ignore class-target-action if has actionBlock
  *  
- *  call next when completed
- *      if (next) next(<#result#>);
+ *  call finish when completed
+ *      if (finish) finish(<#result#>);
  */
 @property(nonatomic, copy, readonly) URLActionBlock actionBlock;
 + (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
@@ -81,33 +81,16 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionNextBlock next);
  */
 @property(nonatomic, readonly) SEL instanceSelector;
 /**
- *  selector of method with two parameters URLAction *action and URLActionNextBlock next
+ *  selector of method with two parameters URLAction *action and URLActionFinishBlock finish
  *  e.g.
- *      + (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
- *      - (void)performAction:(URLAction *)action next:(URLActionNextBlock)next;
+ *      + (void)performAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
+ *      - (void)performAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
  *  
- *  call next when completed
- *      if (next) next(<#result#>);
+ *  call finish when completed
+ *      if (finish) finish(<#result#>);
  */
 @property(nonatomic, readonly) SEL actionSelector;
 + (instancetype)actionSettingWithTarget:(id)target actionSelector:(SEL)actionSelector;
 + (instancetype)actionSettingWithTarget:(id)target instanceSelector:(SEL)instanceSelector actionSelector:(SEL)actionSelector;
-
-@end
-
-#pragma mark -
-
-@protocol URLActionDelegate <NSObject>
-// @optional
-
-// TODO: MingLQ - <#task#>
-/**
- *  do clear or log with action url/parameters
- */
-- (void)willPerformAction:(URLAction *)action;
-// - (void)willPerformNextAction:(URLAction *)action;
-// - (void)willPerformNextNextAction:(URLAction *)action;
-
-// - (void)didPerformAction:(URLAction *)action;
 
 @end

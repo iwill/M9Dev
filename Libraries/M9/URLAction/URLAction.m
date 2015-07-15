@@ -15,7 +15,7 @@
 @property(nonatomic) id target;
 @property(nonatomic) SEL instanceSelector;
 @property(nonatomic) SEL actionSelector;
-- (void)performWithAction:(URLAction *)action next:(URLActionNextBlock)next;
+- (void)performWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
 @end
 
 #pragma mark -
@@ -29,7 +29,7 @@
 @property(nonatomic, copy) NSString *nextURLString;
 
 @property(nonatomic, copy) URLActionSetting *setting;
-@property(nonatomic, weak) id<URLActionDelegate> delegate;
+@property(nonatomic, copy) URLActionCompletion completion;
 
 @property(nonatomic, strong) URLAction *prevAction;
 @property(nonatomic, copy) NSDictionary *prevActionResult;
@@ -62,17 +62,17 @@ static NSDictionary *ActionSettings = nil;
     ActionSettings = [actionSettings copy];
 }}
 
-+ (instancetype)performActionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate {
-    URLAction *action = [self actionWithURL:actionURL delegate:delegate];
++ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion {
+    URLAction *action = [self actionWithURL:actionURL completion:completion];
     return [action perform] ? action : nil;
 }
 
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString delegate:(id<URLActionDelegate>)delegate {
++ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(URLActionCompletion)completion {
     NSURL *url = [NSURL URLWithString:actionURLString];
-    return [self performActionWithURL:url delegate:delegate];
+    return [self performActionWithURL:url completion:completion];
 }
 
-+ (instancetype)actionWithURL:(NSURL *)actionURL delegate:(id<URLActionDelegate>)delegate {
++ (instancetype)actionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion {
     if (!actionURL) {
         NSLog(@"NO Action URL @ %@", _HERE);
         return nil;
@@ -87,7 +87,7 @@ static NSDictionary *ActionSettings = nil;
     action.nextURLString = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     action.setting = [[URLAction actionSettings] objectForKey:action.key class:[URLActionSetting class]];
-    action.delegate = delegate;
+    action.completion = completion;
     
     return action;
 }
@@ -99,17 +99,17 @@ static NSDictionary *ActionSettings = nil;
     }
     
     // !!!: DONOT weakify self
-    [self.setting performWithAction:self next:^(NSDictionary *result) {
-        // ?: another delegate method for next
-        [self performNextWithResult:result delegate:nil];
+    [self.setting performWithAction:self finish:^(/* BOOL success, */NSDictionary *result) {
+        BOOL isTheLast = ![self performNextWithResult:result completion:self.completion];
+        if (isTheLast && self.completion) self.completion(/* success */);
     }];
     
     return !!self.setting;
 }
 
-- (BOOL)performNextWithResult:(NSDictionary *)result delegate:(id<URLActionDelegate>)delegate {
+- (BOOL)performNextWithResult:(NSDictionary *)result completion:(URLActionCompletion)completion {
     NSURL *nextActionURL = [NSURL URLWithString:self.nextURLString];
-    URLAction *nextAction = [URLAction actionWithURL:nextActionURL delegate:delegate];
+    URLAction *nextAction = [URLAction actionWithURL:nextActionURL completion:completion];
     nextAction.prevAction = self;
     nextAction.prevActionResult = result;
     return [nextAction perform];
@@ -151,13 +151,9 @@ static NSDictionary *ActionSettings = nil;
     copy.actionSelector = self.actionSelector;
 }
 
-- (void)performWithAction:(URLAction *)action next:(URLActionNextBlock)next {
-    if ([action.delegate respondsToSelector:@selector(willPerformAction:)]) {
-        [action.delegate willPerformAction:action];
-    }
-    
+- (void)performWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
     if (self.actionBlock) {
-        self.actionBlock(action, next);
+        self.actionBlock(action, finish);
         return;
     }
     
@@ -175,7 +171,7 @@ static NSDictionary *ActionSettings = nil;
     }
     SEL actionSelector = self.actionSelector;
     if ([target respondsToSelector:actionSelector]) {
-        [target performSelector:actionSelector withObject:action withObject:next];
+        [target performSelector:actionSelector withObject:action withObject:finish];
     }
 #pragma clang diagnostic pop
 }
