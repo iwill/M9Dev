@@ -106,7 +106,7 @@
         bounds.origin.x = CGRectGetWidth(bounds) * page;
         bounds.origin.y = 0;
         _RETURN bounds;
-    }) animated:NO];
+    }) animated:NO/* !!!: always NO */];
 }
 
 - (void)setCurrentPage:(NSInteger)page {
