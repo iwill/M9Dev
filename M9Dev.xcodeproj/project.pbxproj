@@ -80,7 +80,6 @@
 		DFF3C3CA19B9A26700E8F0DA /* NSData+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3C919B9A26700E8F0DA /* NSData+.m */; };
 		DFF3C3CD19B9A44100E8F0DA /* NSData+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */; };
 		DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */; };
-		DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */; };
 		DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */; };
 		DFFA08C71A136060003168E1 /* Specta+Expecta.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C61A136060003168E1 /* Specta+Expecta.m */; };
 		DFFCA3E51A398B61009BDE46 /* SpectaAlternative.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFCA3E41A398B61009BDE46 /* SpectaAlternative.m */; };
@@ -240,8 +239,6 @@
 		DFF3C3CC19B9A44100E8F0DA /* NSData+JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+JS.m"; sourceTree = "<group>"; };
 		DFF3C3DC19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CGRect.h"; sourceTree = "<group>"; };
-		DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CGRect.m"; sourceTree = "<group>"; };
 		DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9PromiseTests.m; sourceTree = "<group>"; };
 		DFFA08C21A135AD7003168E1 /* Pods-M9Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		DFFA08C31A135AD7003168E1 /* Pods-M9Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.release.xcconfig"; sourceTree = "<group>"; };
@@ -466,8 +463,6 @@
 				DFF233BD19B89F970045FDCE /* UIScrollView+.m */,
 				DF57B64419A7525500C374E8 /* UIScrollViewController.h */,
 				DF57B64519A7525500C374E8 /* UIScrollViewController.m */,
-				DFF418E619A7AE0200BF9909 /* UIView+CGRect.h */,
-				DFF418E719A7AE0200BF9909 /* UIView+CGRect.m */,
 				DFDF47F61AFC8BB900F6E31C /* UIViewController+.h */,
 				DFDF47F71AFC8BB900F6E31C /* UIViewController+.m */,
 			);
@@ -832,7 +827,6 @@
 				DFF233C519B8BB010045FDCE /* JSCollectionViewCell.m in Sources */,
 				DFF233AF19B8759D0045FDCE /* NSURL+JS.m in Sources */,
 				DFF2339A19B848C10045FDCE /* UIImageView+JS.m in Sources */,
-				DFF418E819A7AE0200BF9909 /* UIView+CGRect.m in Sources */,
 				DFE66CAB1B395CAE00124656 /* NSURL+M9Categories.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
