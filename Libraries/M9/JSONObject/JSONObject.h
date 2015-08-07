@@ -65,8 +65,11 @@
 
 #pragma mark - NON JSONObject
 
+// TODO: @see NSJSONSerialization + isValidJSONObject:
+
 @interface NSObject (NonJSONObject)
 
+// !!!: return YES for NSNull
 - (BOOL)isNonJSONObject;
 
 @end
