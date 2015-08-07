@@ -13,7 +13,8 @@
 #import "M9ScrollViewController.h"
 #import "UIViewController+.h"
 
-// TODO: MingLQ - UIPageViewController
+// TODO: UIPageViewController
+// TODO: placeholderViewController
 @interface M9PagingViewController : M9ScrollViewController
 
 @property(nonatomic, readonly) NSInteger numberOfPages;
