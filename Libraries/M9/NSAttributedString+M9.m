@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "NSAttributedString+.h"
+#import "NSAttributedString+M9.h"
 
 #import "M9Utilities.h"
 
