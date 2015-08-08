@@ -61,6 +61,8 @@
     metamacro_foreach(ext_strongify_,, __VA_ARGS__) \
     _Pragma("clang diagnostic pop")
 
+/*** implementation details follow ***/
+
 #define ext_weakify_(INDEX, CONTEXT, VAR) \
     CONTEXT __typeof__(VAR) metamacro_concat(VAR, _weak_) = (VAR);
 
