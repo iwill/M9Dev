@@ -1,5 +1,5 @@
 //
-//  URLAction.h
+//  M9URLAction.h
 //  M9Dev
 //
 //  Created by MingLQ on 2015-06-12.
@@ -12,13 +12,13 @@
 #import "M9Utilities.h"
 #import "UIViewController+.h"
 
-@class URLActionSetting;
+@class M9URLActionSetting;
 
-@interface URLAction : NSObject
+@interface M9URLAction : NSObject
 
 // TODO: MingLQ - <#task#>
-// typedef void (^URLActionProccess)(URLAction *action, NSInteger depth);
-typedef void (^URLActionCompletion)(/* BOOL success */);
+// typedef void (^M9URLActionProccess)(M9URLAction *action, NSInteger depth);
+typedef void (^M9URLActionCompletion)(/* BOOL success */);
 
 #pragma mark - settings
 
@@ -31,10 +31,10 @@ typedef void (^URLActionCompletion)(/* BOOL success */);
 #pragma mark - perform action
 
 /**
- *  @return URLAction if perform success
+ *  @return M9URLAction if perform success
  */
-+ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion;
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(URLActionCompletion)completion;
++ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(M9URLActionCompletion)completion;
++ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion;
 
 #pragma mark - parameters
 
@@ -44,20 +44,20 @@ typedef void (^URLActionCompletion)(/* BOOL success */);
 @property(nonatomic, copy, readonly) NSDictionary *parameters;
 @property(nonatomic, copy, readonly) NSString *nextURLString;
 
-@property(nonatomic, copy, readonly) URLActionSetting *setting;
-@property(nonatomic, copy, readonly) URLActionCompletion completion;
+@property(nonatomic, copy, readonly) M9URLActionSetting *setting;
+@property(nonatomic, copy, readonly) M9URLActionCompletion completion;
 
-@property(nonatomic, strong, readonly) URLAction *prevAction;
+@property(nonatomic, strong, readonly) M9URLAction *prevAction;
 @property(nonatomic, copy, readonly) NSDictionary *prevActionResult;
 
 @end
 
 #pragma mark -
 
-@interface URLActionSetting : NSObject <M9MakeCopy>
+@interface M9URLActionSetting : NSObject <M9MakeCopy>
 
-typedef void (^URLActionFinishBlock)(/* BOOL success, */NSDictionary *result);
-typedef void (^URLActionBlock)(URLAction *action, URLActionFinishBlock finish);
+typedef void (^M9URLActionFinishBlock)(/* BOOL success, */NSDictionary *result);
+typedef void (^M9URLActionBlock)(M9URLAction *action, M9URLActionFinishBlock finish);
 
 #pragma mark - action setting with block
 
@@ -67,8 +67,8 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionFinishBlock finish);
  *  call finish when completed
  *      if (finish) finish(<#result#>);
  */
-@property(nonatomic, copy, readonly) URLActionBlock actionBlock;
-+ (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock;
+@property(nonatomic, copy, readonly) M9URLActionBlock actionBlock;
++ (instancetype)actionSettingWithBlock:(M9URLActionBlock)actionBlock;
 
 #pragma mark - action setting with target[-instance]-action
 
@@ -81,10 +81,10 @@ typedef void (^URLActionBlock)(URLAction *action, URLActionFinishBlock finish);
  */
 @property(nonatomic, readonly) SEL instanceSelector;
 /**
- *  selector of method with two parameters URLAction *action and URLActionFinishBlock finish
+ *  selector of method with two parameters M9URLAction *action and M9URLActionFinishBlock finish
  *  e.g.
- *      + (void)performAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
- *      - (void)performAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
+ *      + (void)performAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish;
+ *      - (void)performAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish;
  *  
  *  call finish when completed
  *      if (finish) finish(<#result#>);

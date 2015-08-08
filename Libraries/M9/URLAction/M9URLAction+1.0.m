@@ -1,14 +1,14 @@
 //
-//  URLAction+1.0.m
+//  M9URLAction+1.0.m
 //  M9Dev
 //
 //  Created by MingLQ on 2015-06-24.
 //  Copyright (c) 2015年 iwill. All rights reserved.
 //
 
-#import "URLAction+1.0.h"
+#import "M9URLAction+1.0.h"
 
-@implementation URLAction (_1_0)
+@implementation M9URLAction (_1_0)
 
 + (NSURL *)actionURLFrom_1_0:(NSString *)actionURLString {
     NSURL *actionURL = [self actionURLFromString:actionURLString];

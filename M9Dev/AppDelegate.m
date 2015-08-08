@@ -12,8 +12,8 @@
 #import "M9Networking.h"
 
 #import "M9DevTestTableViewController.h"
-#import "URLAction.h"
-#import "URLAction+1.0.h"
+#import "M9URLAction.h"
+#import "M9URLAction+1.0.h"
 #import "VideosJSCollectionViewController+action.h"
 
 #define APP_VERSION_KEY @"CFBundleShortVersionString"
@@ -40,38 +40,38 @@
     UIViewController *rootViewController = [[M9DevTestTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
-    [URLAction setActionSettings:
+    [M9URLAction setActionSettings:
      @{ @"action.hello":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
+            [M9URLActionSetting actionSettingWithBlock:^void(M9URLAction *action, M9URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
                  if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"action.test":
-            [URLActionSetting actionSettingWithTarget:self
+            [M9URLActionSetting actionSettingWithTarget:self
                                        actionSelector:@selector(testWithAction:finish:)],
         @"webview.open":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
+            [M9URLActionSetting actionSettingWithBlock:^void(M9URLAction *action, M9URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
                  if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"channel.goto":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
+            [M9URLActionSetting actionSettingWithBlock:^void(M9URLAction *action, M9URLActionFinishBlock finish)
              {
                  NSLog(@"%@", action);
                  if (finish) finish(@{ @"x": @1, @"y": @2 });
              }],
         @"videos.open":
-            [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
+            [M9URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
                                        actionSelector:@selector(openWithAction:finish:)],
         @"videos.goto":
-            [URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
+            [M9URLActionSetting actionSettingWithTarget:[VideosJSCollectionViewController class]
                                      instanceSelector:@selector(new)
                                        actionSelector:@selector(gotoWithAction:finish:)],
         @"root.goto":
-            [URLActionSetting actionSettingWithBlock:^void(URLAction *action, URLActionFinishBlock finish)
+            [M9URLActionSetting actionSettingWithBlock:^void(M9URLAction *action, M9URLActionFinishBlock finish)
              {
                  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
                      NSLog(@"rootViewController: %@", rootViewController);
@@ -110,14 +110,14 @@
     }
     else if ([[url.host lowercaseString] isEqualToString:@"action.cmd"]
              || [[url.path lowercaseString] isEqualToString:@"//action.cmd"]) {
-        actionURL = [URLAction actionURLFrom_1_0:[url absoluteString]];
+        actionURL = [M9URLAction actionURLFrom_1_0:[url absoluteString]];
         NSLog(@"translate to action 2.0: %@", actionURL);
     }
     
     // !!!: do this in action 1.0 manager
     
     // filter action 2.0
-    if ([URLAction performActionWithURL:actionURL completion:nil]) {
+    if ([M9URLAction performActionWithURL:actionURL completion:nil]) {
         NSLog(@"action 2.0");
     }
     // forward action 1.0, a new method without translating
@@ -128,7 +128,7 @@
     return YES;
 }
 
-- (void)testWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
+- (void)testWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish {
     NSLog(@"%@ / %@", action, action.prevActionResult);
     if (finish) finish(nil);
 }

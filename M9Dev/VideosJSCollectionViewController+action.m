@@ -13,7 +13,7 @@
 
 @implementation VideosJSCollectionViewController (action)
 
-- (void)openWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
+- (void)openWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish {
     UIViewController *topViewController = [UIViewController topViewController];
     UINavigationController *navigationController = ([topViewController as:[UINavigationController class]]
                                                     OR topViewController.navigationController);
@@ -24,7 +24,7 @@
     }
 }
 
-- (void)gotoWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
+- (void)gotoWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish {
     __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES completion:^{
         UINavigationController *navigationController = [rootViewController as:[UINavigationController class]];
         if (navigationController) {

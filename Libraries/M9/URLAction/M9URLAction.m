@@ -1,26 +1,26 @@
 //
-//  URLAction.m
+//  M9URLAction.m
 //  M9Dev
 //
 //  Created by MingLQ on 2015-06-12.
 //  Copyright (c) 2015年 iwill. All rights reserved.
 //
 
-#import "URLAction.h"
+#import "M9URLAction.h"
 
 #import "NSURL+M9Categories.h"
 
-@interface URLActionSetting ()
-@property(nonatomic, copy) URLActionBlock actionBlock;
+@interface M9URLActionSetting ()
+@property(nonatomic, copy) M9URLActionBlock actionBlock;
 @property(nonatomic) id target;
 @property(nonatomic) SEL instanceSelector;
 @property(nonatomic) SEL actionSelector;
-- (void)performWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
+- (void)performWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish;
 @end
 
 #pragma mark -
 
-@interface URLAction ()
+@interface M9URLAction ()
 
 @property(nonatomic, copy) NSURL *URL;
 @property(nonatomic, copy) NSString *scheme;
@@ -28,15 +28,15 @@
 @property(nonatomic, copy) NSDictionary *parameters;
 @property(nonatomic, copy) NSString *nextURLString;
 
-@property(nonatomic, copy) URLActionSetting *setting;
-@property(nonatomic, copy) URLActionCompletion completion;
+@property(nonatomic, copy) M9URLActionSetting *setting;
+@property(nonatomic, copy) M9URLActionCompletion completion;
 
-@property(nonatomic, strong) URLAction *prevAction;
+@property(nonatomic, strong) M9URLAction *prevAction;
 @property(nonatomic, copy) NSDictionary *prevActionResult;
 
 @end
 
-@implementation URLAction
+@implementation M9URLAction
 
 static NSArray *ValidSchemes = nil;
 
@@ -62,23 +62,23 @@ static NSDictionary *ActionSettings = nil;
     ActionSettings = [actionSettings copy];
 }}
 
-+ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion {
-    URLAction *action = [self actionWithURL:actionURL completion:completion];
++ (instancetype)performActionWithURL:(NSURL *)actionURL completion:(M9URLActionCompletion)completion {
+    M9URLAction *action = [self actionWithURL:actionURL completion:completion];
     return [action perform] ? action : nil;
 }
 
-+ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(URLActionCompletion)completion {
++ (instancetype)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion {
     NSURL *url = [NSURL URLWithString:actionURLString];
     return [self performActionWithURL:url completion:completion];
 }
 
-+ (instancetype)actionWithURL:(NSURL *)actionURL completion:(URLActionCompletion)completion {
++ (instancetype)actionWithURL:(NSURL *)actionURL completion:(M9URLActionCompletion)completion {
     if (!actionURL) {
         NSLog(@"NO Action URL @ %@", _HERE);
         return nil;
     }
     
-    URLAction *action = [self new];
+    M9URLAction *action = [self new];
     
     action.URL = actionURL;
     action.scheme = actionURL.scheme;
@@ -86,14 +86,14 @@ static NSDictionary *ActionSettings = nil;
     action.parameters = actionURL.queryDictionary;
     action.nextURLString = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    action.setting = [[URLAction actionSettings] objectForKey:action.key class:[URLActionSetting class]];
+    action.setting = [[M9URLAction actionSettings] objectForKey:action.key class:[M9URLActionSetting class]];
     action.completion = completion;
     
     return action;
 }
 
 - (BOOL)perform {
-    NSArray *validSchemes = [URLAction validSchemes];
+    NSArray *validSchemes = [M9URLAction validSchemes];
     if (validSchemes.count && ![validSchemes containsObject:self.scheme]) {
         return NO;
     }
@@ -107,9 +107,9 @@ static NSDictionary *ActionSettings = nil;
     return !!self.setting;
 }
 
-- (BOOL)performNextWithResult:(NSDictionary *)result completion:(URLActionCompletion)completion {
+- (BOOL)performNextWithResult:(NSDictionary *)result completion:(M9URLActionCompletion)completion {
     NSURL *nextActionURL = [NSURL URLWithString:self.nextURLString];
-    URLAction *nextAction = [URLAction actionWithURL:nextActionURL completion:completion];
+    M9URLAction *nextAction = [M9URLAction actionWithURL:nextActionURL completion:completion];
     nextAction.prevAction = self;
     nextAction.prevActionResult = result;
     return [nextAction perform];
@@ -123,10 +123,10 @@ static NSDictionary *ActionSettings = nil;
 
 #pragma mark -
 
-@implementation URLActionSetting
+@implementation M9URLActionSetting
 
-+ (instancetype)actionSettingWithBlock:(URLActionBlock)actionBlock {
-    URLActionSetting *actionSetting = [self new];
++ (instancetype)actionSettingWithBlock:(M9URLActionBlock)actionBlock {
+    M9URLActionSetting *actionSetting = [self new];
     actionSetting.actionBlock = actionBlock;
     return actionSetting;
 }
@@ -136,7 +136,7 @@ static NSDictionary *ActionSettings = nil;
 }
 
 + (instancetype)actionSettingWithTarget:(id)target instanceSelector:(SEL)instanceSelector actionSelector:(SEL)actionSelector {
-    URLActionSetting *actionSetting = [self new];
+    M9URLActionSetting *actionSetting = [self new];
     actionSetting.target = target;
     actionSetting.instanceSelector = instanceSelector;
     actionSetting.actionSelector = actionSelector;
@@ -144,14 +144,14 @@ static NSDictionary *ActionSettings = nil;
 }
 
 @M9MakeCopyWithZone;
-- (void)makeCopy:(URLActionSetting *)copy {
+- (void)makeCopy:(M9URLActionSetting *)copy {
     copy.actionBlock = self.actionBlock;
     copy.target = self.target;
     copy.instanceSelector = self.instanceSelector;
     copy.actionSelector = self.actionSelector;
 }
 
-- (void)performWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish {
+- (void)performWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish {
     if (self.actionBlock) {
         self.actionBlock(action, finish);
         return;

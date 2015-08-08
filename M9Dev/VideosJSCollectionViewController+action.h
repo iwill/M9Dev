@@ -8,11 +8,11 @@
 
 #import "VideosJSCollectionViewController.h"
 
-#import "URLAction.h"
+#import "M9URLAction.h"
 
 @interface VideosJSCollectionViewController (action)
 
-- (void)openWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
-- (void)gotoWithAction:(URLAction *)action finish:(URLActionFinishBlock)finish;
+- (void)openWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish;
+- (void)gotoWithAction:(M9URLAction *)action finish:(M9URLActionFinishBlock)finish;
 
 @end

@@ -10,8 +10,8 @@
 
 #import <Masonry/Masonry.h>
 
-#import "URLAction.h"
-#import "URLAction+1.0.h"
+#import "M9URLAction.h"
+#import "M9URLAction+1.0.h"
 
 @implementation TestActionViewController
 
@@ -72,12 +72,12 @@
     
     NSURL *actionURL = [NSURL URLWithString:actionString];
     if ([[actionURL.host lowercaseString] isEqualToString:@"action.cmd"]) {
-        actionURL = [URLAction actionURLFrom_1_0:actionString];
+        actionURL = [M9URLAction actionURLFrom_1_0:actionString];
         NSLog(@"translate action from 1.0 to 2.0: %@", actionURL);
     }
     
     // filter action 2.0
-    __block URLAction *action = [URLAction performActionWithURL:actionURL completion:^() {
+    __block M9URLAction *action = [M9URLAction performActionWithURL:actionURL completion:^() {
         NSLog(@"completion: <#%@#>", action);
     }];
     if (action) {
