@@ -1,5 +1,5 @@
 //
-//  EXTScope.h
+//  EXTScope+M9.h
 //  extobjc
 //
 //  Created by Justin Spahr-Summers on 2011-05-04.
@@ -7,7 +7,10 @@
 //  Released under the MIT license.
 //
 
-#import "metamacros.h"
+#ifndef EXTC_EXTSCOPE_H
+#define EXTC_EXTSCOPE_H
+
+#import "metamacros+M9.h"
 
 /**
  * Creates \c __weak shadow variables for each of the variables provided as
@@ -68,3 +71,5 @@
 
 #define ext_strongify_(INDEX, VAR) \
     __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
+
+#endif

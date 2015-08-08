@@ -8,7 +8,7 @@
 
 #import "M9RequestInfoExt.h"
 
-#import "EXTScope.h"
+#import "EXTScope+M9.h"
 #import "NSInvocation+.h"
 #import "NSDictionary+.h"
 

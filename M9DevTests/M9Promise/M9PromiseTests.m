@@ -18,7 +18,7 @@
 #endif
 #import <Expecta/Expecta.h>
 
-#import "EXTScope.h"
+#import "EXTScope+M9.h"
 #import "M9Utilities.h"
 #import "M9Promise.h"
 

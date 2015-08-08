@@ -138,8 +138,8 @@
 		DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9NetworkingViewController.m; sourceTree = "<group>"; };
 		DF69D2581968513300B8C011 /* NSObject+AssociatedObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedObjects.h"; sourceTree = "<group>"; };
 		DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObjects.m"; sourceTree = "<group>"; };
-		DF69D25B1968513300B8C011 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
-		DF69D25C1968513300B8C011 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		DF69D25B1968513300B8C011 /* EXTScope+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EXTScope+M9.h"; sourceTree = "<group>"; };
+		DF69D25C1968513300B8C011 /* metamacros+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "metamacros+M9.h"; sourceTree = "<group>"; };
 		DF69D25D1968513300B8C011 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
 		DF69D2611968513300B8C011 /* M9Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9Utilities.h; sourceTree = "<group>"; };
 		DF69D2621968513300B8C011 /* NSObject+AssociatedValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+AssociatedValues.h"; sourceTree = "<group>"; };
@@ -413,8 +413,8 @@
 		DF69D25A1968513300B8C011 /* extobjc */ = {
 			isa = PBXGroup;
 			children = (
-				DF69D25B1968513300B8C011 /* EXTScope.h */,
-				DF69D25C1968513300B8C011 /* metamacros.h */,
+				DF69D25B1968513300B8C011 /* EXTScope+M9.h */,
+				DF69D25C1968513300B8C011 /* metamacros+M9.h */,
 				DF69D25D1968513300B8C011 /* readme.md */,
 			);
 			path = extobjc;
@@ -955,7 +955,6 @@
 				GCC_PREFIX_HEADER = "M9Dev/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9Dev/M9Dev-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a357174-e24e-454e-884d-5d7881e7c6f6";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -971,7 +970,6 @@
 				GCC_PREFIX_HEADER = "M9Dev/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9Dev/M9Dev-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a357174-e24e-454e-884d-5d7881e7c6f6";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

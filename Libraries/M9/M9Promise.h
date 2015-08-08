@@ -10,7 +10,7 @@
 
 #import "M9Promise.h"
 
-#import "EXTScope.h"
+#import "EXTScope+M9.h"
 
 /**
  * M9Thenable
