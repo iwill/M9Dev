@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "M9Utilities.h"
-#import "NSArray+.h"
+#import "NSArray+M9.h"
 #import "M9ScrollViewController.h"
 #import "UIViewController+.h"
 

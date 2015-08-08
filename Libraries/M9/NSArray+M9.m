@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "NSArray+.h"
+#import "NSArray+M9.h"
 
 @implementation NSArray (Shortcuts)
 

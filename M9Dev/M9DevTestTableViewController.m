@@ -8,7 +8,7 @@
 
 #import "M9DevTestTableViewController.h"
 
-#import "NSArray+.h"
+#import "NSArray+M9.h"
 
 #import "M9NetworkingViewController.h"
 #import "JSLayoutViewController.h"

@@ -13,7 +13,7 @@
 
 #import "M9Utilities.h"
 #import "M9Networking.h"
-#import "NSArray+.h"
+#import "NSArray+M9.h"
 #import "NSDictionary+.h"
 #import "UIColor+.h"
 #import "UIImage+.h"
