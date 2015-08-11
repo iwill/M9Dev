@@ -1,5 +1,5 @@
 //
-//  NSURL+M9Categories.h
+//  NSURL+M9.h
 //  M9Dev
 //
 //  Created by MingLQ on 2015-06-23.
@@ -10,7 +10,7 @@
 // #import <CoreFoundation/CoreFoundation.h>
 
 #import "M9Utilities.h"
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 @interface NSURL (M9Categories)
 

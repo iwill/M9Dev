@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import "NSString+.h"
+#import "NSString+M9.h"
 
 @protocol NSStringExport <JSExport>
 

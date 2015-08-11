@@ -22,7 +22,7 @@
 #import "M9Utilities.h"
 #import "M9Promise.h"
 
-#import "NSDate+.h"
+#import "NSDate+M9.h"
 
 #define sentinel @"sentinel"
 

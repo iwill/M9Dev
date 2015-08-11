@@ -8,7 +8,7 @@
 
 #import "M9URLAction.h"
 
-#import "NSURL+M9Categories.h"
+#import "NSURL+M9.h"
 
 @interface M9URLActionSetting ()
 @property(nonatomic, copy) M9URLActionBlock actionBlock;

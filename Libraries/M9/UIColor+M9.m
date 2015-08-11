@@ -6,7 +6,7 @@
 //  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "UIColor+.h"
+#import "UIColor+M9.h"
 
 #if ! __has_feature(objc_arc)
 // set -fobjc-arc flag: - Target > Build Phases > Compile Sources > implementation.m + -fobjc-arc

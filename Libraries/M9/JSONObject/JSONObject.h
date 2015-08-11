@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "NSArray+M9.h"
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 
 #pragma mark - JSONObject protocol

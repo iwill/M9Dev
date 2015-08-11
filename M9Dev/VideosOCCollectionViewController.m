@@ -14,10 +14,10 @@
 #import "M9Utilities.h"
 #import "M9Networking.h"
 #import "NSArray+M9.h"
-#import "NSDictionary+.h"
-#import "UIColor+.h"
-#import "UIImage+.h"
-#import "UIScrollView+.h"
+#import "NSDictionary+M9.h"
+#import "UIColor+M9.h"
+#import "UIImage+M9.h"
+#import "UIScrollView+M9.h"
 
 @interface UIImageCollectionViewCell : UICollectionViewCell
 

@@ -10,7 +10,7 @@
 
 #import "EXTScope+M9.h"
 #import "M9Utilities.h"
-#import "UIViewController+.h"
+#import "UIViewController+M9.h"
 
 @class M9URLActionSetting;
 

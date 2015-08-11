@@ -8,7 +8,7 @@
 
 #import "UICollectionViewFlowLayout+JS.h"
 
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 #define UIEdgeInsets
 

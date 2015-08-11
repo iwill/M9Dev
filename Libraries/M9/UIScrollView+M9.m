@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "UIScrollView+.h"
+#import "UIScrollView+M9.h"
 
 @implementation UIScrollView (UIScrollViewScrolledToTheBottomEdge)
 

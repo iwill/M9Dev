@@ -9,7 +9,7 @@
 #import "M9URLAction.h"
 
 #import "NSString+JSONObject.h"
-#import "NSURL+M9Categories.h"
+#import "NSURL+M9.h"
 
 @interface M9URLAction (_1_0)
 

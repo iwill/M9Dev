@@ -9,7 +9,7 @@
 #import "JSLayoutViewController.h"
 
 #import "M9Networking.h"
-#import "NSString+.h"
+#import "NSString+M9.h"
 
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "JSCore.h"

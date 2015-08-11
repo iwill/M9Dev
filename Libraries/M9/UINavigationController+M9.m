@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "UINavigationController+.h"
+#import "UINavigationController+M9.h"
 
 /**
  *  为 interactivePopGestureRecognizer-BUG 而生：解决自定义 NavBar、backBarButtonItem 导致的返回手势、动画相关的问题

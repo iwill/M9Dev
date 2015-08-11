@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import "NSData+.h"
+#import "NSData+M9.h"
 
 @protocol NSDataExport <JSExport>
 

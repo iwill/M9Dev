@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "NSURL+M9Categories.h"
+#import "NSURL+M9.h"
 
 @implementation NSURL (M9Categories)
 

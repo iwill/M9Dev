@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "NSString+.h"
+#import "NSString+M9.h"
 
 @implementation NSString (NSData)
 

@@ -9,7 +9,7 @@
 #import "JSView.h"
 
 #import "M9Utilities.h"
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 @implementation JSView {
     NSMutableDictionary *keyedSubviews;

@@ -6,7 +6,7 @@
 //  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "NSInvocation+.h"
+#import "NSInvocation+M9.h"
 
 #import "M9Utilities.h"
 

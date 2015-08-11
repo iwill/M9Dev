@@ -10,7 +10,7 @@
 
 #import "EXTScope+M9.h"
 #import "M9Utilities.h"
-#import "NSInvocation+.h"
+#import "NSInvocation+M9.h"
 #import "M9Networking.h"
 #import "NSAttributedString+M9.h"
 

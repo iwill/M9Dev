@@ -8,8 +8,8 @@
 
 #import "VideosJSCollectionViewController+action.h"
 
-#import "UIViewController+.h"
-#import "UINavigationController+.h"
+#import "UIViewController+M9.h"
+#import "UINavigationController+M9.h"
 
 @implementation VideosJSCollectionViewController (action)
 

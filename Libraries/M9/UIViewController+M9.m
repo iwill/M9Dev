@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "UIViewController+.h"
+#import "UIViewController+M9.h"
 
-#import "UINavigationController+.h"
+#import "UINavigationController+M9.h"
 
 @implementation UIViewController (M9Category)
 

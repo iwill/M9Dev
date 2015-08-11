@@ -9,7 +9,7 @@
 #import "JSCollectionViewCell.h"
 
 #import "M9Utilities.h"
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 @implementation JSCollectionViewCell {
     NSMutableDictionary *keyedSubviews;

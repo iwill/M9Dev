@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "NSDictionary+.h"
+#import "NSDictionary+M9.h"
 
 @implementation NSDictionary (Shortcuts)
 

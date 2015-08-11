@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import "UIColor+.h"
+#import "UIColor+M9.h"
 
 @protocol UIColorExport <JSExport>
 

@@ -17,8 +17,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "UIImage+.h"
-#import "NSData+.h"
+#import "UIImage+M9.h"
+#import "NSData+M9.h"
 
 static inline CGFloat DegreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;

@@ -15,7 +15,7 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
-#import "NSDate+.h"
+#import "NSDate+M9.h"
 
 extern NSMilliseconds NSMillisecondsFromTimeInterval(NSTimeInterval timeInterval) {
     return (NSMilliseconds)(timeInterval * 1000);

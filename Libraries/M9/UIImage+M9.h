@@ -1,5 +1,5 @@
 //
-//  UIImage+.h
+//  UIImage+M9.h
 //  M9Dev
 //
 //  Created by MingLQ on 2011-06-20.

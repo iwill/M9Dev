@@ -9,8 +9,8 @@
 #import "M9RequestInfoExt.h"
 
 #import "EXTScope+M9.h"
-#import "NSInvocation+.h"
-#import "NSDictionary+.h"
+#import "NSInvocation+M9.h"
+#import "NSDictionary+M9.h"
 
 @implementation M9RequestInfoDelegateExt
 

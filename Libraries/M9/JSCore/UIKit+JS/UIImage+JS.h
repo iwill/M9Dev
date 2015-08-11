@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 
-#import "UIImage+.h"
+#import "UIImage+M9.h"
 
 @protocol UIImageExport <JSExport>
 
