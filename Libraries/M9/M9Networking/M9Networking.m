@@ -2,8 +2,8 @@
 //  M9Networking.m
 //  M9Dev
 //
-//  Created by iwill on 2014-07-01.
-//  Copyright (c) 2014年 iwill. All rights reserved.
+//  Created by MingLQ on 2014-07-01.
+//  Copyright (c) 2014年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #if ! __has_feature(objc_arc)

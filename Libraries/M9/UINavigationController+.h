@@ -1,9 +1,9 @@
 //
 //  UINavigationController+.h
-//  iPhoneVideo
+//  M9Dev
 //
 //  Created by MingLQ on 2011-11-15.
-//  Copyright 2011 SOHU. All rights reserved.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

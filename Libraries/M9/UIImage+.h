@@ -1,9 +1,9 @@
 //
 //  UIImage+.h
-//  iM9
+//  M9Dev
 //
-//  Created by iwill on 2011-06-20.
-//  Copyright 2011 M9. All rights reserved.
+//  Created by MingLQ on 2011-06-20.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

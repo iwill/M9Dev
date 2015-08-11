@@ -653,8 +653,9 @@
 		DF69D2191967EA7E00B8C011 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = M9;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = iwill;
+				ORGANIZATIONNAME = "MingLQ <minglq.9@gmail.com>";
 				TargetAttributes = {
 					DF69D23B1967EA7F00B8C011 = {
 						TestTargetID = DF69D2201967EA7E00B8C011;

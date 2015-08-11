@@ -2,7 +2,7 @@
 //  NSDate+.h
 //  M9Dev
 //
-//  Created by iwill on 2013-02-01.
+//  Created by MingLQ on 2013-02-01.
 //
 //
 

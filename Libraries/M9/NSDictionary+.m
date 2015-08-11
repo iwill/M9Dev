@@ -1,9 +1,9 @@
 //
 //  NSDictionary+.m
-//  iM9
+//  M9Dev
 //
-//  Created by iwill on 2011-05-20.
-//  Copyright 2011 M9. All rights reserved.
+//  Created by MingLQ on 2011-05-20.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #if ! __has_feature(objc_arc)

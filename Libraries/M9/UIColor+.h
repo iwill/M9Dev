@@ -1,9 +1,9 @@
 //
 //  UIColor+.h
-//  iMSC
+//  M9Dev
 //
-//  Created by Wills on 11-03-09.
-//  Copyright 2011 Finalist. All rights reserved.
+//  Created by MingLQ on 2011-03-09.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

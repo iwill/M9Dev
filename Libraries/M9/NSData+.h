@@ -2,7 +2,7 @@
 //  NSData+.h
 //  Utility
 //
-//  Created by iwill on 2014-06-19.
+//  Created by MingLQ on 2014-06-19.
 //
 //
 

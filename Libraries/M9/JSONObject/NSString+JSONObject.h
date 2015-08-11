@@ -1,9 +1,9 @@
 //
 //  NSString+JSONObject.h
-//  iPhoneVideo
+//  M9Dev
 //
 //  Created by MingLQ on 2011-08-25.
-//  Copyright 2011 SOHU. All rights reserved.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

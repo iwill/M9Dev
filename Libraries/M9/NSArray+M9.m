@@ -1,9 +1,9 @@
 //
 //  NSArray+.m
-//  iM9
+//  M9Dev
 //
 //  Created by MingLQ on 2011-08-04.
-//  Copyright 2011 SOHU. All rights reserved.
+//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #if ! __has_feature(objc_arc)

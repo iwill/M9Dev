@@ -1,9 +1,9 @@
 //
 //  M9ScrollViewController.m
-//  iPhoneVideo
+//  M9Dev
 //
-//  Created by Ming LQ on 2012-06-12.
-//  Copyright (c) 2012年 M9. All rights reserved.
+//  Created by MingLQ on 2012-06-12.
+//  Copyright (c) 2012年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import "M9ScrollViewController.h"
