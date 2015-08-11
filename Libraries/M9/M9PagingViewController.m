@@ -219,46 +219,41 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+        [super scrollViewWillBeginDragging:scrollView];
+    }
+    
     if (scrollView != self.scrollView) {
         return;
     }
     
-    [self addChildViewControllerOfPage:self.currentPage - 1];
-    [self addChildViewControllerOfPage:self.currentPage + 1];
-}
-
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if (scrollView != self.scrollView) {
-        return;
-    }
-    
-    [self addChildViewControllerOfPage:self.currentPage - 1];
-    [self addChildViewControllerOfPage:self.currentPage + 1];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView != self.scrollView) {
-        return;
-    }
-    
-    if (decelerate) {
-        return;
-    }
-    
-    CGFloat width = CGRectGetWidth(scrollView.bounds);
-    CGFloat position = self.scrollView.contentOffset.x;
-    [self setCurrentPage:round(position / width) animated:YES];
-    
-    if (!decelerate) {
-        for (NSInteger i = 0; i < self.numberOfPages; i++) {
-            if (i != self.currentPage) {
-                [self removeChildViewControllerOfPage:i];
-            }
+    // add +/- 2: for (NSInteger page = self.currentPage - 2; page <= self.currentPage + 2 && page < self.numberOfPages; page++)
+    // add all:
+    for (NSInteger page = 0; page < self.numberOfPages; page++) {
+        if (page != self.currentPage) {
+            [self addChildViewControllerOfPage:page];
         }
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+/* - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+        [super scrollViewWillBeginDecelerating:scrollView];
+    }
+    
+    if (scrollView != self.scrollView) {
+        return;
+    }
+    
+    [self addChildViewControllerOfPage:self.currentPage - 1];
+    [self addChildViewControllerOfPage:self.currentPage + 1];
+} */
+
+- (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView {
+    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+        [super scrollViewDidEndScrolling:scrollView];
+    }
+    
     if (scrollView != self.scrollView) {
         return;
     }
@@ -267,14 +262,11 @@
     CGFloat position = self.scrollView.contentOffset.x;
     [self setCurrentPage:round(position / width) animated:YES];
     
-    for (NSInteger i = 0; i < self.numberOfPages; i++) {
-        if (i != self.currentPage) {
-            [self removeChildViewControllerOfPage:i];
+    for (NSInteger page = 0; page < self.numberOfPages; page++) {
+        if (page != self.currentPage) {
+            [self removeChildViewControllerOfPage:page];
         }
     }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
 }
 
 @end

@@ -12,14 +12,13 @@
 #import "EXTScope+M9.h"
 #import "M9Utilities.h"
 
-/*
 @protocol M9ScrollViewDelegate <UITableViewDelegate>
 @optional
-- (void)scrollViewWillBeginScrolling:(UIScrollView *)scrollView;
+// - (void)scrollViewWillBeginScrolling:(UIScrollView *)scrollView;
 - (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView;
-@end */
+@end
 
-@interface M9ScrollViewController : UIViewController <UIScrollViewDelegate>
+@interface M9ScrollViewController : UIViewController <UIScrollViewDelegate, M9ScrollViewDelegate>
 
 @property(nonatomic, readonly, strong) UIScrollView *scrollView;
 

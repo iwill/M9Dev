@@ -60,20 +60,19 @@
 
 #pragma mark -
 
-/*
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
-        if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
-            [(id<M9ScrollViewDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
+        if ([self respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
+            [self scrollViewDidEndScrolling:scrollView];
         }
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
-        [(id<M9ScrollViewDelegate>)scrollView.delegate scrollViewDidEndScrolling:scrollView];
+    if ([self respondsToSelector:@selector(scrollViewDidEndScrolling:)]) {
+        [self scrollViewDidEndScrolling:scrollView];
     }
-} */
+}
 
 @end
 
