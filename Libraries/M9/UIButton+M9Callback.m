@@ -10,18 +10,6 @@
 
 @implementation UIButton (M9Callback)
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    [self addTarget:self action:@selector(callbackWithButton:) forControlEvents:UIControlEventTouchUpInside];
-    return self;
-}
-
-- (void)callbackWithButton:(UIButton *)button {
-    if (self.callback) self.callback(button);
-}
-
-#pragma mark -
-
 @dynamic callback;
 static void *UIButton_M9Callback = &UIButton_M9Callback;
 
@@ -31,6 +19,16 @@ static void *UIButton_M9Callback = &UIButton_M9Callback;
 
 - (void)setCallback:(M9ButtonCallback)callback {
     [self associateCopyOfValue:callback withKey:UIButton_M9Callback];
+    if (callback) {
+        [self addTarget:self action:@selector(callbackWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else {
+        [self removeTarget:self action:@selector(callbackWithButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void)callbackWithButton:(UIButton *)button {
+    if (self.callback) self.callback(button);
 }
 
 @end
