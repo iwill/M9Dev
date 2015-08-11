@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 // @see SpectaUtility.h - https://github.com/specta/specta
 #define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
 
@@ -20,6 +21,15 @@
 // for each with blocks
 #define _BREAK      return NO
 #define _CONTINUE   return YES
+
+// __CLASS__
+#define _CLASS_NAME ({ \
+    NSString *Class_Method = [NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__]; \
+    NSUInteger loc = [Class_Method rangeOfString:@"["].location + 1; \
+    NSUInteger len = [Class_Method rangeOfString:@" "].location - loc; \
+    NSRange range = NSMakeSafeRange(loc, len, Class_Method.length); \
+    [Class_Method substringWithRange:range]; \
+}) \
 
 
 /**
@@ -269,10 +279,13 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
 /**
  * NSRange
  */
+static inline NSRange NSMakeSafeRange(NSUInteger loc, NSUInteger len, NSUInteger length) {
+    loc = MIN(loc, length);
+    len = MIN(len, length - loc);
+    return NSMakeRange(loc, len);
+}
 static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
-    range.location = MIN(range.location, length);
-    range.length = MIN(range.length, length - range.location);
-    return range;
+    return NSMakeSafeRange(range.location, range.length, length);
 }
 
 

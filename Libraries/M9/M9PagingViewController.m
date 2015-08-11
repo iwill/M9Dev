@@ -219,7 +219,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
         [super scrollViewWillBeginDragging:scrollView];
     }
     
@@ -237,7 +237,7 @@
 }
 
 /* - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
         [super scrollViewWillBeginDecelerating:scrollView];
     }
     
@@ -250,7 +250,7 @@
 } */
 
 - (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView {
-    if ([[M9PagingViewController superclass] instancesRespondToSelector:_cmd]) {
+    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
         [super scrollViewDidEndScrolling:scrollView];
     }
     
