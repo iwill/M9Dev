@@ -20,7 +20,7 @@
 /**
  *  为 interactivePopGestureRecognizer-BUG 而生：解决自定义 NavBar、backBarButtonItem 导致的返回手势、动画相关的问题
  */
-@interface UINavigationController_M9Category : UINavigationController <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface UINavigationController_M9 : UINavigationController <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 /* !!!: 解决 interactivePopGestureRecognizer-BUG
  */
@@ -39,7 +39,7 @@
 }
 
 + (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController {
-    UINavigationController *navigationController = [[UINavigationController_M9Category alloc]
+    UINavigationController *navigationController = [[UINavigationController_M9 alloc]
                                                     initWithNavigationBarClass:[UINavigationBar class]
                                                     toolbarClass:[UIToolbar class]];
     [navigationController pushViewController:rootViewController animated:NO];
@@ -118,7 +118,7 @@
 
 #pragma mark -
 
-@implementation UINavigationController_M9Category
+@implementation UINavigationController_M9
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -225,11 +225,9 @@
     return YES;
 }
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
 - (BOOL)shouldAutorotate {
-    return NO; // 解决播放器大小窗，statusBar不旋转问题
+    return NO;
 }
-#endif
 
 @end
 
