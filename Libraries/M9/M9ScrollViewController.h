@@ -43,3 +43,11 @@
 - (void)scrollToTopAnimated:(BOOL)animated;
 
 @end
+
+/**
+ *  NOTE:
+ *  // @see http://stackoverflow.com/a/31961867/456536
+ *  - (BOOL)touchesShouldCancelInContentView:(UIView *)view {
+ *      return YES;
+ *  }
+ */
