@@ -64,6 +64,7 @@
 		DFE66CC11B3AC59600124656 /* TestActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC01B3AC59600124656 /* TestActionViewController.m */; };
 		DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */; };
 		DFE66CC71B3D686C00124656 /* UINavigationController+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC61B3D686C00124656 /* UINavigationController+M9.m */; };
+		DFECD75A1B7AE54700F3EB06 /* ARCWeakRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DFECD7591B7AE54700F3EB06 /* ARCWeakRef.m */; };
 		DFF2339719B82F500045FDCE /* VideosJSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */; };
 		DFF2339A19B848C10045FDCE /* UIImageView+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339919B848C10045FDCE /* UIImageView+JS.m */; };
 		DFF2339D19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339C19B84C490045FDCE /* UICollectionViewFlowLayout+JS.m */; };
@@ -210,6 +211,8 @@
 		DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VideosJSCollectionViewController+action.m"; sourceTree = "<group>"; };
 		DFE66CC51B3D686C00124656 /* UINavigationController+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+M9.h"; sourceTree = "<group>"; };
 		DFE66CC61B3D686C00124656 /* UINavigationController+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+M9.m"; sourceTree = "<group>"; };
+		DFECD7581B7AE54700F3EB06 /* ARCWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCWeakRef.h; sourceTree = "<group>"; };
+		DFECD7591B7AE54700F3EB06 /* ARCWeakRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCWeakRef.m; sourceTree = "<group>"; };
 		DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosJSCollectionViewController.h; sourceTree = "<group>"; };
 		DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosJSCollectionViewController.m; sourceTree = "<group>"; };
 		DFF2339819B848C10045FDCE /* UIImageView+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+JS.h"; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 				DFE66CB61B3A929300124656 /* JSONObject */,
 				DF69D29C1968763B00B8C011 /* M9Networking */,
 				DF8E1B0D1B2EED8A008816DC /* URLAction */,
+				DFECD7581B7AE54700F3EB06 /* ARCWeakRef.h */,
+				DFECD7591B7AE54700F3EB06 /* ARCWeakRef.m */,
 				DFDF47F91AFC95EA00F6E31C /* M9PagingViewController.h */,
 				DFDF47FA1AFC95EA00F6E31C /* M9PagingViewController.m */,
 				DF0116531A4ABEBA00AF7F3A /* M9Promise.h */,
@@ -795,6 +800,7 @@
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
 				DFF233B519B876C10045FDCE /* JSView.m in Sources */,
 				DF68086F1B01DBC100F0E9E3 /* M9TableViewController.m in Sources */,
+				DFECD75A1B7AE54700F3EB06 /* ARCWeakRef.m in Sources */,
 				DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */,
 				DF57B64619A7525500C374E8 /* UIScrollViewController.m in Sources */,
 				DFB335EE197FC33D002060E7 /* M9Utilities.m in Sources */,
