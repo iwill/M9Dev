@@ -219,7 +219,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
+    if ([_SUPER_CLASS instancesRespondToSelector:_cmd]) {
         [super scrollViewWillBeginDragging:scrollView];
     }
     
@@ -242,7 +242,7 @@
 }
 
 /* - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
+    if ([_SUPER_CLASS instancesRespondToSelector:_cmd]) {
         [super scrollViewWillBeginDecelerating:scrollView];
     }
     
@@ -255,7 +255,7 @@
 } */
 
 - (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView {
-    if ([[NSClassFromString(_CLASS_NAME) superclass] instancesRespondToSelector:_cmd]) {
+    if ([_SUPER_CLASS instancesRespondToSelector:_cmd]) {
         [super scrollViewDidEndScrolling:scrollView];
     }
     

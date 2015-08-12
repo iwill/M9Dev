@@ -22,14 +22,20 @@
 #define _BREAK      return NO
 #define _CONTINUE   return YES
 
-// __CLASS__
+
+/**
+ * @see __CLASS__ - Google: Objective-C macro __CLASS__
+ *  !!!: _SELF_CLASS != [self class]
+ */
 #define _CLASS_NAME ({ \
-    NSString *Class_Method = [NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__]; \
-    NSUInteger loc = [Class_Method rangeOfString:@"["].location + 1; \
-    NSUInteger len = [Class_Method rangeOfString:@" "].location - loc; \
-    NSRange range = NSMakeSafeRange(loc, len, Class_Method.length); \
-    [Class_Method substringWithRange:range]; \
-}) \
+    NSString *prettyFunction = [NSString stringWithUTF8String:__PRETTY_FUNCTION__]; \
+    NSUInteger loc = [prettyFunction rangeOfString:@"["].location + 1; \
+    NSUInteger len = [prettyFunction rangeOfString:@" "].location - loc; \
+    NSRange range = NSMakeSafeRange(loc, len, prettyFunction.length); \
+    [prettyFunction substringWithRange:range]; \
+})
+#define _SELF_CLASS     NSClassFromString(_CLASS_NAME)
+#define _SUPER_CLASS    [_SELF_CLASS superclass]
 
 
 /**
