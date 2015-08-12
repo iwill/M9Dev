@@ -227,8 +227,13 @@
         return;
     }
     
-    // add +/- 2: for (NSInteger page = self.currentPage - 2; page <= self.currentPage + 2 && page < self.numberOfPages; page++)
-    // add all:
+    /* a. add +/- 2:
+     *  for (NSInteger page = self.currentPage - 2;
+     *       page <= self.currentPage + 2 && page < self.numberOfPages;
+     *       page++)
+     * b. add all:
+     *  for (NSInteger page = 0; page < self.numberOfPages; page++)
+     */
     for (NSInteger page = 0; page < self.numberOfPages; page++) {
         if (page != self.currentPage) {
             [self addChildViewControllerOfPage:page];
