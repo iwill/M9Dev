@@ -24,14 +24,15 @@
  *  call setupWithNumberOfPages: when viewDidLoad
  */
 - (void)setupWithNumberOfPages:(NSInteger)numberOfPages;
+- (UIViewController *)viewControllerOfPage:(NSInteger)page;
+
+// subclasses MUST override
+- (UIViewController *)generateViewControllerOfPage:(NSInteger)page;
+
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 
 // TODO: scroll progress - 1, 1.1, 1.2 ..., 2
 - (void)willScrollToPage:(NSInteger)page animated:(BOOL)animated;
 - (void)didScrollToPage:(NSInteger)page animated:(BOOL)animated;
-
-- (UIViewController *)viewControllerOfPage:(NSInteger)page;
-// subclasses MUST override
-- (UIViewController *)generateViewControllerOfPage:(NSInteger)page;
 
 @end

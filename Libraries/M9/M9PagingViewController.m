@@ -83,6 +83,15 @@
     [self scrollToPage:self.currentPage animated:NO];
 }
 
+- (UIViewController *)viewControllerOfPage:(NSInteger)page {
+    return [[self.viewControllers objectOrNilAtIndex:page] as:[UIViewController class]];
+}
+
+- (UIViewController *)generateViewControllerOfPage:(NSInteger)page {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated {
     NSInteger lastPage = self.currentPage;
     [self setCurrentPage:page animated:animated];
@@ -97,6 +106,14 @@
         _RETURN bounds;
     }) animated:NO/* !!!: always NO */];
 }
+
+- (void)willScrollToPage:(NSInteger)page animated:(BOOL)animated {
+}
+
+- (void)didScrollToPage:(NSInteger)page animated:(BOOL)animated {
+}
+
+#pragma mark - private
 
 - (void)setCurrentPage:(NSInteger)page {
     [self setCurrentPage:page animated:NO];
@@ -121,21 +138,6 @@
     }
     
     [self didScrollToPage:page animated:animated];
-}
-
-- (void)willScrollToPage:(NSInteger)page animated:(BOOL)animated {
-}
-
-- (void)didScrollToPage:(NSInteger)page animated:(BOOL)animated {
-}
-
-- (UIViewController *)generateViewControllerOfPage:(NSInteger)page {
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-- (UIViewController *)viewControllerOfPage:(NSInteger)page {
-    return [[self.viewControllers objectOrNilAtIndex:page] as:[UIViewController class]];
 }
 
 - (void)loadChildViewControllerOfPage:(NSInteger)page {
@@ -186,6 +188,8 @@
         [self.viewControllers replaceObjectAtIndex:page withObjectOrNil:[NSNull null]];
     }
 }
+
+#pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object != self.scrollView) {
