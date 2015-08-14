@@ -271,11 +271,14 @@ static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
 
 
 /**
- * typedef
+ * UIKit
  */
 
 // NS instead of CG
 // typedef CGFloat NSFloat;
+
+// animationDuration
+static const CGFloat UIViewAnimationDuration = 0.2; // @see UIView + setAnimationDuration:
 
 // UIAnimationCompletion
 typedef void (^UIAnimationCompletion)();
