@@ -29,6 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self setupWithNumberOfPages:6];
 }
 
@@ -64,6 +67,10 @@
     
     [self.viewControllersPool setObject:viewController forKey:@(page)];
     return viewController;
+}
+
+- (UIEdgeInsets)viewInsetOfPage:(NSInteger)page {
+    return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
 @end
