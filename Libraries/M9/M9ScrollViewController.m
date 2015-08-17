@@ -25,17 +25,11 @@
     return self;
 }
 
-/* A: loadView - self.view == self.scrollView
-- (void)loadView {
-    UIScrollView *scrollView = [UIScrollView new];
-    scrollView.delegate = self;
-    self.scrollView = scrollView;
-    
-    self.view = scrollView;
-} //*/
-
-//* B: loadScrollView - self.view == self.scrollView.superview
 - (void)loadScrollView {
+    if (self.scrollView) {
+        return;
+    }
+    
     UIScrollView *scrollView = [UIScrollView new];
     scrollView.delegate = self;
     self.scrollView = scrollView;
@@ -46,7 +40,14 @@
         strongify(self);
         make.left.top.width.height.equalTo(self.view);
     }];
-} //*/
+}
+
+- (UIScrollView *)scrollView {
+    if (![self isViewLoaded]) {
+        [self view];
+    }
+    return _scrollView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
