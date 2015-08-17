@@ -25,9 +25,9 @@
     return self;
 }
 
-- (void)loadScrollView {
-    if (self.scrollView) {
-        return;
+- (UIScrollView *)scrollView {
+    if (_scrollView) {
+        return _scrollView;
     }
     
     UIScrollView *scrollView = [UIScrollView new];
@@ -40,19 +40,13 @@
         strongify(self);
         make.left.top.width.height.equalTo(self.view);
     }];
-}
-
-- (UIScrollView *)scrollView {
-    if (![self isViewLoaded]) {
-        [self view];
-    }
+    
     return _scrollView;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self loadScrollView];
+- (void)loadView {
+    [super loadView];
+    [self scrollView];
 }
 
 - (void)dealloc {
@@ -82,6 +76,14 @@
 @implementation UIScrollView (M9Category)
 
 - (void)scrollToTopAnimated:(BOOL)animated {
+    [self scrollRectToVisible:CGRectMake(self.contentOffset.x, 0, 1, 1) animated:animated];
+}
+
+- (void)scrollToLeftAnimated:(BOOL)animated {
+    [self scrollRectToVisible:CGRectMake(0, self.contentOffset.y, 1, 1) animated:animated];
+}
+
+- (void)scrollToLeftTopAnimated:(BOOL)animated {
     [self scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:animated];
 }
 

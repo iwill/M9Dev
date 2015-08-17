@@ -16,9 +16,14 @@
 
 @implementation M9TableViewController
 
-- (void)loadScrollView {
+@dynamic scrollView;
+- (UIScrollView *)scrollView {
+    return self.tableView;
+}
+
+- (UITableView *)tableView {
     if (self.tableView) {
-        return;
+        return _tableView;
     }
     
     UITableView *tableView = [UITableView new];
@@ -31,18 +36,12 @@
         strongify(self);
         make.left.top.width.height.equalTo(self.view);
     }];
-}
-
-@dynamic scrollView;
-- (UIScrollView *)scrollView {
-    return self.tableView;
-}
-
-- (UITableView *)tableView {
-    if (![self isViewLoaded]) {
-        [self view];
-    }
     return _tableView;
+}
+
+- (void)loadView {
+    [super loadView];
+    [self tableView];
 }
 
 - (void)dealloc {

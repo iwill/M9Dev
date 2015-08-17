@@ -10,7 +10,7 @@
 
 @interface M9TableViewController : M9ScrollViewController
 
-// dataSource & delegate is nil by default
+// !!!: dataSource & delegate are nil by default
 @property(nonatomic, readonly, retain) UITableView *tableView;
 
 @end
