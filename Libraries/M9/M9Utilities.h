@@ -299,6 +299,16 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 
 /**
+ * StructMake
+ */
+#define StructMake(_struct, statements) ({ \
+    __typeof__(_struct) make = _struct; \
+    statements \
+    _RETURN make; \
+})
+
+
+/**
  * CGRectSet
  */
 #define CGRectSetX(_rect, _x) ({ \
