@@ -28,6 +28,8 @@
 
 // subclasses MUST override
 - (UIViewController *)generateViewControllerOfPage:(NSInteger)page;
+// default: UIEdgeInsetsMake(0, 0, 0, 0)
+- (UIEdgeInsets)viewInsetOfPage:(NSInteger)page;
 
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 
