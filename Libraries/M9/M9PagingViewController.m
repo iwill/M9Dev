@@ -134,19 +134,18 @@
         return;
     }
     
-    [self willScrollToPage:page animated:animated];
-    
-    _currentPage = page;
-    
     [self loadChildViewControllerOfPage:page];
+    [self willScrollToPage:page animated:animated];
+    _currentPage = page;
     [self addChildViewControllerOfPage:page];
-    
-    for (NSInteger i = 1; i <= PreloadViewControllers; i++) {
-        [self loadChildViewControllerOfPage:page + i];
-        [self loadChildViewControllerOfPage:page - i];
-    }
-    
     [self didScrollToPage:page animated:animated];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        for (NSInteger i = 1; i <= PreloadViewControllers; i++) {
+            [self loadChildViewControllerOfPage:page + i];
+            [self loadChildViewControllerOfPage:page - i];
+        }
+    });
 }
 
 - (void)loadChildViewControllerOfPage:(NSInteger)page {
