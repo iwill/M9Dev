@@ -22,7 +22,10 @@
 }
 
 - (UITableView *)tableView {
-    if (self.tableView) {
+    if (![self isViewLoaded]) {
+        [self view];
+    }
+    if (_tableView) {
         return _tableView;
     }
     
@@ -39,8 +42,8 @@
     return _tableView;
 }
 
-- (void)loadView {
-    [super loadView];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [self tableView];
 }
 

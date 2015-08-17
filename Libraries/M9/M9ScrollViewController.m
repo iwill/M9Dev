@@ -26,6 +26,9 @@
 }
 
 - (UIScrollView *)scrollView {
+    if (![self isViewLoaded]) {
+        [self view];
+    }
     if (_scrollView) {
         return _scrollView;
     }
@@ -44,8 +47,8 @@
     return _scrollView;
 }
 
-- (void)loadView {
-    [super loadView];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [self scrollView];
 }
 
