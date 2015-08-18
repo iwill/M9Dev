@@ -10,11 +10,24 @@
 
 @interface M9TableViewController ()
 
+@property(nonatomic, readwrite) UITableViewStyle style;
 @property(nonatomic, readwrite, retain) UITableView *tableView;
 
 @end
 
 @implementation M9TableViewController
+
+- (instancetype)init {
+    return [self initWithStyle:UITableViewStylePlain];
+}
+
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+    self = [super init];
+    if (self) {
+        self.style = style;
+    }
+    return self;
+}
 
 @dynamic scrollView;
 - (UIScrollView *)scrollView {
@@ -29,8 +42,9 @@
         return _tableView;
     }
     
-    UITableView *tableView = [UITableView new];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     // tableView.delegate = self;
+    // tableView.dataSource = self;
     self.tableView = tableView;
     [self.view addSubview:tableView];
     
