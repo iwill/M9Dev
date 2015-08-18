@@ -10,7 +10,7 @@
 
 @interface M9ScrollViewController ()
 
-@property(nonatomic, readwrite, strong) UIScrollView *scrollView;
+@property(nonatomic, strong, readwrite) UIScrollView *scrollView;
 
 @end
 
@@ -25,6 +25,7 @@
     return self;
 }
 
+@synthesize scrollView = _scrollView;
 - (UIScrollView *)scrollView {
     if (![self isViewLoaded]) {
         [self view];

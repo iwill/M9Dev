@@ -18,9 +18,12 @@
 - (void)scrollViewDidEndScrolling:(UIScrollView *)scrollView;
 @end
 
-@interface M9ScrollViewController : UIViewController <UIScrollViewDelegate, M9ScrollViewDelegate>
+@interface M9ScrollViewController : UIViewController <UIScrollViewDelegate, M9ScrollViewDelegate> {
+@protected
+    UIScrollView *_scrollView;
+}
 
-@property(nonatomic, readonly, strong) UIScrollView *scrollView;
+@property(nonatomic, strong, readonly) UIScrollView *scrollView;
 
 @end
 

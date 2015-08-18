@@ -8,12 +8,15 @@
 
 #import "M9ScrollViewController.h"
 
-@interface M9TableViewController : M9ScrollViewController
+@interface M9TableViewController : M9ScrollViewController {
+@protected
+    UITableView *_tableView;
+}
 
 // UITableViewStylePlain by default
 @property(nonatomic, readonly) UITableViewStyle style;
 // !!!: dataSource & delegate are nil by default
-@property(nonatomic, readonly, retain) UITableView *tableView;
+@property(nonatomic, strong, readonly) UITableView *tableView;
 
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
 

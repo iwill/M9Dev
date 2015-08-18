@@ -11,7 +11,7 @@
 @interface M9TableViewController ()
 
 @property(nonatomic, readwrite) UITableViewStyle style;
-@property(nonatomic, readwrite, retain) UITableView *tableView;
+@property(nonatomic, strong, readwrite) UITableView *tableView;
 
 @end
 
@@ -34,6 +34,7 @@
     return self.tableView;
 }
 
+@synthesize tableView = _tableView;
 - (UITableView *)tableView {
     if (![self isViewLoaded]) {
         [self view];
