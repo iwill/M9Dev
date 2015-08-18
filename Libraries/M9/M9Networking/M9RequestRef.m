@@ -71,7 +71,7 @@
 
 @implementation NSObject (M9RequestOwner)
 
-static void *const M9RequestOwner_allRequestRef = (void *)&M9RequestOwner_allRequestRef;
+static void *M9RequestOwner_allRequestRef = &M9RequestOwner_allRequestRef;
 
 - (void)addRequestRef:(M9RequestRef *)requestRef { @synchronized(self) { // lock: owner.allRequestRefOfOwner
     if (!requestRef) {

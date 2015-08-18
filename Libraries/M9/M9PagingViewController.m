@@ -8,7 +8,8 @@
 
 #import "M9PagingViewController.h"
 
-#define PreloadViewControllers 1
+static const NSInteger PreloadViewControllers = 1;
+static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewController;
 
 @interface M9PagingViewController ()
 
@@ -38,7 +39,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     
-    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:NULL];
+    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:&KVOContext_M9PagingViewController];
 }
 
 - (void)updateViewConstraints {
@@ -66,7 +67,7 @@
 }
 
 - (void)dealloc {
-    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:NULL];
+    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:&KVOContext_M9PagingViewController];
 }
 
 #pragma mark -
@@ -212,12 +213,15 @@
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object != self.scrollView) {
+    if (context != &KVOContext_M9PagingViewController) {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         return;
     }
     
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
-        [self updateScrollViewContentSize];
+    if (object == self.scrollView) {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
+            [self updateScrollViewContentSize];
+        }
     }
 }
 

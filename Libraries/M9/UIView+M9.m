@@ -60,14 +60,14 @@
 }
 
 @dynamic updateConstraintsBlock;
-static void *const UIView_updateConstraints = (void *)&UIView_updateConstraints;
+static void *UIView_updateConstraintsBlock = &UIView_updateConstraintsBlock;
 
 - (void (^)())updateConstraintsBlock {
-    return [self associatedValueForKey:UIView_updateConstraints];
+    return [self associatedValueForKey:UIView_updateConstraintsBlock];
 }
 
 - (void)setUpdateConstraintsBlock:(void (^)())updateConstraintsBlock {
-    [self associateCopyOfValue:updateConstraintsBlock withKey:UIView_updateConstraints];
+    [self associateCopyOfValue:updateConstraintsBlock withKey:UIView_updateConstraintsBlock];
 }
 
 @end
