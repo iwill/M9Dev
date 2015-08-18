@@ -19,9 +19,17 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 #pragma mark -
 
-@interface UIView (FirstResponder)
+@interface UIView (Hierarchy)
 
 @property(nonatomic, readwrite, assign) UIView *firstResponder;
+
+@end
+
+#pragma mark -
+
+@interface UIView (updateConstraints)
+
+@property(nonatomic, copy) void (^updateConstraintsBlock)();
 
 @end
 

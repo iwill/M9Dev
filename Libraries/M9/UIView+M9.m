@@ -17,9 +17,13 @@
 
 #import "UIView+M9.h"
 
+#import "JRSwizzle.h"
+#import "NSObject+AssociatedObjects.h"
 #import "M9Utilities.h"
 
-@implementation UIView (FirstResponder)
+@implementation UIView (Hierarchy)
+
+@dynamic firstResponder;
 
 - (UIView *)firstResponder {
     if ([self isFirstResponder]) {
@@ -44,18 +48,41 @@
 
 #pragma mark -
 
+@implementation UIView (updateConstraints)
+
++ (void)load {
+    [self jr_swizzleMethod:@selector(updateConstraints) withMethod:@selector(swizzled_updateConstraints) error:nil];
+}
+
+- (void)swizzled_updateConstraints {
+    if (self.updateConstraintsBlock) self.updateConstraintsBlock();
+    [self swizzled_updateConstraints];
+}
+
+@dynamic updateConstraintsBlock;
+static void *const UIView_updateConstraints = (void *)&UIView_updateConstraints;
+
+- (void (^)())updateConstraintsBlock {
+    return [self associatedValueForKey:UIView_updateConstraints];
+}
+
+- (void)setUpdateConstraintsBlock:(void (^)())updateConstraintsBlock {
+    [self associateCopyOfValue:updateConstraintsBlock withKey:UIView_updateConstraints];
+}
+
+@end
+
+#pragma mark -
+
 @implementation UIView (M9Category)
 
 static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 
-/* + (void)load {
-    if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"5."]) {
-        return;
-    }
-    [self jr_swizzleMethod:@selector(initWithFrame:) withMethod:@selector(initWithFrame_swizzle_:) error:nil];
++ (void)load {
+    /* [self jr_swizzleMethod:@selector(initWithFrame:) withMethod:@selector(initWithFrame_swizzle_:) error:nil]; */
 }
 
-- (instancetype)initWithFrame_swizzle_:(CGRect)frame {
+/* - (instancetype)initWithFrame_swizzle_:(CGRect)frame {
     self = [self initWithFrame_swizzle_:frame];
     if (self) {
         self.exclusiveTouch = YES;
