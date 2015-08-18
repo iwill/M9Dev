@@ -40,7 +40,7 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
  * iOS6 alternative method for
  *  - (UIView *)resizableSnapshotViewFromRect:(CGRect)rect afterScreenUpdates:(BOOL)afterUpdates withCapInsets:(UIEdgeInsets)capInsets
  */
-- (UIView *)snapshotViewFromRect:(CGRect)rect withCapInsets:(UIEdgeInsets)capInsets NS_DEPRECATED_IOS(6_0, 7_0);
+/* - (UIView *)snapshotViewFromRect:(CGRect)rect withCapInsets:(UIEdgeInsets)capInsets NS_DEPRECATED_IOS(6_0, 7_0); */
 
 /**
  * returns 0.2
