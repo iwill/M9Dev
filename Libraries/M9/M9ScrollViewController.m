@@ -39,9 +39,7 @@
     self.scrollView = scrollView;
     [self.view addSubview:scrollView];
     
-    weakify(self);
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        strongify(self);
         make.left.top.width.height.equalTo(self.view);
     }];
     

@@ -17,6 +17,7 @@
 @property(nonatomic, readonly) UITableViewStyle style;
 // !!!: dataSource & delegate are nil by default
 @property(nonatomic, strong, readonly) UITableView *tableView;
+@property(nonatomic) BOOL clearsSelectionOnViewWillAppear;
 
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
 

@@ -49,9 +49,7 @@
     self.tableView = tableView;
     [self.view addSubview:tableView];
     
-    weakify(self);
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        strongify(self);
         make.left.top.width.height.equalTo(self.view);
     }];
     return _tableView;
@@ -60,6 +58,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.clearsSelectionOnViewWillAppear) {
+        NSArray *indexPaths = [self.tableView indexPathsForSelectedRows];
+        for (NSIndexPath *indexPath in indexPaths) {
+            [self.tableView deselectRowAtIndexPath:indexPath animated:animated];
+        }
+    }
 }
 
 - (void)dealloc {
