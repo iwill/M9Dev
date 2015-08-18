@@ -17,7 +17,6 @@
 
 #import "UIView+M9.h"
 
-#import "JRSwizzle.h"
 #import "M9Utilities.h"
 
 @implementation UIView (FirstResponder)
