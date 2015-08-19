@@ -27,9 +27,14 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 #pragma mark -
 
+typedef void (^UIViewUpdateConstraintsBlock)();
+
 @interface UIView (updateConstraints)
 
-@property(nonatomic, copy) void (^updateConstraintsBlock)();
+@property(nonatomic, copy) UIViewUpdateConstraintsBlock updateConstraintsBlock;
+// re-declare for code completions
+- (UIViewUpdateConstraintsBlock)updateConstraintsBlock;
+- (void)setUpdateConstraintsBlock:(UIViewUpdateConstraintsBlock)updateConstraintsBlock;
 
 @end
 
