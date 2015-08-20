@@ -1,4 +1,7 @@
-source 'https://github.com/CocoaPods/Specs.git'
+# pod install --no-repo-update
+
+# source 'https://github.com/CocoaPods/Specs.git'
+source 'https://gitcafe.com/akuandev/Specs.git'
 
 platform :ios, '7.0'
 
