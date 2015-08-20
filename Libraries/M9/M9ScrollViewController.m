@@ -3,7 +3,7 @@
 //  M9Dev
 //
 //  Created by MingLQ on 2012-06-12.
-//  Copyright (c) 2012年 MingLQ <minglq.9@gmail.com>. All rights reserved.
+//  Copyright (c) 2012 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import "M9ScrollViewController.h"
