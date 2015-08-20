@@ -247,6 +247,7 @@
 		DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		DFF785D91B82C0EC00342450 /* UIView+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+M9.h"; sourceTree = "<group>"; };
 		DFF785DA1B82C0EC00342450 /* UIView+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+M9.m"; sourceTree = "<group>"; };
+		DFF786611B85F62100342450 /* M9Dev.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = M9Dev.h; sourceTree = "<group>"; };
 		DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9PromiseTests.m; sourceTree = "<group>"; };
 		DFFA08C21A135AD7003168E1 /* Pods-M9Dev.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.debug.xcconfig"; sourceTree = "<group>"; };
 		DFFA08C31A135AD7003168E1 /* Pods-M9Dev.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-M9Dev.release.xcconfig"; path = "Pods/Target Support Files/Pods-M9Dev/Pods-M9Dev.release.xcconfig"; sourceTree = "<group>"; };
@@ -421,6 +422,7 @@
 		DF69D25E1968513300B8C011 /* M9 */ = {
 			isa = PBXGroup;
 			children = (
+				DFF786611B85F62100342450 /* M9Dev.h */,
 				DFD7AB6F1994C0E10054CD55 /* JSCore */,
 				DFE66CB61B3A929300124656 /* JSONObject */,
 				DF69D29C1968763B00B8C011 /* M9Networking */,
