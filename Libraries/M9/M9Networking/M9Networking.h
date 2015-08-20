@@ -18,7 +18,12 @@
  *  !!!: ONLY used for common requirements, or use AFNetworking or other framework directly
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
  *
- *  use lock instead of synchronized? not yet!
+ *  use AFCache?
+ *      https://github.com/artifacts/AFCache
+ *  use AFNetworking-AutoRetry?
+ *      https://github.com/shaioz/AFNetworking-AutoRetry
+ *
+ *  use NSLock instead of synchronized? not yet!
  */
 
 #define M9NETWORKING [M9Networking sharedInstance]
