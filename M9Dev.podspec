@@ -94,16 +94,16 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = "Classes/**/*.h"
 
-  s.subspec "Libraries" do |ss|
-    ss.source_files = "Libraries/**/*.{h,m}"
-    ss.frameworks = "CoreGraphics", "Foundation", "UIKit"
-  end
+  s.default_subspecs = "Libraries", "M9Dev"
 
-  s.subspec "M9Dev" do |ss|
-    ss.source_files = "M9Dev"
-    ss.frameworks = "CoreGraphics", "Foundation", "UIKit"
-    ss.dependency = "M9Dev/Libraries"
-  end
+  # s.subspec "Libraries" do |ss|
+  #   ss.source_files = "Libraries/**/*.{h,m}"
+  # end
+
+  # s.subspec "M9Dev" do |ss|
+  #   ss.source_files = "M9Dev"
+  #   ss.dependency = "M9Dev/Libraries"
+  # end
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
