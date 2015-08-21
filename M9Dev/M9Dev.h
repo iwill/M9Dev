@@ -9,6 +9,9 @@
 #ifndef M9Dev_h
 #define M9Dev_h
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "NSObject+AssociatedObjects.h"
 #import "NSString+CompareToVersion.h"
 #import "EXTScope+M9.h"
