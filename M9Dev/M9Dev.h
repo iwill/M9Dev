@@ -6,8 +6,12 @@
 //  Copyright (c) 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#ifndef M9Dev_h
-#define M9Dev_h
+#ifndef M9Dev
+#define M9Dev
+
+/* Error: Include of non-modular header inside framework module
+ *  @see http://stackoverflow.com/a/28552525/456536
+ */
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
