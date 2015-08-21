@@ -53,7 +53,7 @@ Pod::Spec.new do |s|
   s.author             = { "iwill" => "minglq.9@gmail.com" }
   # Or just: s.author    = "iwill"
   # s.authors            = { "iwill" => "minglq.9@gmail.com" }
-  s.social_media_url   = "http://twitter.com/iwill"
+  s.social_media_url   = "http://twitter.com/minglq"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://git.baijiahulian.com/minglinqing/M9Dev.git", :branch => "master" }
+  s.source = { :git => "http://git.baijiahulian.com/minglinqing/M9Dev.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
