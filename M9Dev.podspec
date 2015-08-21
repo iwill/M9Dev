@@ -87,22 +87,38 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
+  # s.public_header_files = "M9Dev/**/*.h", "Libraries/**/*.h"
+
   # s.source_files  = "M9Dev", "Libraries/**/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
-
-  # s.public_header_files = "M9Dev/**/*.h", "Libraries/**/*.h"
 
   s.source_files  = "M9Dev/M9Dev.h"
   s.public_header_files = "M9Dev/M9Dev.h"
   
   s.subspec 'Libraries' do |ss|
-    ss.source_files = "Libraries/**/*.{h,m}"
-    ss.public_header_files = 'Libraries/**/*.h'
+    ss.subspec 'BlocksKit' do |sss|
+      sss.public_header_files = 'Libraries/BlocksKit/*.h'
+      sss.source_files = "Libraries/BlocksKit/*.{h,m}"
+    end
+    ss.subspec 'CompareToVersion' do |sss|
+      sss.public_header_files = 'Libraries/CompareToVersion/*.h'
+      sss.source_files = "Libraries/CompareToVersion/*.{h,m}"
+    end
+    ss.subspec 'extobjc' do |sss|
+      sss.public_header_files = 'Libraries/extobjc/*.h'
+      sss.source_files = "Libraries/extobjc/*.{h,m}"
+    end
+    ss.subspec 'JRSwizzle' do |sss|
+      sss.public_header_files = 'Libraries/JRSwizzle/*.h'
+      sss.source_files = "Libraries/JRSwizzle/*.{h,m}"
+    end
+    # ss.public_header_files = 'Libraries/**/*.h'
+    # ss.source_files = "Libraries/**/*.{h,m}"
   end
   
   s.subspec 'M9Dev' do |ss|
-    ss.source_files = "M9Dev/**/*.{h,m}"
     ss.public_header_files = 'M9Dev/**/*.h'
+    ss.source_files = "M9Dev/**/*.{h,m}"
     ss.dependency "M9Dev/Libraries"
   end
 
