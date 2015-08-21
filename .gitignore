@@ -1,4 +1,4 @@
-# Created by http://www.gitignore.io
+# Created by https://www.gitignore.io/api/osx,xcode,objective-c
 
 ### OSX ###
 .DS_Store
@@ -11,9 +11,13 @@ Icon
 # Thumbnails
 ._*
 
-# Files that might appear on external disk
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
 .Spotlight-V100
+.TemporaryItems
 .Trashes
+.VolumeIcon.icns
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -24,7 +28,15 @@ Temporary Items
 
 
 ### Xcode ###
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## Build generated
 build/
+DerivedData
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -34,16 +46,23 @@ build/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata
+
+## Other
 *.xccheckout
 *.moved-aside
-DerivedData
 *.xcuserstate
 
 
 ### Objective-C ###
 # Xcode
 #
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## Build generated
 build/
+DerivedData
+
+## Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -53,18 +72,32 @@ build/
 *.perspectivev3
 !default.perspectivev3
 xcuserdata
+
+## Other
 *.xccheckout
 *.moved-aside
-DerivedData
+*.xcuserstate
+*.xcscmblueprint
+
+## Obj-C/Swift specific
 *.hmap
 *.ipa
-*.xcuserstate
 
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
 # you should judge for yourself, the pros and cons are mentioned at:
-# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control?
+# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
+#Pods/
+
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build
+
+### Objective-C Patch ###
+*.xcscmblueprint
 
