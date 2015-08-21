@@ -103,7 +103,7 @@ Pod::Spec.new do |s|
   s.subspec 'M9Dev' do |ss|
     ss.source_files = "M9Dev/**/*.{h,m}"
     ss.public_header_files = 'M9Dev/**/*.h'
-    s.dependency "M9Dev/Libraries"
+    ss.dependency "M9Dev/Libraries"
   end
 
 
