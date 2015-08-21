@@ -87,6 +87,13 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
+  s.prefix_header_contents = <<-EOS
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+EOS
+
   # s.public_header_files = "M9Dev/**/*.h", "Libraries/**/*.h"
 
   # s.source_files  = "M9Dev", "Libraries/**/*.{h,m}"
