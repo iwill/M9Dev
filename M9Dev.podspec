@@ -87,7 +87,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.spec.prefix_header_file = "M9Dev-prefix.pch"
+  s.prefix_header_file = "M9Dev-prefix.pch"
 
   # s.public_header_files = "M9Dev/**/*.h", "Libraries/**/*.h"
 
