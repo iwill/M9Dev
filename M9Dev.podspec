@@ -87,10 +87,24 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "M9Dev", "Libraries/**/*.{h,m}"
+  # s.source_files  = "M9Dev", "Libraries/**/*.{h,m}"
   # s.exclude_files = "Classes/Exclude"
 
-  s.public_header_files = "M9Dev/**/*.h". "Libraries/**/*.h"
+  # s.public_header_files = "M9Dev/**/*.h", "Libraries/**/*.h"
+
+  s.source_files  = "M9Dev/M9Dev.h"
+  s.public_header_files = "M9Dev/M9Dev.h"
+  
+  s.subspec 'Libraries' do |ss|
+    ss.source_files = "Libraries/**/*.{h,m}"
+    ss.public_header_files = 'Libraries/**/*.h'
+  end
+  
+  s.subspec 'M9Dev' do |ss|
+    ss.source_files = "M9Dev/**/*.{h,m}"
+    ss.public_header_files = 'M9Dev/**/*.h'
+    s.dependency "M9Dev/Libraries"
+  end
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
