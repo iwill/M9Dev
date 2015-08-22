@@ -1012,7 +1012,6 @@
 				);
 				INFOPLIST_FILE = "M9DevTests/M9DevTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a357174-e24e-454e-884d-5d7881e7c6f6";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1032,7 +1031,6 @@
 				GCC_PREFIX_HEADER = "M9Dev/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9DevTests/M9DevTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7a357174-e24e-454e-884d-5d7881e7c6f6";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
