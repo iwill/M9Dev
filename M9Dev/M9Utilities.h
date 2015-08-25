@@ -263,8 +263,11 @@ class NSObject; /* for @ */ \
 
 
 /**
- * NSDirectory
+ * bundle & directory
  */
+// [UIImage imageNamed:M9Dev_bundle_"QING.png"]
+#define M9Dev_bundle_ @"M9Dev.bundle/"
+// NSDirectory
 static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
     return [paths count] ? [paths objectAtIndex:0] : nil;
