@@ -16,6 +16,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// [UIImage imageNamed:M9Dev_bundle_"imageName.png"]
+#define M9Dev_bundle_ @"M9Dev.bundle/"
+
 #import "NSObject+AssociatedObjects.h"
 #import "NSString+CompareToVersion.h"
 #import "EXTScope+M9.h"
