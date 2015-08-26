@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.1.0"
+  s.version      = "0.0.2"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
@@ -76,7 +76,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source = { :git => "http://git.baijiahulian.com/iOS/M9Dev.git", :tag => s.version }
+  s.source = { :git => "https://github.com/iwill/M9Dev.git", :tag => s.version }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
