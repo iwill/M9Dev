@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.1"
+  s.version      = "0.1.0"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
