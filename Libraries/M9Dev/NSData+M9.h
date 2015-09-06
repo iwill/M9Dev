@@ -1,9 +1,9 @@
 //
 //  NSData+M9.h
-//  Utility
+//  M9Dev
 //
 //  Created by MingLQ on 2014-06-19.
-//
+//  Released under the MIT license.
 //
 
 #import <Foundation/Foundation.h>

@@ -3,7 +3,7 @@
 //  M9Dev
 //
 //  Created by MingLQ on 2013-02-01.
-//
+//  Released under the MIT license.
 //
 
 #if ! __has_feature(objc_arc)
