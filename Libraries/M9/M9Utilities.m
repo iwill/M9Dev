@@ -3,7 +3,8 @@
 //  M9Dev
 //
 //  Created by MingLQ on 2013-06-26.
-//  Copyright (c) 2013 MingLQ <minglq.9@gmail.com>. All rights reserved.
+//  Copyright (c) 2013 MingLQ <minglq.9@gmail.com>.
+//  Released under the MIT license.
 //
 
 #import "M9Utilities.h"

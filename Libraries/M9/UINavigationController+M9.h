@@ -3,7 +3,8 @@
 //  M9Dev
 //
 //  Created by MingLQ on 2011-11-15.
-//  Copyright 2011 MingLQ <minglq.9@gmail.com>. All rights reserved.
+//  Copyright (c) 2011 MingLQ <minglq.9@gmail.com>.
+//  Released under the MIT license.
 //
 
 #import <UIKit/UIKit.h>
