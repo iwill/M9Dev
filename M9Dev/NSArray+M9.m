@@ -3,7 +3,7 @@
 //  M9Dev
 //
 //  Created by MingLQ on 2011-08-04.
-//  Copyright 2011 MingLQ <minglq.9@gmail.com>.
+//  Copyright (c) 2011 MingLQ <minglq.9@gmail.com>.
 //  Released under the MIT license.
 //
 
