@@ -20,8 +20,10 @@ typedef id (^NSDictionaryObjectValidator)(id object);
 @interface NSDictionary (Shortcuts)
 
 /**
- *  Detect CGFloat is float or double:
+ * ???: add int, remove unsignedXxxx
+ *  @see NSString+NSStringExtensionMethods @ xxxValue
  *
+ * NOTE: detect CGFloat is float or double:
  *  #if defined(__LP64__) && __LP64__
  *      CGFloat is double
  *  #elif
