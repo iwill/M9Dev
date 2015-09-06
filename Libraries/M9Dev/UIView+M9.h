@@ -60,8 +60,8 @@ typedef void (^UIViewUpdateConstraintsBlock)();
  * returns 0.2
  *  @see +[UIView setAnimationDuration:]
  * BTW
- *  [CATransaction animationDuration] is 1/4s now
- *  [[UIApplication sharedApplication] statusBarOrientationAnimationDuration] is 0.3
+ *  [CATransaction animationDuration] defaults to 1/4s
+ *  [[UIApplication sharedApplication] statusBarOrientationAnimationDuration] defaults to 0.3
  */
 + (NSTimeInterval)animationDuration;
 /**
