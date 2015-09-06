@@ -28,6 +28,7 @@
 
 /* Foundation */
 #import "NSArray+M9.h"
+#import "NSData+M9.h"
 #import "NSDictionary+M9.h"
 #import "NSInvocation+M9.h"
 #import "NSObject+AssociatedValues.h"
