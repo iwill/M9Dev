@@ -227,7 +227,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 
 - (void)updateScrollViewContentSize {
     self.scrollView.contentSize = ({
-        CGSize size = UIEdgeInsetsInsetRect(self.scrollView.bounds, self.scrollView.contentInset).size;
+        CGSize size = UIEdgeInsetsInsetRect(self.view.bounds, self.scrollView.contentInset).size;
         size.width *= self.numberOfPages OR 1;
         _RETURN size;
     });

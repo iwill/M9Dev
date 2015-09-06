@@ -223,17 +223,18 @@ static inline void dispatch_async_background_queue(dispatch_block_t block) {
  * as: return self if self is kind of class
  */
 
-// TODO: asString, asNumber
+// TODO: asString, asNumber, asInteger ...
 @interface NSObject (ReturnSelfIf)
 
 - (id)if:(BOOL)condition;
 
 - (id)as:(Class)clazz;
-- (id)asArray;
-- (id)asDictionary;
 - (id)asMemberOfClass:(Class)clazz;
 - (id)asProtocol:(Protocol *)protocol;
 - (id)ifRespondsToSelector:(SEL)selector;
+
+- (NSArray *)asArray;
+- (NSDictionary *)asDictionary;
 
 - (id)performIfRespondsToSelector:(SEL)selector;
 - (id)performIfRespondsToSelector:(SEL)selector withObject:(id)object;

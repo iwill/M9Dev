@@ -19,14 +19,6 @@
     return [self if:[self isKindOfClass:clazz]];
 }
 
-- (id)asArray {
-    return [self as:[NSArray class]];
-}
-
-- (id)asDictionary {
-    return [self as:[NSDictionary class]];
-}
-
 - (id)asMemberOfClass:(Class)clazz {
     return [self if:[self isMemberOfClass:clazz]];
 }
@@ -37,6 +29,14 @@
 
 - (id)ifRespondsToSelector:(SEL)selector {
     return [self if:[self respondsToSelector:selector]];
+}
+
+- (NSArray *)asArray {
+    return [self as:[NSArray class]];
+}
+
+- (NSDictionary *)asDictionary {
+    return [self as:[NSDictionary class]];
 }
 
 - (id)performIfRespondsToSelector:(SEL)selector {
