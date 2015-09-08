@@ -325,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				DF69D2561968513300B8C011 /* Libraries */,
+				DFA870961B9C0A560040249B /* M9Dev */,
 				DF69D22A1967EA7E00B8C011 /* M9DevDemo */,
 				DF69D2431967EA7F00B8C011 /* M9DevTests */,
 				DFF233A919B85B060045FDCE /* Resources */,
@@ -433,7 +434,6 @@
 				DF96C5271B799A4E006DF4EA /* extobjc */,
 				DFF233BF19B8AF560045FDCE /* JRSwizzle */,
 				DF69D28819685B6500B8C011 /* MKNetworkKit */,
-				DFA870961B9C0A560040249B /* M9Dev */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
