@@ -325,7 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				DF69D2561968513300B8C011 /* Libraries */,
-				DF69D22A1967EA7E00B8C011 /* M9Dev */,
+				DF69D22A1967EA7E00B8C011 /* M9DevDemo */,
 				DF69D2431967EA7F00B8C011 /* M9DevTests */,
 				DFF233A919B85B060045FDCE /* Resources */,
 				DF69D2231967EA7E00B8C011 /* Frameworks */,
@@ -359,7 +359,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DF69D22A1967EA7E00B8C011 /* M9Dev */ = {
+		DF69D22A1967EA7E00B8C011 /* M9DevDemo */ = {
 			isa = PBXGroup;
 			children = (
 				DF69D2331967EA7E00B8C011 /* AppDelegate.h */,
@@ -389,7 +389,7 @@
 				DF69D2361967EA7F00B8C011 /* Images.xcassets */,
 				DF69D22B1967EA7E00B8C011 /* Supporting Files */,
 			);
-			path = M9Dev;
+			path = M9DevDemo;
 			sourceTree = "<group>";
 		};
 		DF69D22B1967EA7E00B8C011 /* Supporting Files */ = {
