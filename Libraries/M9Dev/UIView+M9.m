@@ -18,10 +18,6 @@
 
 #import "UIView+M9.h"
 
-#import "JRSwizzle.h"
-#import "NSObject+AssociatedObjects.h"
-#import "M9Utilities.h"
-
 @implementation UIView (Hierarchy)
 
 @dynamic firstResponder;
@@ -149,6 +145,28 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 
 - (void)removeAllSubviews {
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (UIView *)closestViewOfClass:(Class)clazz {
+    return [self closestViewOfClass:clazz includeSelf:NO];
+}
+
+- (UIView *)closestViewOfClass:(Class)clazz includeSelf:(BOOL)includeSelf {
+    if (![clazz isSubclassOfClass:[UIView class]]) {
+        return nil;
+    }
+    return (UIView *)[self findResponderWithBlock:^BOOL(UIResponder *responder, BOOL *stop) {
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            *stop = YES;
+            return NO;
+        }
+        return ((includeSelf || responder != self)
+                && [responder isKindOfClass:clazz]);
+    }];
+}
+
+- (UIViewController *)closestViewController {
+    return (UIViewController *)[self closestResponderOfClass:[UIViewController class]];
 }
 
 - (NSString *)viewDescriptionWithIndent:(NSString *)indent {

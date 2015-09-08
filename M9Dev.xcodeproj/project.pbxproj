@@ -26,6 +26,7 @@
 		DF69D2551968490F00B8C011 /* M9NetworkingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2541968490F00B8C011 /* M9NetworkingViewController.m */; };
 		DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */; };
 		DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D28A19685B6500B8C011 /* NSDate+RFC1123.m */; };
+		DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */; };
 		DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */; };
 		DFA871081B9C0A570040249B /* ARCWeakRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA870981B9C0A560040249B /* ARCWeakRef.m */; };
 		DFA871091B9C0A570040249B /* NSAttributedString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA8709C1B9C0A560040249B /* NSAttributedString+JS.m */; };
@@ -136,6 +137,8 @@
 		DF69D2591968513300B8C011 /* NSObject+AssociatedObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+AssociatedObjects.m"; sourceTree = "<group>"; };
 		DF69D28919685B6500B8C011 /* NSDate+RFC1123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RFC1123.h"; sourceTree = "<group>"; };
 		DF69D28A19685B6500B8C011 /* NSDate+RFC1123.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RFC1123.m"; sourceTree = "<group>"; };
+		DF6D6BA01B9EEAB200259E6D /* UIResponder+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+M9.h"; sourceTree = "<group>"; };
+		DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+M9.m"; sourceTree = "<group>"; };
 		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
 		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
 		DF96C5281B799A4E006DF4EA /* EXTScope+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EXTScope+M9.h"; sourceTree = "<group>"; };
@@ -506,6 +509,8 @@
 				DFA870EF1B9C0A570040249B /* UIImage+M9.m */,
 				DFA870F71B9C0A570040249B /* UINavigationController+M9.h */,
 				DFA870F81B9C0A570040249B /* UINavigationController+M9.m */,
+				DF6D6BA01B9EEAB200259E6D /* UIResponder+M9.h */,
+				DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */,
 				DFA870F91B9C0A570040249B /* UIScrollView+M9.h */,
 				DFA870FA1B9C0A570040249B /* UIScrollView+M9.m */,
 				DFA870FB1B9C0A570040249B /* UIScrollViewController.h */,
@@ -890,6 +895,7 @@
 				DFA871101B9C0A570040249B /* UICollectionViewCell+JS.m in Sources */,
 				DFA8710F1B9C0A570040249B /* NSObject+JS.m in Sources */,
 				DFA8712C1B9C0A570040249B /* NSString+M9.m in Sources */,
+				DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */,
 				DFA871281B9C0A570040249B /* NSDate+M9.m in Sources */,
 				DFA8712B1B9C0A570040249B /* NSObject+AssociatedValues.m in Sources */,
 				DFA871111B9C0A570040249B /* UICollectionViewFlowLayout+JS.m in Sources */,
