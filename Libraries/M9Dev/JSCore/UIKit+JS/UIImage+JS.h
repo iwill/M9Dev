@@ -74,17 +74,13 @@
 
 - (UIImage *)imageByResizing:(CGSize)size;
 - (UIImage *)imageByZooming:(CGFloat)zoom;
-+ (UIImage *)imageWithImage:(UIImage *)image size:(CGSize)size;
-+ (UIImage *)imageWithImage:(UIImage *)image zoom:(CGFloat)zoom;
 
 - (UIImage *)imageByRotateRadians:(CGFloat)radians;
 - (UIImage *)imageByRotateRadians:(CGFloat)radians size:(CGSize)size;
 - (UIImage *)imageByRotateDegrees:(CGFloat)degrees;
 - (UIImage *)imageByRotateDegrees:(CGFloat)degrees size:(CGSize)size;
-+ (UIImage *)imageWithImage:(UIImage *)image rotateRadians:(CGFloat)radians;
-+ (UIImage *)imageWithImage:(UIImage *)image rotateRadians:(CGFloat)radians size:(CGSize)size;
-+ (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees;
-+ (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees size:(CGSize)size;
+
+- (UIImage *)blurImageWithRadius:(CGFloat)blurRadius;
 
 + (UIImage *)imageWithColor:(UIColor *)color;
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size;

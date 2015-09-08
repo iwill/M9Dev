@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 iwill. All rights reserved.
 //
 
-#import "UIView+JSView.h"
+#import "UIView+JS.h"
 
 @implementation UIView (JSView)
 

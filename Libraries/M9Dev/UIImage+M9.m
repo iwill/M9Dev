@@ -17,6 +17,7 @@
 #endif
 
 #import <QuartzCore/QuartzCore.h>
+#import <Accelerate/Accelerate.h>
 
 #import "UIImage+M9.h"
 #import "NSData+M9.h"
@@ -46,29 +47,18 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
 #pragma mark resize and zoom image
 
 - (UIImage *)imageByResizing:(CGSize)size {
-    return [UIImage imageWithImage:self size:size];
-}
-
-- (UIImage *)imageByZooming:(CGFloat)zoom {
-    return [UIImage imageWithImage:self zoom:zoom];
-}
-
-+ (UIImage *)imageWithImage:(UIImage *)image size:(CGSize)size {
-    if (!image) {
-        return nil;
-    }
-    if (CGSizeEqualToSize(size, image.size)) {
-        return [image copy];
+    if (CGSizeEqualToSize(size, self.size)) {
+        return self;
     }
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    image = UIGraphicsGetImageFromCurrentImageContext();
+    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
 }
 
-+ (UIImage *)imageWithImage:(UIImage *)image zoom:(CGFloat)zoom {
-    return [self imageWithImage:image size:CGSizeMake(image.size.width * zoom, image.size.height * zoom)];
+- (UIImage *)imageByZooming:(CGFloat)zoom {
+    return [self imageByResizing:CGSizeMake(self.size.width * zoom, self.size.height * zoom)];
 }
 
 #pragma mark rotate image
@@ -113,20 +103,61 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
     return image;
 }
 
-+ (UIImage *)imageWithImage:(UIImage *)image rotateRadians:(CGFloat)radians {
-    return [image imageByRotateRadians:radians];
-}
+#pragma mark blur image
 
-+ (UIImage *)imageWithImage:(UIImage *)image rotateRadians:(CGFloat)radians size:(CGSize)size {
-    return [image imageByRotateRadians:radians size:size];
-}
-
-+ (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees {
-    return [image imageByRotateDegrees:degrees];
-}
-
-+ (UIImage *)imageWithImage:(UIImage *)image rotateDegrees:(CGFloat)degrees size:(CGSize)size {
-    return [image imageByRotateDegrees:degrees size:size];
+- (UIImage *)blurImageWithRadius:(CGFloat)blurRadius {
+    // boxSize must be odd and gt 1
+    int boxSize = MAX(1, floor(blurRadius * 50) * 2 + 1);
+    
+    CGImageRef rawImage = self.CGImage;
+    
+    vImage_Buffer inBuffer, outBuffer;
+    vImage_Error error;
+    void *pixelBuffer;
+    
+    CGDataProviderRef inProvider = CGImageGetDataProvider(rawImage);
+    CFDataRef inBitmapData = CGDataProviderCopyData(inProvider);
+    
+    inBuffer.width = CGImageGetWidth(rawImage);
+    inBuffer.height = CGImageGetHeight(rawImage);
+    inBuffer.rowBytes = CGImageGetBytesPerRow(rawImage);
+    inBuffer.data = (void *)CFDataGetBytePtr(inBitmapData);
+    
+    pixelBuffer = malloc(CGImageGetBytesPerRow(rawImage) * CGImageGetHeight(rawImage));
+    
+    outBuffer.data = pixelBuffer;
+    outBuffer.width = CGImageGetWidth(rawImage);
+    outBuffer.height = CGImageGetHeight(rawImage);
+    outBuffer.rowBytes = CGImageGetBytesPerRow(rawImage);
+    
+    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL,
+                                       0, 0, boxSize, boxSize, NULL,
+                                       kvImageEdgeExtend | kvImageHighQualityResampling);
+    if (error) {
+        NSLog(@"error from convolution %ld", error);
+    }
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef ctx = CGBitmapContextCreate(outBuffer.data,
+                                             outBuffer.width,
+                                             outBuffer.height,
+                                             8,
+                                             outBuffer.rowBytes,
+                                             colorSpace,
+                                             CGImageGetBitmapInfo(self.CGImage));
+    
+    CGImageRef imageRef = CGBitmapContextCreateImage (ctx);
+    UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
+    
+    CGContextRelease(ctx);
+    CGColorSpaceRelease(colorSpace);
+    
+    free(pixelBuffer);
+    CFRelease(inBitmapData);
+    CGImageRelease(imageRef);
+    
+    return returnImage;
 }
 
 #pragma mark image with color
