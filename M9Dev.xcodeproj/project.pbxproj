@@ -28,6 +28,7 @@
 		DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = DF69D28A19685B6500B8C011 /* NSDate+RFC1123.m */; };
 		DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */; };
 		DF6D6BA51B9F084D00259E6D /* UITableViewCell+M9AccessoryButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9AccessoryButton.m */; };
+		DF6D6BA81B9F160100259E6D /* TestClosestAndAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */; };
 		DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */; };
 		DFA871081B9C0A570040249B /* ARCWeakRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA870981B9C0A560040249B /* ARCWeakRef.m */; };
 		DFA871091B9C0A570040249B /* NSAttributedString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA8709C1B9C0A560040249B /* NSAttributedString+JS.m */; };
@@ -142,6 +143,8 @@
 		DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+M9.m"; sourceTree = "<group>"; };
 		DF6D6BA31B9F084D00259E6D /* UITableViewCell+M9AccessoryButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+M9AccessoryButton.h"; sourceTree = "<group>"; };
 		DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9AccessoryButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+M9AccessoryButton.m"; sourceTree = "<group>"; };
+		DF6D6BA61B9F160100259E6D /* TestClosestAndAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestClosestAndAccessoryViewController.h; sourceTree = "<group>"; };
+		DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClosestAndAccessoryViewController.m; sourceTree = "<group>"; };
 		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
 		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
 		DF96C5281B799A4E006DF4EA /* EXTScope+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EXTScope+M9.h"; sourceTree = "<group>"; };
@@ -379,6 +382,8 @@
 				DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */,
 				DFE66CBF1B3AC59600124656 /* TestActionViewController.h */,
 				DFE66CC01B3AC59600124656 /* TestActionViewController.m */,
+				DF6D6BA61B9F160100259E6D /* TestClosestAndAccessoryViewController.h */,
+				DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */,
 				DFDF47FF1AFC965100F6E31C /* TestPagingViewController.h */,
 				DFDF48001AFC965100F6E31C /* TestPagingViewController.m */,
 				DFE66CC21B3D650500124656 /* VideosJSCollectionViewController+action.h */,
@@ -878,6 +883,7 @@
 				DFA871261B9C0A570040249B /* NSAttributedString+M9.m in Sources */,
 				DFE66CAF1B3A80EB00124656 /* NSString+CompareToVersion.m in Sources */,
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
+				DF6D6BA81B9F160100259E6D /* TestClosestAndAccessoryViewController.m in Sources */,
 				DFA871221B9C0A570040249B /* M9ScrollViewController.m in Sources */,
 				DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */,
 				DFA871161B9C0A570040249B /* UILabel+JS.m in Sources */,

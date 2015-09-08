@@ -16,6 +16,7 @@
 #import "VideosJSCollectionViewController.h"
 #import "TestPagingViewController.h"
 #import "TestActionViewController.h"
+#import "TestClosestAndAccessoryViewController.h"
 
 #import "JRSwizzle.h"
 
@@ -77,10 +78,11 @@
     [self.tableView registerClass:tableViewCellClass forCellReuseIdentifier:NSStringFromClass(tableViewCellClass)];
     self.tableView.rowHeight = 50;
     
-    viewControllers = @[ [TestActionViewController new],
+    viewControllers = @[ [TestClosestAndAccessoryViewController new],
+                         [TestActionViewController new],
                          ({
                              UIViewController *vc = [TestPagingViewController new];
-                             vc.navigationItem.title = @"TestPagingViewController";
+                             vc.navigationItem.title = @"PagingViewController";
                              _RETURN vc;
                          }),
                          [M9NetworkingViewController new],
