@@ -13,6 +13,9 @@
 
 @interface UITableViewCell (M9AccessoryButton)
 
-@property (nonatomic, strong) UIButton *accessoryButton;
+// @property (nonatomic, strong) UIButton *accessoryButton;
+
+- (void)enableAccessoryView;
+- (void)disableAccessoryView;
 
 @end

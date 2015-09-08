@@ -10,6 +10,7 @@
 
 #import "TestClosestAndAccessoryViewController.h"
 
+#import "UIImage+M9.h"
 #import "UIView+M9.h"
 #import "UIControl+M9EventCallback.h"
 #import "UITableViewCell+M9AccessoryButton.h"
@@ -65,15 +66,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%lu-%lu", indexPath.section, indexPath.row];
-    // this should be set in cell
-    cell.accessoryButton = ({
+    
+    // !!!: this should be set in cell
+    /* cell.accessoryButton = ({
         UIButton *button = [UIButton new];
         [button setTitle:@"accessory >" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
         [button sizeToFit]
         _RETURN button;
+    }); */
+    
+    // !!!: this should be set in cell
+    cell.accessoryView = ({
+        UIImage *image = [UIImage imageWithColor:[UIColor blackColor] size:CGSizeMake(100, 20)];
+        UIImage *highlightedImage = [UIImage imageWithColor:[UIColor blueColor] size:image.size];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image highlightedImage:highlightedImage];
+        imageView.userInteractionEnabled = YES;
+        _RETURN imageView;
     });
+    [cell enableAccessoryView];
+    
     return cell;
 }
 
