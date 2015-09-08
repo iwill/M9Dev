@@ -65,11 +65,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%lu-%lu", indexPath.section, indexPath.row];
-    cell.accessoryButton = [UIButton new];
-    [cell.accessoryButton setTitle:@"accessory >" forState:UIControlStateNormal];
-    [cell.accessoryButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cell.accessoryButton setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
-    [cell.accessoryButton sizeToFit];
+    // this should be set in cell
+    cell.accessoryButton = ({
+        UIButton *button = [UIButton new];
+        [button setTitle:@"accessory >" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
+        [button sizeToFit]
+        _RETURN button;
+    });
     return cell;
 }
 
