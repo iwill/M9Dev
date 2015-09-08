@@ -130,9 +130,10 @@ static inline CGFloat RadiansToDegrees(CGFloat radians) {
     outBuffer.height = CGImageGetHeight(rawImage);
     outBuffer.rowBytes = CGImageGetBytesPerRow(rawImage);
     
+    // !!!: kvImageHighQualityResampling: Use a higher quality, slower resampling filter for Geometry operations
     error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL,
                                        0, 0, boxSize, boxSize, NULL,
-                                       kvImageEdgeExtend | kvImageHighQualityResampling);
+                                       kvImageEdgeExtend/* | kvImageHighQualityResampling */);
     if (error) {
         NSLog(@"error from convolution %ld", error);
     }
