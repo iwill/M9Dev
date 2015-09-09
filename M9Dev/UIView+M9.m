@@ -18,10 +18,6 @@
 
 #import "UIView+M9.h"
 
-#import "JRSwizzle.h"
-#import "NSObject+AssociatedObjects.h"
-#import "M9Utilities.h"
-
 @implementation UIView (Hierarchy)
 
 @dynamic firstResponder;
@@ -79,14 +75,11 @@ static void *UIView_updateConstraintsBlock = &UIView_updateConstraintsBlock;
 
 static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 
-/* + (void)load {
-    if ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"5."]) {
-        return;
-    }
-    [self jr_swizzleMethod:@selector(initWithFrame:) withMethod:@selector(initWithFrame_swizzle_:) error:nil];
++ (void)load {
+    /* [self jr_swizzleMethod:@selector(initWithFrame:) withMethod:@selector(initWithFrame_swizzle_:) error:nil]; */
 }
 
-- (instancetype)initWithFrame_swizzle_:(CGRect)frame {
+/* - (instancetype)initWithFrame_swizzle_:(CGRect)frame {
     self = [self initWithFrame_swizzle_:frame];
     if (self) {
         self.exclusiveTouch = YES;
@@ -152,6 +145,28 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 
 - (void)removeAllSubviews {
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (UIView *)closestViewOfClass:(Class)clazz {
+    return [self closestViewOfClass:clazz includeSelf:NO];
+}
+
+- (UIView *)closestViewOfClass:(Class)clazz includeSelf:(BOOL)includeSelf {
+    if (![clazz isSubclassOfClass:[UIView class]]) {
+        return nil;
+    }
+    return (UIView *)[self findResponderWithBlock:^BOOL(UIResponder *responder, BOOL *stop) {
+        if ([responder isKindOfClass:[UIViewController class]]) {
+            *stop = YES;
+            return NO;
+        }
+        return ((includeSelf || responder != self)
+                && [responder isKindOfClass:clazz]);
+    }];
+}
+
+- (UIViewController *)closestViewController {
+    return (UIViewController *)[self closestResponderOfClass:[UIViewController class]];
 }
 
 - (NSString *)viewDescriptionWithIndent:(NSString *)indent {

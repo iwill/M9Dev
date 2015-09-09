@@ -9,6 +9,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "JRSwizzle.h"
+#import "NSObject+AssociatedObjects.h"
+#import "M9Utilities.h"
+#import "UIResponder+M9.h"
+
 static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     insets.top  = - CGRectGetMinY(fromRect) + CGRectGetMinY(toRect);
@@ -48,7 +53,11 @@ typedef void (^UIViewUpdateConstraintsBlock)();
 @property(nonatomic, readwrite, assign) UIEdgeInsets customBackgroundInsets;
 
 - (UIView *)subviewWithTag:(NSInteger)tag;
-- (void)removeAllSubviews;
+- (void)removeAllSubviews DEPRECATED_ATTRIBUTE;
+
+- (UIView *)closestViewOfClass:(Class)clazz; // NOT include self
+- (UIView *)closestViewOfClass:(Class)clazz includeSelf:(BOOL)includeSelf;
+- (UIViewController *)closestViewController;
 
 /**
  * iOS6 alternative method for
@@ -60,8 +69,8 @@ typedef void (^UIViewUpdateConstraintsBlock)();
  * returns 0.2
  *  @see +[UIView setAnimationDuration:]
  * BTW
- *  [CATransaction animationDuration] is 1/4s now
- *  [[UIApplication sharedApplication] statusBarOrientationAnimationDuration] is 0.3
+ *  [CATransaction animationDuration] defaults to 1/4s
+ *  [[UIApplication sharedApplication] statusBarOrientationAnimationDuration] defaults to 0.3
  */
 + (NSTimeInterval)animationDuration;
 /**
