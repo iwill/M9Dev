@@ -24,6 +24,7 @@
 /**
  *  better than CoreImage(too slow) and GPUImage(too large)
  *  @see http://blog.bubbly.net/2013/09/11/slick-tricks-for-ios-blur-effect/
+ *  @see https://github.com/kronik/DKLiveBlur
  *
  *  dispatch_queue_t queue = dispatch_queue_create("Blur queue", NULL);
  *  dispatch_async(queue, ^{
