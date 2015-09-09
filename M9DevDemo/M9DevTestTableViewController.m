@@ -17,6 +17,7 @@
 #import "TestPagingViewController.h"
 #import "TestActionViewController.h"
 #import "TestClosestAndAccessoryViewController.h"
+#import "TestCornerRadiusViewController.h"
 
 #import "JRSwizzle.h"
 
@@ -79,6 +80,7 @@
     self.tableView.rowHeight = 50;
     
     viewControllers = @[ [TestClosestAndAccessoryViewController new],
+                         [TestCornerRadiusViewController new],
                          [TestActionViewController new],
                          ({
                              UIViewController *vc = [TestPagingViewController new];

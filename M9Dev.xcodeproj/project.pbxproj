@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F07CE80CFC38A9413CC8739 /* libPods-M9Dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C40F5709482EB90422698E21 /* libPods-M9Dev.a */; };
 		60D9A2532435B9F0EB6F2351 /* libPods-M9DevTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD668994EC447AAC47A2B14 /* libPods-M9DevTests.a */; };
+		DF18B31F1BA001FB00CE10CB /* TestCornerRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */; };
 		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
@@ -115,6 +116,8 @@
 		8448D981CCB32F83BD81493F /* Pods-M9DevTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M9DevTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9DevTests/Pods-M9DevTests.debug.xcconfig"; sourceTree = "<group>"; };
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C40F5709482EB90422698E21 /* libPods-M9Dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-M9Dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF18B31D1BA001FB00CE10CB /* TestCornerRadiusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCornerRadiusViewController.h; sourceTree = "<group>"; };
+		DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCornerRadiusViewController.m; sourceTree = "<group>"; };
 		DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = M9Dev.bundle; sourceTree = "<group>"; };
 		DF2781171B9DB4F800E5E517 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
@@ -387,6 +390,8 @@
 				DFE66CC01B3AC59600124656 /* TestActionViewController.m */,
 				DF6D6BA61B9F160100259E6D /* TestClosestAndAccessoryViewController.h */,
 				DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */,
+				DF18B31D1BA001FB00CE10CB /* TestCornerRadiusViewController.h */,
+				DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */,
 				DFDF47FF1AFC965100F6E31C /* TestPagingViewController.h */,
 				DFDF48001AFC965100F6E31C /* TestPagingViewController.m */,
 				DFE66CC21B3D650500124656 /* VideosJSCollectionViewController+action.h */,
@@ -868,6 +873,7 @@
 				DFA871391B9C0A570040249B /* M9URLAction.m in Sources */,
 				DFA871141B9C0A570040249B /* UIImage+JS.m in Sources */,
 				DFA871311B9C0A570040249B /* UIColor+JS.m in Sources */,
+				DF18B31F1BA001FB00CE10CB /* TestCornerRadiusViewController.m in Sources */,
 				DFA8710B1B9C0A570040249B /* NSString+JS.m in Sources */,
 				DFA871201B9C0A570040249B /* M9PagingViewController.m in Sources */,
 				DFA871131B9C0A570040249B /* UIFont+JS.m in Sources */,
