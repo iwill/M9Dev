@@ -20,10 +20,12 @@
         for (NSInteger i = 0; i < 3; i++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100 * i + 10, 10, 80, 80)];
             imageView.image = [UIImage imageNamed:M9Dev_bundle_@"QING.png"];
+            
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 40;
-            imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.imageView.bounds].CGPath;
             imageView.layer.masksToBounds = YES;
+            imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.imageView.bounds].CGPath;
+            
             [self.contentView addSubview:imageView];
         }
     }
