@@ -28,12 +28,16 @@
             imageView.layer.cornerRadius = 40;
             imageView.layer.masksToBounds = YES;
             
-            /* // ???:
+            // ???:
+            // @see http://zsisme.gitbooks.io/ios-/content/chapter15/offscreen-rendering.html
             imageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.imageView.bounds
-                                                                    cornerRadius:imageView.layer.cornerRadius].CGPath; */
+                                                                    cornerRadius:imageView.layer.cornerRadius].CGPath;
             
+            /*
+            // @see http://stackoverflow.com/a/11049343/456536
+            // @see http://zsisme.gitbooks.io/ios-/content/chapter15/offscreen-rendering.html
             imageView.layer.shouldRasterize = YES;
-            imageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+            imageView.layer.rasterizationScale = [UIScreen mainScreen].scale; */
             
             [self.contentView addSubview:imageView];
         }
