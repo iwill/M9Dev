@@ -68,16 +68,18 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%lu-%lu", indexPath.section, indexPath.row];
     
     // !!!: this should be set in cell
-    /* cell.accessoryButton = ({
+    // A
+    cell.accessoryButton = ({
         UIButton *button = [UIButton new];
         [button setTitle:@"accessory >" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blueColor] forState:UIControlStateHighlighted];
         [button sizeToFit]
         _RETURN button;
-    }); */
+    });
     
-    // !!!: this should be set in cell
+    /*
+    // B
     cell.accessoryView = ({
         UIImage *image = [UIImage imageWithColor:[UIColor blackColor] size:CGSizeMake(100, 20)];
         UIImage *highlightedImage = [UIImage imageWithColor:[UIColor blueColor] size:image.size];
@@ -85,7 +87,7 @@
         imageView.userInteractionEnabled = YES;
         _RETURN imageView;
     });
-    [cell enableAccessoryView];
+    cell.accessoryViewEnabled = YES; */
     
     return cell;
 }
@@ -94,6 +96,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%@ - %@", NSStringFromSelector(_cmd),  indexPath);
+    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    // cell.accessoryViewEnabled = !cell.accessoryViewEnabled;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
