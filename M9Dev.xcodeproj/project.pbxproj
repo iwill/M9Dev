@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F07CE80CFC38A9413CC8739 /* libPods-M9Dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C40F5709482EB90422698E21 /* libPods-M9Dev.a */; };
 		60D9A2532435B9F0EB6F2351 /* libPods-M9DevTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD668994EC447AAC47A2B14 /* libPods-M9DevTests.a */; };
+		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
@@ -114,6 +115,7 @@
 		8448D981CCB32F83BD81493F /* Pods-M9DevTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M9DevTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-M9DevTests/Pods-M9DevTests.debug.xcconfig"; sourceTree = "<group>"; };
 		99F85B4578904FC4A7C2B0CB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C40F5709482EB90422698E21 /* libPods-M9Dev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-M9Dev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = M9Dev.bundle; sourceTree = "<group>"; };
 		DF2781171B9DB4F800E5E517 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			children = (
 				DF69D2561968513300B8C011 /* Libraries */,
 				DFA870961B9C0A560040249B /* M9Dev */,
+				DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */,
 				DF69D22A1967EA7E00B8C011 /* M9DevDemo */,
 				DF69D2431967EA7F00B8C011 /* M9DevTests */,
 				DFF233A919B85B060045FDCE /* Resources */,
@@ -767,6 +770,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF69D22F1967EA7E00B8C011 /* InfoPlist.strings in Resources */,
+				DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */,
 				DF69D2371967EA7F00B8C011 /* Images.xcassets in Resources */,
 				DFF233AB19B85B140045FDCE /* jslayout in Resources */,
 			);
