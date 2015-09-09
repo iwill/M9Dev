@@ -14,6 +14,8 @@
 
 @interface UITableViewCell (M9AccessoryButton)
 
+// TODO: MingLQ - A or B
+
 // A: set self.accessoryView with a UIButton
 @property (nonatomic, strong) UIButton *accessoryButton;
 
