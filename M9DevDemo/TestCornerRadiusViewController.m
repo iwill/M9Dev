@@ -8,6 +8,8 @@
 
 #import "TestCornerRadiusViewController.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
+
 @interface TestCornerRadiusTableViewCell : UITableViewCell
 
 @end
@@ -19,12 +21,19 @@
     if (self) {
         for (NSInteger i = 0; i < 3; i++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100 * i + 10, 10, 80, 80)];
-            imageView.image = [UIImage imageNamed:M9Dev_bundle_@"QING.png"];
+            // imageView.image = [UIImage imageNamed:M9Dev_bundle_@"QING.png"];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:@"https://s.yimg.com/uy/build/images/sohp/backgrounds/bottom5.jpg"]];
             
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.cornerRadius = 40;
             imageView.layer.masksToBounds = YES;
-            imageView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.imageView.bounds].CGPath;
+            
+            /* // ???:
+            imageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.imageView.bounds
+                                                                    cornerRadius:imageView.layer.cornerRadius].CGPath; */
+            
+            imageView.layer.shouldRasterize = YES;
+            imageView.layer.rasterizationScale = [UIScreen mainScreen].scale;
             
             [self.contentView addSubview:imageView];
         }
