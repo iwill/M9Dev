@@ -9,7 +9,6 @@
 
 #import "M9Utilities.h"
 
-
 @implementation NSObject (ReturnSelfIf)
 
 - (id)if:(BOOL)condition {
@@ -60,10 +59,26 @@
 
 @end
 
+#pragma mark -
+
+@implementation UIImage (M9DevBundle)
+
++ (UIImage *)imageNamedInM9DevBundle:(NSString *)name {
+    /* !!!: iOS8 ONLY
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"M9Dev" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    UITraitCollection *traitCollection = [UITraitCollection traitCollectionWithDisplayScale:[UIScreen mainScreen].scale];
+    return [UIImage imageNamed:name inBundle:bundle compatibleWithTraitCollection:traitCollection]; */
+    
+    return [self imageNamed:[NSString stringWithFormat:M9Dev_bundle_"%@", name]];
+}
+
+@end
+
+#pragma mark -
 
 /**
  * custom NSLog
  */
 
 void __NO_NSLog__(NSString *format, ...) {}
-
