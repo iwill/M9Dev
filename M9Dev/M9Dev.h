@@ -23,6 +23,7 @@
 #import "metamacros+M9.h"
 #import "JRSwizzle.h"
 
+#import "M9AlertController.h"
 #import "M9PagingViewController.h"
 #import "M9ScrollViewController.h"
 #import "M9Utilities.h"

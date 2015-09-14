@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import "M9Dev.h"
 #import "M9Utilities.h"
 #import "M9Networking.h"
 

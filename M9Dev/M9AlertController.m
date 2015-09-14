@@ -46,6 +46,18 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
     [self dismissViewControllerAnimated:flag completion:completion];
 }
 
+- (UIAlertController *)asUIAlertController {
+    return [self as:[UIAlertController class]];
+}
+
+- (UIAlertView *)asUIAlertView {
+    return [self as:[UIAlertView class]];
+}
+
+- (UIActionSheet *)asUIActionSheet {
+    return [self as:[UIActionSheet class]];
+}
+
 @end
 
 #pragma mark -
@@ -188,6 +200,18 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     }
 }
 
+- (UIAlertController *)asUIAlertController {
+    return [self as:NSClassFromString(@"UIAlertController")];
+}
+
+- (UIAlertView *)asUIAlertView {
+    return [self as:[UIAlertView class]];
+}
+
+- (UIActionSheet *)asUIActionSheet {
+    return [self as:[UIActionSheet class]];
+}
+
 @end
 
 #pragma mark -
@@ -272,6 +296,18 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     }
 }
 
+- (UIAlertController *)asUIAlertController {
+    return [self as:NSClassFromString(@"UIAlertController")];
+}
+
+- (UIAlertView *)asUIAlertView {
+    return [self as:[UIAlertView class]];
+}
+
+- (UIActionSheet *)asUIActionSheet {
+    return [self as:[UIActionSheet class]];
+}
+
 @end
 
 
@@ -321,6 +357,21 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion {
     [self doesNotRecognizeSelector:_cmd];
+}
+
+- (UIAlertController *)asUIAlertController {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
+- (UIAlertView *)asUIAlertView {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
+
+- (UIActionSheet *)asUIActionSheet {
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 @end
