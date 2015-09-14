@@ -9,7 +9,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <M9Dev/M9Dev.h>
+
+#import "M9Utilities.h"
+#import "NSArray+M9.h"
+#import "NSObject+AssociatedValues.h"
 
 typedef NS_ENUM(NSInteger, M9AlertActionStyle) {
     M9AlertActionStyleDefault = 0,
@@ -48,6 +51,10 @@ typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
 
 - (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion;
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion;
+
+- (UIAlertController *)asUIAlertController NS_AVAILABLE_IOS(8_0);
+- (UIAlertView *)asUIAlertView NS_DEPRECATED_IOS(6_0, 8_0);
+- (UIActionSheet *)asUIActionSheet NS_DEPRECATED_IOS(6_0, 8_0);
 
 @end
 
