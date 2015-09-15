@@ -65,7 +65,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%lu-%lu", indexPath.section, indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, indexPath.row];
     
     // !!!: this should be set in cell
     {
