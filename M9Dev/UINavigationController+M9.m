@@ -95,14 +95,6 @@
     return poppedViewControllers;
 }
 
-- (UIViewController *)popViewControllerAnimated {
-    return [self popViewControllerAnimated:YES];
-}
-
-- (UIViewController *)popViewControllerNonAnimated {
-    return [self popViewControllerAnimated:NO];
-}
-
 - (BOOL)shouldAutorotate {
     return YES;
 }
@@ -238,14 +230,6 @@
 
 - (UINavigationController *)wrapWithNavigationController {
     return [UINavigationController navigationControllerWithRootViewController:self];
-}
-
-- (UIViewController *)popFromNavigationControllerAnimated {
-    return [self.navigationController popViewControllerAnimated];
-}
-
-- (UIViewController *)popFromNavigationControllerNonAnimated {
-    return [self.navigationController popViewControllerNonAnimated];
 }
 
 @end
