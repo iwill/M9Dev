@@ -61,12 +61,12 @@
     }];
 }
 
-- (void)dismissViewControllerAnimated {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (UIViewController *)popViewControllerAnimated {
+    return [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)dismissViewControllerNonAnimated {
-    [self dismissViewControllerAnimated:NO completion:nil];
+- (void)dismissViewControllerAnimated {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)addChildViewController:(UIViewController *)childViewController superview:(UIView *)superview {

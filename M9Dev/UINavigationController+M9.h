@@ -22,10 +22,6 @@
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
-// for @selector(popViewController<#Animated#>/<#NonAnimated#>)
-- (UIViewController *)popViewControllerAnimated;
-- (UIViewController *)popViewControllerNonAnimated;
-
 @end
 
 #pragma mark -
@@ -34,9 +30,6 @@
 
 // !!!: @see - [UINavigationController navigationControllerWithRootViewController:self];
 - (UINavigationController *)wrapWithNavigationController;
-
-- (UIViewController *)popFromNavigationControllerAnimated;
-- (UIViewController *)popFromNavigationControllerNonAnimated;
 
 @end
 

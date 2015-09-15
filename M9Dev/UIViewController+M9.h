@@ -24,9 +24,11 @@
 + (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
-// for @selector(dismissViewController<#Animated#>/<#NonAnimated#>)
+// for @selector(popViewControllerAnimated)
+- (UIViewController *)popViewControllerAnimated;
+
+// for @selector(dismissViewControllerAnimated)
 - (void)dismissViewControllerAnimated;
-- (void)dismissViewControllerNonAnimated;
 
 /**
  *  Adding and Removing a Child
