@@ -22,7 +22,7 @@
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
-// for performSelector:@selector(popViewController<#Animated#>/<#NonAnimated#>)
+// for @selector(popViewController<#Animated#>/<#NonAnimated#>)
 - (UIViewController *)popViewControllerAnimated;
 - (UIViewController *)popViewControllerNonAnimated;
 

@@ -61,6 +61,14 @@
     }];
 }
 
+- (void)dismissViewControllerAnimated {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dismissViewControllerNonAnimated {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
 - (void)addChildViewController:(UIViewController *)childViewController superview:(UIView *)superview {
     /* The addChildViewController: method automatically calls the willMoveToParentViewController: method
      * of the view controller to be added as a child before adding it.
