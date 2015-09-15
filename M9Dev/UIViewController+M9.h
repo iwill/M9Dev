@@ -24,6 +24,10 @@
 + (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
 
+// for @selector(dismissViewController<#Animated#>/<#NonAnimated#>)
+- (void)dismissViewControllerAnimated;
+- (void)dismissViewControllerNonAnimated;
+
 /**
  *  Adding and Removing a Child
  *  @see xcdoc://?url=developer.apple.com/library/etc/redirect/xcode/ios/1048/featuredarticles/ViewControllerPGforiPhoneOS/CreatingCustomContainerViewControllers/CreatingCustomContainerViewControllers.html
