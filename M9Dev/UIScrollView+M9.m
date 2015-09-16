@@ -54,15 +54,4 @@
     }
 }
 
-- (BOOL)isPullingDownToReload {
-    if (!self.dragging) {
-        return NO;
-    }
-    return [self bouncingOffsetY] < 0.0;
-}
-
-- (BOOL)isScrollingUpToLoadMore {
-    return [self bouncingOffsetY] > 0.0;
-}
-
 @end
