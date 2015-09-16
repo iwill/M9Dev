@@ -20,6 +20,6 @@
  */
 - (CGFloat)bouncingOffsetY;
 - (BOOL)isPullingDownToReload;
-- (BOOL)isScrollingDownToReload;
+- (BOOL)isScrollingUpToLoadMore;
 
 @end
