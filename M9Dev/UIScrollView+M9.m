@@ -61,7 +61,7 @@
     return [self bouncingOffsetY] < 0.0;
 }
 
-- (BOOL)isScrollingDownToReload {
+- (BOOL)isScrollingUpToLoadMore {
     return [self bouncingOffsetY] > 0.0;
 }
 
