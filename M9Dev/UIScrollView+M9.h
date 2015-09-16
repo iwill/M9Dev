@@ -14,12 +14,16 @@
 - (BOOL)scrolledToTheBottomEdge;
 
 /**
- *  pulling down to reload: bouncingOffsetY < 0
- *  scrolling up to load more: bouncingOffsetY > 0
- *  otherwise: bouncingOffsetY == 0
+ *  if (dragging && bouncingOffsetY < 0) {
+ *      // pulling down to reload
+ *  }
+ *  else if (bouncingOffsetY > 0) {
+ *      // scrolling up to load more
+ *  }
+ *  else {
+ *      // not bouncing
+ *  }
  */
 - (CGFloat)bouncingOffsetY;
-- (BOOL)isPullingDownToReload;
-- (BOOL)isScrollingUpToLoadMore;
 
 @end
