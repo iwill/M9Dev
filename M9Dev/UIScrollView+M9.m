@@ -35,17 +35,17 @@
     CGFloat bottomOffset = contentOffset + viewHeight - bottom - contentHeight;
     
     if (topOffset < 0.0) {
-        NSLog(@"topOffset: %f", topOffset);
+        // NSLog(@"topOffset: %f", topOffset);
         return topOffset;
     }
     else if (topOffset > 0 && bottomOffset >= 0) {
         CGFloat minContentHeight = top + viewHeight + bottom;
         if (contentHeight < minContentHeight) {
-            NSLog(@"bottomOffset: %f", topOffset);
+            // NSLog(@"bottomOffset: %f", topOffset);
             return topOffset;
         }
         else {
-            NSLog(@"bottomOffset: %f", bottomOffset);
+            // NSLog(@"bottomOffset: %f", bottomOffset);
             return bottomOffset;
         }
     }
