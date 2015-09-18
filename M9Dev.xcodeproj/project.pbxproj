@@ -13,6 +13,7 @@
 		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
 		DF34A3E71BAC58EE00F6AF06 /* FreeTeestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTeestViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; settings = {ASSET_TAGS = (); }; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
 		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
@@ -125,6 +126,7 @@
 		DF2781171B9DB4F800E5E517 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DF34A3E51BAC58EE00F6AF06 /* FreeTeestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeTeestViewController.h; sourceTree = "<group>"; };
 		DF34A3E61BAC58EE00F6AF06 /* FreeTeestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTeestViewController.m; sourceTree = "<group>"; };
+		DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
 		DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				DF96C5281B799A4E006DF4EA /* EXTScope.h */,
+				DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */,
 				DF96C5291B799A4E006DF4EA /* metamacros.h */,
 				DF96C52A1B799A4E006DF4EA /* readme.md */,
 			);
@@ -933,6 +936,7 @@
 				DFA871101B9C0A570040249B /* UICollectionViewCell+JS.m in Sources */,
 				DFA8710F1B9C0A570040249B /* NSObject+JS.m in Sources */,
 				DFA8712C1B9C0A570040249B /* NSString+M9.m in Sources */,
+				DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */,
 				DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */,
 				DFA871281B9C0A570040249B /* NSDate+M9.m in Sources */,
 				DFA8712B1B9C0A570040249B /* NSObject+AssociatedValues.m in Sources */,
