@@ -13,6 +13,7 @@
 		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
+		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
 		DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2281967EA7E00B8C011 /* UIKit.framework */; };
@@ -123,6 +124,7 @@
 		DF2781171B9DB4F800E5E517 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
+		DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		DF69D2211967EA7E00B8C011 /* M9Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M9Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF69D2241967EA7E00B8C011 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -412,10 +414,11 @@
 		DF69D22B1967EA7E00B8C011 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DF69D22C1967EA7E00B8C011 /* M9Dev-Info.plist */,
 				DF69D22D1967EA7E00B8C011 /* InfoPlist.strings */,
-				DF69D2301967EA7E00B8C011 /* main.m */,
+				DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */,
+				DF69D22C1967EA7E00B8C011 /* M9Dev-Info.plist */,
 				DF69D2321967EA7E00B8C011 /* M9Dev-Prefix.pch */,
+				DF69D2301967EA7E00B8C011 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -779,6 +782,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */,
 				DF69D22F1967EA7E00B8C011 /* InfoPlist.strings in Resources */,
 				DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */,
 				DF69D2371967EA7F00B8C011 /* Images.xcassets in Resources */,
@@ -1015,7 +1019,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1048,7 +1052,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1060,7 +1064,6 @@
 			baseConfigurationReference = DFFA08C21A135AD7003168E1 /* Pods-M9Dev.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/M9DevDemo/M9Dev-Info.plist";
@@ -1076,7 +1079,6 @@
 			baseConfigurationReference = DFFA08C31A135AD7003168E1 /* Pods-M9Dev.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/M9DevDemo/M9Dev-Info.plist";
@@ -1092,10 +1094,6 @@
 			baseConfigurationReference = 8448D981CCB32F83BD81493F /* Pods-M9DevTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1115,10 +1113,6 @@
 			baseConfigurationReference = 22F1125B55E062DE6BB5DCA7 /* Pods-M9DevTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9DevTests/M9DevTests-Info.plist";
