@@ -40,9 +40,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        weakify(self);
+        @weakify(self);
         self.afterwards = ^id<M9Thenable> (M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
-            strongify(self);
+            @strongify(self);
             return [self then:fulfillCallback fail:rejectCallback];
         };
     }

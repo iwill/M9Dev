@@ -112,10 +112,10 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
         return requestRef;
     }
     
-    weakify(self);
+    @weakify(self);
     [self loadCachedResponseWithRequest:request callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
      { @synchronized(requestRef) {
-        strongify(self);
+        @strongify(self);
         if (requestRef.isCancelled) {
             return;
         }
@@ -219,11 +219,11 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     request.timeoutInterval = config.timeoutInterval;
     
     // callback
-    weakify(self);
+    @weakify(self);
     AFHTTPRequestOperation *requestOperation = ({
         _RETURN [_AFN HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
          { @synchronized(requestRef) {
-            // strongify(self);
+            // @strongify(self);
             if (requestRef.isCancelled) {
                 return;
             }
@@ -237,7 +237,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
             [requestRef.owner removeRequestRef:requestRef];
         }} failure:^(AFHTTPRequestOperation *operation, NSError *error)
          { @synchronized(requestRef) {
-            strongify(self);
+            @strongify(self);
             if (requestRef.isCancelled) {
                 return;
             }
@@ -249,7 +249,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
             if (config.useCachedDataWhenFailure) {
                 [self loadCachedResponseWithRequest:request callback:^(AFHTTPRequestOperation *operation, id responseObject, BOOL expired)
                  { @synchronized(requestRef) {
-                    // strongify(self);
+                    // @strongify(self);
                     if (requestRef.isCancelled) {
                         return;
                     }
@@ -325,7 +325,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     if (!callback) {
         return;
     }
-    // weakify(self);
+    // @weakify(self);
     [[TMCache sharedCache] objectForKey:[[request URL] absoluteString] block:^(TMCache *cache, NSString *key, id object) {
         AFHTTPRequestOperation *cachedOperation = nil;
         id responseObject = nil;

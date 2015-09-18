@@ -19,9 +19,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        weakify(self);
+        @weakify(self);
         [super setSuccess:^(id<M9ResponseInfo> responseInfo, id responseObject) {
-            strongify(self);
+            @strongify(self);
             if ([self.delegate respondsToSelector:self.successSelector]) {
                 M9RequestInfo *requestInfo = self;
                 /* NOTE:
@@ -32,7 +32,7 @@
             }
         }];
         [super setFailure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
-            strongify(self);
+            @strongify(self);
             if ([self.delegate respondsToSelector:self.failureSelector]) {
                 M9RequestInfo *requestInfo = self;
                 [self.delegate invokeWithSelector:self.failureSelector arguments:&requestInfo, &responseInfo, &error];
@@ -76,9 +76,9 @@
 @implementation M9RequestInfoCallbackExt
 
 - (void)setSuccessWithCustomCallback:(void (^)(id<M9ResponseInfo> responseInfo, NSArray *data))success {
-    weakify(self);
+    @weakify(self);
     self.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        strongify(self);
+        @strongify(self);
         NSDictionary *dataDict = [responseObject as:[NSDictionary class]];
         if (dataDict) {
             if (success) {

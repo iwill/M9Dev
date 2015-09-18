@@ -56,9 +56,9 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.text = NSStringFromValue(page + 1);
         [viewController.view addSubview:label];
-        weakify(viewController);
+        @weakify(viewController);
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
-            strongify(viewController);
+            @strongify(viewController);
             make.edges.equalTo(viewController.view).with.insets(UIEdgeInsetsMake(2, 2, - 2, 2));
         }];
         

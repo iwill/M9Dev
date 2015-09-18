@@ -51,25 +51,25 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 - (instancetype)initWithBlock:(M9PromiseBlock)block {
     self = [super init];
     if (self) {
-        weakify(self);
+        @weakify(self);
         
         _afterwards = ^M9Promise *(M9ThenableCallback fulfillCallback, M9ThenableCallback rejectCallback) {
-            strongify(self);
+            @strongify(self);
             return [self then:fulfillCallback fail:rejectCallback];
         };
         
         _then = ^M9Promise *(M9ThenableCallback fulfillCallback) {
-            strongify(self);
+            @strongify(self);
             return [self then:fulfillCallback];
         };
         
         _fail = ^M9Promise *(M9ThenableCallback rejectCallback) {
-            strongify(self);
+            @strongify(self);
             return [self fail:rejectCallback];
         };
         
         _always = ^M9Promise *(M9ThenableCallback callback) {
-            strongify(self);
+            @strongify(self);
             return [self then:callback fail:callback];
         };
         
@@ -123,9 +123,9 @@ typedef NS_ENUM(NSInteger, M9PromiseState) {
 #pragma mark oc-style
 
 - (instancetype)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
-    weakify(self);
+    @weakify(self);
     return [M9Promise when:^(M9PromiseCallback nextFulfill, M9PromiseCallback nextReject) {
-        strongify(self);
+        @strongify(self);
         [self handle:[M9Deferred deferred:fulfillCallback :rejectCallback :nextFulfill :nextReject]];
     }];
 }

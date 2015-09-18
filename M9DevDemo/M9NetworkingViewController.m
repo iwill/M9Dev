@@ -131,18 +131,18 @@
         button.enabled = NO; // start loading
     }
     
-    weakify(button);
+    @weakify(button);
     [M9NETWORKING GET:testURLString
            parameters:@{ @"a": @1, @"b": @[ @1, @2 ], @"c": @{ @"x": @1, @"y": @2, @"z": @[ @1, @2 ] } }
               success:^(id<M9ResponseInfo> responseInfo, id responseObject) {
                   NSLog(@"success: %@", responseObject);
-                  strongify(button);
+                  @strongify(button);
                   button.enabled = YES; // stop loading
                   button.selected = YES; // alert result
                   [button setTitle:@"success" forState:UIControlStateSelected];
               } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
                   NSLog(@"failure: %@", error);
-                  strongify(button);
+                  @strongify(button);
                   button.enabled = YES; // stop loading
                   button.selected = YES; // alert result
                   [button setTitle:@"failure" forState:UIControlStateSelected];
@@ -166,7 +166,7 @@
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
-    weakify(requestInfo, button);
+    @weakify(requestInfo, button);
     requestInfo.parsing = ^id(id<M9ResponseInfo> responseInfo, id responseObject, NSError **error) {
         NSLog(@"parsing: %@", responseObject);
         *error = nil;
@@ -177,7 +177,7 @@
         return responseDictionary;
     };
     requestInfo.success = ^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        strongify(requestInfo, button);
+        @strongify(requestInfo, button);
         if (![responseObject count]) {
             requestInfo.failure((id<M9ResponseInfo>)requestInfo, nil);
             return;
@@ -188,7 +188,7 @@
         [button setTitle:@"success" forState:UIControlStateSelected];
     };
     requestInfo.failure = ^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        strongify(button);
+        @strongify(button);
         NSLog(@"failure: %@", error);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
@@ -211,17 +211,17 @@
     requestInfo.URLString = testURLString;
     requestInfo.parameters = @{ @"x": @1, @"y": @2 };
     
-    weakify(button);
+    @weakify(button);
     [requestInfo setSuccessWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSArray *dataList) {
         NSLog(@"M9RequestInfoCallbackExt: %@", dataList);
-        strongify(button);
+        @strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"success" forState:UIControlStateSelected];
     }];
     [requestInfo setFailureWithCustomCallback:^(id<M9ResponseInfo> responseInfo, NSString *errorMessage) {
         NSLog(@"M9RequestInfoCallbackExt: %@", errorMessage);
-        strongify(button);
+        @strongify(button);
         button.enabled = YES; // stop loading
         button.selected = YES; // alert result
         [button setTitle:@"failure" forState:UIControlStateSelected];

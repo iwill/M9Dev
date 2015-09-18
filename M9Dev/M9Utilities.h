@@ -113,20 +113,21 @@
 /* strongify var, and call $statements if $var is not nil
  */
 #define strongifyAnd($var, $statements) \
-    strongify($var); \
+    @strongify($var); \
     if ($var) { \
         $statements \
     }
 /* strongify var, or call $statements if $var is nil
  */
 #define strongifyOr($var, $statements) \
-    strongify($var); \
+    @strongify($var); \
     if (!$var) { \
         $statements \
     }
-#define defineWeak(...) weakify(__VA_ARGS__)
+
+#define defineWeak(...) @weakify(__VA_ARGS__)
 #define ifNotStrong(...) \
-    strongify(__VA_ARGS__) \
+    @strongify(__VA_ARGS__) \
     NSArray *array = nil; \
     @try { array = @[ __VA_ARGS__ ]; } @catch (NSException *exception) {} \
     if (!array)

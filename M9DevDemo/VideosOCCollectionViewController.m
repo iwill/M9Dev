@@ -186,13 +186,13 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
     
     [nextLayout invalidateLayout];
     
-    weakify(self);
+    @weakify(self);
     [self.collectionView performBatchUpdates:^{
-        strongify(self);
+        @strongify(self);
         [self.collectionView setCollectionViewLayout:nextLayout animated:YES];
         [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
     } completion:^(BOOL finished) {
-        strongify(self);
+        @strongify(self);
         NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
         if ([indexPaths count]) {
             [self.collectionView reloadItemsAtIndexPaths:indexPaths];
@@ -223,9 +223,9 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
                                 @"page_size":   @30 };
     requestInfo.owner = self;
     
-    weakify(requestInfo);
+    @weakify(requestInfo);
     [requestInfo setSuccess:^(id<M9ResponseInfo> responseInfo, id responseObject) {
-        strongify(requestInfo);
+        @strongify(requestInfo);
         
         NSDictionary *data = [[responseObject as:[NSDictionary class]] dictionaryForKey:@"data"];
         NSArray *videos = [data arrayForKey:@"videos"];
@@ -243,7 +243,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
         
         [self stopLoading];
     } failure:^(id<M9ResponseInfo> responseInfo, NSError *error) {
-        // strongify(requestInfo);
+        // @strongify(requestInfo);
         
         NSLog(@"page %ld: %@", (unsigned long)page, error);
         
