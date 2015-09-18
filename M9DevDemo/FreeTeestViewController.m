@@ -43,7 +43,7 @@ static const CGFloat margin = 10, height = 44;
     }
     
     {
-        button = [self addButtonWithTitle:@"test ifNotStrong nil" nextTo:button];
+        button = [self addButtonWithTitle:@"test ifNotStrong(nil)" nextTo:button];
         id nill = nil;
         defineWeak(self, button, nill);
         [button addEventCallback:^(id sender) {
