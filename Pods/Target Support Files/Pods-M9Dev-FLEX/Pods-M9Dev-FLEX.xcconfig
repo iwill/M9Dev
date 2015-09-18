@@ -1,1 +1,0 @@
-PODS_M_DEV_FLEX_OTHER_LDFLAGS = -l"z" -framework "CoreGraphics"

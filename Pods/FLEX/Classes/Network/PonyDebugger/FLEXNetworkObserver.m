@@ -352,14 +352,19 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        Class class = [NSURLSessionTask class];
+        // In iOS 7 resume lives in __NSCFLocalSessionTask
+        // In iOS 8 resume lives in NSURLSessionTask
+        // In iOS 9 resume lives in __NSCFURLSessionTask
+        Class class = Nil;
+        if (![[NSProcessInfo processInfo] respondsToSelector:@selector(operatingSystemVersion)]) {
+            class = NSClassFromString([@[@"__", @"NSC", @"FLocalS", @"ession", @"Task"] componentsJoinedByString:@""]);
+        } else if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion < 9) {
+            class = [NSURLSessionTask class];
+        } else {
+            class = NSClassFromString([@[@"__", @"NSC", @"FURLS", @"ession", @"Task"] componentsJoinedByString:@""]);
+        }
         SEL selector = @selector(resume);
         SEL swizzledSelector = [self swizzledSelectorForSelector:selector];
-
-        if ([self instanceRespondsButDoesNotImplementSelector:selector class:class]) {
-            // Dummy NSURLSessionTask to get the actual class, needed for iOS 7 (__NSCFURLSessionTask)
-            class = [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:@"about:blank"]] superclass];
-        }
 
         Method originalResume = class_getInstanceMethod(class, selector);
 
@@ -465,7 +470,6 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
 
         // The method signatures here are close enough that we can use the same logic to inject into all of them.
         const SEL selectors[] = {
-            @selector(dataTaskWithHTTPGetRequest:completionHandler:),
             @selector(dataTaskWithRequest:completionHandler:),
             @selector(dataTaskWithURL:completionHandler:),
             @selector(downloadTaskWithRequest:completionHandler:),
@@ -868,8 +872,6 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask delegate:(id <NSU
     Method method = class_getInstanceMethod(cls, selector);
     struct objc_method_description methodDescription = *method_getDescription(method);
 
-    typedef void (^NSURLSessionTaskDidCompleteWithErrorBlock)(id slf, SEL sel);
-
     BOOL (^undefinedBlock)(id <NSURLSessionTaskDelegate>, SEL) = ^(id slf, SEL sel) {
         return YES;
     };
@@ -1154,7 +1156,8 @@ static char const * const kFLEXRequestIDKey = "kFLEXRequestIDKey";
         FLEXInternalRequestState *requestState = [self requestStateForRequestID:requestID];
 
         if (!requestState.dataAccumulator) {
-            requestState.dataAccumulator = [[NSMutableData alloc] initWithCapacity:(NSUInteger)totalBytesExpectedToWrite];
+            NSUInteger unsignedBytesExpectedToWrite = totalBytesExpectedToWrite > 0 ? (NSUInteger)totalBytesExpectedToWrite : 0;
+            requestState.dataAccumulator = [[NSMutableData alloc] initWithCapacity:unsignedBytesExpectedToWrite];
             [[FLEXNetworkRecorder defaultRecorder] recordResponseReceivedWithRequestID:requestID response:downloadTask.response];
 
             NSString *requestMechanism = [NSString stringWithFormat:@"NSURLSessionDownloadTask (delegate: %@)", [delegate class]];

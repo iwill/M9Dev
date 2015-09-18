@@ -748,7 +748,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = M9;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "MingLQ <minglq.9@gmail.com>";
 				TargetAttributes = {
 					DF69D23B1967EA7F00B8C011 = {
@@ -1000,6 +1000,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1063,6 +1064,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/M9DevDemo/M9Dev-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "im.iwill.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1078,6 +1080,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/M9DevDemo/M9Dev-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "im.iwill.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1090,7 +1093,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
@@ -1101,6 +1103,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "M9DevTests/M9DevTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "im.iwill.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1113,13 +1116,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/M9Dev.app/M9Dev";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "M9DevDemo/M9Dev-Prefix.pch";
 				INFOPLIST_FILE = "M9DevTests/M9DevTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "im.iwill.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

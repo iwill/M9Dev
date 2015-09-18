@@ -1,1 +1,0 @@
-PODS_M_DEV_TMCACHE_OTHER_LDFLAGS = -framework "Foundation" -weak_framework "UIKit"
