@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 
 /**
  *  Bring ARC weak ref to MRC code.

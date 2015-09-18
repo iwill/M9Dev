@@ -158,8 +158,8 @@
 		DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClosestAndAccessoryViewController.m; sourceTree = "<group>"; };
 		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
 		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
-		DF96C5281B799A4E006DF4EA /* EXTScope+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EXTScope+M9.h"; sourceTree = "<group>"; };
-		DF96C5291B799A4E006DF4EA /* metamacros+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "metamacros+M9.h"; sourceTree = "<group>"; };
+		DF96C5281B799A4E006DF4EA /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		DF96C5291B799A4E006DF4EA /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		DF96C52A1B799A4E006DF4EA /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		DFA870971B9C0A560040249B /* ARCWeakRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCWeakRef.h; sourceTree = "<group>"; };
 		DFA870981B9C0A560040249B /* ARCWeakRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCWeakRef.m; sourceTree = "<group>"; };
@@ -483,8 +483,8 @@
 		DF96C5271B799A4E006DF4EA /* extobjc */ = {
 			isa = PBXGroup;
 			children = (
-				DF96C5281B799A4E006DF4EA /* EXTScope+M9.h */,
-				DF96C5291B799A4E006DF4EA /* metamacros+M9.h */,
+				DF96C5281B799A4E006DF4EA /* EXTScope.h */,
+				DF96C5291B799A4E006DF4EA /* metamacros.h */,
 				DF96C52A1B799A4E006DF4EA /* readme.md */,
 			);
 			path = extobjc;

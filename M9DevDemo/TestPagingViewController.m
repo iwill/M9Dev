@@ -8,7 +8,7 @@
 
 #import "TestPagingViewController.h"
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 
 @interface TestPagingViewController ()
 

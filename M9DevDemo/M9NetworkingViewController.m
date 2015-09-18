@@ -8,7 +8,7 @@
 
 #import "M9NetworkingViewController.h"
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 #import "M9Utilities.h"
 #import "NSInvocation+M9.h"
 #import "M9Networking.h"

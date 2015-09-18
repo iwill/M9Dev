@@ -23,7 +23,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import <TMCache/TMCache.h>
 #import "NSDate+RFC1123.h"
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 
 #import "NSDictionary+M9.h"
 #import "NSDate+M9.h"

@@ -8,7 +8,7 @@
 
 #import "VideosJSCollectionViewController.h"
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 #import "M9Utilities.h"

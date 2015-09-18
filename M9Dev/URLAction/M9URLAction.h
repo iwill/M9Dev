@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 #import "M9Utilities.h"
 #import "UIViewController+M9.h"
 

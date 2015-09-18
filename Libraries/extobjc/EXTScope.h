@@ -1,5 +1,5 @@
 //
-//  EXTScope+M9.h
+//  EXTScope.h
 //  extobjc
 //
 //  Created by Justin Spahr-Summers on 2011-05-04.
@@ -10,7 +10,7 @@
 #ifndef EXTC_EXTSCOPE_H
 #define EXTC_EXTSCOPE_H
 
-#import "metamacros+M9.h"
+#import "metamacros.h"
 
 /**
  * Creates \c __weak shadow variables for each of the variables provided as

@@ -11,7 +11,7 @@
 
 #import "M9Promise.h"
 
-#import "EXTScope+M9.h"
+#import "EXTScope.h"
 
 /**
  * M9Thenable

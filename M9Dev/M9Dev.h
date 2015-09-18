@@ -22,8 +22,8 @@
 /* third part */
 #import "NSObject+AssociatedObjects.h"
 #import "NSString+CompareToVersion.h"
-#import "EXTScope+M9.h"
-#import "metamacros+M9.h"
+#import "metamacros.h"
+#import "EXTScope.h"
 #import "JRSwizzle.h"
 
 /* Foundation */
