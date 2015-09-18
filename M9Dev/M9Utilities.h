@@ -107,24 +107,8 @@
 
 
 /**
- * strongify with block
+ * defineWeak & ifNotStrong
  */
-
-/* strongify var, and call $statements if $var is not nil
- */
-#define strongifyAnd($var, $statements) \
-    @strongify($var); \
-    if ($var) { \
-        $statements \
-    }
-/* strongify var, or call $statements if $var is nil
- */
-#define strongifyOr($var, $statements) \
-    @strongify($var); \
-    if (!$var) { \
-        $statements \
-    }
-
 #define defineWeak(...) @weakify(__VA_ARGS__)
 #define ifNotStrong(...) \
     @strongify(__VA_ARGS__) \
