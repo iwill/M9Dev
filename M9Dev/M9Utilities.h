@@ -124,6 +124,12 @@
     if (!$var) { \
         $statements \
     }
+#define defineWeak(...) weakify(__VA_ARGS__)
+#define ifNotStrong(...) \
+    strongify(__VA_ARGS__) \
+    NSArray *array = nil; \
+    @try { array = @[ __VA_ARGS__ ]; } @catch (NSException *exception) {} \
+    if (!array)
 
 
 /**
