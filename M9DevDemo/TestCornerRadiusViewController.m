@@ -29,7 +29,10 @@
             imageView.layer.masksToBounds = YES;
             
             // ???:
-            // @see http://zsisme.gitbooks.io/ios-/content/chapter15/offscreen-rendering.html
+            // @see
+            //  http://stackoverflow.com/questions/17593524/using-cornerradius-on-a-uiimageview-in-a-uitableviewcell
+            //  http://articles.cocoahope.com/blog/2013/03/06/applying-rounded-corners
+            //  http://zsisme.gitbooks.io/ios-/content/chapter15/offscreen-rendering.html
             imageView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.imageView.bounds
                                                                     cornerRadius:imageView.layer.cornerRadius].CGPath;
             

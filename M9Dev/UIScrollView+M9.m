@@ -28,11 +28,11 @@
     CGFloat top = self.contentInset.top;
     CGFloat bottom = self.contentInset.bottom;
     CGFloat viewHeight = CGRectGetHeight(self.frame);
-    CGFloat contentOffset = self.contentOffset.y;
+    CGFloat contentOffsetY = self.contentOffset.y;
     CGFloat contentHeight = self.contentSize.height;
     
-    CGFloat topOffset = contentOffset + top;
-    CGFloat bottomOffset = contentOffset + viewHeight - bottom - contentHeight;
+    CGFloat topOffset = contentOffsetY + top;
+    CGFloat bottomOffset = contentOffsetY + viewHeight - bottom - contentHeight;
     
     if (topOffset < 0.0) {
         // NSLog(@"topOffset: %f", topOffset);
