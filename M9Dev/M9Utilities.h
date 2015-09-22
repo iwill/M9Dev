@@ -326,6 +326,12 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     rect.origin.y = _y; \
     _RETURN rect; \
 })
+#define CGRectSetXY(_rect, _x, _y) ({ \
+    CGRect rect = _rect; \
+    rect.origin.x = _x; \
+    rect.origin.y = _y; \
+    _RETURN rect; \
+})
 #define CGRectSetWidth(_rect, _width) ({ \
     CGRect rect = _rect; \
     rect.size.width = _width; \
@@ -333,6 +339,12 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 })
 #define CGRectSetHeight(_rect, _height) ({ \
     CGRect rect = _rect; \
+    rect.size.height = _height; \
+    _RETURN rect; \
+})
+#define CGRectSetWidthHeight(_rect, _width, _height) ({ \
+    CGRect rect = _rect; \
+    rect.size.width = _width; \
     rect.size.height = _height; \
     _RETURN rect; \
 })
