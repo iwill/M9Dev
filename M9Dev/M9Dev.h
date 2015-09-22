@@ -38,6 +38,7 @@
 // view
 #import "UIControl+M9EventCallback.h"
 #import "UIView+M9.h"
+#import "UITableViewCell+M9.h"
 // view controller
 #import "M9AlertController.h"
 #import "M9ScrollViewController.h"
