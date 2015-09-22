@@ -35,9 +35,9 @@ static const CGFloat margin = 10, height = 44;
     
     {
         button = [self addButtonWithTitle:@"test ifNotStrong" nextTo:button];
-        defineWeak(self, button);
+        weakdef(self, button);
         [button addEventCallback:^(id sender) {
-            ifNotStrong(self, button) return;
+            strongdef_ifNOT(self, button) return;
             button.selected = !button.selected;
         } forControlEvents:UIControlEventTouchUpInside];
     }
@@ -45,9 +45,9 @@ static const CGFloat margin = 10, height = 44;
     {
         button = [self addButtonWithTitle:@"test ifNotStrong(nil)" nextTo:button];
         id nill = nil;
-        defineWeak(self, button, nill);
+        weakdef(self, button, nill);
         [button addEventCallback:^(id sender) {
-            ifNotStrong(self, button, nill) return;
+            strongdef_ifNOT(self, button, nill) return;
             button.selected = !button.selected;
         } forControlEvents:UIControlEventTouchUpInside];
     }

@@ -107,10 +107,11 @@
 
 
 /**
- * defineWeak & ifNotStrong
+ * weakdef, strongdef & strongdef_ifNOT
  */
-#define defineWeak(...) @weakify(__VA_ARGS__)
-#define ifNotStrong(...) \
+#define weakdef(...) @weakify(__VA_ARGS__)
+#define strongdef(...) @strongify(__VA_ARGS__)
+#define strongdef_ifNOT(...) \
     @strongify(__VA_ARGS__) \
     NSArray *array = nil; \
     @try { array = @[ __VA_ARGS__ ]; } @catch (NSException *exception) {} \
