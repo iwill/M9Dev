@@ -105,7 +105,7 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
         make.top.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
         make.left.mas_equalTo(inset.left);
-        make.right.mas_equalTo(inset.right);
+        make.right.mas_equalTo(- inset.right);
     }];
 }
 
@@ -117,7 +117,7 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
         make.left.mas_equalTo(inset.left);
-        make.right.mas_equalTo(inset.right);
+        make.right.mas_equalTo(- inset.right);
     }];
 }
 
