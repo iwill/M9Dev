@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+M9AccessoryButton.h
+//  UITableViewCell+M9.h
 //  M9Dev
 //
 //  Created by MingLQ on 2015-09-08.
@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Masonry/Masonry.h>
 
 #import "NSObject+AssociatedValues.h"
 #import "M9Utilities.h"
@@ -21,5 +22,16 @@
 
 // B: add UITapGestureRecognizer to self.accessoryView
 @property (nonatomic, getter=isAccessoryViewEnabled) BOOL accessoryViewEnabled;
+
+@end
+
+#pragma mark -
+
+@interface UITableViewCell (M9AddSeparator)
+
+@property (nonatomic, strong) UIView *topSeparator, *bottomSeparator;
+
+- (void)addTopSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset;
+- (void)addBottomSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset;
 
 @end

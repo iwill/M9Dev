@@ -1,12 +1,12 @@
 //
-//  UITableViewCell+M9AccessoryButton.m
+//  UITableViewCell+M9.m
 //  M9Dev
 //
 //  Created by MingLQ on 2015-09-08.
 //  Copyright (c) 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#import "UITableViewCell+M9AccessoryButton.h"
+#import "UITableViewCell+M9.h"
 
 @implementation UITableViewCell (M9AccessoryButton)
 
@@ -68,6 +68,57 @@ static void *M9AccessoryButtonTapGestureRecognizer = &M9AccessoryButtonTapGestur
     if (indexPath && [tableView.delegate respondsToSelector:@selector(tableView:accessoryButtonTappedForRowWithIndexPath:)]) {
         [tableView.delegate tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
     }
+}
+
+@end
+
+#pragma mark -
+
+@implementation UITableViewCell (M9AddSeparator)
+
+@dynamic topSeparator, bottomSeparator;
+
+static void *UITableViewCell_topSeparator = &UITableViewCell_topSeparator;
+static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
+
+- (UIView *)topSeparator {
+    return [self associatedValueForKey:UITableViewCell_topSeparator];
+}
+
+- (void)setTopSeparator:(UIView *)topSeparator {
+    [self associateValue:topSeparator withKey:UITableViewCell_topSeparator];
+}
+
+- (UIView *)bottomSeparator {
+    return [self associatedValueForKey:UITableViewCell_bottomSeparator];
+}
+
+- (void)setBottomSeparator:(UIView *)bottomSeparator {
+    [self associateValue:bottomSeparator withKey:UITableViewCell_bottomSeparator];
+}
+
+- (void)addTopSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
+    self.topSeparator = self.topSeparator OR [UIView new];
+    self.topSeparator.backgroundColor = color OR [UIColor lightGrayColor];
+    [self addSubview:self.topSeparator];
+    [self.topSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
+        make.left.mas_equalTo(inset.left);
+        make.right.mas_equalTo(inset.right);
+    }];
+}
+
+- (void)addBottomSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
+    self.bottomSeparator = self.bottomSeparator OR [UIView new];
+    self.bottomSeparator.backgroundColor = color OR [UIColor lightGrayColor];
+    [self addSubview:self.bottomSeparator];
+    [self.bottomSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(0);
+        make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
+        make.left.mas_equalTo(inset.left);
+        make.right.mas_equalTo(inset.right);
+    }];
 }
 
 @end

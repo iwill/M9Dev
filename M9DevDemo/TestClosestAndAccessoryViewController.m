@@ -13,7 +13,7 @@
 #import "UIImage+M9.h"
 #import "UIView+M9.h"
 #import "UIControl+M9EventCallback.h"
-#import "UITableViewCell+M9AccessoryButton.h"
+#import "UITableViewCell+M9.h"
 
 @implementation TestClosestAndAccessoryViewController
 
