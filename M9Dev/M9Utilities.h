@@ -107,23 +107,15 @@
 
 
 /**
- * strongify with block
+ * weakdef, strongdef & strongdef_ifNOT
  */
-
-/* strongify var, and call $statements if $var is not nil
- */
-#define strongifyAnd($var, $statements) \
-    strongify($var); \
-    if ($var) { \
-        $statements \
-    }
-/* strongify var, or call $statements if $var is nil
- */
-#define strongifyOr($var, $statements) \
-    strongify($var); \
-    if (!$var) { \
-        $statements \
-    }
+#define weakdef(...) @weakify(__VA_ARGS__)
+#define strongdef(...) @strongify(__VA_ARGS__)
+#define strongdef_ifNOT(...) \
+    @strongify(__VA_ARGS__) \
+    NSArray *array = nil; \
+    @try { array = @[ __VA_ARGS__ ]; } @catch (NSException *exception) {} \
+    if (!array)
 
 
 /**
