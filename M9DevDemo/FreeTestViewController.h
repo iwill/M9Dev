@@ -1,5 +1,5 @@
 //
-//  FreeTeestViewController.h
+//  FreeTestViewController.h
 //  M9Dev
 //
 //  Created by MingLQ on 2015-09-18.
@@ -8,6 +8,6 @@
 
 #import "M9ScrollViewController.h"
 
-@interface FreeTeestViewController : M9ScrollViewController
+@interface FreeTestViewController : M9ScrollViewController
 
 @end

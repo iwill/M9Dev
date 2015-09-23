@@ -18,7 +18,7 @@
 #import "TestActionViewController.h"
 #import "TestClosestAndAccessoryViewController.h"
 #import "TestCornerRadiusViewController.h"
-#import "FreeTeestViewController.h"
+#import "FreeTestViewController.h"
 
 #import "JRSwizzle.h"
 
@@ -80,7 +80,7 @@
     [self.tableView registerClass:tableViewCellClass forCellReuseIdentifier:NSStringFromClass(tableViewCellClass)];
     self.tableView.rowHeight = 50;
     
-    viewControllers = @[ [FreeTeestViewController new],
+    viewControllers = @[ [FreeTestViewController new],
                          [TestClosestAndAccessoryViewController new],
                          [TestCornerRadiusViewController new],
                          [TestActionViewController new],

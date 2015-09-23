@@ -12,7 +12,7 @@
 		DF18B31F1BA001FB00CE10CB /* TestCornerRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */; };
 		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
-		DF34A3E71BAC58EE00F6AF06 /* FreeTeestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTeestViewController.m */; settings = {ASSET_TAGS = (); }; };
+		DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */; settings = {ASSET_TAGS = (); }; };
 		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; settings = {ASSET_TAGS = (); }; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
 		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
@@ -124,8 +124,8 @@
 		DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCornerRadiusViewController.m; sourceTree = "<group>"; };
 		DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = M9Dev.bundle; sourceTree = "<group>"; };
 		DF2781171B9DB4F800E5E517 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		DF34A3E51BAC58EE00F6AF06 /* FreeTeestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeTeestViewController.h; sourceTree = "<group>"; };
-		DF34A3E61BAC58EE00F6AF06 /* FreeTeestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTeestViewController.m; sourceTree = "<group>"; };
+		DF34A3E51BAC58EE00F6AF06 /* FreeTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeTestViewController.h; sourceTree = "<group>"; };
+		DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTestViewController.m; sourceTree = "<group>"; };
 		DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
@@ -384,8 +384,8 @@
 			children = (
 				DF69D2331967EA7E00B8C011 /* AppDelegate.h */,
 				DF69D2341967EA7E00B8C011 /* AppDelegate.m */,
-				DF34A3E51BAC58EE00F6AF06 /* FreeTeestViewController.h */,
-				DF34A3E61BAC58EE00F6AF06 /* FreeTeestViewController.m */,
+				DF34A3E51BAC58EE00F6AF06 /* FreeTestViewController.h */,
+				DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */,
 				DFF233C319B8BB010045FDCE /* JSCollectionViewCell.h */,
 				DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */,
 				DFF3C3DC19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.h */,
@@ -908,7 +908,7 @@
 				DFA8712F1B9C0A570040249B /* UIImage+M9.m in Sources */,
 				DFA8712D1B9C0A570040249B /* UIColor+M9.m in Sources */,
 				DFA8711A1B9C0A570040249B /* UIColor+JS.m in Sources */,
-				DF34A3E71BAC58EE00F6AF06 /* FreeTeestViewController.m in Sources */,
+				DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */,
 				DFA871261B9C0A570040249B /* NSAttributedString+M9.m in Sources */,
 				DFE66CAF1B3A80EB00124656 /* NSString+CompareToVersion.m in Sources */,
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
