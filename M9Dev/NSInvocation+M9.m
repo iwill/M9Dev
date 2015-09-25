@@ -14,9 +14,14 @@
 @implementation NSInvocation (Repeat)
 
 - (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval {
+    [self repeatInvokeWithInterval:repeatInterval inModes:nil];
+}
+
+- (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval inModes:(NSArray<NSString *> *)modes {
     [self performSelector:@selector(repeatInvokeWithIntervalNumber:)
                withObject:[NSNumber numberWithDouble:repeatInterval]
-               afterDelay:repeatInterval];
+               afterDelay:repeatInterval
+                  inModes:modes OR @[ NSDefaultRunLoopMode ]];
 }
 
 - (void)repeatInvokeWithIntervalNumber:(NSNumber *)repeatInterval {
