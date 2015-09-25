@@ -11,7 +11,10 @@
 
 @interface NSInvocation (Repeat)
 
+// NSDefaultRunLoopMode
 - (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval;
+// NSRunLoopCommonModes = NSDefaultRunLoopMode + UITrackingRunLoopMode
+- (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval inModes:(NSArray<NSString *> *)modes;
 - (void)cancelRepeat;
 
 @end
