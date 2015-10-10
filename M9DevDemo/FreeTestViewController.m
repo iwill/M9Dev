@@ -9,6 +9,7 @@
 #import "FreeTestViewController.h"
 
 #import "UIControl+M9EventCallback.h"
+#import "M9Link.h"
 
 static const CGFloat margin = 10, height = 44;
 
@@ -55,22 +56,52 @@ static const CGFloat margin = 10, height = 44;
     }
     
     {
-        NSString *string = @"UserA reply to UserB: hello";
-        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:string];
-        [text addAttributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:[UIFont buttonFontSize]] } range:NSMakeRange(0, text.length)];
-        [text addAttributes:@{ NSLinkAttributeName: @"http://www.google.com" } range:[string rangeOfString:@"UserA"]];
-        [text addAttributes:@{ NSLinkAttributeName: @"http://www.google.com" } range:[string rangeOfString:@"UserB"]];
-        /* NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-        [paragraphStyle setAlignment:NSTextAlignmentCenter];
-        [text addAttributes:@{ NSParagraphStyleAttributeName: paragraphStyle } range:NSMakeRange(0, text.length)]; */
+        NSTextAttachment *linkAttachment = [NSTextAttachment new];
+        linkAttachment.fileType = NSLinkAttributeName;
+        linkAttachment.contents = [@"http://www.google.com" dataUsingEncoding:NSUTF8StringEncoding];
         
+        NSString *string = @
+        "Returns the index of the glyph falling under the given point, expressed in the given container's coordinate system."
+        "UserA reply to UserB: hello"
+        "If no glyph is under the point, the nearest glyph is returned, where nearest is defined according to the requirements of selection by touch or mouse."
+        ;
+        NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:string];
+        [text addAttributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:[UIFont buttonFontSize]],
+                               NSParagraphStyleAttributeName: ({
+            NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+            paragraphStyle.alignment = NSTextAlignmentCenter
+            _RETURN paragraphStyle;
+        }) }
+                      range:NSMakeRange(0, text.length)];
+        [text addAttributes:@{ // NSLinkAttributeName: @"http://www.google.com",
+                               NSAttachmentAttributeName: linkAttachment,
+                               NSForegroundColorAttributeName: [UIColor redColor] }
+                      range:[string rangeOfString:@"UserA"]];
+        [text addAttributes:@{ // NSLinkAttributeName: @"http://www.google.com",
+                               NSAttachmentAttributeName: linkAttachment,
+                               NSForegroundColorAttributeName: [UIColor redColor] }
+                      range:[string rangeOfString:@"UserB"]];
+        
+        // A: UITextView
         UITextView *textView = [UITextView new];
-        textView.attributedText = text;
-        textView.backgroundColor = [UIColor lightGrayColor];
-        textView.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor redColor] };
-        textView.textAlignment = NSTextAlignmentCenter;
+        // textView.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor redColor] };
         textView.editable = NO;
         textView.selectable = NO;
+        [textView enableLinkWithCallback:^(UITextView *textView, NSString *urlString) {
+            NSLog(@"urlString: %@", urlString);
+        }];
+        
+        /* // B: UILabel
+        UILabel *textView = [UILabel new];
+        textView.numberOfLines = 0;
+        textView.userInteractionEnabled = YES;
+        [textView enableLinkWithCallback:^(UILabel *label, NSString *urlString) {
+            NSLog(@"urlString: %@", urlString);
+        }]; */
+        
+        textView.backgroundColor = [UIColor lightGrayColor];
+        textView.attributedText = text;
+        // [textView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapWithGestureRecognizer:)]];
         
         [self.scrollView addSubview:textView];
         [textView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -82,7 +113,7 @@ static const CGFloat margin = 10, height = 44;
             else {
                 make.top.equalTo(prevView.mas_bottom).with.offset(margin);
             }
-            make.height.mas_equalTo(height);
+            make.height.mas_equalTo(120);
         }];
         prevView = textView;
     }
@@ -90,6 +121,20 @@ static const CGFloat margin = 10, height = 44;
     [prevView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.scrollView).with.offset(margin);
     }];
+}
+
+- (void)didTapWithGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
+    /* [label.attributedText enumerateAttributesInRange:NSMakeRange(0, label.attributedText.length) options:0 usingBlock:^(NSDictionary<NSString *,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+    }]; */
+    
+    /* UITextPosition *tapPosition = [label closestPositionToPoint:tapLocation];
+    NSDictionary *tapAttributes = [label textStylingAtPosition:tapPosition inDirection:UITextStorageDirectionForward];
+    id urlObject = tapAttributes[NSLinkAttributeName];
+    NSURL *tapURL = [urlObject as:[NSURL class]] OR [NSURL URLWithString:urlObject];
+    if (tapURL) {
+        [self textView:label shouldInteractWithURL:tapURL inRange:NSMakeRange(0, 0)];
+        return;
+    } */
 }
 
 - (UIButton *)addButtonWithTitle:(NSString *)title nextTo:(UIView *)prevView {
