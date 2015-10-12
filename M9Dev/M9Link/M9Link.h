@@ -21,16 +21,26 @@
  *      location to index
  */
 
-typedef void (^M9LabelLinkCalback)(UILabel *label, NSString *urlString);
+typedef void (^M9LabelLinkCalback)(UILabel * _Nullable label, NSString * _Nullable urlString, NSRange range);
 
 @interface UILabel (M9Link)
-- (void)enableLinkWithCallback:(M9LabelLinkCalback)callback;
+- (void)enableLinkWithCallback:(nullable M9LabelLinkCalback)callback;
 @end
 
 #pragma mark -
 
-typedef void (^M9TextViewLinkCalback)(UITextView *label, NSString *urlString);
+typedef void (^M9TextViewLinkCalback)(UITextView * _Nullable label, NSString * _Nullable urlString, NSRange range);
 
 @interface UITextView (M9Link)
-- (void)enableLinkWithCallback:(M9TextViewLinkCalback)callback;
+- (void)enableLinkWithCallback:(nullable M9TextViewLinkCalback)callback;
+@end
+
+#pragma mark -
+
+@interface NSTextAttachment (M9Link)
+
+// @see image of NSTextAttachment
+// Link representing the text attachment contents. Modifying this property invalidates -contents, -fileType, and -FileWrapper properties.
+@property(nullable, strong, NS_NONATOMIC_IOSONLY) NSString *linkURL NS_AVAILABLE(10_11, 7_0);
+
 @end

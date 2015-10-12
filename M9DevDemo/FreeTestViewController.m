@@ -61,9 +61,9 @@ static const CGFloat margin = 10, height = 44;
         linkAttachment.contents = [@"http://www.google.com" dataUsingEncoding:NSUTF8StringEncoding];
         
         NSString *string = @
-        "Returns the index of the glyph falling under the given point, expressed in the given container's coordinate system."
+        "Returns the index of the glyph falling under the given point, expressed in the given container's coordinate system. "
         "UserA reply to UserB: hello"
-        "If no glyph is under the point, the nearest glyph is returned, where nearest is defined according to the requirements of selection by touch or mouse."
+        " If no glyph is under the point, the nearest glyph is returned, where nearest is defined according to the requirements of selection by touch or mouse."
         ;
         NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:string];
         [text addAttributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:[UIFont buttonFontSize]],
@@ -73,31 +73,33 @@ static const CGFloat margin = 10, height = 44;
             _RETURN paragraphStyle;
         }) }
                       range:NSMakeRange(0, text.length)];
-        [text addAttributes:@{ // NSLinkAttributeName: @"http://www.google.com",
-                               NSAttachmentAttributeName: linkAttachment,
-                               NSForegroundColorAttributeName: [UIColor redColor] }
-                      range:[string rangeOfString:@"UserA"]];
-        [text addAttributes:@{ // NSLinkAttributeName: @"http://www.google.com",
-                               NSAttachmentAttributeName: linkAttachment,
-                               NSForegroundColorAttributeName: [UIColor redColor] }
-                      range:[string rangeOfString:@"UserB"]];
         
-        // A: UITextView
+        /* // UITextView
+        [text addAttributes:@{ NSLinkAttributeName: @"http://www.google.com" }
+                      range:[string rangeOfString:@"UserA"]];
+        [text addAttributes:@{ NSLinkAttributeName: @"http://www.google.com" }
+                      range:[string rangeOfString:@"UserB"]];
         UITextView *textView = [UITextView new];
-        // textView.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor redColor] };
+        textView.linkTextAttributes = @{ NSForegroundColorAttributeName: [UIColor redColor] };
         textView.editable = NO;
         textView.selectable = NO;
-        [textView enableLinkWithCallback:^(UITextView *textView, NSString *urlString) {
-            NSLog(@"urlString: %@", urlString);
-        }];
+        [textView enableLinkWithCallback:^(UITextView *textView, NSString *urlString, NSRange range) {
+            NSLog(@"%@: %@", [textView.attributedText.string substringWithRange:range], urlString);
+        }]; // */
         
-        /* // B: UILabel
+        // /* // UILabel
+        [text addAttributes:@{ NSAttachmentAttributeName: linkAttachment,
+                               NSForegroundColorAttributeName: [UIColor redColor] }
+                      range:[string rangeOfString:@"UserA"]];
+        [text addAttributes:@{ NSAttachmentAttributeName: linkAttachment,
+                               NSForegroundColorAttributeName: [UIColor redColor] }
+                      range:[string rangeOfString:@"UserB"]];
         UILabel *textView = [UILabel new];
         textView.numberOfLines = 0;
         textView.userInteractionEnabled = YES;
-        [textView enableLinkWithCallback:^(UILabel *label, NSString *urlString) {
-            NSLog(@"urlString: %@", urlString);
-        }]; */
+        [textView enableLinkWithCallback:^(UILabel *label, NSString *urlString, NSRange range) {
+            NSLog(@"%@: %@", [label.attributedText.string substringWithRange:range], urlString);
+        }]; // */
         
         textView.backgroundColor = [UIColor lightGrayColor];
         textView.attributedText = text;
