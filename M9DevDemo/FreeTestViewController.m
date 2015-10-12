@@ -56,10 +56,6 @@ static const CGFloat margin = 10, height = 44;
     }
     
     {
-        NSTextAttachment *linkAttachment = [NSTextAttachment new];
-        linkAttachment.fileType = NSLinkAttributeName;
-        linkAttachment.contents = [@"http://www.google.com" dataUsingEncoding:NSUTF8StringEncoding];
-        
         NSString *string = @
         "Returns the index of the glyph falling under the given point, expressed in the given container's coordinate system. "
         "UserA reply to UserB: hello"
@@ -88,6 +84,8 @@ static const CGFloat margin = 10, height = 44;
         }]; // */
         
         // /* // UILabel
+        NSTextAttachment *linkAttachment = [NSTextAttachment new];
+        linkAttachment.linkURL = @"http://www.google.com";
         [text addAttributes:@{ NSAttachmentAttributeName: linkAttachment,
                                NSForegroundColorAttributeName: [UIColor redColor] }
                       range:[string rangeOfString:@"UserA"]];
