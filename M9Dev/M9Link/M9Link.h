@@ -14,7 +14,7 @@
  *      - enableLinkWithCallback: - _add UITapGestureRecognizer OR UILongPressGestureRecognizer.minimumPressDuration
  *  √ UIGestureRecognizer action
  *      location to index
- *  NSTextAttachment
+ *  √ NSTextAttachment
  *      @property linkURL
  *  static _UIGestureRecognizerDelegate
  *      start - remember and remove origin bg, add new
