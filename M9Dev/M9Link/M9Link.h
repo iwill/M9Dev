@@ -21,6 +21,10 @@
  *      end - remove new bg, add origin bg
  */
 
+/**
+ *  @see https://www.cocoanetics.com/2015/03/customizing-uilabel-hyperlinks/
+ */
+
 typedef void (^M9LabelLinkCalback)(UILabel * _Nullable label, NSString * _Nullable urlString, NSRange range);
 
 @interface UILabel (M9Link)
