@@ -9,16 +9,16 @@
 #import <UIKit/UIKit.h>
 
 /* TODO: MingLQ
- *  !!!: both UILabel and UITextView
+ *  √ !!!: both UILabel and UITextView
+ *  √ UILabel+Link
+ *      - enableLinkWithCallback: - _add UITapGestureRecognizer OR UILongPressGestureRecognizer.minimumPressDuration
+ *  √ UIGestureRecognizer action
+ *      location to index
  *  NSTextAttachment
  *      @property linkURL
- *  UILabel+Link
- *      - enableLinkWithCallback: - _add UITapGestureRecognizer OR UILongPressGestureRecognizer.minimumPressDuration
  *  static _UIGestureRecognizerDelegate
  *      start - remember and remove origin bg, add new
  *      end - remove new bg, add origin bg
- *  UIGestureRecognizer action
- *      location to index
  */
 
 typedef void (^M9LabelLinkCalback)(UILabel * _Nullable label, NSString * _Nullable urlString, NSRange range);
