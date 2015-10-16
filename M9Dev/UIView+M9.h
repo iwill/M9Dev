@@ -33,6 +33,7 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 #pragma mark -
 
+typedef void (^UIViewLayoutSubviewsBlock)();
 typedef void (^UIViewUpdateConstraintsBlock)();
 
 @interface UIView (updateConstraints)
@@ -41,6 +42,11 @@ typedef void (^UIViewUpdateConstraintsBlock)();
 // re-declare for code completions
 - (UIViewUpdateConstraintsBlock)updateConstraintsBlock;
 - (void)setUpdateConstraintsBlock:(UIViewUpdateConstraintsBlock)updateConstraintsBlock;
+
+@property(nonatomic, copy) UIViewLayoutSubviewsBlock layoutSubviewsBlock;
+// re-declare for code completions
+- (UIViewLayoutSubviewsBlock)layoutSubviewsBlock;
+- (void)setLayoutSubviewsBlock:(UIViewLayoutSubviewsBlock)layoutSubviewsBlock;
 
 @end
 
