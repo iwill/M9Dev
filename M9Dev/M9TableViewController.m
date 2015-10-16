@@ -23,7 +23,7 @@
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
-    self = [super init];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.style = style;
     }

@@ -62,6 +62,9 @@
 
 @property(nonatomic, readonly, retain) NSMutableDictionary *JSONDictionary;
 
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithJSONDictionary:(NSDictionary *)jsonDictionary NS_DESIGNATED_INITIALIZER;
+
 @end
 
 #pragma mark - NON JSONObject
