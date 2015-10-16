@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <JRSwizzle/JRSwizzle.h>
 
 #import "M9Utilities.h"
 
@@ -24,7 +25,6 @@
 #import "NSString+CompareToVersion.h"
 #import "metamacros.h"
 #import "EXTScope.h"
-#import "JRSwizzle.h"
 
 /* Foundation */
 #import "NSArray+M9.h"

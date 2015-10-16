@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
+#import <JRSwizzle/JRSwizzle.h>
+
 #import "M9DevTestTableViewController.h"
 
 #import "NSArray+M9.h"
@@ -19,8 +21,6 @@
 #import "TestClosestAndAccessoryViewController.h"
 #import "TestCornerRadiusViewController.h"
 #import "FreeTestViewController.h"
-
-#import "JRSwizzle.h"
 
 // #if DEBUG
 #import <FLEX/FLEXManager.h>
