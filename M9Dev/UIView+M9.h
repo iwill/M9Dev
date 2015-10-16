@@ -8,8 +8,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JRSwizzle/JRSwizzle.h>
 
-#import "JRSwizzle.h"
 #import "NSObject+AssociatedObjects.h"
 #import "M9Utilities.h"
 #import "UIResponder+M9.h"
