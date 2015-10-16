@@ -10,6 +10,16 @@
 #import <Foundation/Foundation.h>
 
 
+/* TODO: typedef void (^ResultCallback)(NSString *string, NSArray *array);
+- (void)testStructWithResultCallback:(ResultCallback)result {
+    return result(@"test", @[ @1, @2 ]);
+}
+[self testStructWithResultCallback:^(NSString *string, NSArray *array) {
+    self.string = string;
+    self.array = array;
+}]; */
+
+
 // @see SpectaUtility.h - https://github.com/specta/specta
 #define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
 
