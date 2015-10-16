@@ -12,15 +12,13 @@
 
 @protocol UIViewExport <JSExport>
 
-#pragma mark UIView
-
 - (id)initWithFrame:(CGRect)frame;
 
 @property(nonatomic,getter=isUserInteractionEnabled) BOOL userInteractionEnabled;
 @property(nonatomic)                                 NSInteger tag;
 @property(nonatomic,readonly,retain)                 CALayer  *layer;
 
-#pragma mark UIViewGeometry
+#pragma mark - UIViewGeometry
 
 @property(nonatomic) CGRect            frame;
 
@@ -46,7 +44,7 @@
 - (CGSize)sizeThatFits:(CGSize)size;
 - (void)sizeToFit;
 
-#pragma mark UIViewHierarchy
+#pragma mark - UIViewHierarchy
 
 @property(nonatomic,readonly) UIView       *superview;
 @property(nonatomic,readonly,copy) NSArray *subviews;
@@ -63,6 +61,14 @@
 - (void)bringSubviewToFront:(UIView *)view;
 - (void)sendSubviewToBack:(UIView *)view;
 
+- (void)didAddSubview:(UIView *)subview;
+- (void)willRemoveSubview:(UIView *)subview;
+
+- (void)willMoveToSuperview:(UIView *)newSuperview;
+- (void)didMoveToSuperview;
+- (void)willMoveToWindow:(UIWindow *)newWindow;
+- (void)didMoveToWindow;
+
 - (BOOL)isDescendantOfView:(UIView *)view;
 - (UIView *)viewWithTag:(NSInteger)tag;
 
@@ -71,7 +77,9 @@
 
 - (void)layoutSubviews;
 
-#pragma mark UIViewRendering
+#pragma mark - UIViewRendering
+
+- (void)drawRect:(CGRect)rect;
 
 - (void)setNeedsDisplay;
 - (void)setNeedsDisplayInRect:(CGRect)rect;
@@ -89,7 +97,9 @@
 
 @property(nonatomic) UIViewTintAdjustmentMode tintAdjustmentMode NS_AVAILABLE_IOS(7_0);
 
-#pragma mark UIViewAnimation
+- (void)tintColorDidChange NS_AVAILABLE_IOS(7_0);
+
+#pragma mark - UIViewAnimation
 
 + (void)beginAnimations:(NSString *)animationID context:(void *)context;
 + (void)commitAnimations;
@@ -111,7 +121,7 @@
 + (BOOL)areAnimationsEnabled;
 + (void)performWithoutAnimation:(void (^)(void))actionsWithoutAnimation NS_AVAILABLE_IOS(7_0);
 
-#pragma mark UIViewAnimationWithBlocks
+#pragma mark - UIViewAnimationWithBlocks
 
 + (void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion NS_AVAILABLE_IOS(4_0);
 
@@ -127,12 +137,12 @@
 
 + (void)performSystemAnimation:(UISystemAnimation)animation onViews:(NSArray *)views options:(UIViewAnimationOptions)options animations:(void (^)(void))parallelAnimations completion:(void (^)(BOOL finished))completion NS_AVAILABLE_IOS(7_0);
 
-#pragma mark UIViewKeyframeAnimations
+#pragma mark - UIViewKeyframeAnimations
 
 + (void)animateKeyframesWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewKeyframeAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion NS_AVAILABLE_IOS(7_0);
 + (void)addKeyframeWithRelativeStartTime:(double)frameStartTime relativeDuration:(double)frameDuration animations:(void (^)(void))animations NS_AVAILABLE_IOS(7_0);
 
-#pragma mark UIViewGestureRecognizers
+#pragma mark - UIViewGestureRecognizers
 
 @property(nonatomic,copy) NSArray *gestureRecognizers NS_AVAILABLE_IOS(3_2);
 
@@ -141,7 +151,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIViewMotionEffects
+#pragma mark - UIViewMotionEffects
 
 - (void)addMotionEffect:(UIMotionEffect *)effect NS_AVAILABLE_IOS(7_0);
 
@@ -149,7 +159,7 @@
 
 @property (copy, nonatomic) NSArray *motionEffects NS_AVAILABLE_IOS(7_0);
 
-#pragma mark UIConstraintBasedLayoutInstallingConstraints
+#pragma mark - UIConstraintBasedLayoutInstallingConstraints
 
 - (NSArray *)constraints NS_AVAILABLE_IOS(6_0);
 
@@ -158,21 +168,21 @@
 - (void)removeConstraint:(NSLayoutConstraint *)constraint NS_AVAILABLE_IOS(6_0);
 - (void)removeConstraints:(NSArray *)constraints NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIConstraintBasedLayoutCoreMethods
+#pragma mark - UIConstraintBasedLayoutCoreMethods
 
 - (void)updateConstraintsIfNeeded NS_AVAILABLE_IOS(6_0);
 - (void)updateConstraints NS_AVAILABLE_IOS(6_0);
 - (BOOL)needsUpdateConstraints NS_AVAILABLE_IOS(6_0);
 - (void)setNeedsUpdateConstraints NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIConstraintBasedCompatibility
+#pragma mark - UIConstraintBasedCompatibility
 
 - (BOOL)translatesAutoresizingMaskIntoConstraints NS_AVAILABLE_IOS(6_0);
 - (void)setTranslatesAutoresizingMaskIntoConstraints:(BOOL)flag NS_AVAILABLE_IOS(6_0);
 
 + (BOOL)requiresConstraintBasedLayout NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIConstraintBasedLayoutLayering
+#pragma mark - UIConstraintBasedLayoutLayering
 
 - (CGRect)alignmentRectForFrame:(CGRect)frame NS_AVAILABLE_IOS(6_0);
 - (CGRect)frameForAlignmentRect:(CGRect)alignmentRect NS_AVAILABLE_IOS(6_0);
@@ -190,30 +200,30 @@
 - (UILayoutPriority)contentCompressionResistancePriorityForAxis:(UILayoutConstraintAxis)axis NS_AVAILABLE_IOS(6_0);
 - (void)setContentCompressionResistancePriority:(UILayoutPriority)priority forAxis:(UILayoutConstraintAxis)axis NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIConstraintBasedLayoutFittingSize
+#pragma mark - UIConstraintBasedLayoutFittingSize
 
 - (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIConstraintBasedLayoutDebugging
+#pragma mark - UIConstraintBasedLayoutDebugging
 
 - (NSArray *)constraintsAffectingLayoutForAxis:(UILayoutConstraintAxis)axis NS_AVAILABLE_IOS(6_0);
 
 - (BOOL)hasAmbiguousLayout NS_AVAILABLE_IOS(6_0);
 - (void)exerciseAmbiguityInLayout NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UIStateRestoration
+#pragma mark - UIStateRestoration
 
 @property (nonatomic, copy) NSString *restorationIdentifier NS_AVAILABLE_IOS(6_0);
 - (void) encodeRestorableStateWithCoder:(NSCoder *)coder NS_AVAILABLE_IOS(6_0);
 - (void) decodeRestorableStateWithCoder:(NSCoder *)coder NS_AVAILABLE_IOS(6_0);
 
-#pragma mark UISnapshotting
+#pragma mark - UISnapshotting
 
 - (UIView *)snapshotViewAfterScreenUpdates:(BOOL)afterUpdates NS_AVAILABLE_IOS(7_0);
 - (UIView *)resizableSnapshotViewFromRect:(CGRect)rect afterScreenUpdates:(BOOL)afterUpdates withCapInsets:(UIEdgeInsets)capInsets NS_AVAILABLE_IOS(7_0);
 - (BOOL)drawViewHierarchyInRect:(CGRect)rect afterScreenUpdates:(BOOL)afterUpdates NS_AVAILABLE_IOS(7_0);
 
-#pragma mark NSObject
+#pragma mark - NSObject
 
 - (NSString *)description;
 

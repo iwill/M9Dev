@@ -41,6 +41,15 @@
 + (UIColor *)brownColor;
 + (UIColor *)clearColor;
 
+- (void)set;
+
+- (void)setFill;
+- (void)setStroke;
+
+- (BOOL)getWhite:(CGFloat *)white alpha:(CGFloat *)alpha NS_AVAILABLE_IOS(5_0);
+- (BOOL)getHue:(CGFloat *)hue saturation:(CGFloat *)saturation brightness:(CGFloat *)brightness alpha:(CGFloat *)alpha NS_AVAILABLE_IOS(5_0);
+- (BOOL)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha NS_AVAILABLE_IOS(5_0);
+
 - (UIColor *)colorWithAlphaComponent:(CGFloat)alpha;
 
 @property(nonatomic,readonly) CGColorRef CGColor;
@@ -48,10 +57,15 @@
 
 @property(nonatomic,readonly) CIColor   *CIColor NS_AVAILABLE_IOS(5_0);
 
-#pragma mark UIColor+
+#pragma mark UIColor+M9
 
-+ (UIColor *)colorWithHexString:(NSString *)hexString;
 - (UIColor *)inverseColor;
+
++ (UIColor *)colorWithName:(NSString *)name;
++ (UIColor *)colorWithHexString:(NSString *)hexString;
+
++ (UIColor *)colorWithName:(NSString *)name alpha:(CGFloat)alpha;
++ (UIColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha;
 
 @end
 
