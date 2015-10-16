@@ -108,10 +108,6 @@ Pod::Spec.new do |s|
       sss.public_header_files = 'Libraries/extobjc/*.h'
       sss.source_files = "Libraries/extobjc/*.{h,m}"
     end
-    ss.subspec 'JRSwizzle' do |sss|
-      sss.public_header_files = 'Libraries/JRSwizzle/*.h'
-      sss.source_files = "Libraries/JRSwizzle/*.{h,m}"
-    end
     # ss.public_header_files = 'Libraries/**/*.h'
     # ss.source_files = "Libraries/**/*.{h,m}"
   end
