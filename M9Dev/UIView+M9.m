@@ -48,12 +48,18 @@
 @implementation UIView (updateConstraints)
 
 + (void)load {
-    [self jr_swizzleMethod:@selector(updateConstraints) withMethod:@selector(swizzled_updateConstraints) error:nil];
+    [self jr_swizzleMethod:@selector(updateConstraints) withMethod:@selector(m9_updateConstraints) error:nil];
+    [self jr_swizzleMethod:@selector(layoutSubviews) withMethod:@selector(m9_layoutSubviews) error:nil];
 }
 
-- (void)swizzled_updateConstraints {
+- (void)m9_updateConstraints {
     if (self.updateConstraintsBlock) self.updateConstraintsBlock();
-    [self swizzled_updateConstraints];
+    [self m9_updateConstraints];
+}
+
+- (void)m9_layoutSubviews {
+    if (self.layoutSubviewsBlock) self.layoutSubviewsBlock();
+    [self m9_layoutSubviews];
 }
 
 @dynamic updateConstraintsBlock;
@@ -65,6 +71,17 @@ static void *UIView_updateConstraintsBlock = &UIView_updateConstraintsBlock;
 
 - (void)setUpdateConstraintsBlock:(UIViewUpdateConstraintsBlock)updateConstraintsBlock {
     [self associateCopyOfValue:updateConstraintsBlock withKey:UIView_updateConstraintsBlock];
+}
+
+@dynamic layoutSubviewsBlock;
+static void *UIView_layoutSubviewsBlock = &UIView_layoutSubviewsBlock;
+
+- (UIViewLayoutSubviewsBlock)layoutSubviewsBlock {
+    return [self associatedValueForKey:UIView_layoutSubviewsBlock];
+}
+
+- (void)setLayoutSubviewsBlock:(UIViewLayoutSubviewsBlock)layoutSubviewsBlock {
+    [self associateCopyOfValue:layoutSubviewsBlock withKey:UIView_layoutSubviewsBlock];
 }
 
 @end
