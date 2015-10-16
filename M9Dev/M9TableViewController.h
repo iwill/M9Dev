@@ -20,6 +20,9 @@
 @property(nonatomic, strong, readonly) UITableView *tableView;
 @property(nonatomic) BOOL clearsSelectionOnViewWillAppear;
 
+- (instancetype)init; // UITableViewStyleGrouped
 - (instancetype)initWithStyle:(UITableViewStyle)style NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
