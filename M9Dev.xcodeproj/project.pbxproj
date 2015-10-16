@@ -96,7 +96,6 @@
 		DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */; };
 		DFF2339719B82F500045FDCE /* VideosJSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */; };
 		DFF233AB19B85B140045FDCE /* jslayout in Resources */ = {isa = PBXBuildFile; fileRef = DFF233AA19B85B140045FDCE /* jslayout */; };
-		DFF233C219B8AF560045FDCE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233C119B8AF560045FDCE /* JRSwizzle.m */; };
 		DFF233C519B8BB010045FDCE /* JSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */; };
 		DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DFF3C3DD19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m */; };
 		DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DFFA08C01A134F1E003168E1 /* M9PromiseTests.m */; };
@@ -289,8 +288,6 @@
 		DFF2339519B82F500045FDCE /* VideosJSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosJSCollectionViewController.h; sourceTree = "<group>"; };
 		DFF2339619B82F500045FDCE /* VideosJSCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosJSCollectionViewController.m; sourceTree = "<group>"; };
 		DFF233AA19B85B140045FDCE /* jslayout */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jslayout; sourceTree = "<group>"; };
-		DFF233C019B8AF560045FDCE /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
-		DFF233C119B8AF560045FDCE /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		DFF233C319B8BB010045FDCE /* JSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCollectionViewCell.h; sourceTree = "<group>"; };
 		DFF233C419B8BB010045FDCE /* JSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSCollectionViewCell.m; sourceTree = "<group>"; };
 		DFF3C3DC19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSCollectionViewFlowLayout.h; sourceTree = "<group>"; };
@@ -470,7 +467,6 @@
 				DF69D2571968513300B8C011 /* BlocksKit */,
 				DFE66CAC1B3A80EB00124656 /* CompareToVersion */,
 				DF96C5271B799A4E006DF4EA /* extobjc */,
-				DFF233BF19B8AF560045FDCE /* JRSwizzle */,
 				DF69D28819685B6500B8C011 /* MKNetworkKit */,
 			);
 			path = Libraries;
@@ -703,15 +699,6 @@
 				DFF233AA19B85B140045FDCE /* jslayout */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		DFF233BF19B8AF560045FDCE /* JRSwizzle */ = {
-			isa = PBXGroup;
-			children = (
-				DFF233C019B8AF560045FDCE /* JRSwizzle.h */,
-				DFF233C119B8AF560045FDCE /* JRSwizzle.m */,
-			);
-			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
 		DFFA08BF1A134D3A003168E1 /* M9Promise */ = {
@@ -955,7 +942,6 @@
 				DFA871281B9C0A570040249B /* NSDate+M9.m in Sources */,
 				DFA8712B1B9C0A570040249B /* NSObject+AssociatedValues.m in Sources */,
 				DFA871111B9C0A570040249B /* UICollectionViewFlowLayout+JS.m in Sources */,
-				DFF233C219B8AF560045FDCE /* JRSwizzle.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
 				DFA871211B9C0A570040249B /* M9Promise.m in Sources */,
 				DFA8711C1B9C0A570040249B /* AFNResponseInfo.m in Sources */,

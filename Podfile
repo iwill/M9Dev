@@ -6,6 +6,7 @@ source 'https://gitcafe.com/akuandev/Specs.git'
 platform :ios, '7.0'
 
 target :M9Dev do
+  pod 'JRSwizzle',      '~> 1.0'
   pod 'AFNetworking',   '~> 2.6'
   # pod 'AFNetworking',   :git => 'https://github.com/iwill/AFNetworking.git', :commit => '5764f5400908b480bdb413b3b2a900916b62d7cc'
   pod 'TMCache',        '~> 1.2'
