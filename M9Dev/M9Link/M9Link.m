@@ -89,7 +89,8 @@ static void *M9Link_callback = &M9Link_callback;
     NSUInteger charIndex = [layoutManager characterIndexForGlyphAtIndex:glyphIndex];
     
     NSRange range = NSMakeRange(NSNotFound, 0);
-    NSDictionary *attributes = [self.attributedText attributesAtIndex:charIndex effectiveRange:&range];
+    NSDictionary *attributes = [self.attributedText attributesAtIndex:MIN(charIndex, self.attributedText.length - 1)
+                                                       effectiveRange:&range];
     
     NSTextAttachment *linkAttachment = attributes[NSAttachmentAttributeName];
     NSString *linkURL = linkAttachment.contents ? [[NSString alloc] initWithData:linkAttachment.contents encoding:NSUTF8StringEncoding] : nil;
@@ -121,7 +122,8 @@ static void *M9Link_callback = &M9Link_callback;
     UITextPosition *beginningPosition = self.beginningOfDocument;
     NSInteger index = [self offsetFromPosition:beginningPosition toPosition:position];
     NSRange range = NSMakeRange(NSNotFound, 0);
-    NSDictionary *attributes = [self.attributedText attributesAtIndex:index effectiveRange:&range];
+    NSDictionary *attributes = [self.attributedText attributesAtIndex:MIN(index, self.attributedText.length - 1)
+                                                       effectiveRange:&range];
     
     id urlObject = attributes[NSLinkAttributeName];
     NSString *linkURL = [urlObject isKindOfClass:[NSURL class]] ? [(NSURL *)urlObject absoluteString] : (NSString *)urlObject;
