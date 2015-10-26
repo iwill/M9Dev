@@ -17,7 +17,7 @@
     [self repeatInvokeWithInterval:repeatInterval inModes:nil];
 }
 
-- (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval inModes:(NSArray<NSString *> *)modes {
+- (void)repeatInvokeWithInterval:(NSTimeInterval)repeatInterval inModes:(NSArray *)modes {
     [self performSelector:@selector(repeatInvokeWithIntervalNumber:)
                withObject:[NSNumber numberWithDouble:repeatInterval]
                afterDelay:repeatInterval
