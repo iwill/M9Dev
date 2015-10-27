@@ -1,6 +1,6 @@
 #include "JRSwizzle.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/JRSwizzle" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/Expecta" "${PODS_ROOT}/Headers/Public/FLEX" "${PODS_ROOT}/Headers/Public/JRSwizzle" "${PODS_ROOT}/Headers/Public/Masonry" "${PODS_ROOT}/Headers/Public/SDWebImage" "${PODS_ROOT}/Headers/Public/Specta" "${PODS_ROOT}/Headers/Public/TMCache"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/JRSwizzle" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/Expecta" "${PODS_ROOT}/Headers/Public/FLEX" "${PODS_ROOT}/Headers/Public/JRSwizzle" "${PODS_ROOT}/Headers/Public/Masonry" "${PODS_ROOT}/Headers/Public/NSString-UrlEncode" "${PODS_ROOT}/Headers/Public/SDWebImage" "${PODS_ROOT}/Headers/Public/Specta" "${PODS_ROOT}/Headers/Public/TMCache"
 OTHER_LDFLAGS = ${JRSWIZZLE_OTHER_LDFLAGS}
 PODS_ROOT = ${SRCROOT}
 SKIP_INSTALL = YES

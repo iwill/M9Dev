@@ -25,8 +25,8 @@
 + (NSString *)queryStringFromParameters:(NSDictionary *)parameters {
     NSMutableString *queryString = nil;
     for (__strong id key in [parameters allKeys]) {
-        key = URLEncodedFieldWithEncoding(key, NSUTF8StringEncoding);
-        id value = URLEncodedValueWithEncoding([parameters stringForKey:key], NSUTF8StringEncoding);
+        key = [[key description] URLEncode];
+        id value = [[parameters stringForKey:key] URLEncode];
         NSString *keyValue = [NSString stringWithFormat:@"%@=%@", key, value OR @""];
         if (!queryString) {
             queryString = [keyValue mutableCopy];

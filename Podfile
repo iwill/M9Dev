@@ -10,6 +10,7 @@ target :M9Dev do
   pod 'AFNetworking',   '~> 2.6'
   # pod 'AFNetworking',   :git => 'https://github.com/iwill/AFNetworking.git', :commit => '5764f5400908b480bdb413b3b2a900916b62d7cc'
   pod 'TMCache',        '~> 1.2'
+  pod 'NSString-UrlEncode', '~> 2.0'
   pod 'Masonry',        '~> 0.6'
   pod 'SDWebImage',     '~> 3.7'
   pod 'FLEX',           '~> 2.0', :configurations => ['Debug']

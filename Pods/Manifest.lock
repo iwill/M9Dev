@@ -24,6 +24,7 @@ PODS:
   - FLEX (2.0.6)
   - JRSwizzle (1.0)
   - Masonry (0.6.2)
+  - NSString-UrlEncode (2.0.0)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - FLEX (~> 2.0)
   - JRSwizzle (~> 1.0)
   - Masonry (~> 0.6)
+  - NSString-UrlEncode (~> 2.0)
   - SDWebImage (~> 3.7)
   - Specta (~> 1.0)
   - TMCache (~> 1.2)
@@ -46,6 +48,7 @@ SPEC CHECKSUMS:
   FLEX: 3c390976e788d3d447b614ea1714ffc8fc914cf3
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   Masonry: 362e8a1cc0beada4a4c4832d5e863da2a51533be
+  NSString-UrlEncode: d26eb4378531911d54694733143dd493c1571f5c
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
