@@ -22,6 +22,15 @@
 @end
 
 /**
+ *  Use NSString+URLEncode
+ *
+ *  @see
+ *      http://madebymany.com/blog/url-encoding-an-nsstring-on-ios
+ *      http://johan.svbtle.com/encodeuricomponent-in-objectivec
+ *      http://stackoverflow.com/a/8086845/456536
+ */
+
+/**
  *  Copied from AFNetworking
  *  @see AFNetworking/AFURLRequestSerialization.m
  *      static inline NSString * AFPercentEscapedStringFromString(NSString *string)
