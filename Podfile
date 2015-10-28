@@ -4,6 +4,7 @@
 source 'https://gitcafe.com/akuandev/Specs.git'
 
 platform :ios, '7.0'
+inhibit_all_warnings!
 
 target :M9Dev do
   pod 'JRSwizzle',      '~> 1.0'
@@ -21,8 +22,8 @@ end
 
 target :M9DevTests do
   # pod 'Kiwi',     '~> 2.3'
-  pod 'Specta',   '~> 1.0', :inhibit_warnings => true
+  pod 'Specta',   '~> 1.0'
   # pod 'Specta',   :git => 'https://github.com/specta/specta.git', :tag => 'v0.3.0.beta1'
-  pod 'Expecta',  '~> 0.4', :inhibit_warnings => true
+  pod 'Expecta',  '~> 0.4'
   # pod 'KZPlayground'
 end
