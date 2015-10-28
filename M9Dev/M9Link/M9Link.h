@@ -16,6 +16,7 @@
  *      location to index
  *  √ NSTextAttachment
  *      @property linkURL
+ *  find link around the point with UIEdgeInset
  *  static _UIGestureRecognizerDelegate
  *      start - remember and remove origin bg, add new
  *      end - remove new bg, add origin bg
