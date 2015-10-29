@@ -104,8 +104,8 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
     [self.topSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
-        make.left.mas_equalTo(inset.left);
-        make.right.mas_equalTo(- inset.right);
+        make.left.equalTo(self).with.offset(inset.left);
+        make.right.equalTo(self).with.offset(- inset.right);
     }];
 }
 
@@ -116,8 +116,8 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
     [self.bottomSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
-        make.left.mas_equalTo(inset.left);
-        make.right.mas_equalTo(- inset.right);
+        make.left.equalTo(self).with.offset(inset.left);
+        make.right.equalTo(self).with.offset(- inset.right);
     }];
 }
 
