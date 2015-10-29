@@ -9,6 +9,23 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma mark - NSString+Length
+
+/**
+ *  NSUTF8StringEncoding
+ */
+@interface NSString (Length)
+
+- (NSUInteger)bytesLength;
+- (NSString *)visualSubstringOfBytesLength:(NSUInteger)bytesLength;
+
+- (NSUInteger)visualLength;
+- (NSString *)visualSubstringOfVisualLength:(NSUInteger)visualLength;
+
+@end
+
+#pragma mark - NSString+NSData
+
 @interface NSString (NSData)
 
 + (instancetype)stringWithData:(NSData *)data; // encoding: NSUTF8StringEncoding by default
@@ -20,8 +37,8 @@
 
 @interface NSString (Base64)
 
-+ (instancetype)stringWithBase64Data:(NSData *)base64Data;
-+ (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength;
++ (instancetype)stringWithBase64Data:(NSData *)base64Data; // lineLength: 0, lineFeed: @"\n"
++ (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength; // lineFeed: @"\n"
 + (instancetype)stringWithBase64Data:(NSData *)base64Data lineLength:(int)lineLength lineFeed:(NSString *)lineFeed;
 
 @end

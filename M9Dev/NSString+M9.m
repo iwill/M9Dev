@@ -18,6 +18,67 @@
 
 #import "NSString+M9.h"
 
+#pragma mark - NSString+Length
+
+@implementation NSString (Length)
+
+- (NSUInteger)bytesLength {
+    return [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSString *)visualSubstringOfBytesLength:(NSUInteger)maxBytesLength {
+    if (!maxBytesLength) {
+        return @"";
+    }
+    NSMutableString *visualSubstring = [NSMutableString new];
+    [self enumerateSubstringsInRange:NSMakeRange(0, self.length)
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                              NSUInteger loc = [visualSubstring length];
+                              [visualSubstring appendString:substring];
+                              if ([visualSubstring bytesLength] < maxBytesLength) {
+                                  return;
+                              }
+                              if ([visualSubstring bytesLength] > maxBytesLength) {
+                                  [visualSubstring deleteCharactersInRange:NSMakeRange(loc, substring.length)];
+                              }
+                              *stop = YES;
+                          }];
+    return visualSubstring;
+}
+
+- (NSUInteger)visualLength {
+    __block NSUInteger visualLength = 0;
+    [self enumerateSubstringsInRange:NSMakeRange(0, self.length)
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                              visualLength++;
+                          }];
+    return visualLength;
+}
+
+- (NSString *)visualSubstringOfVisualLength:(NSUInteger)maxVisualLength {
+    if (!maxVisualLength) {
+        return @"";
+    }
+    __block NSUInteger visualLength = 0;
+    NSMutableString *visualSubstring = [NSMutableString new];
+    [self enumerateSubstringsInRange:NSMakeRange(0, self.length)
+                             options:NSStringEnumerationByComposedCharacterSequences
+                          usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                              [visualSubstring appendString:substring];
+                              visualLength++;
+                              if (visualLength >= maxVisualLength) {
+                                  *stop = YES;
+                              }
+                          }];
+    return visualSubstring;
+}
+
+@end
+
+#pragma mark - NSString+NSData
+
 @implementation NSString (NSData)
 
 + (instancetype)stringWithData:(NSData *)data {
