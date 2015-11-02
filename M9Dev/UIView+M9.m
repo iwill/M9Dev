@@ -54,12 +54,12 @@
 
 - (void)m9_updateConstraints {
     if (self.updateConstraintsBlock) self.updateConstraintsBlock();
-    [self m9_updateConstraints];
+    [self m9_updateConstraints]; // at last
 }
 
 - (void)m9_layoutSubviews {
+    [self m9_layoutSubviews]; // at first
     if (self.layoutSubviewsBlock) self.layoutSubviewsBlock();
-    [self m9_layoutSubviews];
 }
 
 @dynamic updateConstraintsBlock;
