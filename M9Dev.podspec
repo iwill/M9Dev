@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
@@ -160,6 +160,6 @@ Pod::Spec.new do |s|
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   s.dependency "Masonry", "~> 0.6"
   s.dependency "JRSwizzle", "~> 1.0"
-  # s.dependency "NSString-UrlEncode", "~> 2.0"
+  s.dependency "NSString-UrlEncode", "~> 2.0"
 
 end
