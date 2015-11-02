@@ -100,7 +100,8 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
 - (void)addTopSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
     self.topSeparator = self.topSeparator OR [UIView new];
     self.topSeparator.backgroundColor = color OR [UIColor lightGrayColor];
-    [self addSubview:self.topSeparator];
+    // !!!: self.contentView for iOS6
+    [self.contentView addSubview:self.topSeparator];
     [self.topSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
@@ -112,7 +113,8 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
 - (void)addBottomSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
     self.bottomSeparator = self.bottomSeparator OR [UIView new];
     self.bottomSeparator.backgroundColor = color OR [UIColor lightGrayColor];
-    [self addSubview:self.bottomSeparator];
+    // !!!: self.contentView for iOS6
+    [self.contentView addSubview:self.bottomSeparator];
     [self.bottomSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
