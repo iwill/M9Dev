@@ -11,13 +11,13 @@
 		60D9A2532435B9F0EB6F2351 /* libPods-M9DevTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CD668994EC447AAC47A2B14 /* libPods-M9DevTests.a */; };
 		DF18B31F1BA001FB00CE10CB /* TestCornerRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF18B31E1BA001FB00CE10CB /* TestCornerRadiusViewController.m */; };
 		DF18B3231BA00E4D00CE10CB /* M9Dev.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DF18B3221BA00E4D00CE10CB /* M9Dev.bundle */; };
-		DF256A171BC95BEC00154BF6 /* M9Link.m in Sources */ = {isa = PBXBuildFile; fileRef = DF256A161BC95BEC00154BF6 /* M9Link.m */; settings = {ASSET_TAGS = (); }; };
+		DF256A171BC95BEC00154BF6 /* M9Link.m in Sources */ = {isa = PBXBuildFile; fileRef = DF256A161BC95BEC00154BF6 /* M9Link.m */; };
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
-		DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */; settings = {ASSET_TAGS = (); }; };
-		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; settings = {ASSET_TAGS = (); }; };
+		DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */; };
+		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
-		DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6217001BD0CE71005F92CC /* NSObject+JS.m */; settings = {ASSET_TAGS = (); }; };
-		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
+		DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6217001BD0CE71005F92CC /* NSObject+JS.m */; };
+		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; };
 		DF69D2251967EA7E00B8C011 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2241967EA7E00B8C011 /* Foundation.framework */; };
 		DF69D2271967EA7E00B8C011 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2261967EA7E00B8C011 /* CoreGraphics.framework */; };
 		DF69D2291967EA7E00B8C011 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF69D2281967EA7E00B8C011 /* UIKit.framework */; };
@@ -82,9 +82,9 @@
 		DFA871371B9C0A570040249B /* UIViewController+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871001B9C0A570040249B /* UIViewController+M9.m */; };
 		DFA871381B9C0A570040249B /* M9URLAction+1.0.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871031B9C0A570040249B /* M9URLAction+1.0.m */; };
 		DFA871391B9C0A570040249B /* M9URLAction.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871051B9C0A570040249B /* M9URLAction.m */; };
-		DFA8713A1B9C0A570040249B /* NSURL+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871071B9C0A570040249B /* NSURL+M9.m */; };
 		DFACA57E1BA673970002A8A0 /* M9AlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFACA57D1BA673970002A8A0 /* M9AlertController.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
+		DFCF92041BE72EF600410F84 /* NSURL+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF92031BE72EF600410F84 /* NSURL+M9.m */; };
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
 		DFDF48011AFC965100F6E31C /* TestPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF48001AFC965100F6E31C /* TestPagingViewController.m */; };
 		DFE66CAF1B3A80EB00124656 /* NSString+CompareToVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CAE1B3A80EB00124656 /* NSString+CompareToVersion.m */; };
@@ -256,12 +256,12 @@
 		DFA871031B9C0A570040249B /* M9URLAction+1.0.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "M9URLAction+1.0.m"; sourceTree = "<group>"; };
 		DFA871041B9C0A570040249B /* M9URLAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9URLAction.h; sourceTree = "<group>"; };
 		DFA871051B9C0A570040249B /* M9URLAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9URLAction.m; sourceTree = "<group>"; };
-		DFA871061B9C0A570040249B /* NSURL+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+M9.h"; sourceTree = "<group>"; };
-		DFA871071B9C0A570040249B /* NSURL+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+M9.m"; sourceTree = "<group>"; };
 		DFACA57C1BA673970002A8A0 /* M9AlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9AlertController.h; sourceTree = "<group>"; };
 		DFACA57D1BA673970002A8A0 /* M9AlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9AlertController.m; sourceTree = "<group>"; };
 		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
 		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
+		DFCF92021BE72EF600410F84 /* NSURL+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+M9.h"; sourceTree = "<group>"; };
+		DFCF92031BE72EF600410F84 /* NSURL+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+M9.m"; sourceTree = "<group>"; };
 		DFD6964D1998788B0089B2B5 /* JSLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSLayoutViewController.h; sourceTree = "<group>"; };
 		DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSLayoutViewController.m; sourceTree = "<group>"; };
 		DFDF47FF1AFC965100F6E31C /* TestPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPagingViewController.h; sourceTree = "<group>"; };
@@ -528,6 +528,8 @@
 				DFA870E71B9C0A560040249B /* NSObject+AssociatedValues.m */,
 				DFA870E81B9C0A560040249B /* NSString+M9.h */,
 				DFA870E91B9C0A560040249B /* NSString+M9.m */,
+				DFCF92021BE72EF600410F84 /* NSURL+M9.h */,
+				DFCF92031BE72EF600410F84 /* NSURL+M9.m */,
 				DFA870EA1B9C0A560040249B /* UIColor+M9.h */,
 				DFA870EB1B9C0A560040249B /* UIColor+M9.m */,
 				DFA870EC1B9C0A560040249B /* UIControl+M9EventCallback.h */,
@@ -642,8 +644,6 @@
 				DFA871031B9C0A570040249B /* M9URLAction+1.0.m */,
 				DFA871041B9C0A570040249B /* M9URLAction.h */,
 				DFA871051B9C0A570040249B /* M9URLAction.m */,
-				DFA871061B9C0A570040249B /* NSURL+M9.h */,
-				DFA871071B9C0A570040249B /* NSURL+M9.m */,
 			);
 			path = URLAction;
 			sourceTree = "<group>";
@@ -855,6 +855,7 @@
 				DFA871141B9C0A570040249B /* UIImage+JS.m in Sources */,
 				DF18B31F1BA001FB00CE10CB /* TestCornerRadiusViewController.m in Sources */,
 				DFA8710B1B9C0A570040249B /* NSString+JS.m in Sources */,
+				DFCF92041BE72EF600410F84 /* NSURL+M9.m in Sources */,
 				DFA871201B9C0A570040249B /* M9PagingViewController.m in Sources */,
 				DFA871131B9C0A570040249B /* UIFont+JS.m in Sources */,
 				DFA871361B9C0A570040249B /* UIView+M9.m in Sources */,
@@ -906,7 +907,6 @@
 				DFA871211B9C0A570040249B /* M9Promise.m in Sources */,
 				DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */,
 				DFA8711C1B9C0A570040249B /* AFNResponseInfo.m in Sources */,
-				DFA8713A1B9C0A570040249B /* NSURL+M9.m in Sources */,
 				DFA871371B9C0A570040249B /* UIViewController+M9.m in Sources */,
 				DFA871291B9C0A570040249B /* NSDictionary+M9.m in Sources */,
 				DFA871241B9C0A570040249B /* M9Utilities.m in Sources */,
