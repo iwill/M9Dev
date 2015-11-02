@@ -40,7 +40,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     
-    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:&KVOContext_M9PagingViewController];
+    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:KVOContext_M9PagingViewController];
 }
 
 - (void)updateViewConstraints {
@@ -68,7 +68,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 }
 
 - (void)dealloc {
-    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:&KVOContext_M9PagingViewController];
+    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:KVOContext_M9PagingViewController];
 }
 
 #pragma mark -
@@ -214,7 +214,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context != &KVOContext_M9PagingViewController) {
+    if (context != KVOContext_M9PagingViewController) {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         return;
     }
