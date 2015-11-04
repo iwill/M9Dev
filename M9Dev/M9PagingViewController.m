@@ -68,7 +68,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 }
 
 - (void)dealloc {
-    [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:KVOContext_M9PagingViewController];
+    [_scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:KVOContext_M9PagingViewController];
 }
 
 #pragma mark -
