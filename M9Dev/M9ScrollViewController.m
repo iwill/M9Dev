@@ -44,6 +44,9 @@
         make.left.top.width.height.equalTo(self.view);
     }];
     
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    
     return _scrollView;
 }
 
