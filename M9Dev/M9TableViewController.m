@@ -53,6 +53,10 @@
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.width.height.equalTo(self.view);
     }];
+    
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    
     return _tableView;
 }
 
