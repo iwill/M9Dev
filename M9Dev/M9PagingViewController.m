@@ -10,7 +10,6 @@
 #import "M9PagingViewController.h"
 
 static const NSInteger PreloadViewControllers = 1;
-static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewController;
 
 @interface M9PagingViewController ()
 
@@ -21,6 +20,8 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 @implementation M9PagingViewController {
     NSInteger _currentPage, _numberOfPages;
 }
+
+static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewController;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nil bundle:nil];
