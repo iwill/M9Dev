@@ -35,22 +35,27 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     self.scrollView.pagingEnabled = YES;
     self.scrollView.scrollsToTop = NO;
     self.scrollView.bounces = YES;
+    self.scrollView.bouncesZoom = NO;
+    self.scrollView.directionalLockEnabled = YES;
     self.scrollView.alwaysBounceHorizontal = YES;
     self.scrollView.alwaysBounceVertical = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
     
-    [self.scrollView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) options:0 context:KVOContext_M9PagingViewController];
+    [self.scrollView addObserver:self
+                      forKeyPath:NSStringFromSelector(@selector(contentInset))
+                         options:0
+                         context:KVOContext_M9PagingViewController];
 }
 
-- (void)updateViewConstraints {
-    [self updateScrollViewContentSize];
-    
+/* - (void)updateViewConstraints {
     [super updateViewConstraints];
-}
+} */
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    
+    [self updateScrollViewContentSize];
     
     // !!!: iOS7 bug - self.scrollView.contentOffset is set to (0, 0)
     [self scrollToPage:self.currentPage animated:NO];
@@ -68,7 +73,9 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 }
 
 - (void)dealloc {
-    [_scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentInset)) context:KVOContext_M9PagingViewController];
+    [_scrollView removeObserver:self
+                     forKeyPath:NSStringFromSelector(@selector(contentInset))
+                        context:KVOContext_M9PagingViewController];
 }
 
 #pragma mark -
@@ -158,6 +165,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     UIViewController *viewController = [self viewControllerOfPage:page];
     if (!viewController) {
         viewController = [self generateViewControllerOfPage:page];
+        viewController.automaticallyAdjustsScrollViewInsets = NO;
         if (!viewController) {
             return;
         }
@@ -181,21 +189,31 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     if (viewController.view.superview != self.scrollView) {
         return;
     }
-    // UIScrollView And Autolayout
-    // @see Technical Note TN2154 - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
-    // @see http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/#4-_[中级]_在UIScrollView顺序排列一些view并自动计算contentSize
-    [viewController.view mas_remakeConstraints:^(MASConstraintMaker *make) {
+    
+    // for calling from - viewDidLayoutSubviews
+    UIEdgeInsets viewInset = [self viewInsetOfPage:page];
+    CGFloat left = CGRectGetWidth(self.scrollView.bounds) * page + viewInset.left;
+    CGFloat top = viewInset.top;
+    CGFloat width = CGRectGetWidth(self.scrollView.bounds) - viewInset.left - viewInset.right;
+    CGFloat height = self.scrollView.contentSize.height - viewInset.top - viewInset.bottom;
+    viewController.view.frame = CGRectMake(left, top, width, height);
+    
+    // for calling from - updateViewConstraints
+    /* UIScrollView And Autolayout
+     * @see Technical Note TN2154 - https://developer.apple.com/library/ios/technotes/tn2154/_index.html
+     * @see http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/#4-_[中级]_在UIScrollView顺序排列一些view并自动计算contentSize
+     */
+    /* [viewController.view mas_remakeConstraints:^(MASConstraintMaker *make) {
         UIEdgeInsets viewInset = [self viewInsetOfPage:page];
         CGFloat left = CGRectGetWidth(self.scrollView.bounds) * page + viewInset.left;
         CGFloat top = viewInset.top;
         CGFloat width = CGRectGetWidth(self.scrollView.bounds) - viewInset.left - viewInset.right;
         CGFloat height = self.scrollView.contentSize.height - viewInset.top - viewInset.bottom;
-        
         make.left.mas_equalTo(left);
         make.top.mas_equalTo(top);
         make.width.mas_equalTo(width);
         make.height.mas_equalTo(height);
-    }];
+    }]; */
 }
 
 - (void)removeChildViewControllerOfPage:(NSInteger)page {
@@ -219,10 +237,12 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
         return;
     }
     
-    if (object == self.scrollView) {
-        if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
-            [self updateScrollViewContentSize];
-        }
+    if (object != self.scrollView) {
+        return;
+    }
+    
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentInset))]) {
+        [self updateScrollViewContentSize];
     }
 }
 
