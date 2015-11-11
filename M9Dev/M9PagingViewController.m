@@ -166,7 +166,10 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     UIViewController *viewController = [self viewControllerOfPage:page];
     if (!viewController) {
         viewController = [self generateViewControllerOfPage:page];
-        viewController.automaticallyAdjustsScrollViewInsets = NO;
+        /* `if` for iOS6 */
+        if ([viewController respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+            viewController.automaticallyAdjustsScrollViewInsets = NO;
+        }
         if (!viewController) {
             return;
         }
