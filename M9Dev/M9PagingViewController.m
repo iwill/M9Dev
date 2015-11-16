@@ -262,7 +262,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     }];
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - <UIScrollViewDelegate>
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if ([_SUPER_CLASS instancesRespondToSelector:_cmd]) {

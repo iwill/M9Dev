@@ -316,12 +316,12 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 
 /**
- * StructMake
+ * SetStruct
  */
-#define StructMake(_struct, statements) ({ \
-    __typeof__(_struct) make = _struct; \
+#define SetStruct(_struct, statements) ({ \
+    __typeof__(_struct) set = _struct; \
     statements \
-    _RETURN make; \
+    _RETURN set; \
 })
 
 
