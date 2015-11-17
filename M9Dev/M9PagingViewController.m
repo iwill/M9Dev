@@ -107,7 +107,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     return nil;
 }
 
-- (UIEdgeInsets)viewInsetOfPage:(NSInteger)page {
+- (UIEdgeInsets)viewInsetsOfPage:(NSInteger)page {
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
@@ -195,7 +195,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
     }
     
     // for calling from - viewDidLayoutSubviews
-    UIEdgeInsets viewInset = [self viewInsetOfPage:page];
+    UIEdgeInsets viewInset = [self viewInsetsOfPage:page];
     CGFloat left = CGRectGetWidth(self.scrollView.bounds) * page + viewInset.left;
     CGFloat top = viewInset.top;
     CGFloat width = CGRectGetWidth(self.scrollView.bounds) - viewInset.left - viewInset.right;
@@ -208,7 +208,7 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
      * @see http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/#4-_[中级]_在UIScrollView顺序排列一些view并自动计算contentSize
      */
     /* [viewController.view mas_remakeConstraints:^(MASConstraintMaker *make) {
-        UIEdgeInsets viewInset = [self viewInsetOfPage:page];
+        UIEdgeInsets viewInset = [self viewInsetsOfPage:page];
         CGFloat left = CGRectGetWidth(self.scrollView.bounds) * page + viewInset.left;
         CGFloat top = viewInset.top;
         CGFloat width = CGRectGetWidth(self.scrollView.bounds) - viewInset.left - viewInset.right;
