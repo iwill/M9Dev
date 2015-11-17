@@ -61,6 +61,38 @@
 
 #pragma mark -
 
+CGFloat UISizeScaleWithMargin(CGFloat margin, CGFloat baseWidth) {
+    static CGFloat screenWidth;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+        screenWidth = MIN(screenSize.width, screenSize.height);
+    });
+    NSCAssert(margin >= 0.0, @"<#margin#> must great than <#0.0#>");
+    NSCAssert(margin < baseWidth && margin < screenWidth, @"<#margin#> must less than <#baseWidth#> & <#screenWidth#>");
+    if (margin < 0.0 || margin >= baseWidth || margin >= screenWidth) {
+        margin = 0;
+    }
+    return (screenWidth - margin) / (baseWidth - margin);
+};
+
+CGFloat UISizeScaleWithMargin_320(CGFloat margin) {
+    static CGFloat const iPhone5Width = 320;
+    return UISizeScaleWithMargin(margin, iPhone5Width);
+}
+
+CGFloat UISizeScaleWithMargin_375(CGFloat margin) {
+    static CGFloat const iPhone6Width = 375;
+    return UISizeScaleWithMargin(margin, iPhone6Width);
+}
+
+CGFloat UISizeScaleWithMargin_414(CGFloat margin) {
+    static CGFloat const iPhone6PlusWidth = 414;
+    return UISizeScaleWithMargin(margin, iPhone6PlusWidth);
+}
+
+#pragma mark -
+
 @implementation UIImage (M9DevBundle)
 
 + (UIImage *)imageNamedInM9DevBundle:(NSString *)name {

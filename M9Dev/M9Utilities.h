@@ -268,6 +268,15 @@ class NSObject; /* for @ */ \
 
 
 /**
+ *  UISizeScaleWithMargin base on designing screen width
+ */
+CGFloat UISizeScaleWithMargin(CGFloat margin, CGFloat baseWidth);
+CGFloat UISizeScaleWithMargin_320(CGFloat margin);
+CGFloat UISizeScaleWithMargin_375(CGFloat margin);
+CGFloat UISizeScaleWithMargin_414(CGFloat margin);
+
+
+/**
  * bundle & directory
  */
 // [UIImage imageNamed:M9Dev_bundle_"QING.png"]
