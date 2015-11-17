@@ -13,61 +13,17 @@
 
 @implementation UIViewController (M9Category)
 
-+ (UIViewController *)rootViewController {
-    return [UIApplication sharedApplication].keyWindow.rootViewController;
+#pragma mark - layout
+
+- (CGFloat)topLayoutGuideLength {
+    return [self respondsToSelector:@selector(topLayoutGuide)] ? self.topLayoutGuide.length : 0;
 }
 
-+ (UIViewController *)topViewController {
-    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    UITabBarController *tabBarController = [topViewController as:[UITabBarController class]];
-    if (tabBarController.selectedViewController) {
-        topViewController = tabBarController.selectedViewController;
-    }
-    while (topViewController.presentedViewController) {
-        topViewController = topViewController.presentedViewController;
-    }
-    UINavigationController *navigationController = [topViewController as:[UINavigationController class]];
-    if ([navigationController.viewControllers count]) {
-        topViewController = navigationController.viewControllers.lastObject;
-    }
-    return topViewController;
+- (CGFloat)bottomLayoutGuideLength {
+    return [self respondsToSelector:@selector(bottomLayoutGuide)] ? self.bottomLayoutGuide.length : 0;
 }
 
-+ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    UITabBarController *tabBarController = [rootViewController as:[UITabBarController class]];
-    [rootViewController dismissAllViewControllersAnimated:animated completion:^{
-        UINavigationController *navigationController = [tabBarController.selectedViewController OR rootViewController as:[UINavigationController class]];
-        if (navigationController) {
-            [navigationController popToRootViewControllerAnimated:animated completion:completion];
-        }
-        else {
-            if (completion) completion();
-        }
-    }];
-    return rootViewController;
-}
-
-- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    if (!self.presentedViewController) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (completion) completion();
-        });
-        return;
-    }
-    
-    [self dismissViewControllerAnimated:animated completion:^{
-        [self dismissAllViewControllersAnimated:NO completion:completion];
-    }];
-}
-
-- (UIViewController *)popViewControllerAnimated {
-    return [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)dismissViewControllerAnimated {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+#pragma mark - child view controller management
 
 - (void)addChildViewController:(UIViewController *)childViewController superview:(UIView *)superview {
     /* The addChildViewController: method automatically calls the willMoveToParentViewController: method
@@ -112,6 +68,64 @@
                                 // end
                                 if (completion) completion(finished);
                             }];
+}
+
+#pragma mark - view controllers navigation
+
+- (UIViewController *)popViewControllerAnimated {
+    return [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)dismissViewControllerAnimated {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    if (!self.presentedViewController) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (completion) completion();
+        });
+        return;
+    }
+    
+    [self dismissViewControllerAnimated:animated completion:^{
+        [self dismissAllViewControllersAnimated:NO completion:completion];
+    }];
+}
+
++ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UITabBarController *tabBarController = [rootViewController as:[UITabBarController class]];
+    [rootViewController dismissAllViewControllersAnimated:animated completion:^{
+        UINavigationController *navigationController = [tabBarController.selectedViewController OR rootViewController as:[UINavigationController class]];
+        if (navigationController) {
+            [navigationController popToRootViewControllerAnimated:animated completion:completion];
+        }
+        else {
+            if (completion) completion();
+        }
+    }];
+    return rootViewController;
+}
+
++ (UIViewController *)topViewController {
+    UIViewController *topViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UITabBarController *tabBarController = [topViewController as:[UITabBarController class]];
+    if (tabBarController.selectedViewController) {
+        topViewController = tabBarController.selectedViewController;
+    }
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    UINavigationController *navigationController = [topViewController as:[UINavigationController class]];
+    if ([navigationController.viewControllers count]) {
+        topViewController = navigationController.viewControllers.lastObject;
+    }
+    return topViewController;
+}
+
++ (UIViewController *)rootViewController {
+    return [UIApplication sharedApplication].keyWindow.rootViewController;
 }
 
 @end

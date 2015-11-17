@@ -13,22 +13,12 @@
 
 @interface UIViewController (M9Category)
 
-+ (UIViewController *)rootViewController;
-+ (UIViewController *)topViewController;
+#pragma mark - layout
 
-/**
- *  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES/NO completion:^{
- *      [rootViewController presentViewController:viewController animated:YES/NO completion:nil];
- *  }];
- */
-+ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
-- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
+// TODO: for iOS6
+@property(nonatomic, readonly) CGFloat topLayoutGuideLength, bottomLayoutGuideLength;
 
-// for @selector(popViewControllerAnimated)
-- (UIViewController *)popViewControllerAnimated;
-
-// for @selector(dismissViewControllerAnimated)
-- (void)dismissViewControllerAnimated;
+#pragma mark - child view controller management
 
 /**
  *  Adding and Removing a Child
@@ -42,5 +32,25 @@
                                   options:(UIViewAnimationOptions)options
                                animations:(void (^)(void))animations
                                completion:(void (^)(BOOL))completion;
+
+#pragma mark - view controllers navigation
+
+// for @selector(popViewControllerAnimated)
+- (UIViewController *)popViewControllerAnimated;
+
+// for @selector(dismissViewControllerAnimated)
+- (void)dismissViewControllerAnimated;
+
+/**
+ *  __block UIViewController *rootViewController = [UIViewController gotoRootViewControllerAnimated:YES/NO completion:^{
+ *      [rootViewController presentViewController:viewController animated:YES/NO completion:nil];
+ *  }];
+ */
+- (void)dismissAllViewControllersAnimated:(BOOL)animated completion:(void (^)(void))completion;
+
++ (UIViewController *)gotoRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
+
++ (UIViewController *)topViewController;
++ (UIViewController *)rootViewController;
 
 @end
