@@ -26,6 +26,9 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
+        if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+            self.automaticallyAdjustsScrollViewInsets = NO;
+        }
     }
     return self;
 }
@@ -55,6 +58,9 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    
+    self.scrollView.contentInset = [self scrollViewInsets];
+    self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
     
     [self updateScrollViewContentSize];
     
@@ -109,6 +115,11 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 
 - (UIEdgeInsets)viewInsetsOfPage:(NSInteger)page {
     return UIEdgeInsetsMake(0, 0, 0, 0);
+}
+
+- (UIEdgeInsets)scrollViewInsets {
+    return UIEdgeInsetsMake(self.topLayoutGuideLength, 0,
+                            self.bottomLayoutGuideLength, 0);
 }
 
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated {
