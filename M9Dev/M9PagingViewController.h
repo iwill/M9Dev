@@ -31,7 +31,7 @@
 // automaticallyAdjustsScrollViewInsets of the generated viewControllers will be set to NO
 - (UIViewController *)generateViewControllerOfPage:(NSInteger)page;
 // default: UIEdgeInsetsMake(0, 0, 0, 0)
-- (UIEdgeInsets)viewInsetOfPage:(NSInteger)page;
+- (UIEdgeInsets)viewInsetsOfPage:(NSInteger)page;
 
 - (void)scrollToPage:(NSInteger)page animated:(BOOL)animated;
 

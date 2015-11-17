@@ -69,7 +69,7 @@
     return viewController;
 }
 
-- (UIEdgeInsets)viewInsetOfPage:(NSInteger)page {
+- (UIEdgeInsets)viewInsetsOfPage:(NSInteger)page {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
 
