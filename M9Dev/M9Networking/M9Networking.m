@@ -289,7 +289,7 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     if (config.dataParser & M9ResponseDataParser_XML) {
         [responseSerializers addObject:[AFXMLParserResponseSerializer serializer]];
     }
-#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+#if defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
     if (config.dataParser & M9ResponseDataParser_XMLDocument) {
         [responseSerializers addObject:[AFXMLDocumentResponseSerializer serializer]];
     }

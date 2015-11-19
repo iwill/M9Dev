@@ -7,7 +7,7 @@
 //  Released under the MIT license.
 //
 
-#ifndef M9Dev
+#if !defined(M9Dev)
 #define M9Dev
 
 /* Error: Include of non-modular header inside framework module

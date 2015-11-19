@@ -13,7 +13,7 @@
 // #import <Specta/Specta.h>
 #import "SpectaAlternative.h"
 
-#ifndef EXP_SHORTHAND
+#if !defined(EXP_SHORTHAND)
     #define EXP_SHORTHAND
 #endif
 #import <Expecta/Expecta.h>

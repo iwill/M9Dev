@@ -43,7 +43,7 @@ typedef NS_OPTIONS(NSUInteger, M9ResponseDataParser) {
     M9ResponseDataParser_Data   = 1 << 0,
     M9ResponseDataParser_JSON   = 1 << 1,
     M9ResponseDataParser_XML    = 1 << 2,
-#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+#if defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
     M9ResponseDataParser_XMLDocument = 1 << 3,
 #endif
     M9ResponseDataParser_PList  = 1 << 4,

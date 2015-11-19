@@ -398,7 +398,7 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 })
 
 // __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
-#ifndef __OPTIMIZE__
+#if !defined(__OPTIMIZE__)
     #define NSLogHere() { \
         NSLog(@"%@", _HERE); \
     }
