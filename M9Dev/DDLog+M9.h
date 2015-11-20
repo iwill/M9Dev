@@ -6,8 +6,6 @@
 //  Copyright © 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
-#define COCOA_LUMBERJACK_AVAILABLE 1
-
 #if defined(COCOA_LUMBERJACK_AVAILABLE)
     #if defined(__OPTIMIZE__)
         #define ddLogLevelGlobal DDLogLevelOff
