@@ -8,7 +8,7 @@
 
 #import "DDLog+M9.h"
 
-#if defined(COCOA_LUMBERJACK_AVAILABLE)
+#if defined(COCOA_LUMBERJACK_AVAILABLE) && !defined(__OPTIMIZE__)
 @implementation DDLog (M9)
 
 + (void)m9_setupDDLog {
