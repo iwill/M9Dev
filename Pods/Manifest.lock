@@ -20,6 +20,14 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - CocoaLumberjack (2.2.0):
+    - CocoaLumberjack/Default (= 2.2.0)
+    - CocoaLumberjack/Extensions (= 2.2.0)
+  - CocoaLumberjack/Core (2.2.0)
+  - CocoaLumberjack/Default (2.2.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.2.0):
+    - CocoaLumberjack/Default
   - Expecta (0.4.2)
   - FLEX (2.0.6)
   - JRSwizzle (1.0)
@@ -33,6 +41,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
+  - CocoaLumberjack
   - Expecta (~> 0.4)
   - FLEX (~> 2.0)
   - JRSwizzle (~> 1.0)
@@ -44,6 +53,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  CocoaLumberjack: 17fe8581f84914d5d7e6360f7c70022b173c3ae0
   Expecta: 78b4e8b0c8291fa4524d7f74016b6065c2e391ec
   FLEX: 3c390976e788d3d447b614ea1714ffc8fc914cf3
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
@@ -53,4 +63,4 @@ SPEC CHECKSUMS:
   Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
