@@ -12,6 +12,12 @@
     #else
         #import <CocoaLumberjack/CocoaLumberjack.h>
         #define ddLogLevelGlobal DDLogLevelAll
+        #undef  LOG_LEVEL_DEF
+        #define LOG_LEVEL_DEF M9_ddLogLevel
+static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
+@interface DDLog (M9)
++ (void)m9_setupDDLog;
+@end
     #endif
 #else
     #undef  DDLogError
@@ -24,16 +30,4 @@
     #define DDLogInfo(frmt, ...)    NSLog(@"<#INF#> " frmt, ##__VA_ARGS__);
     #define DDLogDebug(frmt, ...)   NSLog(@"<#DEB#> " frmt, ##__VA_ARGS__);
     #define DDLogVerbose(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__);
-#endif
-
-#if defined(ddLogLevelGlobal)
-    #undef  LOG_LEVEL_DEF
-    #define LOG_LEVEL_DEF M9_ddLogLevel
-    static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
-#endif
-
-#if defined(COCOA_LUMBERJACK_AVAILABLE)
-@interface DDLog (M9)
-+ (void)m9_setupDDLog;
-@end
 #endif
