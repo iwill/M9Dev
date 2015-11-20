@@ -7,18 +7,18 @@
 //
 
 #if defined(COCOA_LUMBERJACK_AVAILABLE)
+    #import <CocoaLumberjack/CocoaLumberjack.h>
     #if defined(__OPTIMIZE__)
         #define ddLogLevelGlobal DDLogLevelOff
     #else
-        #import <CocoaLumberjack/CocoaLumberjack.h>
         #define ddLogLevelGlobal DDLogLevelAll
-        #undef  LOG_LEVEL_DEF
-        #define LOG_LEVEL_DEF M9_ddLogLevel
-static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
-@interface DDLog (M9)
-+ (void)m9_setupDDLog;
-@end
     #endif
+    #undef  LOG_LEVEL_DEF
+    #define LOG_LEVEL_DEF M9_ddLogLevel
+    static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
+    @interface DDLog (M9)
+    + (void)m9_setupDDLog;
+    @end
 #else
     #undef  DDLogError
     #undef  DDLogWarn
