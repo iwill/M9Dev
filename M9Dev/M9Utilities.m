@@ -125,7 +125,7 @@ void __NO_NSLog__(NSString *format, ...) {}
 @implementation M9Utilities (DDLog)
 
 + (void)setupDDLog {
-#if defined(M9_DDLOG_ENABLED)
+#if defined(M9_NSLOG_ENABLED)
     NSArray *allLoggers = [DDLog allLoggers];
     for (id<DDLogger> logger in @[ [DDASLLogger sharedInstance], [DDTTYLogger sharedInstance] ]) {
         if (![allLoggers containsObject:logger]) {
@@ -151,13 +151,13 @@ void __NO_NSLog__(NSString *format, ...) {}
     [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_LOG_CXT];
     [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_LOG_CXT];
     
-    DDLogInf(@"M9-DDLog ColorLegend:");
+    NSLOG(@"NSLOG ColorLegend:");
     
-    DDLogErr(@"ERR");
-    DDLogWar(@"WAR");
-    DDLogInf(@"INF");
-    DDLogDeb(@"DEB");
-    DDLogVer(@"VER");
+    NSERR(@"ERR");
+    NSWAR(@"WAR");
+    NSINF(@"INF");
+    NSDEB(@"DEB");
+    NSVER(@"VER");
 #endif
 }
 
