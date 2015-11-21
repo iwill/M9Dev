@@ -10,6 +10,20 @@
 #import <Foundation/Foundation.h>
 
 
+@interface M9Utilities : NSObject
+@end
+
+
+/* TODO: typedef void (^ResultCallback)(NSString *string, NSArray *array);
+- (void)testStructWithResultCallback:(ResultCallback)result {
+    return result(@"test", @[ @1, @2 ]);
+}
+[self testStructWithResultCallback:^(NSString *string, NSArray *array) {
+    self.string = string;
+    self.array = array;
+}]; */
+
+
 // @see SpectaUtility.h - https://github.com/specta/specta
 #define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
 
@@ -398,6 +412,38 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #define NSLog(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
     #define NSLogv(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
 #endif
+
+
+/**
+ *  custom DDLog
+ */
+#if defined(M9_DDLOG_ENABLED)
+    #import <CocoaLumberjack/CocoaLumberjack.h>
+    #if defined(__OPTIMIZE__)
+        #define ddLogLevelGlobal DDLogLevelOff
+    #else
+        #define ddLogLevelGlobal DDLogLevelAll
+    #endif
+    #undef  LOG_LEVEL_DEF
+    #define LOG_LEVEL_DEF M9_ddLogLevel
+    #define M9_LOG_CXT (2015-11-21)
+    #define DDLogErr(frmt, ...) LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDLogWar(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDLogInf(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDLogDeb(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDLogVer(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
+#else
+    #define DDLogErr(frmt, ...) NSLog(@"<#ERR#> " frmt, ##__VA_ARGS__)
+    #define DDLogWar(frmt, ...) NSLog(@"<#WAR#> " frmt, ##__VA_ARGS__)
+    #define DDLogInf(frmt, ...) NSLog(@"<#INF#> " frmt, ##__VA_ARGS__)
+    #define DDLogDeb(frmt, ...) NSLog(@"<#DEB#> " frmt, ##__VA_ARGS__)
+    #define DDLogVer(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__)
+    #import <Foundation/Foundation.h>
+#endif
+@interface M9Utilities (DDLog)
++ (void)setupDDLog;
+@end
 
 
 /**
