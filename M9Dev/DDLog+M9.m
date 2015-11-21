@@ -2,13 +2,13 @@
 //  DDLog+M9.m
 //  M9Dev
 //
-//  Created by MingLQ on 2015-11-20.
+//  Created by MingLQ on 2015-11-21.
 //  Copyright © 2015年 MingLQ <minglq.9@gmail.com>. All rights reserved.
 //
 
 #import "DDLog+M9.h"
 
-#if defined(COCOA_LUMBERJACK_AVAILABLE)
+#if defined(M9_DDLOG_ENABLED)
 @implementation DDLog (M9)
 
 + (void)m9_setupDDLog {
@@ -31,19 +31,25 @@
     
     DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
     [ttyLogger setColorsEnabled:YES];
-    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError];
-    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning];
-    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo];
-    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug];
-    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose];
+    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError context:M9_LOG_CXT];
+    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning context:M9_LOG_CXT];
+    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo context:M9_LOG_CXT];
+    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_LOG_CXT];
+    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_LOG_CXT];
     
-    DDLogInfo(@"DDLog+M9-ColorLegend:");
-    DDLogError(@"Error");
-    DDLogWarn(@"Warn");
-    DDLogInfo(@"Info");
-    DDLogDebug(@"Debug");
-    DDLogVerbose(@"Verbose");
+    DDLogInf(@"M9-DDLog ColorLegend:");
+    
+    DDLogErr(@"ERR");
+    DDLogWar(@"WAR");
+    DDLogInf(@"INF");
+    DDLogDeb(@"DEB");
+    DDLogVer(@"VER");
 }
 
+@end
+#else
+@implementation DDLog
++ (void)m9_setupDDLog {
+}
 @end
 #endif
