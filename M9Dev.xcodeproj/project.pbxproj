@@ -1077,7 +1077,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"COCOA_LUMBERJACK_AVAILABLE=1",
+					"M9_DDLOG_ENABLED=1",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/M9DevDemo/M9Dev-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "im.iwill.${PRODUCT_NAME:rfc1034identifier}";
