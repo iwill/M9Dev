@@ -122,9 +122,9 @@ void __NO_NSLog__(NSString *format, ...) {}
 
 #pragma mark -
 
-@implementation M9Utilities (DDLog)
+@implementation M9Utilities (NSLOG)
 
-+ (void)setupDDLog {
++ (void)setupNSLOG {
 #if defined(M9_NSLOG_ENABLED)
     NSArray *allLoggers = [DDLog allLoggers];
     for (id<DDLogger> logger in @[ [DDASLLogger sharedInstance], [DDTTYLogger sharedInstance] ]) {
@@ -145,11 +145,11 @@ void __NO_NSLog__(NSString *format, ...) {}
     
     DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
     [ttyLogger setColorsEnabled:YES];
-    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError context:M9_LOG_CXT];
-    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning context:M9_LOG_CXT];
-    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo context:M9_LOG_CXT];
-    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_LOG_CXT];
-    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_LOG_CXT];
+    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError context:M9_NSLOG_CXT];
+    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning context:M9_NSLOG_CXT];
+    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo context:M9_NSLOG_CXT];
+    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_NSLOG_CXT];
+    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_NSLOG_CXT];
     
     NSLOG(@"NSLOG ColorLegend:");
     
