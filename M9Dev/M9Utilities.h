@@ -426,12 +426,12 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #endif
     #undef  LOG_LEVEL_DEF
     #define LOG_LEVEL_DEF M9_ddLogLevel
-    #define M9_LOG_CXT (2015-11-21)
-    #define NSERR(frmt, ...) LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSWAR(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSINF(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSDEB(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSVER(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_LOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define M9_NSLOG_CXT (NSIntegerMax-2015-11-21)
+    #define NSERR(frmt, ...) LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define NSWAR(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define NSINF(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define NSDEB(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define NSVER(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
     #define NSLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
     static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
 #else
@@ -443,8 +443,8 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #define NSVER(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__)
     #define NSLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
 #endif
-@interface M9Utilities (DDLog)
-+ (void)setupDDLog;
+@interface M9Utilities (NSLOG)
++ (void)setupNSLOG;
 @end
 
 
