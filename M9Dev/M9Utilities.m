@@ -122,10 +122,10 @@ void __NO_NSLog__(NSString *format, ...) {}
 
 #pragma mark -
 
-#if defined(M9_DDLOG_ENABLED)
 @implementation M9Utilities (DDLog)
 
 + (void)setupDDLog {
+#if defined(M9_DDLOG_ENABLED)
     NSArray *allLoggers = [DDLog allLoggers];
     for (id<DDLogger> logger in @[ [DDASLLogger sharedInstance], [DDTTYLogger sharedInstance] ]) {
         if (![allLoggers containsObject:logger]) {
@@ -158,7 +158,7 @@ void __NO_NSLog__(NSString *format, ...) {}
     DDLogInf(@"INF");
     DDLogDeb(@"DEB");
     DDLogVer(@"VER");
+#endif
 }
 
 @end
-#endif
