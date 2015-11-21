@@ -36,7 +36,6 @@
 		DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */; };
 		DF6D6BA51B9F084D00259E6D /* UITableViewCell+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9.m */; };
 		DF6D6BA81B9F160100259E6D /* TestClosestAndAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */; };
-		DF7A39C31BFEF53000E2412D /* DDLog+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7A39C21BFEF53000E2412D /* DDLog+M9.m */; };
 		DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */; };
 		DFA871081B9C0A570040249B /* ARCWeakRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA870981B9C0A560040249B /* ARCWeakRef.m */; };
 		DFA871091B9C0A570040249B /* NSAttributedString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA8709C1B9C0A560040249B /* NSAttributedString+JS.m */; };
@@ -159,8 +158,6 @@
 		DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+M9.m"; sourceTree = "<group>"; };
 		DF6D6BA61B9F160100259E6D /* TestClosestAndAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestClosestAndAccessoryViewController.h; sourceTree = "<group>"; };
 		DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClosestAndAccessoryViewController.m; sourceTree = "<group>"; };
-		DF7A39C11BFEF53000E2412D /* DDLog+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DDLog+M9.h"; sourceTree = "<group>"; };
-		DF7A39C21BFEF53000E2412D /* DDLog+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DDLog+M9.m"; sourceTree = "<group>"; };
 		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
 		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
 		DF96C5281B799A4E006DF4EA /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
@@ -502,8 +499,6 @@
 				DFA871011B9C0A570040249B /* URLAction */,
 				DFA870971B9C0A560040249B /* ARCWeakRef.h */,
 				DFA870981B9C0A560040249B /* ARCWeakRef.m */,
-				DF7A39C11BFEF53000E2412D /* DDLog+M9.h */,
-				DF7A39C21BFEF53000E2412D /* DDLog+M9.m */,
 				DFACA57C1BA673970002A8A0 /* M9AlertController.h */,
 				DFACA57D1BA673970002A8A0 /* M9AlertController.m */,
 				DFA870C41B9C0A560040249B /* M9Dev.h */,
@@ -901,7 +896,6 @@
 				DFA871191B9C0A570040249B /* NSString+JSONObject.m in Sources */,
 				DFA871181B9C0A570040249B /* JSONObject.m in Sources */,
 				DFA871091B9C0A570040249B /* NSAttributedString+JS.m in Sources */,
-				DF7A39C31BFEF53000E2412D /* DDLog+M9.m in Sources */,
 				DFA871351B9C0A570040249B /* UIScrollViewController.m in Sources */,
 				DFA871251B9C0A570040249B /* NSArray+M9.m in Sources */,
 				DFA8710A1B9C0A570040249B /* NSData+JS.m in Sources */,
