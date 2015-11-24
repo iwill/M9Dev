@@ -8,7 +8,29 @@
 
 #import "UITableViewCell+M9.h"
 
-@implementation UITableViewCell (M9AccessoryButton)
+@implementation UITableViewCell (M9_UITableView)
+
+@dynamic closestTableView;
+- (UITableView *)closestTableView {
+    return (UITableView *)[self closestViewOfClass:[UITableView class]];
+}
+
+- (BOOL)isFirstRowOfSectionInTableView:(UITableView *)tableView {
+    NSIndexPath *indexPath = [tableView indexPathForCell:self];
+    return indexPath && indexPath.row == 0;
+}
+
+- (BOOL)isLastRowOfSectionInTableView:(UITableView *)tableView {
+    NSIndexPath *indexPath = [tableView indexPathForCell:self];
+    NSInteger numberOfRows = [tableView numberOfRowsInSection:indexPath.section];
+    return indexPath && indexPath.row == numberOfRows - 1;
+}
+
+@end
+
+#pragma mark -
+
+@implementation UITableViewCell (M9_AccessoryButton)
 
 @dynamic accessoryButton;
 
@@ -97,28 +119,38 @@ static void *UITableViewCell_bottomSeparator = &UITableViewCell_bottomSeparator;
     [self associateValue:bottomSeparator withKey:UITableViewCell_bottomSeparator];
 }
 
-- (void)addTopSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
+- (void)showTopSeparatorWithColor:(UIColor *)color insets:(UIEdgeInsets)insets {
     self.topSeparator = self.topSeparator OR [UIView new];
     self.topSeparator.backgroundColor = color OR [UIColor lightGrayColor];
     [self addSubview:self.topSeparator];
     [self.topSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
-        make.left.equalTo(self).with.offset(inset.left);
-        make.right.equalTo(self).with.offset(- inset.right);
+        make.left.equalTo(self).with.offset(insets.left);
+        make.right.equalTo(self).with.offset(- insets.right);
     }];
+    self.topSeparator.hidden = NO;
 }
 
-- (void)addBottomSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset {
+- (void)showBottomSeparatorWithColor:(UIColor *)color insets:(UIEdgeInsets)insets {
     self.bottomSeparator = self.bottomSeparator OR [UIView new];
     self.bottomSeparator.backgroundColor = color OR [UIColor lightGrayColor];
     [self addSubview:self.bottomSeparator];
     [self.bottomSeparator mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(0);
         make.height.mas_equalTo(1.0 / [UIScreen mainScreen].scale);
-        make.left.equalTo(self).with.offset(inset.left);
-        make.right.equalTo(self).with.offset(- inset.right);
+        make.left.equalTo(self).with.offset(insets.left);
+        make.right.equalTo(self).with.offset(- insets.right);
     }];
+    self.bottomSeparator.hidden = NO;
+}
+
+- (void)hideTopSeparator {
+    self.topSeparator.hidden = YES;
+}
+
+- (void)hideBottomSeparator {
+    self.bottomSeparator.hidden = YES;
 }
 
 @end
