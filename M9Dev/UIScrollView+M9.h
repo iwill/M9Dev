@@ -11,7 +11,10 @@
 
 @interface UIScrollView (UIScrollViewScrolledToTheBottomEdge)
 
-- (BOOL)scrolledToTheBottomEdge;
+// NO offsetX, offsetY
+@property (nonatomic, readonly) CGFloat minOffsetX, minOffsetY, maxOffsetX, maxOffsetY;
+
+- (void)setContentOffsetWithoutNotifingDelegate:(CGPoint)contentOffset;
 
 /**
  *  if (dragging && bouncingOffsetY < 0) {
@@ -25,5 +28,6 @@
  *  }
  */
 - (CGFloat)bouncingOffsetY;
+- (BOOL)scrolledToTheBottomEdge /* DEPRECATED_ATTRIBUTE */;
 
 @end
