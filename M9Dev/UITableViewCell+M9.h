@@ -13,7 +13,34 @@
 #import "M9Utilities.h"
 #import "UIView+M9.h"
 
-@interface UITableViewCell (M9AccessoryButton)
+/**
+ *  indexPath:          [self.closestTableView indexPathForCell:self]
+ *  numberOfRows:       [self.closestTableView numberOfRowsInSection:indexPath.section]
+ *  numberOfSections:   self.closestTableView.numberOfSections
+ *
+ *  @see UITableView
+ */
+@interface UITableViewCell (M9_UITableView)
+
+/**
+ *  @return nil if cell is not added to a tableView
+ *
+ *  @see UIView+M9.h
+ *      - (UIView *)closestViewOfClass:(Class)clazz
+ */
+@property (nonatomic, readonly) UITableView *closestTableView;
+
+/**
+ *  @return NO if self.closestTableView is not available
+ */
+- (BOOL)isFirstRowOfSectionInTableView:(UITableView *)tableView;
+- (BOOL)isLastRowOfSectionInTableView:(UITableView *)tableView;
+
+@end
+
+#pragma mark -
+
+@interface UITableViewCell (M9_AccessoryButton)
 
 // TODO: MingLQ - A or B
 
@@ -31,7 +58,10 @@
 
 @property (nonatomic, strong) UIView *topSeparator, *bottomSeparator;
 
-- (void)addTopSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset;
-- (void)addBottomSeparatorWithColor:(UIColor *)color inset:(UIEdgeInsets)inset;
+- (void)showTopSeparatorWithColor:(UIColor *)color insets:(UIEdgeInsets)insets;
+- (void)showBottomSeparatorWithColor:(UIColor *)color insets:(UIEdgeInsets)insets;
+
+- (void)hideTopSeparator;
+- (void)hideBottomSeparator;
 
 @end

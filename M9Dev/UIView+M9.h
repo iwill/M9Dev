@@ -61,8 +61,10 @@ typedef void (^UIViewUpdateConstraintsBlock)();
 - (UIView *)subviewWithTag:(NSInteger)tag;
 - (void)removeAllSubviews DEPRECATED_ATTRIBUTE;
 
+// return nil if not found in the current view controller
 - (UIView *)closestViewOfClass:(Class)clazz; // NOT include self
 - (UIView *)closestViewOfClass:(Class)clazz includeSelf:(BOOL)includeSelf;
+// return nil if not found in the current window
 - (UIViewController *)closestViewController;
 
 /**
