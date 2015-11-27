@@ -15,6 +15,7 @@
 		DF2781181B9DB4F800E5E517 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF2781171B9DB4F800E5E517 /* Accelerate.framework */; };
 		DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */; };
 		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; };
+		DF51017F1C08536600991827 /* YYModelTestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = DF51017E1C08536600991827 /* YYModelTestsSpec.m */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
 		DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6217001BD0CE71005F92CC /* NSObject+JS.m */; };
 		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; };
@@ -125,6 +126,7 @@
 		DF34A3E51BAC58EE00F6AF06 /* FreeTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeTestViewController.h; sourceTree = "<group>"; };
 		DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTestViewController.m; sourceTree = "<group>"; };
 		DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
+		DF51017E1C08536600991827 /* YYModelTestsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYModelTestsSpec.m; sourceTree = "<group>"; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
 		DF6216FF1BD0CE71005F92CC /* NSObject+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JS.h"; sourceTree = "<group>"; };
@@ -336,6 +338,14 @@
 			path = M9Link;
 			sourceTree = "<group>";
 		};
+		DF51017D1C08536600991827 /* YYModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				DF51017E1C08536600991827 /* YYModelTestsSpec.m */,
+			);
+			path = YYModelTests;
+			sourceTree = "<group>";
+		};
 		DF69D2181967EA7E00B8C011 = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +445,7 @@
 				DF69D2491967EA7F00B8C011 /* M9DevTests.m */,
 				DFFA08C61A136060003168E1 /* Specta+Expecta.m */,
 				DFFA08BF1A134D3A003168E1 /* M9Promise */,
+				DF51017D1C08536600991827 /* YYModelTests */,
 				DF69D2441967EA7F00B8C011 /* Supporting Files */,
 			);
 			path = M9DevTests;
@@ -954,6 +965,7 @@
 				DFFCA3E51A398B61009BDE46 /* SpectaAlternative.m in Sources */,
 				DFFCA3E71A3993B0009BDE46 /* M9WhenTests.m in Sources */,
 				DF69D24A1967EA7F00B8C011 /* M9DevTests.m in Sources */,
+				DF51017F1C08536600991827 /* YYModelTestsSpec.m in Sources */,
 				DFFA08C11A134F1E003168E1 /* M9PromiseTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
