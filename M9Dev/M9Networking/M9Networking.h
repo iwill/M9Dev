@@ -19,6 +19,7 @@
  *  !!!: ONLY used for common requirements, or use AFNetworking or other framework directly
  *      e.g. Use AFNetworking for posting multipart form data, @see AFMultipartFormData
  *
+ *  TODO:
  *  use AFCache?
  *      https://github.com/artifacts/AFCache
  *  use AFNetworking-AutoRetry?

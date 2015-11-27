@@ -31,8 +31,10 @@
 
 @interface NSObject (M9RequestOwner) /* <M9RequestOwner> */
 
+- (NSMutableArray *)allRequestRef;
+
 - (void)addRequestRef:(M9RequestRef *)requestRef;
 - (void)removeRequestRef:(M9RequestRef *)requestRef;
-- (NSMutableArray *)allRequestRef;
+- (void)removeAllRequestRef;
 
 @end

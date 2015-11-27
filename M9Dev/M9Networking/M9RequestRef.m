@@ -74,7 +74,11 @@
 
 static void *M9RequestOwner_allRequestRef = &M9RequestOwner_allRequestRef;
 
-- (void)addRequestRef:(M9RequestRef *)requestRef { @synchronized(self) { // lock: owner.allRequestRefOfOwner
+- (NSMutableArray *)allRequestRef { @synchronized(self) {
+    return [self associatedValueForKey:M9RequestOwner_allRequestRef class:[NSMutableArray class]];
+}}
+
+- (void)addRequestRef:(M9RequestRef *)requestRef { @synchronized(self) {
     if (!requestRef) {
         return;
     }
@@ -86,7 +90,7 @@ static void *M9RequestOwner_allRequestRef = &M9RequestOwner_allRequestRef;
     [allRequestRef addObject:requestRef];
 }}
 
-- (void)removeRequestRef:(M9RequestRef *)requestRef { @synchronized(requestRef) { // lock: owner.allRequestRefOfOwner
+- (void)removeRequestRef:(M9RequestRef *)requestRef { @synchronized(self) {
     if (!requestRef) {
         return;
     }
@@ -97,8 +101,8 @@ static void *M9RequestOwner_allRequestRef = &M9RequestOwner_allRequestRef;
     }
 }}
 
-- (NSMutableArray *)allRequestRef { @synchronized(self) { // lock: owner.allRequestRefOfOwner
-    return [self associatedValueForKey:M9RequestOwner_allRequestRef class:[NSMutableArray class]];
+- (void)removeAllRequestRef { @synchronized(self) {
+    [self associateValue:nil withKey:M9RequestOwner_allRequestRef];
 }}
 
 @end

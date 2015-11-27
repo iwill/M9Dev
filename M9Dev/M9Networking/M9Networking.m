@@ -141,9 +141,8 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
 }
 
 - (void)cancelAllWithOwner:(id)owner { @synchronized(owner) { // lock: owner.allRequestRefOfOwner
-    for (M9RequestRef *requestRef in [[owner allRequestRef] copy]) {
-        [requestRef cancel];
-    }
+    [[owner allRequestRef] makeObjectsPerformSelector:@selector(cancel)];
+    [owner removeAllRequestRef];
 }}
 
 + (void)removeAllCachedData {
@@ -350,10 +349,6 @@ typedef void (^M9LoadCachedResponseCallback)(AFHTTPRequestOperation *operation, 
     }];
 }
 
-/* TODO:
- *  @see http://nshipster.com/nsurlcache/
- *  @see ASIDownloadCache
- */
 - (BOOL)isResponseExpired:(NSHTTPURLResponse *)response {
     NSString *expiresOn = [[response allHeaderFields] stringForKey:HTTPExpires];
     NSDate *expiresOnDate = [NSDate dateFromRFC1123:expiresOn];
