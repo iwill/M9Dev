@@ -16,11 +16,8 @@
  *  !!!: Use weakify and strongify from extobjc instead in ARC.
  *
  *  Usage:
- *      weakifyself;
- *      [object setCallback:^{
- *          strongifyself;
- *          NSLog(@"self: %@", self);
- *      }];
+ *      NSMutableArray *observers = ...;
+ *      [observers addObject:[ARCWeakRef weakRefWithObject:observer]];
  *  OR
  *      __typeof__(self) selfType;
  *      ARCWeakRef *weakRef = [ARCWeakRef weakRefWithObject:self];
@@ -29,9 +26,6 @@
  *          NSLog(@"self: %@", self);
  *      }];
  */
-
-#define weakifyself __typeof__(self) $selfType; ARCWeakRef *$weakRef = [ARCWeakRef weakRefWithObject:self]
-#define strongifyself __typeof__($selfType) self = $weakRef.object
 
 @interface ARCWeakRef : NSObject
 
