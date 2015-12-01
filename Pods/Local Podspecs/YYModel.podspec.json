@@ -1,7 +1,7 @@
 {
   "name": "YYModel",
   "summary": "High performance model framework for iOS.",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -16,7 +16,7 @@
   },
   "source": {
     "git": "https://github.com/ibireme/YYModel.git",
-    "tag": "0.9.4"
+    "tag": "0.9.5"
   },
   "requires_arc": true,
   "source_files": "YYModel/*.{h,m}",

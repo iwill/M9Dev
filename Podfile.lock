@@ -38,7 +38,7 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - Specta (1.0.3)
   - TMCache (1.2.4)
-  - YYModel (0.9.4)
+  - YYModel (0.9.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
@@ -60,7 +60,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   YYModel:
-    :commit: 36995ffabb671179d5193c5bd80d879a8d0a726c
+    :commit: 47f2df5e336866f17ced9d97e1f3e817df23d058
     :git: https://github.com/ibireme/YYModel.git
 
 SPEC CHECKSUMS:
@@ -74,6 +74,6 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   Specta: cf3e4188cf35375c3ee2cd03f8db8f1f4ef98234
   TMCache: a93984b045a5ee84bd8941bd5e0b54296059cc52
-  YYModel: 5a478dc3bd13d2be952026605b77c1edac860128
+  YYModel: dd2bdc9097f8a90c53512a87d55d28340ade1371
 
 COCOAPODS: 0.39.0
