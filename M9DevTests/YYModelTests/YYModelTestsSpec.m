@@ -101,7 +101,7 @@
 @end
 @implementation Bug2
 - (BOOL)modelCustomTransformFromDictionary:(NSDictionary *)dic {
-    return NO;
+    return [dic count];
 }
 @end
 
@@ -231,12 +231,12 @@ describe(@"YYModel", ^{
     });
     
     // TODO: https://github.com/ibireme/YYModel/issues/13
-    /* it(@"真的玩坏了 🙏🙏🙏", ^{
-        Bug2 *bug = [Bug2 yy_modelWithJSON:@{ @"b": @YES }];
+    it(@"擦真的玩坏了 💀💀 - 0.9.5 fixed", ^{
+        Bug2 *bug = [Bug2 yy_modelWithJSON:@{}];
         expect(bug).beNil();
         NSArray *bugs = [NSArray yy_modelArrayWithClass:[Bug2 class] json:@[ @{}, @{ @"b": @YES } ]];
         expect(bugs.count).equal(1);
-    }); */
+    });
     
 });
 
