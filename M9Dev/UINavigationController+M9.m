@@ -147,9 +147,17 @@
 #pragma mark rootViewController
 
 + (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController {
+    return [self navigationControllerWithRootViewController:rootViewController
+                                         navigationBarClass:nil
+                                               toolbarClass:nil];
+}
+
++ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController
+                                                    navigationBarClass:(nullable Class)navigationBarClass
+                                                          toolbarClass:(nullable Class)toolbarClass {
     UINavigationController *navigationController = [[UINavigationController_M9 alloc]
-                                                    initWithNavigationBarClass:[UINavigationBar class]
-                                                    toolbarClass:[UIToolbar class]];
+                                                    initWithNavigationBarClass:navigationBarClass ? : [UINavigationBar class]
+                                                    toolbarClass:toolbarClass ? : [UIToolbar class]];
     [navigationController pushViewController:rootViewController animated:NO];
     return navigationController;
 }

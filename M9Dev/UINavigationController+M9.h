@@ -9,18 +9,30 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UINavigationController (M9Category)
 
-@property(nonatomic, strong, readonly) UIViewController *rootViewController;
+@property(nonatomic, strong, readonly, nullable) UIViewController *rootViewController;
 
 // !!!: the delegate and interactivePopGestureRecognizer.delegate of the returned navigationController is itself
-+ (UINavigationController *)navigationControllerWithRootViewController:(UIViewController *)rootViewController;
++ (UINavigationController *)navigationControllerWithRootViewController:(nullable UIViewController *)rootViewController;
++ (UINavigationController *)navigationControllerWithRootViewController:(nullable UIViewController *)rootViewController
+                                                    navigationBarClass:(nullable Class)navigationBarClass
+                                                          toolbarClass:(nullable Class)toolbarClass;
 
 // push&pop completion
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
-- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
-- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
+- (void)pushViewController:(nullable UIViewController *)viewController
+                  animated:(BOOL)animated
+                completion:(void (^ __nullable)(void))completion;
+
+- (nullable UIViewController *)popViewControllerAnimated:(BOOL)animated
+                                              completion:(void (^ __nullable)(void))completion;
+- (nullable NSArray *)popToViewController:(UIViewController *)viewController
+                                 animated:(BOOL)animated
+                               completion:(void (^ __nullable)(void))completion;
+- (nullable NSArray *)popToRootViewControllerAnimated:(BOOL)animated
+                                           completion:(void (^ __nullable)(void))completion;
 
 @end
 
@@ -32,3 +44,5 @@
 - (UINavigationController *)wrapWithNavigationController;
 
 @end
+
+NS_ASSUME_NONNULL_END
