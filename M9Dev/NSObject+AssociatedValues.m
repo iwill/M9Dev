@@ -95,9 +95,9 @@
     [self associateValue:value ? nil : @(value) withKey:key];
 }
 
-- (id)associatedValueForKey:(const void *)key class:(Class)class {
+- (id)associatedValueForKey:(const void *)key class:(Class)clazz {
     id value = [self associatedValueForKey:key];
-    if (!class || [value isKindOfClass:class]) {
+    if (!clazz || [value isKindOfClass:clazz]) {
         return value;
     }
     return nil;
