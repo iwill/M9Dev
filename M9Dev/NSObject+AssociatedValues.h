@@ -36,7 +36,7 @@
 - (void)associateUnsignedInteger:(NSUInteger)value withKey:(const void *)key;
 
 /* OC Object */
-- (id)associatedValueForKey:(const void *)key class:(Class)class;
+- (id)associatedValueForKey:(const void *)key class:(Class)clazz;
 
 @end
 
