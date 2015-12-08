@@ -60,6 +60,8 @@
 - (void)m9_layoutSubviews {
     [self m9_layoutSubviews]; // at first
     if (self.layoutSubviewsBlock) self.layoutSubviewsBlock();
+    // iOS7: *** Assertion failure in -[XXView layoutSublayersOfLayer:], /SourceCache/UIKit/UIKit-2935.137/UIView.m:8794
+    [self layoutIfNeeded];
 }
 
 @dynamic updateConstraintsBlock;
