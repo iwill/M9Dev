@@ -26,7 +26,12 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSLog(@"<#format#>: %@ - %@", APP_VERSION, APP_BUILD_VERSION);
+    [M9Utilities setupDDLOG];
+    
+    DDINF(@"M9Dev: %@ - %@", APP_VERSION, APP_BUILD_VERSION);
+    DDINF(@"AppDirectory: %@", [NSDirectory(NSApplicationDirectory) stringByDeletingLastPathComponent]);
+    DDINF(@"M9Dev.bundle/QING.png: %@", [UIImage imageNamed:M9Dev_bundle_"QING.png"]);
+    
     return YES;
 }
 

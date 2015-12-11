@@ -416,6 +416,13 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 /**
  *  custom DDLog
+ *
+ *  Install XcodeColors:
+ *      https://github.com/robbiehanson/XcodeColors
+ *  Enable XcodeColors:
+ *      [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+ *      [command+option+r] > Run XXXX.app > Environment Variable > + > XcodeColors: YES
+ *      https://github.com/robbiehanson/CocoaLumberjack/wiki/XcodeColors
  */
 #if defined(M9_DDLOG_ENABLED)
     #import <CocoaLumberjack/CocoaLumberjack.h>
