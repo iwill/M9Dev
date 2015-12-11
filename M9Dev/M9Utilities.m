@@ -122,10 +122,10 @@ void __NO_NSLog__(NSString *format, ...) {}
 
 #pragma mark -
 
-@implementation M9Utilities (NSLOG)
+@implementation M9Utilities (DDLOG)
 
-+ (void)setupNSLOG {
-#if defined(M9_NSLOG_ENABLED)
++ (void)setupDDLOG {
+#if defined(M9_DDLOG_ENABLED)
     NSArray *allLoggers = [DDLog allLoggers];
     for (id<DDLogger> logger in @[ [DDASLLogger sharedInstance], [DDTTYLogger sharedInstance] ]) {
         if (![allLoggers containsObject:logger]) {
@@ -145,20 +145,20 @@ void __NO_NSLog__(NSString *format, ...) {}
     
     DDTTYLogger *ttyLogger = [DDTTYLogger sharedInstance];
     [ttyLogger setColorsEnabled:YES];
-    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError context:M9_NSLOG_CXT];
-    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning context:M9_NSLOG_CXT];
-    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo context:M9_NSLOG_CXT];
-    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_NSLOG_CXT];
-    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_NSLOG_CXT];
+    [ttyLogger setForegroundColor:errColor backgroundColor:bgColor forFlag:DDLogFlagError context:M9_DDLOG_CXT];
+    [ttyLogger setForegroundColor:warColor backgroundColor:bgColor forFlag:DDLogFlagWarning context:M9_DDLOG_CXT];
+    [ttyLogger setForegroundColor:infColor backgroundColor:bgColor forFlag:DDLogFlagInfo context:M9_DDLOG_CXT];
+    [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_DDLOG_CXT];
+    [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_DDLOG_CXT];
     
     // iOS7 BUG
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLOG(@"NSLOG ColorLegend:");
-        NSERR(@"ERR");
-        NSWAR(@"WAR");
-        NSINF(@"INF");
-        NSDEB(@"DEB");
-        NSVER(@"VER");
+        DDLOG(@"DDLOG ColorLegend:");
+        DDERR(@"ERR");
+        DDWAR(@"WAR");
+        DDINF(@"INF");
+        DDDEB(@"DEB");
+        DDVER(@"VER");
     });
 #endif
 }
