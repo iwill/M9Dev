@@ -448,7 +448,7 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #define DDINF(frmt, ...) NSLog(@"<#INF#> " frmt, ##__VA_ARGS__)
     #define DDDEB(frmt, ...) NSLog(@"<#DEB#> " frmt, ##__VA_ARGS__)
     #define DDVER(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__)
-    #define DDLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
+    #define DDLOG(frmt, ...) DDINF(frmt, ##__VA_ARGS__)
 #endif
 @interface M9Utilities (DDLOG)
 + (void)setupDDLOG;
