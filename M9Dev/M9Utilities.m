@@ -151,15 +151,12 @@ void __NO_NSLog__(NSString *format, ...) {}
     [ttyLogger setForegroundColor:debColor backgroundColor:bgColor forFlag:DDLogFlagDebug context:M9_DDLOG_CXT];
     [ttyLogger setForegroundColor:verColor backgroundColor:bgColor forFlag:DDLogFlagVerbose context:M9_DDLOG_CXT];
     
-    // iOS7 BUG
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        DDLOG(@"DDLOG ColorLegend:");
-        DDERR(@"ERR");
-        DDWAR(@"WAR");
-        DDINF(@"INF");
-        DDDEB(@"DEB");
-        DDVER(@"VER");
-    });
+    DDLOG(@"DDLOG ColorLegend:");
+    DDERR(@"ERR");
+    DDWAR(@"WAR");
+    DDINF(@"INF");
+    DDDEB(@"DEB");
+    DDVER(@"VER");
 #endif
 }
 
