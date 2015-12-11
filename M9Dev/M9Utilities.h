@@ -417,7 +417,7 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 /**
  *  custom DDLog
  */
-#if defined(M9_NSLOG_ENABLED)
+#if defined(M9_DDLOG_ENABLED)
     #import <CocoaLumberjack/CocoaLumberjack.h>
     #if defined(__OPTIMIZE__)
         #define ddLogLevelGlobal DDLogLevelOff
@@ -426,25 +426,25 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #endif
     #undef  LOG_LEVEL_DEF
     #define LOG_LEVEL_DEF M9_ddLogLevel
-    #define M9_NSLOG_CXT (NSIntegerMax-2015-11-21)
-    #define NSERR(frmt, ...) LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSWAR(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSINF(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSDEB(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSVER(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_NSLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
-    #define NSLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
+    #define M9_DDLOG_CXT (NSIntegerMax-2015-11-21)
+    #define DDERR(frmt, ...) LOG_MAYBE(NO,                LOG_LEVEL_DEF, DDLogFlagError,   M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDWAR(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagWarning, M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDINF(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagInfo,    M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDDEB(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDVER(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+    #define DDLOG(frmt, ...) DDINF(frmt, ##__VA_ARGS__)
     static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
 #else
     #import <Foundation/Foundation.h>
-    #define NSERR(frmt, ...) NSLog(@"<#ERR#> " frmt, ##__VA_ARGS__)
-    #define NSWAR(frmt, ...) NSLog(@"<#WAR#> " frmt, ##__VA_ARGS__)
-    #define NSINF(frmt, ...) NSLog(@"<#INF#> " frmt, ##__VA_ARGS__)
-    #define NSDEB(frmt, ...) NSLog(@"<#DEB#> " frmt, ##__VA_ARGS__)
-    #define NSVER(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__)
-    #define NSLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
+    #define DDERR(frmt, ...) NSLog(@"<#ERR#> " frmt, ##__VA_ARGS__)
+    #define DDWAR(frmt, ...) NSLog(@"<#WAR#> " frmt, ##__VA_ARGS__)
+    #define DDINF(frmt, ...) NSLog(@"<#INF#> " frmt, ##__VA_ARGS__)
+    #define DDDEB(frmt, ...) NSLog(@"<#DEB#> " frmt, ##__VA_ARGS__)
+    #define DDVER(frmt, ...) NSLog(@"<#VER#> " frmt, ##__VA_ARGS__)
+    #define DDLOG(frmt, ...) NSINF(frmt, ##__VA_ARGS__)
 #endif
-@interface M9Utilities (NSLOG)
-+ (void)setupNSLOG;
+@interface M9Utilities (DDLOG)
++ (void)setupDDLOG;
 @end
 
 
