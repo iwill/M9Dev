@@ -84,6 +84,7 @@
 		DFA871381B9C0A570040249B /* M9URLAction+1.0.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871031B9C0A570040249B /* M9URLAction+1.0.m */; };
 		DFA871391B9C0A570040249B /* M9URLAction.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA871051B9C0A570040249B /* M9URLAction.m */; };
 		DFACA57E1BA673970002A8A0 /* M9AlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFACA57D1BA673970002A8A0 /* M9AlertController.m */; };
+		DFB14F2C1C1F0012002304FE /* NSObject+NTFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB14F2B1C1F0012002304FE /* NSObject+NTFObserver.m */; };
 		DFB515B6199231A8003DF54A /* M9RequestInfoExt.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */; };
 		DFCF92041BE72EF600410F84 /* NSURL+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF92031BE72EF600410F84 /* NSURL+M9.m */; };
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
@@ -260,6 +261,8 @@
 		DFA871051B9C0A570040249B /* M9URLAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9URLAction.m; sourceTree = "<group>"; };
 		DFACA57C1BA673970002A8A0 /* M9AlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9AlertController.h; sourceTree = "<group>"; };
 		DFACA57D1BA673970002A8A0 /* M9AlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9AlertController.m; sourceTree = "<group>"; };
+		DFB14F2A1C1F0012002304FE /* NSObject+NTFObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+NTFObserver.h"; sourceTree = "<group>"; };
+		DFB14F2B1C1F0012002304FE /* NSObject+NTFObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+NTFObserver.m"; sourceTree = "<group>"; };
 		DFB515B4199231A8003DF54A /* M9RequestInfoExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9RequestInfoExt.h; sourceTree = "<group>"; };
 		DFB515B5199231A8003DF54A /* M9RequestInfoExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9RequestInfoExt.m; sourceTree = "<group>"; };
 		DFCF92021BE72EF600410F84 /* NSURL+M9.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+M9.h"; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 				DFA870E91B9C0A560040249B /* NSString+M9.m */,
 				DFCF92021BE72EF600410F84 /* NSURL+M9.h */,
 				DFCF92031BE72EF600410F84 /* NSURL+M9.m */,
+				DFB14F2A1C1F0012002304FE /* NSObject+NTFObserver.h */,
+				DFB14F2B1C1F0012002304FE /* NSObject+NTFObserver.m */,
 				DFA870EA1B9C0A560040249B /* UIColor+M9.h */,
 				DFA870EB1B9C0A560040249B /* UIColor+M9.m */,
 				DFA870EC1B9C0A560040249B /* UIControl+M9EventCallback.h */,
@@ -939,6 +944,7 @@
 				DFA8710C1B9C0A570040249B /* NSURL+JS.m in Sources */,
 				DFA871081B9C0A570040249B /* ARCWeakRef.m in Sources */,
 				DFA871101B9C0A570040249B /* UICollectionViewCell+JS.m in Sources */,
+				DFB14F2C1C1F0012002304FE /* NSObject+NTFObserver.m in Sources */,
 				DFA8710F1B9C0A570040249B /* NSObject+JS.m in Sources */,
 				DFA8712C1B9C0A570040249B /* NSString+M9.m in Sources */,
 				DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */,
