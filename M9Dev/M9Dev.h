@@ -32,6 +32,7 @@
 #import "NSDictionary+M9.h"
 #import "NSInvocation+M9.h"
 #import "NSObject+AssociatedValues.h"
+#import "NSObject+NTFObserver.h"
 #import "NSURL+M9.h"
 
 /* UIKit */
