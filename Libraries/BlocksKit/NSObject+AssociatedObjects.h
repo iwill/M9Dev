@@ -3,6 +3,8 @@
 //  BlocksKit
 //
 
+#import <Foundation/Foundation.h>
+
 // #import "BKGlobals.h"
 
 /** Objective-C wrapper for 10.6+ associated object API.
