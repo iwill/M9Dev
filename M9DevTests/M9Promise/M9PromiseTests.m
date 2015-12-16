@@ -50,7 +50,7 @@
 }
 
 - (id<M9Thenable>)then:(M9ThenableCallback)fulfillCallback fail:(M9ThenableCallback)rejectCallback {
-    dispatch_after_seconds(0.05, ^{
+    dispatch_after_seconds(0.05, dispatch_get_main_queue(), ^{
         fulfillCallback(sentinel);
     });
     return nil;

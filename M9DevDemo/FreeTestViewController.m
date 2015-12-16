@@ -11,6 +11,8 @@
 #import "UIControl+M9EventCallback.h"
 #import "M9Link.h"
 
+#import "NSThread+M9.h"
+
 static const CGFloat margin = 10, height = 44;
 
 @implementation FreeTestViewController
@@ -118,9 +120,37 @@ static const CGFloat margin = 10, height = 44;
         prevView = textView;
     }
     
+    {
+        UIButton *button = [self addButtonWithTitle:@"test thread" nextTo:prevView];
+        weakdef(self);
+        [button addEventCallback:^(id sender) {
+            strongdef_ifNOT(self) return;
+            // [self performSelectorInBackground:@selector(suspend) withObject:nil];
+            dispatch_async_background_queue(^{
+                NSThread *thread = [NSThread currentThread];
+                [self performSelector:@selector(resume) withObject:nil afterDelay:5];
+                /* dispatch_after_seconds(2, dispatch_get_main_queue(), ^{
+                    NSLog(@"<#NSThread+M9#>: 2 before resume");
+                    [thread resume];
+                    NSLog(@"<#NSThread+M9#>: 3 after resume");
+                }); */
+                NSLog(@"<#NSThread+M9#>: 1 before suspend");
+                BOOL suspend = [thread suspend];
+                NSLog(@"<#NSThread+M9#>: 4 after suspend - %@", NSStringFromBOOL(suspend));
+            });
+        } forControlEvents:UIControlEventTouchUpInside];
+        prevView = button;
+    }
+    
     [prevView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.scrollView).with.offset(margin);
     }];
+}
+
+- (void)resume {
+    NSLog(@"<#NSThread+M9#>: 2 before resume");
+    [[NSThread currentThread] resume];
+    NSLog(@"<#NSThread+M9#>: 3 after resume");
 }
 
 - (void)didTapWithGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
