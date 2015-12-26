@@ -74,6 +74,9 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (animated) {
+        if (self.isPushAnimating) {
+            return;
+        }
         self.isPushAnimating = YES;
         [self performSelector:@selector(resetPushAnimating) withObject:nil afterDelay:0.5];
     }
