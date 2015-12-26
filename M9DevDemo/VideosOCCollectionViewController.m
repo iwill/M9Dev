@@ -147,6 +147,8 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     self.collectionView.backgroundColor = [UIColor colorWithHexString:@"#E1E1E6"];
     self.collectionView.alwaysBounceVertical = YES;
     

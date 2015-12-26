@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VideosJSCollectionViewController : UICollectionViewController
+#import "M9CollectionViewController.h"
+
+@interface VideosJSCollectionViewController : M9CollectionViewController <
+UICollectionViewDataSource,
+UICollectionViewDelegate
+>
 
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)initWithCollectionViewLayout:(nullable UICollectionViewLayout *)layout NS_UNAVAILABLE;

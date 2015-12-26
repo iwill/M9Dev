@@ -90,6 +90,7 @@
 		DFCF92041BE72EF600410F84 /* NSURL+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DFCF92031BE72EF600410F84 /* NSURL+M9.m */; };
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
 		DFDF48011AFC965100F6E31C /* TestPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF48001AFC965100F6E31C /* TestPagingViewController.m */; };
+		DFE154BC1C2E8BDC001C13F3 /* M9CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE154BB1C2E8BDC001C13F3 /* M9CollectionViewController.m */; };
 		DFE66CAF1B3A80EB00124656 /* NSString+CompareToVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CAE1B3A80EB00124656 /* NSString+CompareToVersion.m */; };
 		DFE66CC11B3AC59600124656 /* TestActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC01B3AC59600124656 /* TestActionViewController.m */; };
 		DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */; };
@@ -274,6 +275,8 @@
 		DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSLayoutViewController.m; sourceTree = "<group>"; };
 		DFDF47FF1AFC965100F6E31C /* TestPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPagingViewController.h; sourceTree = "<group>"; };
 		DFDF48001AFC965100F6E31C /* TestPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPagingViewController.m; sourceTree = "<group>"; };
+		DFE154BA1C2E8BDC001C13F3 /* M9CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9CollectionViewController.h; sourceTree = "<group>"; };
+		DFE154BB1C2E8BDC001C13F3 /* M9CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9CollectionViewController.m; sourceTree = "<group>"; };
 		DFE66CAD1B3A80EB00124656 /* NSString+CompareToVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CompareToVersion.h"; sourceTree = "<group>"; };
 		DFE66CAE1B3A80EB00124656 /* NSString+CompareToVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CompareToVersion.m"; sourceTree = "<group>"; };
 		DFE66CBD1B3AA5CB00124656 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -518,6 +521,8 @@
 				DFA870981B9C0A560040249B /* ARCWeakRef.m */,
 				DFACA57C1BA673970002A8A0 /* M9AlertController.h */,
 				DFACA57D1BA673970002A8A0 /* M9AlertController.m */,
+				DFE154BA1C2E8BDC001C13F3 /* M9CollectionViewController.h */,
+				DFE154BB1C2E8BDC001C13F3 /* M9CollectionViewController.m */,
 				DFA870C41B9C0A560040249B /* M9Dev.h */,
 				DFA870D01B9C0A560040249B /* M9PagingViewController.h */,
 				DFA870D11B9C0A560040249B /* M9PagingViewController.m */,
@@ -899,6 +904,7 @@
 				DF69D2641968513300B8C011 /* NSObject+AssociatedObjects.m in Sources */,
 				DF69D28B19685B6500B8C011 /* NSDate+RFC1123.m in Sources */,
 				DFB14F321C20109D002304FE /* NSThread+M9.m in Sources */,
+				DFE154BC1C2E8BDC001C13F3 /* M9CollectionViewController.m in Sources */,
 				DFA8712E1B9C0A570040249B /* UIControl+M9EventCallback.m in Sources */,
 				DFF3C3DE19B9CF8F00E8F0DA /* JSCollectionViewFlowLayout.m in Sources */,
 				DFA871271B9C0A570040249B /* NSData+M9.m in Sources */,
