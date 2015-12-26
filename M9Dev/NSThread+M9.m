@@ -28,6 +28,7 @@
         CFRunLoopStop(CFRunLoopGetCurrent());
     }
     else {
+        // waitUntilDone:YES maybe better
         [self performSelector:_cmd onThread:self withObject:nil waitUntilDone:YES];
     }
 }
