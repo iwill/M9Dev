@@ -7,13 +7,14 @@ platform :ios, '7.0'
 inhibit_all_warnings!
 
 target :M9Dev do
-    pod 'JRSwizzle',            '~> 1.0'
+    pod 'JRSwizzle'
     pod 'AFNetworking',         '~> 2.6'
-    pod 'TMCache',              '~> 1.2'
-    pod 'NSString-UrlEncode',   '~> 2.0'
-    pod 'YYModel',              :git => 'https://github.com/ibireme/YYModel.git', :branch => 'master'
-    pod 'Masonry',              '~> 0.6'
-    pod 'SDWebImage',           '~> 3.7'
+    pod 'Reachability'
+    pod 'TMCache'
+    pod 'NSString-UrlEncode'
+    pod 'YYModel'
+    pod 'Masonry'
+    pod 'SDWebImage'
     pod 'CocoaLumberjack'
     pod 'FLEX',                 '~> 2.0', :configurations => ['Debug']
 end
