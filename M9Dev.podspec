@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.0.8"
+  s.version      = "0.0.9"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
@@ -94,7 +94,7 @@ Pod::Spec.new do |s|
 
   s.source_files  = "M9Dev/M9Dev.h"
   s.public_header_files = "M9Dev/M9Dev.h"
-  
+
   s.subspec 'Libraries' do |ss|
     ss.subspec 'BlocksKit' do |sss|
       sss.public_header_files = 'Libraries/BlocksKit/*.h'
@@ -111,7 +111,7 @@ Pod::Spec.new do |s|
     # ss.public_header_files = 'Libraries/**/*.h'
     # ss.source_files = "Libraries/**/*.{h,m}"
   end
-  
+
   s.subspec 'M9Dev' do |ss|
     ss.public_header_files = 'M9Dev/**/*.h'
     ss.source_files = "M9Dev/**/*.{h,m}"
@@ -158,8 +158,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "Masonry", "~> 0.6"
-  s.dependency "JRSwizzle", "~> 1.0"
-  s.dependency "NSString-UrlEncode", "~> 2.0"
+  s.dependency "Masonry"
+  s.dependency "JRSwizzle"
+  s.dependency "NSString-UrlEncode"
+  s.dependency "Reachability"
 
 end
