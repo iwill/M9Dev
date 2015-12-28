@@ -61,13 +61,13 @@
     [self m9_layoutSubviews]; // at first
     if (self.layoutSubviewsBlock) self.layoutSubviewsBlock();
     // iOS7: *** Assertion failure in -[XXView layoutSublayersOfLayer:], /SourceCache/UIKit/UIKit-2935.137/UIView.m:8794
-    static BOOL iOS7OrLower = NO;
+    static BOOL iOS7AndLower = NO;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSString *systemVersion = [UIDevice currentDevice].systemVersion;
-        iOS7OrLower = [systemVersion hasPrefix:@"6."] || [systemVersion hasPrefix:@"7."];
+        iOS7AndLower = [systemVersion hasPrefix:@"6."] || [systemVersion hasPrefix:@"7."];
     });
-    if (iOS7OrLower) {
+    if (iOS7AndLower) {
         [self layoutIfNeeded];
     }
 }
