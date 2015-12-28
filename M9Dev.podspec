@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.0.7"
+  s.version      = "0.0.8"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
@@ -53,7 +53,7 @@ Pod::Spec.new do |s|
   s.author             = { "iwill" => "minglq.9@gmail.com" }
   # Or just: s.author    = "iwill"
   # s.authors            = { "iwill" => "minglq.9@gmail.com" }
-  s.social_media_url   = "https://twitter.com/minglq"
+  s.social_media_url   = "https://github.com/iwill"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
