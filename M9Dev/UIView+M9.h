@@ -33,9 +33,28 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 #pragma mark -
 
-typedef void (^UIViewLayoutSubviewsBlock)();
 typedef void (^UIViewUpdateConstraintsBlock)();
+typedef void (^UIViewLayoutSubviewsBlock)();
 
+/**
+ *  Only used for views which you donot want to subclass.
+ *
+ *  e.g.:
+ *      UIButton *button = [UIButton new];
+ *      // config
+ *      button.updateConstraintsBlock = ^{
+ *          // update constraints
+ *      };
+ *
+ *  override:
+ *      UIViewUpdateConstraintsBlock originalBlock = aView.updateConstraintsBlock;
+ *      aView.updateConstraintsBlock = ^{
+ *          if (originalBlock) {
+ *              originalBlock();
+ *          }
+ *          // update constraints
+ *      };
+ */
 @interface UIView (updateConstraints)
 
 @property(nonatomic, copy) UIViewUpdateConstraintsBlock updateConstraintsBlock;
