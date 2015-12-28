@@ -31,7 +31,7 @@ Features
 - **Type Safe**: All data types will be verified to ensure type-safe during the conversion process.
 - **Non-intrusive**: There is no need to make the model class inherit from other base class.
 - **Lightwight**: This library contains only 5 files.
-
+- **Docs and unit testing**: Coverage 100%.
 
 Usage
 ==============
@@ -128,7 +128,8 @@ EEE MMM dd HH:mm:ss Z yyyy
 	    "p": 256,
 	    "ext" : {
 	        "desc" : "A book written by J.K.Rowing."
-	    }
+	    },
+	    "ID" : 100010
 	}
 
 	// Model:
@@ -136,14 +137,18 @@ EEE MMM dd HH:mm:ss Z yyyy
 	@property NSString *name;
 	@property NSInteger page;
 	@property NSString *desc;
+	@property NSString *bookID;
 	@end
 	@implementation Book
 	+ (NSDictionary *)modelCustomPropertyMapper {
 	    return @{@"name" : @"n",
 	             @"page" : @"p",
-	             @"desc" : @"ext.desc"};
+	             @"desc" : @"ext.desc",
+	             @"bookID" : @[@"id",@"ID",@"book_id"]};
 	}
 	@end
+
+You can map a json key (key path) or an array of json key (key path) to one or multiple property name. If there's no mapper for a property, it will use the property's name as default.
 
 ###Nested model
 
@@ -323,7 +328,7 @@ YYModel is provided under the MIT license. See LICENSE file for details.
 - **类型安全**: 转换过程中，所有的数据类型都会被检测一遍，以保证类型安全，避免崩溃问题。
 - **无侵入性**: 模型无需继承自其他基类。
 - **轻量**: 该框架只有 5 个文件 (包括.h文件)。
-
+- **文档和单元测试**: 覆盖率 100%。
 
 使用方法
 ==============
@@ -418,7 +423,8 @@ EEE MMM dd HH:mm:ss Z yyyy
 	    "p": 256,
 	    "ext" : {
 	        "desc" : "A book written by J.K.Rowing."
-	    }
+	    },
+	    "ID" : 100010
 	}
 
 	// Model:
@@ -426,15 +432,23 @@ EEE MMM dd HH:mm:ss Z yyyy
 	@property NSString *name;
 	@property NSInteger page;
 	@property NSString *desc;
+	@property NSString *bookID;
 	@end
 	@implementation Book
 	//返回一个 Dict，将 Model 属性名对映射到 JSON 的 Key。
 	+ (NSDictionary *)modelCustomPropertyMapper {
 	    return @{@"name" : @"n",
 	             @"page" : @"p",
-	             @"desc" : @"ext.desc"};
+	             @"desc" : @"ext.desc",
+	             @"bookID" : @[@"id",@"ID",@"book_id"]};
 	}
 	@end
+	
+你可以把一个或一组 json key (key path) 映射到一个或多个属性。如果一个属性没有映射关系，那默认会使用相同属性名作为映射。
+
+在 json->model 的过程中：如果一个属性对应了多个 json key，那么转换过程会按顺序查找，并使用第一个不为空的值。
+	
+在 model->json 的过程中：如果一个属性对应了多个 json key (key path)，那么转换过程仅会处理第一个 json key (key path)；如果多个属性对应了同一个 json key，则转换过过程会使用其中任意一个不为空的值。
 
 ###Model 包含其他 Model
 
