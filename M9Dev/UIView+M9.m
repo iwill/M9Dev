@@ -179,6 +179,9 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 }
 
 - (UIView *)closestViewOfClass:(Class)clazz includeSelf:(BOOL)includeSelf {
+    if (clazz == [UIView class]) {
+        return includeSelf ? self : self.superview;
+    }
     if (![clazz isSubclassOfClass:[UIView class]]) {
         return nil;
     }
