@@ -115,6 +115,7 @@ typedef id (^NSDictionaryObjectValidator)(id object);
 
 /* OC Object */
 - (void)setObjectOrNil:(id)anObject forKey:(id<NSCopying>)aKey;
+- (void)removeObjectForKeyOrNil:(id<NSCopying>)aKey;
 
 @end
 

@@ -250,5 +250,11 @@
     [self setObject:anObject forKey:aKey];
 }
 
+- (void)removeObjectForKeyOrNil:(id<NSCopying>)aKey {
+    if (aKey) {
+        [self removeObjectForKey:aKey];
+    }
+}
+
 @end
 
