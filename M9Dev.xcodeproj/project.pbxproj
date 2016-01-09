@@ -91,6 +91,7 @@
 		DFD6964F1998788B0089B2B5 /* JSLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD6964E1998788B0089B2B5 /* JSLayoutViewController.m */; };
 		DFDF48011AFC965100F6E31C /* TestPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFDF48001AFC965100F6E31C /* TestPagingViewController.m */; };
 		DFE154BC1C2E8BDC001C13F3 /* M9CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE154BB1C2E8BDC001C13F3 /* M9CollectionViewController.m */; };
+		DFE155061C3E00E2001C13F3 /* Reachability+.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE155051C3E00E2001C13F3 /* Reachability+.m */; };
 		DFE66CAF1B3A80EB00124656 /* NSString+CompareToVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CAE1B3A80EB00124656 /* NSString+CompareToVersion.m */; };
 		DFE66CC11B3AC59600124656 /* TestActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC01B3AC59600124656 /* TestActionViewController.m */; };
 		DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE66CC31B3D650500124656 /* VideosJSCollectionViewController+action.m */; };
@@ -277,6 +278,8 @@
 		DFDF48001AFC965100F6E31C /* TestPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPagingViewController.m; sourceTree = "<group>"; };
 		DFE154BA1C2E8BDC001C13F3 /* M9CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9CollectionViewController.h; sourceTree = "<group>"; };
 		DFE154BB1C2E8BDC001C13F3 /* M9CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9CollectionViewController.m; sourceTree = "<group>"; };
+		DFE155041C3E00E2001C13F3 /* Reachability+.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reachability+.h"; sourceTree = "<group>"; };
+		DFE155051C3E00E2001C13F3 /* Reachability+.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Reachability+.m"; sourceTree = "<group>"; };
 		DFE66CAD1B3A80EB00124656 /* NSString+CompareToVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CompareToVersion.h"; sourceTree = "<group>"; };
 		DFE66CAE1B3A80EB00124656 /* NSString+CompareToVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CompareToVersion.m"; sourceTree = "<group>"; };
 		DFE66CBD1B3AA5CB00124656 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -516,6 +519,7 @@
 				DFA870BA1B9C0A560040249B /* JSONObject */,
 				DF256A141BC95BC700154BF6 /* M9Link */,
 				DFA870C51B9C0A560040249B /* M9Networking */,
+				DFE155031C3E00E1001C13F3 /* Reachability+ */,
 				DFA871011B9C0A570040249B /* URLAction */,
 				DFA870971B9C0A560040249B /* ARCWeakRef.h */,
 				DFA870981B9C0A560040249B /* ARCWeakRef.m */,
@@ -672,6 +676,15 @@
 				DFA871051B9C0A570040249B /* M9URLAction.m */,
 			);
 			path = URLAction;
+			sourceTree = "<group>";
+		};
+		DFE155031C3E00E1001C13F3 /* Reachability+ */ = {
+			isa = PBXGroup;
+			children = (
+				DFE155041C3E00E2001C13F3 /* Reachability+.h */,
+				DFE155051C3E00E2001C13F3 /* Reachability+.m */,
+			);
+			path = "Reachability+";
 			sourceTree = "<group>";
 		};
 		DFE66CAC1B3A80EB00124656 /* CompareToVersion */ = {
@@ -964,6 +977,7 @@
 				DFA871281B9C0A570040249B /* NSDate+M9.m in Sources */,
 				DFA8712B1B9C0A570040249B /* NSObject+AssociatedValues.m in Sources */,
 				DFA871111B9C0A570040249B /* UICollectionViewFlowLayout+JS.m in Sources */,
+				DFE155061C3E00E2001C13F3 /* Reachability+.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
 				DFA871211B9C0A570040249B /* M9Promise.m in Sources */,
 				DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */,
