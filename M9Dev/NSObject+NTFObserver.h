@@ -24,3 +24,5 @@ typedef void (^NTFObserverCallback)(id object, NSString *name, NSDictionary *inf
 - (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo;
 
 @end
+
+// TODO: MingLQ - NSNotificationCenter+owner: owner.m9_observers: @{ name: @[ observers, ... ] }
