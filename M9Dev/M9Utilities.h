@@ -10,6 +10,11 @@
 #import <Foundation/Foundation.h>
 
 
+#if defined __cplusplus
+extern "C" {
+#endif
+
+
 @interface M9Utilities : NSObject
 @end
 
@@ -484,4 +489,9 @@ _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"") \
 statements \
 _Pragma("clang diagnostic pop")
+
+
+#if defined __cplusplus
+};
+#endif
 
