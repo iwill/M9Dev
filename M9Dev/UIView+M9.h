@@ -27,7 +27,8 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 @interface UIView (Hierarchy)
 
-@property(nonatomic, readwrite, assign) UIView *firstResponder;
+@property (nonatomic) UIEdgeInsets alignmentRectInsets;
+@property (nonatomic, readwrite, assign) UIView *firstResponder;
 
 @end
 
@@ -55,14 +56,14 @@ typedef void (^UIViewLayoutSubviewsBlock)();
  *          // update constraints
  *      };
  */
-@interface UIView (updateConstraints)
+@interface UIView (updateConstraints_layoutSubviews)
 
-@property(nonatomic, copy) UIViewUpdateConstraintsBlock updateConstraintsBlock;
+@property (nonatomic, copy) UIViewUpdateConstraintsBlock updateConstraintsBlock;
 // re-declare for code completions
 - (UIViewUpdateConstraintsBlock)updateConstraintsBlock;
 - (void)setUpdateConstraintsBlock:(UIViewUpdateConstraintsBlock)updateConstraintsBlock;
 
-@property(nonatomic, copy) UIViewLayoutSubviewsBlock layoutSubviewsBlock;
+@property (nonatomic, copy) UIViewLayoutSubviewsBlock layoutSubviewsBlock;
 // re-declare for code completions
 - (UIViewLayoutSubviewsBlock)layoutSubviewsBlock;
 - (void)setLayoutSubviewsBlock:(UIViewLayoutSubviewsBlock)layoutSubviewsBlock;
@@ -73,9 +74,9 @@ typedef void (^UIViewLayoutSubviewsBlock)();
 
 @interface UIView (M9Category)
 
-@property(nonatomic, readwrite, retain) UIImage *customBackgroundImage;
-@property(nonatomic, readwrite, retain) UIView *customBackgroundView;
-@property(nonatomic, readwrite, assign) UIEdgeInsets customBackgroundInsets;
+@property (nonatomic, readwrite, retain) UIImage *customBackgroundImage;
+@property (nonatomic, readwrite, retain) UIView *customBackgroundView;
+@property (nonatomic, readwrite, assign) UIEdgeInsets customBackgroundInsets;
 
 - (UIView *)subviewWithTag:(NSInteger)tag;
 - (void)removeAllSubviews DEPRECATED_ATTRIBUTE;

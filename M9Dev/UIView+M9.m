@@ -20,6 +20,19 @@
 
 @implementation UIView (Hierarchy)
 
+@dynamic alignmentRectInsets;
+static void *UIView_alignmentRectInsets = &UIView_alignmentRectInsets;
+
+- (UIEdgeInsets)alignmentRectInsets {
+    NSValue *value = [self associatedValueForKey:UIView_alignmentRectInsets];
+    return [value UIEdgeInsetsValue];
+}
+
+- (void)setAlignmentRectInsets:(UIEdgeInsets)alignmentRectInsets {
+    NSValue *value = [NSValue valueWithUIEdgeInsets:alignmentRectInsets];
+    [self associateValue:value withKey:UIView_alignmentRectInsets];
+}
+
 @dynamic firstResponder;
 
 - (UIView *)firstResponder {
@@ -45,7 +58,7 @@
 
 #pragma mark -
 
-@implementation UIView (updateConstraints)
+@implementation UIView (updateConstraints_layoutSubviews)
 
 + (void)load {
     [self jr_swizzleMethod:@selector(updateConstraints) withMethod:@selector(m9_updateConstraints) error:nil];
