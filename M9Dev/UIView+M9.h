@@ -8,13 +8,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <JRSwizzle/JRSwizzle.h>
 
-#import "NSObject+AssociatedObjects.h"
-#import "M9Utilities.h"
 #import "UIResponder+M9.h"
+#import "UIView+alignmentRectInsets.h"
 
-static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) {
+static inline UIEdgeInsets CGRectDiff(CGRect fromRect, CGRect toRect) {
     UIEdgeInsets insets = UIEdgeInsetsZero;
     insets.top  = - CGRectGetMinY(fromRect) + CGRectGetMinY(toRect);
     insets.left = - CGRectGetMinX(fromRect) + CGRectGetMinX(toRect);
@@ -27,7 +25,6 @@ static inline UIEdgeInsets UIEdgeInsetsDiffRect(CGRect fromRect, CGRect toRect) 
 
 @interface UIView (Hierarchy)
 
-@property (nonatomic) UIEdgeInsets alignmentRectInsets;
 @property (nonatomic, readwrite, assign) UIView *firstResponder;
 
 @end
