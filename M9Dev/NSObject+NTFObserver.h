@@ -15,12 +15,10 @@ typedef void (^NTFObserverCallback)(id object, NSString *name, NSDictionary *inf
  */
 @interface NSObject (NTFObserver)
 
-// TODO: MingLQ - test
-
 - (void)startNTFObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback;
 - (void)startNTFObservingForName:(NSString *)name callback:(NTFObserverCallback)callback;
 - (void)stopNTFObserving:(id)object forName:(NSString *)name;
-- (void)stopNTFObserving;
+- (void)stopAllNTFObserving;
 
 /* TODO: MingLQ - notify
 - (void)notifyNTFObserverWithName:(NSString *)name;

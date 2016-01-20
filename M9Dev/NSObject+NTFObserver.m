@@ -119,7 +119,7 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
     }
 }}
 
-- (void)stopNTFObserving { @synchronized(self) {
+- (void)stopAllNTFObserving { @synchronized(self) {
     [self stopNTFObserving:nil forName:nil];
 }}
 
