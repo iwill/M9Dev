@@ -16,22 +16,14 @@
 #error ARCWeakRef requires iOS 5 and higher.
 #endif
 
+#import <JRSwizzle/JRSwizzle.h>
+
 #import "UIView+M9.h"
 
+#import "NSObject+AssociatedObjects.h"
+#import "M9Utilities.h"
+
 @implementation UIView (Hierarchy)
-
-@dynamic alignmentRectInsets;
-static void *UIView_alignmentRectInsets = &UIView_alignmentRectInsets;
-
-- (UIEdgeInsets)alignmentRectInsets {
-    NSValue *value = [self associatedValueForKey:UIView_alignmentRectInsets];
-    return [value UIEdgeInsetsValue];
-}
-
-- (void)setAlignmentRectInsets:(UIEdgeInsets)alignmentRectInsets {
-    NSValue *value = [NSValue valueWithUIEdgeInsets:alignmentRectInsets];
-    [self associateValue:value withKey:UIView_alignmentRectInsets];
-}
 
 @dynamic firstResponder;
 
@@ -61,8 +53,12 @@ static void *UIView_alignmentRectInsets = &UIView_alignmentRectInsets;
 @implementation UIView (updateConstraints_layoutSubviews)
 
 + (void)load {
-    [self jr_swizzleMethod:@selector(updateConstraints) withMethod:@selector(m9_updateConstraints) error:nil];
-    [self jr_swizzleMethod:@selector(layoutSubviews) withMethod:@selector(m9_layoutSubviews) error:nil];
+    [self jr_swizzleMethod:@selector(updateConstraints)
+                withMethod:@selector(m9_updateConstraints)
+                     error:nil];
+    [self jr_swizzleMethod:@selector(layoutSubviews)
+                withMethod:@selector(m9_layoutSubviews)
+                     error:nil];
 }
 
 - (void)m9_updateConstraints {
@@ -133,7 +129,8 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 - (void)setCustomBackgroundView:(UIView *)customBackgroundView {
     customBackgroundView.tag = CustomBackgroundViewTag;
     customBackgroundView.frame = self.bounds;
-    customBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    customBackgroundView.autoresizingMask = (UIViewAutoresizingFlexibleWidth
+                                             | UIViewAutoresizingFlexibleHeight);
     [self insertSubview:customBackgroundView atIndex:0];
 }
 
@@ -162,7 +159,7 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 
 - (UIEdgeInsets)customBackgroundInsets {
     UIView *backgroundView = self.customBackgroundView;
-    return UIEdgeInsetsDiffRect(self.bounds, backgroundView.frame);
+    return CGRectDiff(self.bounds, backgroundView.frame);
 }
 
 - (void)setCustomBackgroundInsets:(UIEdgeInsets)backgroundInsets {
@@ -213,7 +210,11 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 }
 
 - (NSString *)viewDescriptionWithIndent:(NSString *)indent {
-    return [NSString stringWithFormat:@"%@%@ bounds: %@ superclass: %@\n", indent, self, NSStringFromCGRect(self.bounds), NSStringFromClass([self superclass])];
+    return [NSString stringWithFormat:@"%@%@ bounds: %@ superclass: %@\n",
+            indent,
+            self,
+            NSStringFromCGRect(self.bounds),
+            NSStringFromClass([self superclass])];
 }
 
 - (NSString *)allSubviewsDescriptionWithIndent:(NSString *)indent {
@@ -229,7 +230,9 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     return [self allSubviewsDescriptionWithIndent:nil];
 }
 
-- (void)eachView:(UIView *)view depth:(NSInteger)depth callback:(BOOL (^)(UIView *subview, NSInteger depth))callback {
+- (void)eachView:(UIView *)view
+           depth:(NSInteger)depth
+        callback:(BOOL (^)(UIView *subview, NSInteger depth))callback {
     BOOL goon = callback(view, depth);
     if (!goon) {
         return;
@@ -273,12 +276,24 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     return animated ? [self animationDuration] : 0.0;
 }
 
-+ (void)animate:(BOOL)animated delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
-    [self animateWithDuration:[self animationDuration:animated] delay:delay options:options animations:animations completion:completion];
++ (void)animate:(BOOL)animated
+          delay:(NSTimeInterval)delay
+        options:(UIViewAnimationOptions)options
+     animations:(void (^)(void))animations
+     completion:(void (^)(BOOL finished))completion {
+    [self animateWithDuration:[self animationDuration:animated]
+                        delay:delay
+                      options:options
+                   animations:animations
+                   completion:completion];
 }
 
-+ (void)animate:(BOOL)animated animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
-    [self animateWithDuration:[self animationDuration:animated] animations:animations completion:completion];
++ (void)animate:(BOOL)animated
+     animations:(void (^)(void))animations
+     completion:(void (^)(BOOL finished))completion {
+    [self animateWithDuration:[self animationDuration:animated]
+                   animations:animations
+                   completion:completion];
 }
 
 + (void)animate:(BOOL)animated animations:(void (^)(void))animations {
@@ -292,11 +307,13 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
 @implementation UIView (SwipeView)
 
 - (NSArray *)addSwipeGestureRecognizerWithTarget:(id)target action:(SEL)action {
-    UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:target action:action];
+    UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]
+                                                  initWithTarget:target action:action];
     swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionRight;
     [self addGestureRecognizer:swipeLeftGesture];
     
-    UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:target action:action];
+    UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]
+                                                   initWithTarget:target action:action];
     swipeRightGesture.direction = UISwipeGestureRecognizerDirectionLeft;
     [self addGestureRecognizer:swipeRightGesture];
     
@@ -320,7 +337,9 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
            completion:completion];
 }
 
-- (void)swipeToLeft:(BOOL)swipeToLeft animations:(void (^)(void))animations completion:(void (^)(BOOL finished))completion {
+- (void)swipeToLeft:(BOOL)swipeToLeft
+         animations:(void (^)(void))animations
+         completion:(void (^)(BOOL finished))completion {
     UIView *superview = self.superview;
     
     // snapshot
@@ -328,7 +347,9 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     CGRect snapshotFrame = self.frame;
     UIEdgeInsets snapshotEdgeInsets = UIEdgeInsetsZero;
     if ([superview respondsToSelector:@selector(resizableSnapshotViewFromRect:afterScreenUpdates:withCapInsets:)]) {
-        snapshotView = [superview resizableSnapshotViewFromRect:snapshotFrame afterScreenUpdates:NO withCapInsets:snapshotEdgeInsets];
+        snapshotView = [superview resizableSnapshotViewFromRect:snapshotFrame
+                                             afterScreenUpdates:NO
+                                                  withCapInsets:snapshotEdgeInsets];
     }
     else {
         snapshotView = [superview snapshotViewFromRect:snapshotFrame withCapInsets:snapshotEdgeInsets];
@@ -340,7 +361,9 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
         [superview insertSubview:snapshotView aboveSubview:self];
         self.frame = ({
             CGRect frame = self.frame;
-            frame.origin.x = swipeToLeft ? (frame.origin.x + frame.size.width) : (frame.origin.x - frame.size.width);
+            frame.origin.x = (swipeToLeft
+                              ? (frame.origin.x + frame.size.width)
+                              : (frame.origin.x - frame.size.width));
             _RETURN frame;
         });
     };
@@ -360,12 +383,16 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
         
         snapshotView.frame = ({
             CGRect frame = snapshotView.frame;
-            frame.origin.x = swipeToLeft ? (frame.origin.x - frame.size.width) : (frame.origin.x + frame.size.width);
+            frame.origin.x = (swipeToLeft
+                              ? (frame.origin.x - frame.size.width)
+                              : (frame.origin.x + frame.size.width));
             _RETURN frame;
         });
         self.frame = ({
             CGRect frame = self.frame;
-            frame.origin.x = swipeToLeft ? (frame.origin.x - frame.size.width) : (frame.origin.x + frame.size.width);
+            frame.origin.x = (swipeToLeft
+                              ? (frame.origin.x - frame.size.width)
+                              : (frame.origin.x + frame.size.width));
             _RETURN frame;
         });
     } completion:^(BOOL finished) {
