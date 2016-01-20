@@ -37,6 +37,7 @@
 		DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA11B9EEAB200259E6D /* UIResponder+M9.m */; };
 		DF6D6BA51B9F084D00259E6D /* UITableViewCell+M9.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9.m */; };
 		DF6D6BA81B9F160100259E6D /* TestClosestAndAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */; };
+		DF7C03CE1C4F538800544970 /* UIView+alignmentRectInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = DF7C03CD1C4F538800544970 /* UIView+alignmentRectInsets.m */; };
 		DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */; };
 		DFA871081B9C0A570040249B /* ARCWeakRef.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA870981B9C0A560040249B /* ARCWeakRef.m */; };
 		DFA871091B9C0A570040249B /* NSAttributedString+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DFA8709C1B9C0A560040249B /* NSAttributedString+JS.m */; };
@@ -164,6 +165,8 @@
 		DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+M9.m"; sourceTree = "<group>"; };
 		DF6D6BA61B9F160100259E6D /* TestClosestAndAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestClosestAndAccessoryViewController.h; sourceTree = "<group>"; };
 		DF6D6BA71B9F160100259E6D /* TestClosestAndAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestClosestAndAccessoryViewController.m; sourceTree = "<group>"; };
+		DF7C03CC1C4F538800544970 /* UIView+alignmentRectInsets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+alignmentRectInsets.h"; sourceTree = "<group>"; };
+		DF7C03CD1C4F538800544970 /* UIView+alignmentRectInsets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+alignmentRectInsets.m"; sourceTree = "<group>"; };
 		DF82F31E19B730D300599432 /* VideosOCCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideosOCCollectionViewController.h; sourceTree = "<group>"; };
 		DF82F31F19B730D300599432 /* VideosOCCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideosOCCollectionViewController.m; sourceTree = "<group>"; };
 		DF96C5281B799A4E006DF4EA /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
@@ -578,6 +581,8 @@
 				DF6D6BA41B9F084D00259E6D /* UITableViewCell+M9.m */,
 				DFA870FD1B9C0A570040249B /* UIView+M9.h */,
 				DFA870FE1B9C0A570040249B /* UIView+M9.m */,
+				DF7C03CC1C4F538800544970 /* UIView+alignmentRectInsets.h */,
+				DF7C03CD1C4F538800544970 /* UIView+alignmentRectInsets.m */,
 				DFA870FF1B9C0A570040249B /* UIViewController+M9.h */,
 				DFA871001B9C0A570040249B /* UIViewController+M9.m */,
 			);
@@ -949,6 +954,7 @@
 				DF82F32019B730D300599432 /* VideosOCCollectionViewController.m in Sources */,
 				DF256A171BC95BEC00154BF6 /* M9Link.m in Sources */,
 				DF6D6BA81B9F160100259E6D /* TestClosestAndAccessoryViewController.m in Sources */,
+				DF7C03CE1C4F538800544970 /* UIView+alignmentRectInsets.m in Sources */,
 				DFA871221B9C0A570040249B /* M9ScrollViewController.m in Sources */,
 				DFE66CC41B3D650500124656 /* VideosJSCollectionViewController+action.m in Sources */,
 				DFA871161B9C0A570040249B /* UILabel+JS.m in Sources */,

@@ -10,6 +10,7 @@
 
 #import "UIControl+M9EventCallback.h"
 #import "M9Link.h"
+#import "UIView+M9.h"
 
 #import "NSThread+M9.h"
 
@@ -139,6 +140,37 @@ static const CGFloat margin = 10, height = 44;
                 NSLog(@"<#NSThread+M9#>: 4 after suspend - %@", NSStringFromBOOL(suspend));
             });
         } forControlEvents:UIControlEventTouchUpInside];
+        prevView = button;
+    }
+    
+    {
+        UIButton *button = [UIButton new];
+        button.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+        button.backgroundColor = [UIColor lightGrayColor];
+        [button setTitle:@"test alignmentRectInsets" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        
+        button.alignmentRectInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+        
+        [self.scrollView addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.view).with.offset(margin);
+            make.right.equalTo(self.view).with.offset(- margin);
+            if (!prevView) {
+                make.top.equalTo(self.scrollView).with.offset(margin);
+            }
+            else {
+                make.top.equalTo(prevView.mas_bottom).with.offset(margin);
+            }
+            make.height.mas_equalTo(height);
+        }];
+        
+        /* weakdef(self);
+        [button addEventCallback:^(id sender) {
+            strongdef_ifNOT(self) return;
+            
+        } forControlEvents:UIControlEventTouchUpInside]; */
         prevView = button;
     }
     
