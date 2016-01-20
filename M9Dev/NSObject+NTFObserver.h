@@ -15,12 +15,25 @@ typedef void (^NTFObserverCallback)(id object, NSString *name, NSDictionary *inf
  */
 @interface NSObject (NTFObserver)
 
-- (id)addNTFObserverForName:(NSString *)name callback:(NTFObserverCallback)callback;
+// TODO: MingLQ - test
+
+- (void)startNTFObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback;
+- (void)startNTFObservingForName:(NSString *)name callback:(NTFObserverCallback)callback;
+- (void)stopNTFObserving:(id)object forName:(NSString *)name;
+- (void)stopNTFObserving;
+
+/* TODO: MingLQ - notify
+- (void)notifyNTFObserverWithName:(NSString *)name;
+- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo; */
+
+#pragma mark - NTFObservable
+
+/* - (id)addNTFObserverForName:(NSString *)name callback:(NTFObserverCallback)callback;
 // observer: the returning value of - addNTFObserverForName:callback:
 - (void)removeNTFObserver:(id)observer forName:(NSString *)name;
 - (void)removeNTFObserver:(id)observer;
 
 - (void)notifyNTFObserverWithName:(NSString *)name;
-- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo;
+- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo; */
 
 @end
