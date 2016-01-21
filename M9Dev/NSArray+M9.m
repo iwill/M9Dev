@@ -34,26 +34,36 @@
 
 @implementation NSMutableArray (Shortcuts)
 
-- (void)addObjectOrNil:(id)anObject {
-    if (anObject) {
-        [self addObject:anObject];
+- (BOOL)addObjectOrNil:(id)anObject {
+    if (!anObject) {
+        return NO;
     }
+    [self addObject:anObject];
+    return YES;
 }
 
 - (BOOL)insertObjectOrNil:(id)anObject atIndex:(NSUInteger)index {
-    if (anObject && index <= [self count]) {
-        [self insertObject:anObject atIndex:index];
-        return YES;
+    if (!anObject || index > [self count]) {
+        return NO;
     }
-    return NO;
+    [self insertObject:anObject atIndex:index];
+    return YES;
+}
+
+- (BOOL)removeObjectOrNilAtIndex:(NSUInteger)index {
+    if (index >= [self count]) {
+        return NO;
+    }
+    [self removeObjectAtIndex:index];
+    return YES;
 }
 
 - (BOOL)replaceObjectAtIndex:(NSUInteger)index withObjectOrNil:(id)anObject {
-    if (anObject && index < [self count]) {
-        [self replaceObjectAtIndex:index withObject:anObject];
-        return YES;
+    if (!anObject || index >= [self count]) {
+        return NO;
     }
-    return NO;
+    [self replaceObjectAtIndex:index withObject:anObject];
+    return YES;
 }
 
 @end

@@ -26,8 +26,9 @@ typedef id (^NSArrayObjectValidator)(id object);
  */
 @interface NSMutableArray (Shortcuts)
 
-- (void)addObjectOrNil:(id)anObject;
+- (BOOL)addObjectOrNil:(id)anObject;
 - (BOOL)insertObjectOrNil:(id)anObject atIndex:(NSUInteger)index;
+- (BOOL)removeObjectOrNilAtIndex:(NSUInteger)index;
 - (BOOL)replaceObjectAtIndex:(NSUInteger)index withObjectOrNil:(id)anObject;
 
 @end
