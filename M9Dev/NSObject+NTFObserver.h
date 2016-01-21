@@ -15,23 +15,28 @@ typedef void (^NTFObserverCallback)(id object, NSString *name, NSDictionary *inf
  */
 @interface NSObject (NTFObserver)
 
-- (void)startNTFObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback;
-- (void)startNTFObservingForName:(NSString *)name callback:(NTFObserverCallback)callback;
-- (void)stopNTFObserving:(id)object forName:(NSString *)name;
-- (void)stopAllNTFObserving;
+- (void)ntf_startObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback;
+- (void)ntf_startObservingForName:(NSString *)name callback:(NTFObserverCallback)callback;
+- (void)ntf_stopObserving:(id)object forName:(NSString *)name;
+- (void)ntf_stopAllObserving;
 
-/* TODO: MingLQ - notify
-- (void)notifyNTFObserverWithName:(NSString *)name;
-- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo; */
+/* #pragma mark - DEPRECATED_ATTRIBUTE
 
-#pragma mark - NTFObservable
-
-/* - (id)addNTFObserverForName:(NSString *)name callback:(NTFObserverCallback)callback;
+- (id)addNTFObserverForName:(NSString *)name callback:(NTFObserverCallback)callback;
 // observer: the returning value of - addNTFObserverForName:callback:
 - (void)removeNTFObserver:(id)observer forName:(NSString *)name;
 - (void)removeNTFObserver:(id)observer;
 
 - (void)notifyNTFObserverWithName:(NSString *)name;
-- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)eventInfo; */
+- (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)info; */
+
+@end
+
+#pragma mark -
+
+@interface NSObject (NTFObservable)
+
+- (void)ntf_notifyObserverWithName:(NSString *)name;
+- (void)ntf_notifyObserverWithName:(NSString *)name info:(NSDictionary *)info;
 
 @end

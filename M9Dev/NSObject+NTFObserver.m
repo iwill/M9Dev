@@ -10,7 +10,7 @@
 
 #import "NSObject+AssociatedValues.h"
 
-@interface NTFObserver : NSObject
+@interface _NTFObserver : NSObject
 
 @property (nonatomic, strong) id<NSObject> observer;
 @property (nonatomic, weak) id object;
@@ -19,10 +19,10 @@
 
 @end
 
-@implementation NTFObserver
+@implementation _NTFObserver
 
 + (instancetype)observer:(id<NSObject>)observer object:(id)object {
-    NTFObserver *ntfObserver = [self new];
+    _NTFObserver *ntfObserver = [self new];
     ntfObserver.observer = observer;
     ntfObserver.object = object;
     return ntfObserver;
@@ -30,45 +30,47 @@
 
 @end
 
+#pragma mark -
+
 @implementation NSObject (NTFObserver)
 
 static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
 
-- (NSMutableDictionary<id<NSCopying>, NSMutableArray<NTFObserver *> *> *)allNTFObservers {
+- (NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> *)ntf_allObservers {
     return [self associatedValueForKey:NTFObserver_allNTFObservers];
 }
 
-- (void)setAllNTFObservers:(NSMutableDictionary<id<NSCopying>, NSMutableArray<NTFObserver *> *> *)allNTFObservers {
-    [self associateValue:allNTFObservers withKey:NTFObserver_allNTFObservers];
+- (void)ntf_setAllObservers:(NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> *)allObservers {
+    [self associateValue:allObservers withKey:NTFObserver_allNTFObservers];
 }
 
-- (void)addNTFObserver:(id<NSObject>)observer name:(nullable id<NSCopying>)name object:(nullable id)object {
+- (void)ntf_addObserver:(id<NSObject>)observer name:(nullable id<NSCopying>)name object:(nullable id)object {
     if (!observer) {
         return;
     }
     
     name = name ?: [NSNull null];
     
-    NTFObserver *ntfObserver = [NTFObserver observer:observer object:object];
+    _NTFObserver *ntfObserver = [_NTFObserver observer:observer object:object];
     
-    NSMutableDictionary<id<NSCopying>, NSMutableArray<NTFObserver *> *> *allNTFObservers = [self allNTFObservers];
-    if (!allNTFObservers) {
-        allNTFObservers = [NSMutableDictionary<id<NSCopying>, NSMutableArray<NTFObserver *> *> new];
-        [self setAllNTFObservers:allNTFObservers];
+    NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> *allObservers = [self ntf_allObservers];
+    if (!allObservers) {
+        allObservers = [NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> new];
+        [self ntf_setAllObservers:allObservers];
     }
     
-    NSMutableArray<NTFObserver *> *ntfObservers = [allNTFObservers objectForKey:name];
+    NSMutableArray<_NTFObserver *> *ntfObservers = [allObservers objectForKey:name];
     if (!ntfObservers) {
-        ntfObservers = [NSMutableArray<NTFObserver *> new];
-        [allNTFObservers setObject:ntfObservers forKey:name];
+        ntfObservers = [NSMutableArray<_NTFObserver *> new];
+        [allObservers setObject:ntfObservers forKey:name];
     }
     
     [ntfObservers addObject:ntfObserver];
 }
 
-#pragma mark -
+#pragma mark - public
 
-- (void)startNTFObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
+- (void)ntf_startObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
     if (!callback) {
         return;
     }
@@ -81,23 +83,23 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
                                                                      notification.name,
                                                                      notification.userInfo);
                                                         }];
-    [self addNTFObserver:observer name:name object:object];
+    [self ntf_addObserver:observer name:name object:object];
 }}
 
-- (void)startNTFObservingForName:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
-    [self startNTFObserving:nil name:name callback:callback];
+- (void)ntf_startObservingForName:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
+    [self ntf_startObserving:nil name:name callback:callback];
 }}
 
-- (void)stopNTFObserving:(id)object forName:(NSString *)name { @synchronized(self) {
-    NSMutableDictionary<id<NSCopying>, NSMutableArray<NTFObserver *> *> *allNTFObservers = [self allNTFObservers];
-    NSArray<id<NSCopying>> *allKeys = name ? @[ name ] : [allNTFObservers allKeys];
+- (void)ntf_stopObserving:(id)object forName:(NSString *)name { @synchronized(self) {
+    NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> *allObservers = [self ntf_allObservers];
+    NSArray<id<NSCopying>> *allKeys = name ? @[ name ] : [allObservers allKeys];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     for (id<NSCopying> key in allKeys) {
-        NSMutableArray<NTFObserver *> *ntfObservers = [allNTFObservers objectForKey:key];
+        NSMutableArray<_NTFObserver *> *ntfObservers = [allObservers objectForKey:key];
         
-        for (NTFObserver *ntfObserver in [ntfObservers copy]) {
+        for (_NTFObserver *ntfObserver in [ntfObservers copy]) {
             if (!object || object == ntfObserver.object) {
                 if (name || object) {
                     [notificationCenter removeObserver:ntfObserver.observer name:name object:object];
@@ -110,20 +112,20 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
         }
         
         if (!ntfObservers.count) {
-            [allNTFObservers removeObjectForKey:key];
+            [allObservers removeObjectForKey:key];
         }
     }
     
-    if (!allNTFObservers.count) {
-        [self setAllNTFObservers:nil];
+    if (!allObservers.count) {
+        [self ntf_setAllObservers:nil];
     }
 }}
 
-- (void)stopAllNTFObserving { @synchronized(self) {
-    [self stopNTFObserving:nil forName:nil];
+- (void)ntf_stopAllObserving { @synchronized(self) {
+    [self ntf_stopObserving:nil forName:nil];
 }}
 
-#pragma mark - NTFObservable
+/* #pragma mark - DEPRECATED_ATTRIBUTE
 
 #define NTFObserverMakeName(name) [NSString stringWithFormat:@"NTFObserver-%@-%@", NSStringFromClass([self class]), name]
 
@@ -161,6 +163,22 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
 - (void)notifyNTFObserverWithName:(NSString *)name info:(NSDictionary *)info {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:NTFObserverMakeName(name) object:self userInfo:info];
+} */
+
+@end
+
+#pragma mark - NTFObservable
+
+@implementation NSObject (NTFObservable)
+
+- (void)ntf_notifyObserverWithName:(NSString *)name {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:name object:self];
+}
+
+- (void)ntf_notifyObserverWithName:(NSString *)name info:(NSDictionary *)info {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:name object:self userInfo:info];
 }
 
 @end
