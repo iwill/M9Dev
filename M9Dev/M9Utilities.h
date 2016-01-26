@@ -59,6 +59,32 @@ extern "C" {
 
 
 /**
+ *  @synthesize_singleton(sharedInstance);
+ */
+#define synthesize_singleton(METHOD) \
+class NSObject; /* for @ */ \
+\
+static id _SINGLETON_INSTANCE = nil; \
+\
++ (instancetype)allocWithZone:(struct _NSZone *)zone { \
+    if (self != _SELF_CLASS || _SINGLETON_INSTANCE) { \
+        return nil; \
+    } \
+    @synchronized(self) { \
+        if (!_SINGLETON_INSTANCE) { \
+            _SINGLETON_INSTANCE = [super allocWithZone:zone]; \
+            return _SINGLETON_INSTANCE; \
+        } \
+    } \
+    return nil; \
+} \
+\
++ (instancetype)METHOD { \
+    return (self == _SELF_CLASS) ? ([self new] ?: _SINGLETON_INSTANCE) : nil; \
+}
+
+
+/**
  * NSString
  */
 
