@@ -158,9 +158,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "Masonry"
+  
   s.dependency "JRSwizzle"
+  s.dependency "Masonry"
   s.dependency "NSString-UrlEncode"
   s.dependency "Reachability"
+  # s.dependency "YYModel"
 
 end
