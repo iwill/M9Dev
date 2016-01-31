@@ -45,29 +45,32 @@ extern "C" {
 
 /**
  * @see __CLASS__ - Google: Objective-C macro __CLASS__
- *  !!!: _SELF_CLASS != [self class]
+ *  !!!: _THIS_CLASS != [self class]
  */
-#define _CLASS_NAME ({ \
-    NSString *prettyFunction = [NSString stringWithUTF8String:__PRETTY_FUNCTION__]; \
-    NSUInteger loc = [prettyFunction rangeOfString:@"["].location + 1; \
-    NSUInteger len = [prettyFunction rangeOfString:@" "].location - loc; \
-    NSRange range = NSMakeSafeRange(loc, len, prettyFunction.length); \
-    [prettyFunction substringWithRange:range]; \
+#define _THIS_CLASS_NAME ({ \
+    static NSString *ClassName = nil; \
+    if (!ClassName) {\
+        NSString *prettyFunction = [NSString stringWithUTF8String:__PRETTY_FUNCTION__]; \
+        NSUInteger loc = [prettyFunction rangeOfString:@"["].location + 1; \
+        NSUInteger len = [prettyFunction rangeOfString:@" "].location - loc; \
+        NSRange range = NSMakeSafeRange(loc, len, prettyFunction.length); \
+        ClassName = [prettyFunction substringWithRange:range]; \
+    } \
+    ClassName; \
 })
-#define _SELF_CLASS     NSClassFromString(_CLASS_NAME)
-#define _SUPER_CLASS    [_SELF_CLASS superclass]
+#define _THIS_CLASS     NSClassFromString(_THIS_CLASS_NAME)
 
 
 /**
  *  @synthesize_singleton(sharedInstance);
  */
-#define synthesize_singleton(METHOD) \
+#define synthesize_singleton(_SHARED_METHOD) \
 class NSObject; /* for @ */ \
 \
 static id _SINGLETON_INSTANCE = nil; \
 \
 + (instancetype)allocWithZone:(struct _NSZone *)zone { \
-    if (self != _SELF_CLASS || _SINGLETON_INSTANCE) { \
+    if (self != _THIS_CLASS || _SINGLETON_INSTANCE) { \
         return nil; \
     } \
     @synchronized(self) { \
@@ -79,8 +82,8 @@ static id _SINGLETON_INSTANCE = nil; \
     return nil; \
 } \
 \
-+ (instancetype)METHOD { \
-    return (self == _SELF_CLASS) ? ([self new] ?: _SINGLETON_INSTANCE) : nil; \
++ (instancetype)_SHARED_METHOD { \
+    return (self == _THIS_CLASS) ? (_SINGLETON_INSTANCE ?: [self new] ?: _SINGLETON_INSTANCE) : nil; \
 }
 
 
