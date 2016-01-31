@@ -76,7 +76,6 @@ typedef void (^UIViewLayoutSubviewsBlock)();
 @property (nonatomic, readwrite, assign) UIEdgeInsets customBackgroundInsets;
 
 - (UIView *)subviewWithTag:(NSInteger)tag;
-- (void)removeAllSubviews DEPRECATED_ATTRIBUTE;
 
 // return nil if not found in the current view controller
 - (UIView *)closestViewOfClass:(Class)clazz; // NOT include self

@@ -180,10 +180,6 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     return nil;
 }
 
-- (void)removeAllSubviews {
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-}
-
 - (UIView *)closestViewOfClass:(Class)clazz {
     return [self closestViewOfClass:clazz includeSelf:NO];
 }
