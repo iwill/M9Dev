@@ -343,6 +343,11 @@ static void *KVOContext_M9PagingViewController = &KVOContext_M9PagingViewControl
 /**
  *  @see http://stackoverflow.com/a/19711940/456536
  */
+
+@interface M9PagingViewController (UIStatusBarStyle)
+
+@end
+
 @implementation M9PagingViewController (UIStatusBarStyle)
 
 - (UIViewController *)childViewControllerForStatusBarStyle {

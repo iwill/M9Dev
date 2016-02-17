@@ -229,6 +229,11 @@
 /**
  *  @see http://stackoverflow.com/a/19711940/456536
  */
+
+@interface UINavigationController (UIStatusBarStyle)
+
+@end
+
 @implementation UINavigationController (UIStatusBarStyle)
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
