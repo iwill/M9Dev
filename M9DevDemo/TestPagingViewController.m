@@ -10,6 +10,20 @@
 
 #import "EXTScope.h"
 
+@interface TestPageViewController : UIViewController
+
+@property (nonatomic) NSInteger page;
+
+@end
+
+@implementation TestPageViewController
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.page % 2 ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+}
+
+@end
+
 @interface TestPagingViewController ()
 
 // @optional
@@ -48,8 +62,10 @@
         return viewController;
     }
     
-    viewController = [UIViewController new];
-    {
+    viewController = ({
+        TestPageViewController *viewController = [TestPageViewController new];
+        viewController.page = page;
+        
         UILabel *label = [UILabel new];
         label.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         label.font = [UIFont boldSystemFontOfSize:32];
@@ -63,7 +79,8 @@
         }];
         
         viewController.view.backgroundColor = [UIColor colorWithWhite:(10.0 - page - 1) / 10 alpha:1.0];
-    }
+        _RETURN viewController;
+    });
     
     [self.viewControllersPool setObject:viewController forKey:@(page)];
     return viewController;
