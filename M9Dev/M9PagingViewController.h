@@ -52,9 +52,3 @@
 // TODO: scroll progress - 1, 1.1, 1.2 ..., 2
 
 @end
-
-#pragma mark -
-
-@interface M9PagingViewController (UIStatusBarStyle)
-
-@end
