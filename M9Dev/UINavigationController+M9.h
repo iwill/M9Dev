@@ -45,4 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark -
+
+@interface UINavigationController (UIStatusBarStyle)
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -223,3 +223,20 @@
 }
 
 @end
+
+#pragma mark -
+
+/**
+ *  @see http://stackoverflow.com/a/19711940/456536
+ */
+@implementation UINavigationController (UIStatusBarStyle)
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+    return self.topViewController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarHidden {
+    return self.topViewController;
+}
+
+@end
