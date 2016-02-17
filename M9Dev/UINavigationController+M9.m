@@ -85,21 +85,21 @@
 }
 
 /*
- - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
- return [super popViewControllerAnimated:animated];
- }
- 
- - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
- return [super popToViewController:viewController animated:animated];
- }
- 
- - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
- return [super popToRootViewControllerAnimated:animated];
- }
- 
- - (void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated {
- [super setViewControllers:viewControllers animated:animated];
- } // */
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    return [super popViewControllerAnimated:animated];
+}
+
+- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    return [super popToViewController:viewController animated:animated];
+}
+
+- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
+    return [super popToRootViewControllerAnimated:animated];
+}
+
+- (void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated {
+    [super setViewControllers:viewControllers animated:animated];
+} // */
 
 #pragma mark UINavigationControllerDelegate
 
@@ -174,9 +174,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
     [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
+    [CATransaction setCompletionBlock:completion];
     [self pushViewController:viewController animated:animated];
     [CATransaction commit];
 }
@@ -192,9 +190,7 @@
     }
     
     [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
+    [CATransaction setCompletionBlock:completion];
     UIViewController *poppedViewController = [self popViewControllerAnimated:animated];
     [CATransaction commit];
     return poppedViewController;
@@ -202,9 +198,7 @@
 
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion {
     [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
+    [CATransaction setCompletionBlock:completion];
     NSArray *poppedViewControllers = [self popToViewController:viewController animated:animated];
     [CATransaction commit];
     return poppedViewControllers;
@@ -212,9 +206,7 @@
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion {
     [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        if (completion) completion();
-    }];
+    [CATransaction setCompletionBlock:completion];
     NSArray *poppedViewControllers = [self popToRootViewControllerAnimated:animated];
     [CATransaction commit];
     return poppedViewControllers;
