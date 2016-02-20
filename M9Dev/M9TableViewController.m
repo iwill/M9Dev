@@ -44,7 +44,7 @@
         return _tableView;
     }
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:self.style];
     // tableView.delegate = self;
     // tableView.dataSource = self;
     self.tableView = tableView;
