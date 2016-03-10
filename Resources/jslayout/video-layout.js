@@ -66,7 +66,7 @@
         name: "JSHorLayout",
         layout_setUp: function(layout) {
             JSLayout.prototype.layout_setUp.apply(this, arguments);
-            layout.itemSize = { width: 150, height: 124 };
+            layout.itemSize = { width: 177, height: 147 };
         },
         cell_updateWithData: function(cell, data) {
             JSLayout.prototype.cell_updateWithData.apply(this, arguments);
@@ -80,7 +80,7 @@
         name: "JSVerLayout",
         layout_setUp: function(layout) {
             JSLayout.prototype.layout_setUp.apply(this, arguments);
-            layout.itemSize = { width: 98, height: 135 };
+            layout.itemSize = { width: 116, height: 156 };
         },
         cell_updateWithData: function(cell, data) {
             JSLayout.prototype.cell_updateWithData.apply(this, arguments);

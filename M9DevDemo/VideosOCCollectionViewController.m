@@ -104,7 +104,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
 - (instancetype)init {
     horLayout = ({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.itemSize = CGSizeMake(150, 124);
+        layout.itemSize = CGSizeMake(177, 147);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
         layout.minimumLineSpacing = 6;
         layout.minimumInteritemSpacing = 6;
@@ -113,7 +113,7 @@ static NSString *const UIImageCollectionViewCellIdentifier = @"UIImageCollection
     
     verLayout = ({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.itemSize = CGSizeMake(98, 135);
+        layout.itemSize = CGSizeMake(116, 156);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
         layout.minimumLineSpacing = 6;
         layout.minimumInteritemSpacing = 6;

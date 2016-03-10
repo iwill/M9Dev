@@ -48,7 +48,7 @@
 - (instancetype)init {
     self = [super initWithCollectionViewLayout:({
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.itemSize = CGSizeMake(150, 124);
+        layout.itemSize = CGSizeMake(177, 147);
         layout.sectionInset = UIEdgeInsetsMake(7, 7, 7, 7);
         layout.minimumLineSpacing = 6;
         layout.minimumInteritemSpacing = 6;
