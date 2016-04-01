@@ -50,6 +50,7 @@
 #import "M9TableViewController.h"
 #import "M9PagingViewController.h"
 #import "UINavigationController+M9.h"
+#import "UIViewController+EventNotifications.h"
 #import "UIViewController+M9.h"
 
 #endif
