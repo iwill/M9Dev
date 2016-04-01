@@ -16,6 +16,7 @@
 		DF34A3E71BAC58EE00F6AF06 /* FreeTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */; };
 		DF34A3E91BAC6B7A00F6AF06 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */; };
 		DF51017F1C08536600991827 /* YYModelTestsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = DF51017E1C08536600991827 /* YYModelTestsSpec.m */; };
+		DF57689A1CAE5BB800D6F56A /* UIViewController+EventNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = DF5768991CAE5BB800D6F56A /* UIViewController+EventNotifications.m */; };
 		DF57B64319A74E9300C374E8 /* M9DevTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */; };
 		DF6217011BD0CE71005F92CC /* NSObject+JS.m in Sources */ = {isa = PBXBuildFile; fileRef = DF6217001BD0CE71005F92CC /* NSObject+JS.m */; };
 		DF64282F1BAC41CC00966CF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF64282E1BAC41CC00966CF2 /* LaunchScreen.xib */; };
@@ -132,6 +133,8 @@
 		DF34A3E61BAC58EE00F6AF06 /* FreeTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeTestViewController.m; sourceTree = "<group>"; };
 		DF34A3E81BAC6B7A00F6AF06 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		DF51017E1C08536600991827 /* YYModelTestsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYModelTestsSpec.m; sourceTree = "<group>"; };
+		DF5768981CAE5BB800D6F56A /* UIViewController+EventNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+EventNotifications.h"; sourceTree = "<group>"; };
+		DF5768991CAE5BB800D6F56A /* UIViewController+EventNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+EventNotifications.m"; sourceTree = "<group>"; };
 		DF57B64119A74E9300C374E8 /* M9DevTestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M9DevTestTableViewController.h; sourceTree = "<group>"; };
 		DF57B64219A74E9300C374E8 /* M9DevTestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M9DevTestTableViewController.m; sourceTree = "<group>"; };
 		DF6216FF1BD0CE71005F92CC /* NSObject+JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JS.h"; sourceTree = "<group>"; };
@@ -583,6 +586,8 @@
 				DFA870FE1B9C0A570040249B /* UIView+M9.m */,
 				DF7C03CC1C4F538800544970 /* UIView+alignmentRectInsets.h */,
 				DF7C03CD1C4F538800544970 /* UIView+alignmentRectInsets.m */,
+				DF5768981CAE5BB800D6F56A /* UIViewController+EventNotifications.h */,
+				DF5768991CAE5BB800D6F56A /* UIViewController+EventNotifications.m */,
 				DFA870FF1B9C0A570040249B /* UIViewController+M9.h */,
 				DFA871001B9C0A570040249B /* UIViewController+M9.m */,
 			);
@@ -982,6 +987,7 @@
 				DF6D6BA21B9EEAB200259E6D /* UIResponder+M9.m in Sources */,
 				DFA871281B9C0A570040249B /* NSDate+M9.m in Sources */,
 				DFA8712B1B9C0A570040249B /* NSObject+AssociatedValues.m in Sources */,
+				DF57689A1CAE5BB800D6F56A /* UIViewController+EventNotifications.m in Sources */,
 				DFA871111B9C0A570040249B /* UICollectionViewFlowLayout+JS.m in Sources */,
 				DFE155061C3E00E2001C13F3 /* Reachability+.m in Sources */,
 				DF69D2311967EA7E00B8C011 /* main.m in Sources */,
