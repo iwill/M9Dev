@@ -14,7 +14,7 @@ extern NSString * const UIViewControllerEventTypeKey;
 extern NSString * const UIViewControllerEventAnimationKey;
 
 typedef NS_ENUM(NSInteger, UIViewControllerEventType) {
-    UIViewControllerEventType_viewDidLoad,
+    UIViewControllerEventType_viewDidLoad = 1,
     UIViewControllerEventType_viewWillAppear,
     UIViewControllerEventType_viewDidAppear,
     UIViewControllerEventType_viewWillDisappear,
