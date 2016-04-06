@@ -64,7 +64,7 @@
         self.clearsSelectionOnViewWillAppear = YES;
         
         M9RequestConfig *config = [M9RequestConfig new];
-        config.baseURL = [NSURL URLWithString:@"http://api.tv.sohu.com/v4/"];
+        config.baseURL = [NSURL URLWithString:@"http://api.tv.sohu.com"];
         networking = [M9Networking instanceWithRequestConfig:config];
         
         allVideos = [NSMutableArray array];
@@ -182,7 +182,7 @@
     isLoading = YES;
     
     M9RequestInfo *requestInfo = [M9RequestInfo requestInfoWithRequestConfig:networking.requestConfig];
-    requestInfo.URLString = @"search/channel.json";
+    requestInfo.URLString = @"/v4/search/channel.json";
     requestInfo.parameters = @{ @"api_key":     @"695fe827ffeb7d74260a813025970bd5",
                                 @"plat":        @3,
                                 @"sver":        @"4.5",
