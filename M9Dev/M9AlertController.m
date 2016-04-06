@@ -11,7 +11,7 @@
 
 static void *M9AlertController_allActions = &M9AlertController_allActions;
 
-#pragma mark -
+#pragma mark - UIAlertAction
 
 @interface UIAlertAction (M9AlertAction) <M9AlertAction>
 
@@ -21,7 +21,7 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 @end
 
-#pragma mark -
+#pragma mark - UIAlertController
 
 @interface UIAlertController (M9AlertController) <M9AlertController>
 
@@ -60,7 +60,7 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 @end
 
-#pragma mark -
+#pragma mark - M9AlertAction
 
 @interface M9AlertAction : NSObject <M9AlertAction>
 
@@ -91,7 +91,7 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 @end
 
-#pragma mark -
+#pragma mark - _M9AlertControllerDelegate
 
 @interface _M9AlertControllerDelegate : NSObject <UIAlertViewDelegate, UIActionSheetDelegate>
 
@@ -119,7 +119,7 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
-#pragma mark -
+#pragma mark - UIAlertView
 
 @interface UIAlertView (M9AlertController) <M9AlertController>
 
@@ -164,7 +164,7 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     }
 }
 
-+ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
     AlertControllerDelegate = AlertControllerDelegate OR [_M9AlertControllerDelegate new];
     return [[UIAlertView alloc] initWithTitle:title message:message delegate:AlertControllerDelegate cancelButtonTitle:nil otherButtonTitles:nil];
 }
@@ -214,7 +214,7 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @end
 
-#pragma mark -
+#pragma mark - UIActionSheet
 
 @interface UIActionSheet (M9AlertController) <M9AlertController>
 
@@ -256,7 +256,7 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     return nil;
 }
 
-+ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
     // title = [NSString stringWithFormat:@"%@: %@", title, message];
     AlertControllerDelegate = AlertControllerDelegate OR [_M9AlertControllerDelegate new];
     return [[UIActionSheet alloc] initWithTitle:title delegate:AlertControllerDelegate cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
@@ -311,17 +311,13 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 @end
 
 
-#pragma mark -
+#pragma mark - M9AlertController
 
-@interface M9AlertController ()
-
-@end
-
-@implementation M9AlertController
+@implementation M9AlertController (M9AlertController)
 
 @dynamic actions, textFields, title, message, preferredStyle;
 
-+ (id<M9AlertController>)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
     if (NSClassFromString(@"UIAlertController")) {
         return [UIAlertController alertControllerWithTitle:title
                                                    message:message
@@ -339,38 +335,48 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
                                    preferredStyle:preferredStyle];
 }
 
-+ (instancetype)allocWithZone:(struct _NSZone *)zone {
-    return nil;
-}
-
 - (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
 }
 
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
 }
 
 - (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
 }
 
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
 }
 
 - (UIAlertController *)asUIAlertController {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
     return nil;
 }
 
 - (UIAlertView *)asUIAlertView {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
     return nil;
 }
 
 - (UIActionSheet *)asUIActionSheet {
+#if !defined(__OPTIMIZE__)
     [self doesNotRecognizeSelector:_cmd];
+#endif
     return nil;
 }
 
