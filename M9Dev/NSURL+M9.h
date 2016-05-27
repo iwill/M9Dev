@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NSString-URLEncode/NSString+URLEncode.h>
+#import <NSString-UrlEncode/NSString+URLEncode.h>
 
 #import "M9Utilities.h"
 #import "NSDictionary+M9.h"
