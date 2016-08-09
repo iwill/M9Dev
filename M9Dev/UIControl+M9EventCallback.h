@@ -16,7 +16,8 @@ typedef void (^M9EventCallback)(id sender);
 
 @interface UIControl (M9EventCallback)
 
-- (void)addEventCallback:(M9EventCallback)eventCallback forControlEvents:(UIControlEvents)controlEvents;
+- (void)addEventCallback:(M9EventCallback)eventCallback
+        forControlEvents:(UIControlEvents)controlEvents;
 - (void)removeEventCallbackForControlEvents:(UIControlEvents)controlEvents;
 
 @end

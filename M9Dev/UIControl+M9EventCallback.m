@@ -10,19 +10,27 @@
 #import "UIControl+M9EventCallback.h"
 
 @interface M9EventCallbackWrapper : NSObject
-@property(nonatomic, copy) M9EventCallback eventCallback;
+
+@property (nonatomic, copy) M9EventCallback eventCallback;
+
 - (void)callbackWithSender:(id)sender;
+
 + (instancetype)wrapperWithCallback:(M9EventCallback)eventCallback;
+
 @end
+
 @implementation M9EventCallbackWrapper
+
 - (void)callbackWithSender:(id)sender {
     if (self.eventCallback) self.eventCallback(sender);
 }
+
 + (instancetype)wrapperWithCallback:(M9EventCallback)eventCallback {
     M9EventCallbackWrapper *callbackWrapper = [self new];
     callbackWrapper.eventCallback = eventCallback;
     return callbackWrapper;
 }
+
 @end
 
 #pragma mark -
@@ -31,7 +39,8 @@
 
 static void *M9EventCallbackWrappers = &M9EventCallbackWrappers;
 
-- (void)addEventCallback:(M9EventCallback)eventCallback forControlEvents:(UIControlEvents)controlEvents {
+- (void)addEventCallback:(M9EventCallback)eventCallback
+        forControlEvents:(UIControlEvents)controlEvents {
     NSMutableDictionary *callbackWrapperGroups = [self associatedValueForKey:M9EventCallbackWrappers];
     if (!callbackWrapperGroups) {
         callbackWrapperGroups = [NSMutableDictionary dictionary];
