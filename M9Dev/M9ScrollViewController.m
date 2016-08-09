@@ -35,13 +35,18 @@
         return _scrollView;
     }
     
-    UIScrollView *scrollView = [UIScrollView new];
-    scrollView.delegate = self;
-    self.scrollView = scrollView;
-    [self.view addSubview:scrollView];
+    _scrollView = [UIScrollView new];
+    _scrollView.delegate = self;
+    [self.view addSubview:_scrollView];
     
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.width.height.equalTo(self.view);
+    /**
+     *  subview:
+     *  make.left.right.equalTo(@[ self.view, self.scrollView ])
+     *      .with.insets(UIEdgeInsetsMake(0, horMargin, 0, horMargin));
+     *  make.top.bottom.equalTo(self.scrollView);
+     */
+    [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
     }];
     
     [self.view setNeedsLayout];
