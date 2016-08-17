@@ -9,8 +9,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Masonry/Masonry.h>
+#import <libextobjc/EXTScope.h>
 
-#import "EXTScope.h"
 #import "M9Utilities.h"
 
 @protocol M9ScrollViewDelegate <UITableViewDelegate>

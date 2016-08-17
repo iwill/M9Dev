@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "EXTScope.h"
+#import <libextobjc/EXTScope.h>
 
 /**
  *  Bring ARC weak ref to MRC code.

@@ -17,11 +17,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <JRSwizzle/JRSwizzle.h>
+#import <libextobjc/EXTScope.h>
 
 #import "M9Utilities.h"
 
 /* third part */
-#import "EXTScope.h"
 #import "metamacros.h"
 #import "NSObject+AssociatedObjects.h"
 #import "NSString+CompareToVersion.h"
