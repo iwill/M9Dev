@@ -51,18 +51,6 @@ typedef NS_ENUM(NSInteger, WWANType) {
     return [[self sharedReachability] currentReachabilityStatus];
 }
 
-+ (void)addReachabilityChangedNotificationObserver:(id)observer selector:(SEL)selector {
-    [[NSNotificationCenter defaultCenter] addObserver:observer
-                                             selector:selector
-                                                 name:kReachabilityChangedNotification
-                                               object:[self sharedReachability]];}
-
-+ (void)removeReachabilityChangedNotificationObserver:(id)observer {
-    [[NSNotificationCenter defaultCenter] removeObserver:observer
-                                                    name:kReachabilityChangedNotification
-                                                  object:[self sharedReachability]];
-}
-
 @end
 
 #pragma mark - CTTelephonyNetworkInfo
@@ -195,32 +183,21 @@ typedef NS_ENUM(NSInteger, WWANType) {
 }
 
 + (void)addNetworkTypeChangedNotificationObserver:(id)observer selector:(SEL)selector {
-    if (&CTRadioAccessTechnologyDidChangeNotification) {
-        
-        // !!!: init shared CTTelephonyNetworkInfo instance before add notification observer
-        // @see the comments of this method in the header file
-        [self sharedTelephonyNetworkInfo];
-        
-        // !!!: object is the CTRadioAccessTechnologyXXX instead of the CTTelephonyNetworkInfo instance
-        [[NSNotificationCenter defaultCenter] addObserver:observer
-                                                 selector:selector
-                                                     name:CTRadioAccessTechnologyDidChangeNotification
-                                                   object:nil];
-    }
-    else {
-        [self addReachabilityChangedNotificationObserver:observer selector:selector];
-    }
+    // !!!: init shared CTTelephonyNetworkInfo instance before add notification observer
+    // @see the comments of this method in the header file
+    [self sharedTelephonyNetworkInfo];
+    
+    // !!!: object is the CTRadioAccessTechnologyXXX instead of the CTTelephonyNetworkInfo instance
+    [[NSNotificationCenter defaultCenter] addObserver:observer
+                                             selector:selector
+                                                 name:CTRadioAccessTechnologyDidChangeNotification
+                                               object:nil];
 }
 
 + (void)removeNetworkTypeChangedNotificationObserver:(id)observer {
-    if (&CTRadioAccessTechnologyDidChangeNotification) {
-        [[NSNotificationCenter defaultCenter] removeObserver:observer
-                                                        name:CTRadioAccessTechnologyDidChangeNotification
-                                                      object:nil];
-    }
-    else {
-        [self removeReachabilityChangedNotificationObserver:observer];
-    }
+    [[NSNotificationCenter defaultCenter] removeObserver:observer
+                                                    name:CTRadioAccessTechnologyDidChangeNotification
+                                                  object:nil];
 }
 
 @end

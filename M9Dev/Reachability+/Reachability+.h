@@ -20,13 +20,6 @@
 + (Reachability *)sharedReachability;
 + (NetworkStatus)currentReachabilityStatus;
 
-/**
- * @param selector
- *      The selector must have one and only one argument (an instance of NSNotification)
- */
-+ (void)addReachabilityChangedNotificationObserver:(id)observer selector:(SEL)selector;
-+ (void)removeReachabilityChangedNotificationObserver:(id)observer;
-
 @end
 
 #pragma mark - CTTelephonyNetworkInfo
@@ -65,8 +58,6 @@ typedef NS_ENUM(NSInteger, NetworkType) {
 
 /**
  * Notify observers both when WWAN and WiFi changed via CTRadioAccessTechnologyDidChangeNotification.
- *
- * WWAN types are available from iOS7, call add/remove ReachabilityChangedNotificationObserver for iOS6 and lower.
  *
  * !!!: WARNING
  *      To actually get iOS to emit those notifications, you need to carry an instance of CTTelephonyNetworkInfo around.
