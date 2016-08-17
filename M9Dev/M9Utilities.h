@@ -92,7 +92,7 @@ static id _SINGLETON_INSTANCE = nil; \
  */
 
 #define NSObjectFromValue(value)                                @(value)
-#define NSStringFromValue(value)                                [@(value) description]
+#define NSStringFromValue(value)                                [@(value) stringValue]
 #define NSStringFromBOOL(value)                                 (value ? @"YES" : @"NO")
 #define NSStringFromVariableName(variableName)                  @(#variableName) // #variableName - variableName to CString
 
