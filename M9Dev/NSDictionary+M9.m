@@ -119,13 +119,13 @@
 }
 - (NSString *)stringForKey:(id)aKey defaultValue:(NSString *)defaultValue {
     id object = [self objectForKey:aKey];
-    if (!object || object == [NSNull null]) {
-        return defaultValue;
-    }
     if ([object isKindOfClass:[NSString class]]) {
         return (NSString *)object;
     }
-    return [object description];
+    if ([object respondsToSelector:@selector(stringValue)]) {
+        return [object stringValue];
+    }
+    return defaultValue;
 }
 
 - (NSArray *)arrayForKey:(id)aKey {
