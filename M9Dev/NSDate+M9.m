@@ -17,11 +17,11 @@
 
 #import "NSDate+M9.h"
 
-extern NSMilliseconds NSMillisecondsFromTimeInterval(NSTimeInterval timeInterval) {
+inline NSMilliseconds NSMillisecondsFromTimeInterval(NSTimeInterval timeInterval) {
     return (NSMilliseconds)(timeInterval * 1000);
 }
 
-extern NSTimeInterval NSTimeIntervalFromMilliseconds(NSMilliseconds milliseconds) {
+inline NSTimeInterval NSTimeIntervalFromMilliseconds(NSMilliseconds milliseconds) {
     return (NSTimeInterval)milliseconds / 1000;
 }
 
