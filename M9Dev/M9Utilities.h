@@ -62,9 +62,9 @@ extern "C" {
 
 
 /**
- *  @synthesize_singleton(sharedInstance);
+ *  @singleton_synthesize(sharedInstance);
  */
-#define synthesize_singleton(_SHARED_METHOD) \
+#define singleton_synthesize(_SHARED_METHOD) \
 class NSObject; /* for @ */ \
 \
 static id _SINGLETON_INSTANCE = nil; \
@@ -85,6 +85,7 @@ static id _SINGLETON_INSTANCE = nil; \
 + (instancetype)_SHARED_METHOD { \
     return (self == _THIS_CLASS) ? (_SINGLETON_INSTANCE ?: [self new] ?: _SINGLETON_INSTANCE) : nil; \
 }
+#define synthesize_singleton singleton_synthesize
 
 
 /**
@@ -308,6 +309,12 @@ class NSObject; /* for @ */ \
     [self makeCopy:copy]; \
     return copy; \
 }
+
+
+/**
+ *  UIOnePixel
+ */
+#define UIOnePixel ({ 1.0 / [UIScreen mainScreen].scale; })
 
 
 /**
