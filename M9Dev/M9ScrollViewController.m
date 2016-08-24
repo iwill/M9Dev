@@ -39,6 +39,9 @@
     _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
     
+    [_scrollView.panGestureRecognizer requireGestureRecognizerToFail:
+     self.navigationController.interactivePopGestureRecognizer];
+    
     /**
      *  subview:
      *  make.left.right.equalTo(@[ self.view, self.scrollView ])
