@@ -7,15 +7,6 @@
 //  Released under the MIT license.
 //
 
-#if ! __has_feature(objc_arc)
-// set -fobjc-arc flag: - Target > Build Phases > Compile Sources > implementation.m + -fobjc-arc
-#error This file must be compiled with ARC. Use -fobjc-arc flag or convert project to ARC.
-#endif
-
-#if ! __has_feature(objc_arc_weak)
-#error ARCWeakRef requires iOS 5 and higher.
-#endif
-
 #import "UINavigationController+M9.h"
 
 /**
@@ -32,20 +23,6 @@
 #pragma mark -
 
 @implementation UINavigationController_M9
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        /* !!!: 解决 interactivePopGestureRecognizer-BUG
-         * 详见 - gestureRecognizerShouldBegin:
-         */
-        [super setDelegate:self];
-    }
-    return self;
-}
-
-- (void)setDelegate:(id<UINavigationControllerDelegate>)delegate {
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -82,38 +59,6 @@
     }
     
     [super pushViewController:viewController animated:animated];
-}
-
-/*
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
-    return [super popViewControllerAnimated:animated];
-}
-
-- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    return [super popToViewController:viewController animated:animated];
-}
-
-- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
-    return [super popToRootViewControllerAnimated:animated];
-}
-
-- (void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated {
-    [super setViewControllers:viewControllers animated:animated];
-} // */
-
-#pragma mark UINavigationControllerDelegate
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    /* !!!: 解决 BUG
-     *  动画过程中禁止交互，避免各种异常
-     * !!!:
-     *  present 一个 navigationController 时，navigationController 会调用 willShowViewController，但不会调 didShowViewController
-     *  所以延时调用 endIgnoringInteractionEvents，而不是在 didShowViewController 中调用
-     */
-    if (animated && ![navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-        [[UIApplication sharedApplication] performSelector:@selector(endIgnoringInteractionEvents) withObject:nil afterDelay:0.5];
-    }
 }
 
 #pragma mark UIGestureRecognizerDelegate
