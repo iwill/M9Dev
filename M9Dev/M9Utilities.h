@@ -93,13 +93,13 @@ static id _SINGLETON_INSTANCE = nil; \
  * NSString
  */
 
-#define NSObjectFromValue(value)        @(value)
-#define NSStringFromValue(value)        [@(value) stringValue]
-#define NSStringFromBOOL(value)         (value ? @"YES" : @"NO")
+#define NSObjectFromValue(value, defaultValue)  value ? @(value) : defaultValue
+#define NSStringFromValue(value, defaultValue)  value ? [@(value) stringValue] : defaultValue
+#define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
 
-#define NSSelectorString(sel)           NSStringFromSelector(@selector(sel))
+#define NSSelectorString(sel)                   NSStringFromSelector(@selector(sel))
 
-#define NSStringFromLiteral(literal)    @#literal // #literal - literal to CString
+#define NSStringFromLiteral(literal)            @#literal // #literal - literal to CString
 
 // !!!: use defaultValue if preprocessor is undefined or its value is same to itself
 #define NSStringFromPreprocessor(preprocessor, defaultValue)    ({ \
