@@ -344,8 +344,7 @@ CGFloat UISizeScaleWithMargin_414(CGFloat margin);
 
 // NSDirectory
 static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
-    return [paths count] ? [paths objectAtIndex:0] : nil;
+    return NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES).firstObject;
 }
 
 
