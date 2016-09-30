@@ -24,7 +24,6 @@
 /* third part */
 #import "metamacros.h"
 #import "NSObject+AssociatedObjects.h"
-#import "NSString+CompareToVersion.h"
 #import "Reachability+.h"
 
 /* Foundation */
