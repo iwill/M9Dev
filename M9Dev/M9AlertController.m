@@ -9,6 +9,10 @@
 
 #import "M9AlertController.h"
 
+#import "M9Utilities.h"
+#import "NSArray+M9.h"
+#import "NSObject+AssociatedValues.h"
+
 static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 #pragma mark - UIAlertAction
@@ -310,12 +314,9 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @end
 
-
 #pragma mark - M9AlertController
 
-@implementation M9AlertController (M9AlertController)
-
-@dynamic actions, textFields, title, message, preferredStyle;
+@implementation UIResponder (M9AlertController)
 
 + (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
     if (NSClassFromString(@"UIAlertController")) {
@@ -323,60 +324,16 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
                                                    message:message
                                             preferredStyle:(UIAlertControllerStyle)preferredStyle];
     }
-    
     if (preferredStyle == M9AlertControllerStyleActionSheet) {
         return [UIActionSheet alertControllerWithTitle:title
                                                message:message
                                         preferredStyle:preferredStyle];
     }
-    
-    return [UIAlertView  alertControllerWithTitle:title
-                                          message:message
-                                   preferredStyle:preferredStyle];
-}
-
-- (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-}
-
-- (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-}
-
-- (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-}
-
-- (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-}
-
-- (UIAlertController *)asUIAlertController {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-    return nil;
-}
-
-- (UIAlertView *)asUIAlertView {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
-    return nil;
-}
-
-- (UIActionSheet *)asUIActionSheet {
-#if !defined(__OPTIMIZE__)
-    [self doesNotRecognizeSelector:_cmd];
-#endif
+    if (preferredStyle == M9AlertControllerStyleAlert) {
+        return [UIAlertView  alertControllerWithTitle:title
+                                              message:message
+                                       preferredStyle:preferredStyle];
+    }
     return nil;
 }
 

@@ -10,14 +10,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "M9Utilities.h"
-#import "NSArray+M9.h"
-#import "NSObject+AssociatedValues.h"
-
-@compatibility_alias M9AlertController UIResponder;
-
-#pragma mark -
-
 typedef NS_ENUM(NSInteger, M9AlertActionStyle) {
     M9AlertActionStyleDefault = 0,
     M9AlertActionStyleCancel,
@@ -33,6 +25,9 @@ typedef NS_ENUM(NSInteger, M9AlertActionStyle) {
 @end
 
 #pragma mark -
+
+@protocol M9AlertController;
+typedef UIResponder<M9AlertController> M9AlertController;
 
 typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
     M9AlertControllerStyleActionSheet = 0,
@@ -58,12 +53,12 @@ typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
 - (UIAlertView *)asUIAlertView NS_DEPRECATED_IOS(6_0, 8_0);
 - (UIActionSheet *)asUIActionSheet NS_DEPRECATED_IOS(6_0, 8_0);
 
-+ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle;
-
 @end
 
 #pragma mark -
 
-@interface M9AlertController (M9AlertController) <M9AlertController>
+@interface UIResponder (M9AlertController)
+
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle;
 
 @end
