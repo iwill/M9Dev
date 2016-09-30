@@ -112,6 +112,12 @@ static id _SINGLETON_INSTANCE = nil; \
     [string isEqualToString:@#preprocessor] ? defaultValue : [string integerValue]; \
 })
 
+#define NSVersionEQ(a, b) [a compare:b options:NSNumericSearch] == NSOrderedSame
+#define NSVersionLT(a, b) [a compare:b options:NSNumericSearch] <  NSOrderedSame
+#define NSVersionGT(a, b) [a compare:b options:NSNumericSearch] >  NSOrderedSame
+#define NSVersionLE(a, b) [a compare:b options:NSNumericSearch] <= NSOrderedSame
+#define NSVersionGE(a, b) [a compare:b options:NSNumericSearch] >= NSOrderedSame
+
 
 /**
  * NSMerge
