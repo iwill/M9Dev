@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "M9Dev"
-  s.version      = "0.0.19"
+  s.version      = "0.0.20"
   s.summary      = "Objective-C development utilities for iOS."
 
   s.description  = <<-DESC
@@ -101,10 +101,6 @@ Pod::Spec.new do |s|
     ss.subspec 'BlocksKit' do |sss|
       sss.public_header_files = 'Libraries/BlocksKit/*.h'
       sss.source_files = "Libraries/BlocksKit/*.{h,m}"
-    end
-    ss.subspec 'CompareToVersion' do |sss|
-      sss.public_header_files = 'Libraries/CompareToVersion/*.h'
-      sss.source_files = "Libraries/CompareToVersion/*.{h,m}"
     end
     # ss.public_header_files = 'Libraries/**/*.h'
     # ss.source_files = "Libraries/**/*.{h,m}"
