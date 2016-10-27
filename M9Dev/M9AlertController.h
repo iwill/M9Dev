@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, M9AlertActionStyle) {
 #pragma mark -
 
 @protocol M9AlertController;
+// !!!: M9AlertController *alertController = [M9AlertController alertControllerWithTitle:...];
 typedef UIResponder<M9AlertController> M9AlertController;
 
 typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
@@ -45,6 +46,8 @@ typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
 
 - (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler;
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler;
+// !!!: backgroundTapHandler
+- (void)addBackgroundTapHandler:(void (^)())backgroundTapHandler NS_AVAILABLE_IOS(8_0); // for M9AlertControllerStyleAlert style only
 
 - (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion;
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion;

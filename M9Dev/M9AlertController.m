@@ -14,6 +14,7 @@
 #import "NSObject+AssociatedValues.h"
 
 static void *M9AlertController_allActions = &M9AlertController_allActions;
+static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgroundTapHandler;
 
 #pragma mark - UIAlertAction
 
@@ -33,17 +34,53 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 @implementation UIAlertController (M9AlertController)
 
-- (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
-    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:title style:(UIAlertActionStyle)style handler:^(UIAlertAction *action) {
-        if (handler) {
-            handler(action);
-        }
-    }];
+- (void)addActionWithTitle:(NSString *)title
+                     style:(M9AlertActionStyle)style
+                   handler:(void (^)(id<M9AlertAction> action))handler {
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:title
+                                                          style:(UIAlertActionStyle)style
+                                                        handler:^(UIAlertAction *action) {
+                                                            if (handler) {
+                                                                handler(action);
+                                                            }
+                                                        }];
     [self addAction:alertAction];
 }
 
-- (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion {
-    [presentingViewController presentViewController:self animated:flag completion:completion];
+- (void (^)())backgroundTapHandler {
+    return [self associatedValueForKey:M9AlertController_backgroundTapHandler];
+}
+
+- (void)addBackgroundTapHandler:(void (^)())backgroundTapHandler {
+    if (self.preferredStyle == UIAlertControllerStyleAlert) {
+        [self associateCopyOfValue:backgroundTapHandler ?: ^{}
+                           withKey:M9AlertController_backgroundTapHandler];
+    }
+    else {
+        NSLog(@"You can add a background tap handler only if the <#preferredStyle#> property is set to <#M9AlertControllerStyleAlert#>.");
+    }
+}
+
+// UIAlertController - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler
+
+- (void)presentFromViewController:(UIViewController *)presentingViewController
+                         animated:(BOOL)flag
+                       completion:(void (^)(void))completion {
+    [presentingViewController presentViewController:self animated:flag completion:^{
+        if (self.backgroundTapHandler) {
+            self.view.superview.userInteractionEnabled = YES;
+            [self.view.superview addGestureRecognizer:[[UITapGestureRecognizer alloc]
+                                                       initWithTarget:self
+                                                       action:@selector(dismissByTappingBackground:)]];
+        }
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
+- (void)dismissByTappingBackground:(UITapGestureRecognizer *)tap {
+    [self dismissAnimated:YES completion:self.backgroundTapHandler];
 }
 
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion {
@@ -68,7 +105,9 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 @interface M9AlertAction : NSObject <M9AlertAction>
 
-+ (instancetype)actionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler;
++ (instancetype)actionWithTitle:(NSString *)title
+                          style:(M9AlertActionStyle)style
+                        handler:(void (^)(id<M9AlertAction> action))handler;
 
 @end
 
@@ -85,7 +124,9 @@ static void *M9AlertController_allActions = &M9AlertController_allActions;
 
 // @synthesize enabled;
 
-+ (instancetype)actionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
++ (instancetype)actionWithTitle:(NSString *)title
+                          style:(M9AlertActionStyle)style
+                        handler:(void (^)(id<M9AlertAction> action))handler {
     M9AlertAction *alertAction = [self new];
     alertAction.title = title;
     alertAction.style = style;
@@ -146,7 +187,6 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     [self associateValue:allActions withKey:M9AlertController_allActions];
 }
 
-
 - (M9AlertControllerStyle)preferredStyle {
     return M9AlertControllerStyleAlert;
 }
@@ -168,12 +208,20 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     }
 }
 
-+ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title
+                                        message:(NSString *)message
+                                 preferredStyle:(M9AlertControllerStyle)preferredStyle {
     AlertControllerDelegate = AlertControllerDelegate OR [_M9AlertControllerDelegate new];
-    return [[UIAlertView alloc] initWithTitle:title message:message delegate:AlertControllerDelegate cancelButtonTitle:nil otherButtonTitles:nil];
+    return [[UIAlertView alloc] initWithTitle:title
+                                      message:message
+                                     delegate:AlertControllerDelegate
+                            cancelButtonTitle:nil
+                            otherButtonTitles:nil];
 }
 
-- (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
+- (void)addActionWithTitle:(NSString *)title
+                     style:(M9AlertActionStyle)style
+                   handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
@@ -190,11 +238,36 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     NSLog(@"You can add a text fields by setting the <#alertViewStyle#> property of <#UIAlertView#>.");
 }
 
-- (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion {
+- (void (^)())backgroundTapHandler {
+    return [self associatedValueForKey:M9AlertController_backgroundTapHandler];
+}
+
+- (void)addBackgroundTapHandler:(void (^)())backgroundTapHandler {
+    [self associateCopyOfValue:backgroundTapHandler ?: ^{}
+                       withKey:M9AlertController_backgroundTapHandler];
+}
+
+- (void)presentFromViewController:(UIViewController *)presentingViewController
+                         animated:(BOOL)flag
+                       completion:(void (^)(void))completion {
     [self show];
+    if (self.backgroundTapHandler) {
+        NSTimeInterval const animationDuration = 0.01;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UIView *backgroundView = self.window.subviews.lastObject;
+            backgroundView.userInteractionEnabled = YES;
+            [backgroundView addGestureRecognizer:[[UITapGestureRecognizer alloc]
+                                                  initWithTarget:self
+                                                  action:@selector(dismissByTappingBackground:)]];
+        });
+    }
     if (completion) {
         completion();
     }
+}
+
+- (void)dismissByTappingBackground:(UITapGestureRecognizer *)tap {
+    [self dismissAnimated:YES completion:self.backgroundTapHandler];
 }
 
 - (void)dismissAnimated:(BOOL)flag completion:(void (^)(void))completion {
@@ -260,13 +333,21 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     return nil;
 }
 
-+ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title
+                                        message:(NSString *)message
+                                 preferredStyle:(M9AlertControllerStyle)preferredStyle {
     // title = [NSString stringWithFormat:@"%@: %@", title, message];
     AlertControllerDelegate = AlertControllerDelegate OR [_M9AlertControllerDelegate new];
-    return [[UIActionSheet alloc] initWithTitle:title delegate:AlertControllerDelegate cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    return [[UIActionSheet alloc] initWithTitle:title
+                                       delegate:AlertControllerDelegate
+                              cancelButtonTitle:nil
+                         destructiveButtonTitle:nil
+                              otherButtonTitles:nil];
 }
 
-- (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler {
+- (void)addActionWithTitle:(NSString *)title
+                     style:(M9AlertActionStyle)style
+                   handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
@@ -286,7 +367,13 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     NSLog(@"You can add a text field only if the <#preferredStyle#> property is set to <#M9AlertControllerStyleAlert#>.");
 }
 
-- (void)presentFromViewController:(UIViewController *)presentingViewController animated:(BOOL)flag completion:(void (^)(void))completion {
+- (void)addBackgroundTapHandler:(void (^)())backgroundTapHandler {
+    NSLog(@"You can add a background tap handler only if the <#preferredStyle#> property is set to <#M9AlertControllerStyleAlert#>.");
+}
+
+- (void)presentFromViewController:(UIViewController *)presentingViewController
+                         animated:(BOOL)flag
+                       completion:(void (^)(void))completion {
     [self showInView:presentingViewController.view];
     if (completion) {
         completion();
@@ -318,7 +405,9 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @implementation UIResponder (M9AlertController)
 
-+ (M9AlertController *)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(M9AlertControllerStyle)preferredStyle {
++ (M9AlertController *)alertControllerWithTitle:(NSString *)title
+                                        message:(NSString *)message
+                                 preferredStyle:(M9AlertControllerStyle)preferredStyle {
     if (NSClassFromString(@"UIAlertController")) {
         return [UIAlertController alertControllerWithTitle:title
                                                    message:message
