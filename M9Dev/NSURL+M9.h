@@ -17,7 +17,7 @@
 
 @property(copy, readonly) NSDictionary *queryDictionary;
 
-+ (NSString *)queryStringFromParameters:(NSDictionary *)parameters;
++ (NSString *)queryStringFromDictionary:(NSDictionary *)dictionary;
 
 @end
 

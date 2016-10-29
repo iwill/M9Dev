@@ -12,21 +12,23 @@
 @implementation NSURL (M9Categories)
 
 - (NSDictionary *)queryDictionary {
-    NSMutableDictionary *queryDictionary = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (NSString *keyValue in [self.query componentsSeparatedByString:@"&"]) {
         NSRange range = NSSafeRangeOfLength([keyValue rangeOfString:@"="], keyValue.length);
-        NSString *key = [[keyValue substringToIndex:range.location] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *value = [[keyValue substringFromIndex:MIN(range.location + 1, keyValue.length)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [queryDictionary setObjectOrNil:value OR @"" forKey:key];
+        NSString *key = [[keyValue substringToIndex:range.location]
+                         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *value = [[keyValue substringFromIndex:MIN(range.location + 1, keyValue.length)]
+                           stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [dictionary setObjectOrNil:value OR @"" forKey:key];
     }
-    return queryDictionary;
+    return dictionary;
 }
 
-+ (NSString *)queryStringFromParameters:(NSDictionary *)parameters {
++ (NSString *)queryStringFromDictionary:(NSDictionary *)dictionary {
     NSMutableString *queryString = nil;
-    for (__strong id key in [parameters allKeys]) {
+    for (__strong id key in [dictionary allKeys]) {
         key = [[key description] URLEncode];
-        id value = [[parameters stringForKey:key] URLEncode];
+        id value = [[dictionary stringForKey:key] URLEncode];
         NSString *keyValue = [NSString stringWithFormat:@"%@=%@", key, value OR @""];
         if (!queryString) {
             queryString = [keyValue mutableCopy];
