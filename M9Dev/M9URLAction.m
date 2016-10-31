@@ -11,6 +11,17 @@
 
 #import "M9URLAction.h"
 
+static inline NSString *M9URLActionKey(NSString *host, NSString *path) {
+    if (![path hasPrefix:@"/"]) {
+        path = [@"/" stringByAppendingString:path ?: @""];
+    }
+    return [NSString stringWithFormat:@"%@%@", host ?: @"", path];
+}
+
+static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
+    return url ? M9URLActionKey(url.host, url.path) : nil;
+}
+
 @interface M9URLActionHandlerWrapper : NSObject <M9MakeCopy>
 
 #pragma mark block
@@ -160,23 +171,26 @@
     return globalActionManager;
 }
 
-- (void)configActionWithURLHost:(NSString *)host handler:(M9URLActionHandler)handler {
+- (void)configActionWithURLHost:(NSString *)host path:(NSString *)path handler:(M9URLActionHandler)handler {
     self.actionHandlers = self.actionHandlers ?: [NSMutableDictionary new];
     
     M9URLActionHandlerWrapper *handlerWrapper = [M9URLActionHandlerWrapper handlerWithBlock:handler];
-    [self.actionHandlers setObject:handlerWrapper forKey:host];
+    [self.actionHandlers setObject:handlerWrapper forKey:M9URLActionKey(host, path)];
 }
 
 - (void)configActionWithURLHost:(NSString *)host
+                           path:(NSString *)path
                          target:(id)target
                  actionSelector:(SEL)actionSelector {
     [self configActionWithURLHost:host
+                             path:path
                            target:target
                  instanceSelector:@selector(self)
                    actionSelector:actionSelector];
 }
 
 - (void)configActionWithURLHost:(NSString *)host
+                           path:(NSString *)path
                          target:(id)target
                instanceSelector:(SEL)instanceSelector
                  actionSelector:(SEL)actionSelector {
@@ -185,11 +199,11 @@
     M9URLActionHandlerWrapper *handlerWrapper = [M9URLActionHandlerWrapper handlerWithTarget:target
                                                                             instanceSelector:instanceSelector
                                                                               actionSelector:actionSelector];
-    [self.actionHandlers setObject:handlerWrapper forKey:host];
+    [self.actionHandlers setObject:handlerWrapper forKey:M9URLActionKey(host, path)];
 }
 
-- (void)removeActionWithURLHost:(NSString *)host {
-    [self.actionHandlers removeObjectForKey:host];
+- (void)removeActionWithURLHost:(NSString *)host path:(NSString *)path {
+    [self.actionHandlers removeObjectForKey:M9URLActionKey(host, path)];
 }
 
 - (BOOL)performActionWithURL:(NSURL *)actionURL completion:(M9URLActionCompletion)completion {
@@ -197,7 +211,8 @@
     if (validSchemes.count && ![validSchemes containsObject:actionURL.scheme]) {
         return NO;
     }
-    M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:actionURL.host];
+    NSString *key = M9URLActionKeyWithURL(actionURL);
+    M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:key];
     if (!handler) {
         return NO;
     }
@@ -211,7 +226,8 @@
     [handler handleAction:action completion:^(NSDictionary *result) {
         strongdef(self);
         NSURL *nextActionURL = [NSURL URLWithString:action.nextURLString];
-        M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:nextActionURL.host];
+        NSString *key = M9URLActionKeyWithURL(nextActionURL);
+        M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:key];
         if (handler) {
             M9URLAction *nextAction = [M9URLAction actionWithURL:nextActionURL];
             nextAction.prevAction = action;

@@ -20,13 +20,13 @@ typedef void (^M9URLActionHandler)(M9URLAction *action, M9URLActionHandlerComple
 typedef void (^M9URLActionCompletion)(M9URLAction *action, NSDictionary *result);
 
 /**
- *  1. Config action with url-host and handler:
+ *  1. Config action with url host/path and handler:
  *  !!!: handler MUST call completion with (NSDictionary *)result or nil when action completed
- *      [actionManager configActionWithURLHost:@"action.hello" handler:^void(M9URLAction *action, M9URLActionHandlerCompletion completion) {
+ *      [actionManager configActionWithURLHost:@"profile.update" path:@"/avatar" handler:^void(M9URLAction *action, M9URLActionHandlerCompletion completion) {
  *          NSLog(@"perform: %@ + %@", action, action.prevActionResult);
  *          if (completion) completion(@{ @"x": @1, @"y": @2 });
  *      }];
- *      [actionManager configActionWithURLHost:@"webview.open" handler:^void(M9URLAction *action, M9URLActionHandlerCompletion completion) {
+ *      [actionManager configActionWithURLHost:@"webview.open" path:nil handler:^void(M9URLAction *action, M9URLActionHandlerCompletion completion) {
  *          NSString *urlString = [action.parameters stringForKey:@"url"];
  *          // ...
  *          if (completion) completion(nil);
@@ -61,10 +61,11 @@ typedef void (^M9URLActionCompletion)(M9URLAction *action, NSDictionary *result)
  *  call completion with result or nil when action completed
  *      if (completion) completion((NSDictionary *)result);
  */
-- (void)configActionWithURLHost:(NSString *)host handler:(M9URLActionHandler)handler;
+- (void)configActionWithURLHost:(NSString *)host path:(NSString *)path handler:(M9URLActionHandler)handler;
 
 /**
  *  host                host of action url
+ *  path                path of action url, path should has prefix /, e.g. @"/root"
  *  target              class or object
  *  instanceSelector    selector of class method to get instance, or @selector(self) for target itself
  *  actionSelector      selector of method with two parameters M9URLAction *action and M9URLActionHandlerCompletion completion
@@ -75,14 +76,16 @@ typedef void (^M9URLActionCompletion)(M9URLAction *action, NSDictionary *result)
  *      if (completion) completion((NSDictionary *)result);
  */
 - (void)configActionWithURLHost:(NSString *)host
+                           path:(NSString *)path
                          target:(id)target
                  actionSelector:(SEL)actionSelector;
 - (void)configActionWithURLHost:(NSString *)host
+                           path:(NSString *)path
                          target:(id)target
                instanceSelector:(SEL)instanceSelector
                  actionSelector:(SEL)actionSelector;
 
-- (void)removeActionWithURLHost:(NSString *)host;
+- (void)removeActionWithURLHost:(NSString *)host path:(NSString *)path;
 
 #pragma mark action
 
