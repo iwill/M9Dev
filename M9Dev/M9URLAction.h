@@ -102,12 +102,12 @@ typedef void (^M9URLActionCompletion)(M9URLAction *action, NSDictionary *result)
 @interface M9URLAction : NSObject
 
 // actionURL properties: scheme, host, path, queryDictionary - decoded, fragment
-@property (nonatomic, readonly, copy) NSURL *actionURL;
-
-@property (nonatomic, readonly, copy) NSString *nextURLString; // decoded actionURL.fragment
+@property (nonatomic, readonly, copy) NSURL *actionURL, *nextActionURL; // NSURL with decoded actionURL.fragment
 
 @property (nonatomic, readonly) M9URLAction *originalAction;
 @property (nonatomic, readonly) M9URLAction *prevAction;
 @property (nonatomic, readonly, copy) NSDictionary *prevActionResult;
+
++ (M9URLAction *)actionWithURL:(NSURL *)actionURL;
 
 @end

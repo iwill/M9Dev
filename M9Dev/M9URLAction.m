@@ -116,14 +116,8 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
 
 @interface M9URLAction ()
 
-@property (nonatomic, readwrite, copy) NSURL *actionURL;
-
-@property (nonatomic, readwrite, copy) NSString *nextURLString;
-
 @property (nonatomic, readwrite) M9URLAction *prevAction;
 @property (nonatomic, readwrite, copy) NSDictionary *prevActionResult;
-
-+ (M9URLAction *)actionWithURL:(NSURL *)actionURL;
 
 @end
 
@@ -134,8 +128,8 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
         return nil;
     }
     M9URLAction *action = [M9URLAction new];
-    action.actionURL = actionURL;
-    action.nextURLString = [actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    action->_actionURL = actionURL;
+    action->_nextActionURL = [NSURL URLWithString:[actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     return action;
 }
 
@@ -147,7 +141,7 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
 - (NSString *)description {
     return [[super description]
             stringByAppendingFormat:@" : %@ = %@ ? %@ # %@",
-            self.actionURL, self.actionURL.host, self.actionURL.queryDictionary, self.nextURLString];
+            self.actionURL, self.actionURL.host, self.actionURL.queryDictionary, self.nextActionURL];
 }
 
 @end
@@ -225,11 +219,10 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
     weakdef(self);
     [handler handleAction:action completion:^(NSDictionary *result) {
         strongdef(self);
-        NSURL *nextActionURL = [NSURL URLWithString:action.nextURLString];
-        NSString *key = M9URLActionKeyWithURL(nextActionURL);
+        NSString *key = M9URLActionKeyWithURL(action.nextActionURL);
         M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:key];
         if (handler) {
-            M9URLAction *nextAction = [M9URLAction actionWithURL:nextActionURL];
+            M9URLAction *nextAction = [M9URLAction actionWithURL:action.nextActionURL];
             nextAction.prevAction = action;
             nextAction.prevActionResult = result;
             [self performAction:nextAction handler:handler completion:completion];
