@@ -41,8 +41,8 @@ typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
 @property (nonatomic, copy) NSString *message;
 @property (nonatomic, readonly) M9AlertControllerStyle preferredStyle;
 
-@property (nonatomic, readonly) NSArray *actions;
-@property (nonatomic, readonly) NSArray *textFields;
+@property (nonatomic, readonly) NSArray<id<M9AlertAction>> *actions;
+@property (nonatomic, readonly) NSArray<UITextField *> *textFields;
 
 - (void)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler;
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler;

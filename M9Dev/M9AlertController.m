@@ -168,10 +168,10 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @interface UIAlertView (M9AlertController) <M9AlertController>
 
-@property (nonatomic, strong) NSMutableArray *allActions;
+@property (nonatomic) NSMutableArray<id<M9AlertAction>> *allActions;
 
-@property (nonatomic, readonly) NSArray *actions;
-@property (nonatomic, readonly) NSArray *textFields;
+@property (nonatomic, readonly) NSArray<id<M9AlertAction>> *actions;
+@property (nonatomic, readonly) NSArray<UITextField *> *textFields;
 
 @end
 
@@ -179,11 +179,11 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @dynamic allActions;
 
-- (NSMutableArray *)allActions {
+- (NSMutableArray<id<M9AlertAction>> *)allActions {
     return [self associatedValueForKey:M9AlertController_allActions];
 }
 
-- (void)setAllActions:(NSMutableArray *)allActions {
+- (void)setAllActions:(NSMutableArray<id<M9AlertAction>> *)allActions {
     [self associateValue:allActions withKey:M9AlertController_allActions];
 }
 
@@ -191,11 +191,11 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     return M9AlertControllerStyleAlert;
 }
 
-- (NSArray *)actions {
+- (NSArray<id<M9AlertAction>> *)actions {
     return [self.allActions copy];
 }
 
-- (NSArray *)textFields {
+- (NSArray<UITextField *> *)textFields {
     switch (self.alertViewStyle) {
         case UIAlertViewStylePlainTextInput:
             return @[ [self textFieldAtIndex:0] ];
@@ -295,10 +295,10 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 
 @interface UIActionSheet (M9AlertController) <M9AlertController>
 
-@property (nonatomic, strong) NSMutableArray *allActions;
+@property (nonatomic) NSMutableArray *allActions;
 
-@property (nonatomic, readonly) NSArray *actions;
-@property (nonatomic, readonly) NSArray *textFields;
+@property (nonatomic, readonly) NSArray<id<M9AlertAction>> *actions;
+@property (nonatomic, readonly) NSArray<UITextField *> *textFields;
 
 @end
 
@@ -325,11 +325,11 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
     return M9AlertControllerStyleActionSheet;
 }
 
-- (NSArray *)actions {
+- (NSArray<id<M9AlertAction>> *)actions {
     return [self.allActions copy];
 }
 
-- (NSArray *)textFields {
+- (NSArray<UITextField *> *)textFields {
     return nil;
 }
 
