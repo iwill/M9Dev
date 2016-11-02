@@ -129,7 +129,7 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url) {
     }
     M9URLAction *action = [M9URLAction new];
     action->_actionURL = actionURL;
-    action->_nextActionURL = [NSURL URLWithString:[actionURL.fragment stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    action->_nextActionURL = [NSURL URLWithString:[actionURL.fragment stringByRemovingPercentEncoding]];
     return action;
 }
 

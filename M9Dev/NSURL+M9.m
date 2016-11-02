@@ -15,10 +15,8 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     for (NSString *keyValue in [self.query componentsSeparatedByString:@"&"]) {
         NSRange range = NSSafeRangeOfLength([keyValue rangeOfString:@"="], keyValue.length);
-        NSString *key = [[keyValue substringToIndex:range.location]
-                         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *value = [[keyValue substringFromIndex:MIN(range.location + 1, keyValue.length)]
-                           stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *key = [[keyValue substringToIndex:range.location] stringByRemovingPercentEncoding];
+        NSString *value = [[keyValue substringFromIndex:MIN(range.location + 1, keyValue.length)] stringByRemovingPercentEncoding];
         [dictionary setObjectOrNil:value OR @"" forKey:key];
     }
     return dictionary;
