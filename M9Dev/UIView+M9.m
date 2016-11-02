@@ -217,25 +217,25 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     return [self allSubviewsDescriptionWithIndent:nil];
 }
 
-- (void)eachView:(UIView *)view
+- (void)eachView:(__kindof UIView *)view
            depth:(NSInteger)depth
         callback:(BOOL (^)(UIView *subview, NSInteger depth))callback {
     BOOL goon = callback(view, depth);
     if (!goon) {
         return;
     }
-    for (UIView *subview in view.subviews) {
+    for (__kindof UIView *subview in view.subviews) {
         [self eachView:subview depth:depth + 1 callback:callback];
     }
 }
 
 /**
- *  [self eachSubview:^BOOL(UIView *subview, NSInteger depth) {
+ *  [self eachSubview:^BOOL(__kindof UIView *subview, NSInteger depth) {
  *      NSLog(@"%d: %@", depth, subview);
  *      return ![subview isKindOfClass:[UIPageControl class]];
  *  }];
  */
-- (void)eachSubview:(BOOL (^)(UIView *subview, NSInteger depth))callback {
+- (void)eachSubview:(BOOL (^)(__kindof UIView *subview, NSInteger depth))callback {
     if (!callback) {
         return;
     }

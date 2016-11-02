@@ -109,7 +109,7 @@ typedef void (^UIViewLayoutSubviewsBlock)();
 #pragma mark DEBUG
 
 // continue if callback returns YES, and break if returns NO
-- (void)eachSubview:(BOOL (^)(UIView *subview, NSInteger depth))callback;
+- (void)eachSubview:(BOOL (^)(__kindof UIView *subview, NSInteger depth))callback;
 
 - (NSString *)allSubviewsDescription;
 
