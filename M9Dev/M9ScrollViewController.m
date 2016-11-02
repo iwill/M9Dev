@@ -39,8 +39,10 @@
     _scrollView.delegate = self;
     [self.view addSubview:_scrollView];
     
-    [_scrollView.panGestureRecognizer requireGestureRecognizerToFail:
-     self.navigationController.interactivePopGestureRecognizer];
+    if (self.navigationController.interactivePopGestureRecognizer) {
+        [_scrollView.panGestureRecognizer requireGestureRecognizerToFail:
+         self.navigationController.interactivePopGestureRecognizer];
+    }
     
     /**
      *  subview:
