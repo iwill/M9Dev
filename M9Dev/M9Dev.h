@@ -37,6 +37,7 @@
 /* UIKit */
 #import "UIImage+M9.h"
 // view
+#import "M9ProgressCoverView.h“
 #import "UIControl+M9EventCallback.h"
 #import "UIView+M9.h"
 #import "UITableViewCell+M9.h"
