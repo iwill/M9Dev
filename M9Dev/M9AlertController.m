@@ -37,6 +37,16 @@ static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgro
 - (id<M9AlertAction>)addActionWithTitle:(NSString *)title
                                   style:(M9AlertActionStyle)style
                                 handler:(void (^)(id<M9AlertAction> action))handler {
+    return [self addActionWithTitle:title
+                              style:style
+                            enabled:YES
+                            handler:handler];
+}
+
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                enabled:(BOOL)enabled
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     UIAlertAction *alertAction = [UIAlertAction actionWithTitle:title
                                                           style:(UIAlertActionStyle)style
                                                         handler:^(UIAlertAction *action) {
@@ -44,6 +54,7 @@ static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgro
                                                                 handler(action);
                                                             }
                                                         }];
+    alertAction.enabled = enabled;
     [self addAction:alertAction];
     return alertAction;
 }
@@ -223,7 +234,18 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 - (id<M9AlertAction>)addActionWithTitle:(NSString *)title
                                   style:(M9AlertActionStyle)style
                                 handler:(void (^)(id<M9AlertAction> action))handler {
+    return [self addActionWithTitle:title
+                              style:style
+                            enabled:YES
+                            handler:handler];
+}
+
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                enabled:(BOOL)enabled
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
+    alertAction.enabled = enabled;
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
     }
@@ -350,7 +372,18 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
 - (id<M9AlertAction>)addActionWithTitle:(NSString *)title
                                   style:(M9AlertActionStyle)style
                                 handler:(void (^)(id<M9AlertAction> action))handler {
+    return [self addActionWithTitle:title
+                              style:style
+                            enabled:YES
+                            handler:handler];
+}
+
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                enabled:(BOOL)enabled
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
+    alertAction.enabled = enabled;
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
     }

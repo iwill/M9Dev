@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, M9AlertActionStyle) {
 
 @property (nonatomic, readonly) NSString *title;
 @property (nonatomic, readonly) M9AlertActionStyle style;
-@property (nonatomic, getter=isEnabled) BOOL enabled; // iOS8+
+@property (nonatomic, getter=isEnabled) BOOL enabled NS_AVAILABLE_IOS(8_0);
 
 @end
 
@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, M9AlertControllerStyle) {
 @property (nonatomic, readonly) NSArray<UITextField *> *textFields;
 
 - (id<M9AlertAction>)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style handler:(void (^)(id<M9AlertAction> action))handler;
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title style:(M9AlertActionStyle)style enabled:(BOOL)enabled handler:(void (^)(id<M9AlertAction> action))handler NS_AVAILABLE_IOS(8_0);
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler;
 // !!!: backgroundTapHandler
 - (void)addBackgroundTapHandler:(void (^)())backgroundTapHandler NS_AVAILABLE_IOS(8_0); // for M9AlertControllerStyleAlert style only
