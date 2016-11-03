@@ -34,9 +34,9 @@ static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgro
 
 @implementation UIAlertController (M9AlertController)
 
-- (void)addActionWithTitle:(NSString *)title
-                     style:(M9AlertActionStyle)style
-                   handler:(void (^)(id<M9AlertAction> action))handler {
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     UIAlertAction *alertAction = [UIAlertAction actionWithTitle:title
                                                           style:(UIAlertActionStyle)style
                                                         handler:^(UIAlertAction *action) {
@@ -45,6 +45,7 @@ static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgro
                                                             }
                                                         }];
     [self addAction:alertAction];
+    return alertAction;
 }
 
 - (void (^)())backgroundTapHandler {
@@ -122,7 +123,7 @@ static void *M9AlertController_backgroundTapHandler = &M9AlertController_backgro
 
 @implementation M9AlertAction
 
-// @synthesize enabled;
+@synthesize enabled;
 
 + (instancetype)actionWithTitle:(NSString *)title
                           style:(M9AlertActionStyle)style
@@ -219,9 +220,9 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
                             otherButtonTitles:nil];
 }
 
-- (void)addActionWithTitle:(NSString *)title
-                     style:(M9AlertActionStyle)style
-                   handler:(void (^)(id<M9AlertAction> action))handler {
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
@@ -232,6 +233,7 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
         self.cancelButtonIndex = self.numberOfButtons;
     }
     [self addButtonWithTitle:title];
+    return alertAction;
 }
 
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler {
@@ -345,9 +347,9 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
                               otherButtonTitles:nil];
 }
 
-- (void)addActionWithTitle:(NSString *)title
-                     style:(M9AlertActionStyle)style
-                   handler:(void (^)(id<M9AlertAction> action))handler {
+- (id<M9AlertAction>)addActionWithTitle:(NSString *)title
+                                  style:(M9AlertActionStyle)style
+                                handler:(void (^)(id<M9AlertAction> action))handler {
     id<M9AlertAction> alertAction = [M9AlertAction actionWithTitle:title style:style handler:handler];
     if (!self.allActions) {
         self.allActions = [NSMutableArray new];
@@ -361,6 +363,7 @@ static _M9AlertControllerDelegate *AlertControllerDelegate = nil;
         self.destructiveButtonIndex = self.numberOfButtons;
     }
     [self addButtonWithTitle:title];
+    return alertAction;
 }
 
 - (void)addTextFieldWithConfigurationHandler:(void (^)(UITextField *textField))configurationHandler {
