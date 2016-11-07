@@ -162,7 +162,14 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     backgroundView.frame = UIEdgeInsetsInsetRect(self.bounds, backgroundInsets);
 }
 
-- (UIView *)subviewWithTag:(NSInteger)tag {
+- (void)transformWithScale:(CGFloat)scale {
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
+    CGFloat translationX = CGRectGetWidth(self.frame) * ((1 - scale) / 2);
+    CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(translationX, 0);
+    CGAffineTransformConcat(scaleTransform, translationTransform);
+}
+
+- (__kindof UIView *)subviewWithTag:(NSInteger)tag {
     for (UIView *subview in self.subviews) {
         if (subview.tag == tag) {
             return subview;
