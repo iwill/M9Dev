@@ -166,7 +166,7 @@ static NSInteger CustomBackgroundViewTag = NSIntegerMin;
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
     CGFloat translationX = CGRectGetWidth(self.frame) * ((1 - scale) / 2);
     CGAffineTransform translationTransform = CGAffineTransformMakeTranslation(translationX, 0);
-    CGAffineTransformConcat(scaleTransform, translationTransform);
+    self.transform = CGAffineTransformConcat(scaleTransform, translationTransform);
 }
 
 - (__kindof UIView *)subviewWithTag:(NSInteger)tag {
