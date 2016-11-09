@@ -15,7 +15,7 @@
 
 @interface NSURL (M9Categories)
 
-@property(copy, readonly) NSDictionary *queryDictionary;
+@property (nonatomic, readonly, copy) NSDictionary *queryDictionary;
 
 + (NSString *)queryStringFromDictionary:(NSDictionary *)dictionary;
 

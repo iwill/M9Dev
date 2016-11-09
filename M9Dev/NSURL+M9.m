@@ -19,7 +19,7 @@
         NSString *value = [[keyValue substringFromIndex:MIN(range.location + 1, keyValue.length)] stringByRemovingPercentEncoding];
         [dictionary setObjectOrNil:value OR @"" forKey:key];
     }
-    return dictionary;
+    return [dictionary copy];
 }
 
 + (NSString *)queryStringFromDictionary:(NSDictionary *)dictionary {
