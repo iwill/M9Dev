@@ -12,108 +12,105 @@
 #import "M9Utilities.h"
 #import "NSURL+M9.h"
 
-@class M9URLAction, M9URLActionHandlerWrapper;
-
-typedef void (^M9URLActionHandlerCompletion)(id result);
-typedef void (^M9URLActionHandler)(M9URLAction *action, id userInfo, M9URLActionHandlerCompletion completion);
-
-typedef void (^M9URLActionCompletion)(M9URLAction *action, id result);
-
-#pragma mark -
-
 @interface M9URLAction : NSObject
 
-// actionURL.queryDictionary - decoded query key-value pairs
-@property (nonatomic, readonly, copy) NSURL *actionURL;
+/** Decoded query key-value pairs are available in actionURL.queryDictionary. */
+@property (nonatomic, readonly) NSURL *actionURL;
 
 @end
 
 #pragma mark -
 
+typedef void (^M9URLActionHandleCompletion)(id result);
+typedef void (^M9URLActionHandler)(M9URLAction *action, id userInfo, M9URLActionHandleCompletion completion);
+
+typedef void (^M9URLActionCompletion)(M9URLAction *action, id result);
+
 /**
- *  1. Config action with url host/path and handler:
- *  !!!: handler MUST call completion with (id)result or nil when action completed
- *      [actionManager configActionWithURLHost:@"profile.update" path:@"/avatar" handler:^void(M9URLAction *action, id userInfo, M9URLActionHandlerCompletion completion) {
- *          NSLog(@"perform: %@ + %@", action, userInfo);
- *          if (completion) completion(@{ @"x": @1, @"y": @2 });
- *      }];
- *      [actionManager configActionWithURLHost:@"webview.open" path:nil handler:^void(M9URLAction *action, id userInfo, M9URLActionHandlerCompletion completion) {
- *          NSString *urlString = [action.parameters stringForKey:@"url"];
- *          // ...
- *          if (completion) completion(nil);
- *      }];
- *  2. Perform action with url:
- *      NSURL *actionURL = url;
- *      BOOL performed = [actionManager performActionWithURL:actionURL userInfo:nil completion:^(M9URLAction *action, id userInfo, id result) {
- *          NSLog(@"completed: %@ >> %@", action, result);
- *      }];
- *      NSLog(@"performed: %d", performed);
- *  3. @see NSURL > Structure of a URL.
+ *  Config action with URL scheme, host/path and handler.
+ *  - Parameters combination:
+ *      scheme://[[host]/path]
+ *      [host]/path
+ *  - Handlers <#MUST#> call completion with (id)result or nil when action completed;
+ *
+ *  Perform action with URL, userInfo and completion.
+ *  - URL format - @see NSURL > Structure of a URL:
  *      m9dev     ://  action.hello  /xxxx  ?  a=1&b=2  #  yyyy
  *      [scheme]  ://  [host]        [path] ?  [query]  #  [fragment]
- *  e.g.
+ *    e.g.
  *      m9://webview.open?url=https%3A%2F%2Fgithub.com%2F
  *                            encodeURIComponent("https://github.com/")
- *  4. Access M9URLAction properties in action-handler.
+ *  - Matching action handlers in order:
+ *      scheme://[host]/path
+ *      scheme
+ *      [host]/path
+ *  - Action result returns from action-handler is available in the completion block.
  */
 @interface M9URLActionManager : NSObject
 
 + (instancetype)globalActionManager;
 
+/** Case insensitive. */
 @property (nonatomic, copy) NSArray<NSString *> *validSchemes;
-// @property (nonatomic, copy) NSDictionary<NSString *, M9URLActionHandlerWrapper *> *actionHandlers;
-
-#pragma mark handler
 
 /**
- *  ignore target[-instance]-action if has handler
- *  call completion with result or nil when action completed
- *      if (completion) completion((id)result);
+ *  Config action with block handler.
+ *
+ *  @param scheme   case insensitive
+ *  @param host     case insensitive, use @"" if nil and path is not nil
+ *  @param path     should has prefix /, e.g. @"/root";
+ *  @param handler  MUST call completion with result or nil when handling action completed
  */
-- (void)configActionWithURLHost:(NSString *)host path:(NSString *)path handler:(M9URLActionHandler)handler;
+- (void)configWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path handler:(M9URLActionHandler)handler;
+- (void)configWithScheme:(NSString *)scheme handler:(M9URLActionHandler)handler;
+- (void)configWithHost:(NSString *)host path:(NSString *)path handler:(M9URLActionHandler)handler;
 
 /**
- *  host                host of action url
- *  path                path of action url, path should has prefix /, e.g. @"/root"
- *  target              class or object
- *  instanceSelector    selector of class method to get instance, or @selector(self) for target itself
- *  actionSelector      selector of method with THREE parameters: (M9URLAction *)action, (id)userInfo, (M9URLActionHandlerCompletion)completion
- *  e.g.
- *      +/- (void)performAction:(M9URLAction *)action userInfo:(id)userInfo completion:(M9URLActionHandlerCompletion)completion;
- *  call completion with result or nil when action completed
- *      if (completion) completion((id)result);
+ *  Config action with target[-instance]-action.
+ *
+ *  @param scheme   case insensitive
+ *  @param host     case insensitive, use @"" if nil and path is not nil
+ *  @param path     should has prefix /, e.g. @"/root";
+ *  @param target   class or object
+ *  @param instance class method selector to get instance
+ *  @param action   class/instance method selector with THREE arguments, and MUST call completion with result or nil when handling action completed
+ *                  e.g. +/- (void)performAction:(M9URLAction *)action userInfo:(id)userInfo completion:(M9URLActionHandleCompletion)completion;
  */
-- (void)configActionWithURLHost:(NSString *)host
-                           path:(NSString *)path
-                         target:(id)target
-                 actionSelector:(SEL)actionSelector;
-- (void)configActionWithURLHost:(NSString *)host
-                           path:(NSString *)path
-                         target:(id)target
-               instanceSelector:(SEL)instanceSelector
-                 actionSelector:(SEL)actionSelector;
+- (void)configWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
+                  target:(id)target instance:(SEL)instance action:(SEL)action;
+- (void)configWithScheme:(NSString *)scheme
+                  target:(id)target instance:(SEL)instance action:(SEL)action;
+- (void)configWithHost:(NSString *)host path:(NSString *)path
+                target:(id)target instance:(SEL)instance action:(SEL)action;
 
-- (void)removeActionWithURLHost:(NSString *)host path:(NSString *)path;
-
-#pragma mark action
+/** Remove action config. */
+- (void)removeConfigWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path;
 
 /**
- *  @return YES if action is performed - actionURL is valid && action handler is matched
+ *  Perform action with URL and user info.
+ *
+ *  @return performed - actionURL matched an action handler
  */
-- (BOOL)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion;
-- (BOOL)performActionWithURL:(NSURL *)actionURL completion:(M9URLActionCompletion)completion;
 - (BOOL)performActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
+- (BOOL)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion;
 
 @end
 
-/**
- *  Actions are chained via encoded url-fragment, the result is pass to next action as userInfo.
- *  e.g.
- *  	m9://root.goto#m9%3A%2F%2Fvideos.open
- *                     encodeURIComponent("m9://videos.open")
- */
-@interface M9URLActionManager (M9ChainingViaURLFragment)
+@interface M9URLActionManager (M9Additions)
 
+/**
+ *  Perform chaining action with URL and user info.
+ *
+ *  Actions are chained via decoded URL-fragment.
+ *  Action result returns from action-handler is pass to next action as userInfo.
+ *  e.g.
+ *      perform(m9://root.goto#m9%3A%2F%2Fvideos.open, userInfo-1)
+ *          handle(m9://root.goto, userInfo-1)      >> result-1
+ *          decode(m9%3A%2F%2Fvideos.open)          >> m9://videos.open 
+ *      perform(m9://videos.open, result-1 as userInfo-2)
+ *          handle(m9://videos.open, userInfo-2)    >> result-2
+ *          completion(result-2)
+ */
 - (BOOL)performChainingActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
 
 @end
