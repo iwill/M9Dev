@@ -12,7 +12,7 @@
 #import "NSInvocation+M9.h"
 
 static inline NSString *M9URLActionKeyWithScheme(NSString *scheme) {
-    return [scheme lowercaseString];
+    return scheme.lowercaseString;
 }
 
 static inline NSString *M9URLActionKey(NSString *scheme, NSString *host, NSString *path) {
@@ -20,9 +20,9 @@ static inline NSString *M9URLActionKey(NSString *scheme, NSString *host, NSStrin
         return M9URLActionKeyWithScheme(scheme);
     }
     scheme = (scheme.length
-              ? [[scheme lowercaseString] stringByAppendingString:@"://"]
+              ? [scheme.lowercaseString stringByAppendingString:@"://"]
               : @"");
-    host = ([host lowercaseString]
+    host = (host.lowercaseString
             ?: @"");
     path = ([path hasPrefix:@"/"]
             ? path
@@ -114,8 +114,8 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 - (NSString *)description {
     return [[super description]
             stringByAppendingFormat:@" : %@ :// %@ %@ ? %@ # %@ = %@",
-            [self.actionURL.scheme lowercaseString],
-            [self.actionURL.host lowercaseString],
+            self.actionURL.scheme.lowercaseString,
+            self.actionURL.host.lowercaseString,
             self.actionURL.path.length ? self.actionURL.path : @"/", // <N/A>
             self.actionURL.queryDictionary,
             self.actionURL.fragment,
@@ -147,7 +147,7 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
     NSMutableArray *validSchemes = nil;
     for (NSString *scheme in schemes) {
         validSchemes = validSchemes ?: [NSMutableArray new];
-        [validSchemes addObject:[scheme lowercaseString]];
+        [validSchemes addObject:scheme.lowercaseString];
     }
     self->_validSchemes = [validSchemes copy];
 }
@@ -196,7 +196,7 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 
 - (BOOL)performActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
     NSArray<NSString *> *validSchemes = self.validSchemes;
-    if (validSchemes.count && ![validSchemes containsObject:[actionURL.scheme lowercaseString]]) {
+    if (validSchemes.count && ![validSchemes containsObject:actionURL.scheme.lowercaseString]) {
         return NO;
     }
     
