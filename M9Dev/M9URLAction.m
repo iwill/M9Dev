@@ -11,30 +11,45 @@
 
 #import "NSInvocation+M9.h"
 
-static inline NSString *M9URLActionKeyWithScheme(NSString *scheme) {
-    return scheme.lowercaseString;
+/** scheme:// */
+static inline NSString *_M9URLActionKey_scheme(NSString *scheme) {
+    if (!scheme.length) {
+        return @"";
+    }
+    return ([scheme hasSuffix:@"://"] ? scheme : [scheme stringByAppendingString:@"://"]);
 }
 
+/** host */
+static inline NSString *_M9URLActionKey_host(NSString *host) {
+    if (!host.length) {
+        return @"";
+    }
+    return host;
+}
+
+/** /path or / */
+static inline NSString *_M9URLActionKey_path(NSString *path) {
+    if (!path.length) {
+        return @"/";
+    }
+    return [path hasPrefix:@"/"] ? path : [@"/" stringByAppendingString:path];
+}
+
+/**
+ *  scheme:// host /path
+ *  scheme:// host /
+ *  scheme://      /path
+ *  scheme://      /
+ *            host /path
+ *            host /
+ *                 /path
+ *                 /
+ */
 static inline NSString *M9URLActionKey(NSString *scheme, NSString *host, NSString *path) {
-    if (scheme.length && !host && !path) {
-        return M9URLActionKeyWithScheme(scheme);
-    }
-    scheme = (scheme.length
-              ? [scheme.lowercaseString stringByAppendingString:@"://"]
-              : @"");
-    host = (host.lowercaseString
-            ?: @"");
-    path = ([path hasPrefix:@"/"]
-            ? path
-            : [@"/" stringByAppendingString:path ?: @""]);
-    return [NSString stringWithFormat:@"%@%@%@", scheme, host, path];
-}
-
-static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
-    if (!url) {
-        return nil;
-    }
-    return M9URLActionKey(includeScheme ? url.scheme : nil, url.host, url.path);
+    return [NSString stringWithFormat:@"%@%@%@",
+            _M9URLActionKey_scheme(scheme).lowercaseString ?: @"",
+            _M9URLActionKey_host(host).lowercaseString ?: @"",
+            _M9URLActionKey_path(path)];
 }
 
 #pragma mark -
@@ -195,28 +210,66 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 #pragma mark perform action
 
 - (BOOL)performActionWithURL:(NSURL *)URL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
-    NSArray<NSString *> *validSchemes = self.validSchemes;
-    if (validSchemes.count && ![validSchemes containsObject:URL.scheme.lowercaseString]) {
+    if (!URL) {
         return NO;
     }
     
-    // matching: scheme://[host]/path
-    NSString *key = M9URLActionKeyWithURL(URL, YES);
-    M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:key];
+    if (self.validSchemes.count
+        && ![self.validSchemes containsObject:URL.scheme.lowercaseString]) {
+        return NO;
+    }
+    
+    NSString *key = nil;
+    M9URLActionHandlerWrapper *handler = nil;
+    
+    if (URL.scheme.length) {
+        if (URL.host.length) {
+            if (URL.path.length) {
+                // [ scheme:// host /path ]
+                key = M9URLActionKey(URL.scheme, URL.host, URL.path);
+                handler = [self.actionHandlers objectForKey:key];
+            }
+            if (!handler) {
+                // [ scheme:// host /     ]
+                key = M9URLActionKey(URL.scheme, URL.host, nil);
+                handler = [self.actionHandlers objectForKey:key];
+            }
+        }
+        if (!handler) {
+            // [ scheme://      /path ]
+            key = M9URLActionKey(URL.scheme, nil, URL.path);
+            handler = [self.actionHandlers objectForKey:key];
+        }
+        if (!handler) {
+            // [ scheme://      /     ]
+            key = M9URLActionKey(URL.scheme, nil, nil);
+            handler = [self.actionHandlers objectForKey:key];
+        }
+    }
+    
+    if (!handler && URL.host.length) {
+        if (URL.path.length) {
+            // [           host /path ]
+            key = M9URLActionKey(nil, URL.host, URL.path);
+            handler = [self.actionHandlers objectForKey:key];
+        }
+        if (!handler) {
+            // [           host /     ]
+            key = M9URLActionKey(nil, URL.host, nil);
+            handler = [self.actionHandlers objectForKey:key];
+        }
+    }
+    
     if (!handler) {
-        if (URL.scheme.length) {
-            // matching: scheme
-            key = M9URLActionKeyWithScheme(URL.scheme);
-            handler = [self.actionHandlers objectForKey:key];
-        }
-        if (!handler) {
-            // matching: [host]/path
-            key = M9URLActionKeyWithURL(URL, NO);
-            handler = [self.actionHandlers objectForKey:key];
-        }
-        if (!handler) {
-            return NO;
-        }
+        // !!!: use / if !URL.path.length
+        // [                /path ]
+        // [                /     ]
+        key = M9URLActionKey(nil, nil, URL.path);
+        handler = [self.actionHandlers objectForKey:key];
+    }
+    
+    if (!handler) {
+        return NO;
     }
     
     M9URLAction *action = [M9URLAction actionWithURL:URL];
