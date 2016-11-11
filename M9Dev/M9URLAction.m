@@ -96,30 +96,30 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 
 @interface M9URLAction ()
 
-// + (M9URLAction *)actionWithURL:(NSURL *)actionURL;
+// + (M9URLAction *)actionWithURL:(NSURL *)URL;
 
 @end
 
 @implementation M9URLAction
 
-+ (M9URLAction *)actionWithURL:(NSURL *)actionURL {
-    if (!actionURL) {
++ (M9URLAction *)actionWithURL:(NSURL *)URL {
+    if (!URL) {
         return nil;
     }
     M9URLAction *action = [M9URLAction new];
-    action->_actionURL = actionURL;
+    action->_URL = URL;
     return action;
 }
 
 - (NSString *)description {
     return [[super description]
             stringByAppendingFormat:@" : %@ :// %@ %@ ? %@ # %@ = %@",
-            self.actionURL.scheme.lowercaseString,
-            self.actionURL.host.lowercaseString,
-            self.actionURL.path.length ? self.actionURL.path : @"/", // <N/A>
-            self.actionURL.queryDictionary,
-            self.actionURL.fragment,
-            self.actionURL];
+            self.URL.scheme.lowercaseString,
+            self.URL.host.lowercaseString,
+            self.URL.path.length ? self.URL.path : @"/", // <N/A>
+            self.URL.queryDictionary,
+            self.URL.fragment,
+            self.URL];
 }
 
 @end
@@ -194,24 +194,24 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 
 #pragma mark perform action
 
-- (BOOL)performActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
+- (BOOL)performActionWithURL:(NSURL *)URL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
     NSArray<NSString *> *validSchemes = self.validSchemes;
-    if (validSchemes.count && ![validSchemes containsObject:actionURL.scheme.lowercaseString]) {
+    if (validSchemes.count && ![validSchemes containsObject:URL.scheme.lowercaseString]) {
         return NO;
     }
     
     // matching: scheme://[host]/path
-    NSString *key = M9URLActionKeyWithURL(actionURL, YES);
+    NSString *key = M9URLActionKeyWithURL(URL, YES);
     M9URLActionHandlerWrapper *handler = [self.actionHandlers objectForKey:key];
     if (!handler) {
-        if (actionURL.scheme.length) {
+        if (URL.scheme.length) {
             // matching: scheme
-            key = M9URLActionKeyWithScheme(actionURL.scheme);
+            key = M9URLActionKeyWithScheme(URL.scheme);
             handler = [self.actionHandlers objectForKey:key];
         }
         if (!handler) {
             // matching: [host]/path
-            key = M9URLActionKeyWithURL(actionURL, NO);
+            key = M9URLActionKeyWithURL(URL, NO);
             handler = [self.actionHandlers objectForKey:key];
         }
         if (!handler) {
@@ -219,15 +219,15 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
         }
     }
     
-    M9URLAction *action = [M9URLAction actionWithURL:actionURL];
+    M9URLAction *action = [M9URLAction actionWithURL:URL];
     [handler handleAction:action userInfo:userInfo completion:^(id result) {
         if (completion) completion(action, result);
     }];
     return YES;
 }
 
-- (BOOL)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion {
-    NSURL *url = [NSURL URLWithString:actionURLString];
+- (BOOL)performActionWithURLString:(NSString *)URLString completion:(M9URLActionCompletion)completion {
+    NSURL *url = [NSURL URLWithString:URLString];
     return [self performActionWithURL:url userInfo:nil completion:completion];
 }
 
@@ -237,12 +237,12 @@ static inline NSString *M9URLActionKeyWithURL(NSURL *url, BOOL includeScheme) {
 
 #pragma mark perform chaining action
 
-- (BOOL)performChainingActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
-    return [self performActionWithURL:actionURL userInfo:userInfo completion:^(M9URLAction *action, id result) {
-        NSString *fragment = action.actionURL.fragment;
-        NSURL *nextActionURL = [NSURL URLWithString:[fragment stringByRemovingPercentEncoding]];
-        if (nextActionURL) {
-            [self performChainingActionWithURL:nextActionURL userInfo:result completion:completion];
+- (BOOL)performChainingActionWithURL:(NSURL *)URL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion {
+    return [self performActionWithURL:URL userInfo:userInfo completion:^(M9URLAction *action, id result) {
+        NSString *fragment = action.URL.fragment;
+        NSURL *nextURL = [NSURL URLWithString:[fragment stringByRemovingPercentEncoding]];
+        if (nextURL) {
+            [self performChainingActionWithURL:nextURL userInfo:result completion:completion];
         }
         else {
             if (completion) completion(action, result);

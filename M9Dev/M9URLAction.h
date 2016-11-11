@@ -14,8 +14,8 @@
 
 @interface M9URLAction : NSObject
 
-/** Decoded query key-value pairs are available in actionURL.queryDictionary. */
-@property (nonatomic, readonly) NSURL *actionURL;
+/** Decoded query key-value pairs are available in URL.queryDictionary. */
+@property (nonatomic, readonly) NSURL *URL;
 
 @end
 
@@ -89,10 +89,10 @@ typedef void (^M9URLActionCompletion)(M9URLAction *action, id result);
 /**
  *  Perform action with URL and user info.
  *
- *  @return performed - actionURL matched an action handler
+ *  @return performed - URL matched an action handler
  */
-- (BOOL)performActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
-- (BOOL)performActionWithURLString:(NSString *)actionURLString completion:(M9URLActionCompletion)completion;
+- (BOOL)performActionWithURL:(NSURL *)URL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
+- (BOOL)performActionWithURLString:(NSString *)URLString completion:(M9URLActionCompletion)completion;
 
 @end
 
@@ -111,6 +111,6 @@ typedef void (^M9URLActionCompletion)(M9URLAction *action, id result);
  *          handle(m9://videos.open, userInfo-2)    >> result-2
  *          completion(result-2)
  */
-- (BOOL)performChainingActionWithURL:(NSURL *)actionURL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
+- (BOOL)performChainingActionWithURL:(NSURL *)URL userInfo:(id)userInfo completion:(M9URLActionCompletion)completion;
 
 @end
