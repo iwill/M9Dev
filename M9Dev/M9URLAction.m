@@ -36,14 +36,15 @@ static inline NSString *_M9URLActionKey_path(NSString *path) {
 }
 
 /**
- *  scheme:// host /path
- *  scheme:// host /
- *  scheme://      /path
- *  scheme://      /
- *            host /path
- *            host /
- *                 /path
- *                 /
+ *  URL components combination:
+ *      [ scheme:// host /path ]
+ *      [ scheme:// host /     ]
+ *      [ scheme://      /path ]
+ *      [ scheme://      /     ]
+ *      [           host /path ]
+ *      [           host /     ]
+ *      [                /path ]
+ *      [                /     ]
  */
 static inline NSString *M9URLActionKey(NSString *scheme, NSString *host, NSString *path) {
     return [NSString stringWithFormat:@"%@%@%@",
