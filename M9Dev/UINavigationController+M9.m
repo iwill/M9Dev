@@ -37,6 +37,10 @@
         __weak id <UIGestureRecognizerDelegate> wself = self;
         self.interactivePopGestureRecognizer.delegate = wself;
     }
+    
+    /* !!!: 旋转方向由 topViewController 决定
+     */
+    self.delegate = self;
 }
 
 - (void)dealloc {
@@ -84,6 +88,24 @@
     }
     
     return YES;
+}
+
+#pragma mark - <UINavigationControllerDelegate>
+
+/* !!!: 旋转方向由 topViewController 决定
+ */
+- (UIInterfaceOrientationMask)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    return (self.topViewController
+            ? [self.topViewController supportedInterfaceOrientations]
+            : UIInterfaceOrientationMaskAllButUpsideDown);
+}
+
+/* !!!: 旋转方向由 topViewController 决定
+ */
+- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController {
+    return (self.topViewController
+            ? [self.topViewController preferredInterfaceOrientationForPresentation]
+            : UIInterfaceOrientationPortrait);
 }
 
 @end
