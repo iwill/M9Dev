@@ -8,15 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^M9KVOBlock)(NSString *keyPath, id object, NSDictionary<NSKeyValueChangeKey, id> *change);
+#import "NSObject+AssociatedObjects.h"
+#import "M9Utilities.h"
+
+typedef id M9BlockKVObserver;
+
+typedef void (^M9KVOBlock)(id old, id new);
 
 @interface NSObject (M9BlockKVO)
 
 /**
  *  @see - [NSNotificationCenter addObserverForName:object:queue:usingBlock:]
  */
-- (id)addObserverForKeyPath:(NSString *)keyPath
-                    options:(NSKeyValueObservingOptions)options
-                 usingBlock:(M9KVOBlock)block;
+- (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
+                                  usingBlock:(M9KVOBlock)block; // options: old & new
+- (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
+                                     options:(NSKeyValueObservingOptions)options
+                                  usingBlock:(M9KVOBlock)block;
+
+- (void)removeKVObserver:(NSObject *)observer;
 
 @end

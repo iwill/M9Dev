@@ -20,7 +20,7 @@
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
-    if (self.block) self.block(keyPath, object, change);
+    if (self.block) self.block(change[NSKeyValueChangeOldKey], change[NSKeyValueChangeNewKey]);
 }
 
 @end
@@ -29,13 +29,38 @@
 
 @implementation NSObject (M9BlockKVO)
 
-- (id)addObserverForKeyPath:(NSString *)keyPath
-                    options:(NSKeyValueObservingOptions)options
-                 usingBlock:(M9KVOBlock)block {
+static void *M9BlockKVOObservers = &M9BlockKVOObservers;
+
+- (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
+                                  usingBlock:(M9KVOBlock)block {
+    return [self addKVObserverForKeyPath:keyPath
+                                 options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                              usingBlock:block];
+}
+
+- (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
+                                     options:(NSKeyValueObservingOptions)options
+                                  usingBlock:(M9KVOBlock)block {
     M9BlockKVOObserver *observer = [M9BlockKVOObserver new];
     observer.block = block;
-    [self addObserver:observer forKeyPath:keyPath options:options context:NULL];
+    
+    NSMutableArray *observers = [self associatedValueForKey:M9BlockKVOObservers];
+    if (!observers) {
+        observers = [NSMutableArray new];
+        [self associateValue:observers withKey:M9BlockKVOObservers];
+    }
+    [observers addObject:observer];
+    
+    [self addObserver:observer
+           forKeyPath:keyPath
+              options:options
+              context:NULL];
     return observer;
+}
+
+- (void)removeKVObserver:(NSObject *)observer {
+    NSMutableArray *observers = [self associatedValueForKey:M9BlockKVOObservers];
+    [observers removeObject:observer];
 }
 
 @end
