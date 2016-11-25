@@ -70,8 +70,8 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
 
 #pragma mark - public
 
-- (void)ntf_startObserving:(id)object name:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
-    if (!callback) {
+- (void)ntf_startObserving:(id)object name:(NSString *)name usingBlock:(NTFObserverBlock)block { @synchronized(self) {
+    if (!block) {
         return;
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -79,18 +79,18 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
                                                             object:object
                                                              queue:[NSOperationQueue mainQueue]
                                                         usingBlock:^(NSNotification * _Nonnull notification) {
-                                                            callback(notification.object,
-                                                                     notification.name,
-                                                                     notification.userInfo);
+                                                            block(/* notification.object,
+                                                                  notification.name, */
+                                                                  notification.userInfo);
                                                         }];
     [self ntf_addObserver:observer name:name object:object];
 }}
 
-- (void)ntf_startObservingForName:(NSString *)name callback:(NTFObserverCallback)callback { @synchronized(self) {
-    [self ntf_startObserving:nil name:name callback:callback];
+- (void)ntf_startObservingForName:(NSString *)name usingBlock:(NTFObserverBlock)block { @synchronized(self) {
+    [self ntf_startObserving:nil name:name usingBlock:block];
 }}
 
-- (void)ntf_stopObserving:(id)object forName:(NSString *)name { @synchronized(self) {
+- (void)ntf_stopObserving:(id)object name:(NSString *)name { @synchronized(self) {
     NSMutableDictionary<id<NSCopying>, NSMutableArray<_NTFObserver *> *> *allObservers = [self ntf_allObservers];
     NSArray<id<NSCopying>> *allKeys = name ? @[ name ] : [allObservers allKeys];
     
@@ -122,15 +122,15 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
 }}
 
 - (void)ntf_stopAllObserving { @synchronized(self) {
-    [self ntf_stopObserving:nil forName:nil];
+    [self ntf_stopObserving:nil name:nil];
 }}
 
 /* #pragma mark - DEPRECATED_ATTRIBUTE
 
 #define NTFObserverMakeName(name) [NSString stringWithFormat:@"NTFObserver-%@-%@", NSStringFromClass([self class]), name]
 
-- (id)addNTFObserverForName:(NSString *)name callback:(NTFObserverCallback)callback {
-    if (!callback) {
+- (id)addNTFObserverForName:(NSString *)name usingBlock:(NTFObserverBlock)block {
+    if (!block) {
         return nil;
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -139,13 +139,13 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
                                             queue:[NSOperationQueue mainQueue]
                                        usingBlock:^(NSNotification *notification) {
                                            // NOT: notification.name - notification.name == NTFObserverMakeName(name)
-                                           callback(notification.object,
-                                                    name,
-                                                    notification.userInfo);
+                                           block(notification.object,
+                                                 name,
+                                                 notification.userInfo);
                                        }];
 }
 
-- (void)removeNTFObserver:(id)observer forName:(NSString *)name {
+- (void)removeNTFObserver:(id)observer name:(NSString *)name {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter removeObserver:observer name:NTFObserverMakeName(name) object:self];
 }
@@ -179,6 +179,36 @@ static void *NTFObserver_allNTFObservers = &NTFObserver_allNTFObservers;
 - (void)ntf_notifyObserverWithName:(NSString *)name info:(NSDictionary *)info {
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:name object:self userInfo:info];
+}
+
+@end
+
+#pragma mark - NTFBlockObservable
+
+static NSString * const NTFObserveValueKey = @"NTFObserveValueKey";
+
+@implementation NSObject (NTFBlockObservable)
+
+- (id)ntf_addObserverForKey:(NSString *)key usingBlock:(NTFObserveBlock)block {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    return [center addObserverForName:key
+                               object:self
+                                queue:nil
+                           usingBlock:^(NSNotification *notification) {
+                               if (block) block(notification.userInfo[NTFObserveValueKey]);
+                           }];
+}
+
+- (void)ntf_notifyObserversForKey:(NSString *)key value:(id)value {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:key
+                          object:self
+                        userInfo:@{NTFObserveValueKey: value}];
+}
+
+- (void)ntf_removeObserver:(id)observer {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:observer];
 }
 
 @end
