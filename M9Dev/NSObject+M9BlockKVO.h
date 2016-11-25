@@ -15,11 +15,11 @@ typedef id M9BlockKVObserver;
 
 typedef void (^M9KVOBlock)(id old, id new);
 
-@interface NSObject (M9BlockKVO)
-
 /**
  *  @see - [NSNotificationCenter addObserverForName:object:queue:usingBlock:]
  */
+@interface NSObject (M9BlockKVO)
+
 - (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
                                   usingBlock:(M9KVOBlock)block; // options: old & new
 - (M9BlockKVObserver)addKVObserverForKeyPath:(NSString *)keyPath
