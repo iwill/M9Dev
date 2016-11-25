@@ -118,7 +118,9 @@ CGFloat UISizeScaleWithMargin_414(CGFloat margin) {
  * custom NSLog
  */
 
-void __NO_NSLog__(NSString *format, ...) {}
+#if defined(__OPTIMIZE__)
+    void __NO_NSLog__(NSString *format, ...) {}
+#endif
 
 #pragma mark -
 

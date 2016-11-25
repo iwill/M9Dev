@@ -456,15 +456,16 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 })
 
 // __OPTIMIZE__, @see GCC_OPTIMIZATION_LEVEL
-#if !defined(__OPTIMIZE__)
+#if defined(__OPTIMIZE__)
+    // inhibit unused warnings
+    void __NO_NSLog__(NSString *format, ...);
+    #define NSLogHere()
+    #define NSLog   __NO_NSLog__
+    #define NSLogv  __NO_NSLog__
+#else
     #define NSLogHere() { \
         NSLog(@"%@", _HERE); \
     }
-#else
-    void __NO_NSLog__(NSString *format, ...);
-    #define NSLogHere()
-    #define NSLog(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
-    #define NSLogv(fmt, ...) { __NO_NSLog__(fmt, ##__VA_ARGS__); }
 #endif
 
 
