@@ -9,20 +9,15 @@
 #import "Reachability+.h"
 
 typedef NS_ENUM(NSInteger, WWANType) {
-    WWANTypeNotAvailable    = - 1,          // can not detect
-    WWANTypeNone            = 0,            // has not
+    WWANTypeNone            = 0, // has not
     WWANType2G              = 2,
     WWANType3G              = 3,
     WWANType4G              = 4,
-    WWANTypeUnknown         = NSIntegerMax  // has, but unknown
+    WWANTypeUnknown         = NetworkTypeUnknown // has, but unknown
 };
 
 @interface Reachability (WWANType)
 
-// + (CTTelephonyNetworkInfo *)sharedTelephonyNetworkInfo;
-// + (NSString *)currentRadioAccessTechnology;
-
-+ (BOOL)isWWANTypeAvailable;
 + (WWANType)currentWWANType;
 
 @end
@@ -33,17 +28,14 @@ typedef NS_ENUM(NSInteger, WWANType) {
 
 + (Reachability *)sharedReachability {
     static Reachability *SharedReachability = nil;
-    
     if (SharedReachability) {
         return SharedReachability;
     }
-    
     @synchronized(self) {
         if (!SharedReachability) {
             SharedReachability = [Reachability reachabilityForInternetConnection];
         }
     }
-    
     return SharedReachability;
 }
 
@@ -59,24 +51,19 @@ typedef NS_ENUM(NSInteger, WWANType) {
 
 + (CTTelephonyNetworkInfo *)sharedTelephonyNetworkInfo {
     static CTTelephonyNetworkInfo *SharedTelephonyNetworkInfo = nil;
-    
     if (SharedTelephonyNetworkInfo) {
         return SharedTelephonyNetworkInfo;
     }
-    
     @synchronized(self) {
         if (!SharedTelephonyNetworkInfo) {
             SharedTelephonyNetworkInfo = [[CTTelephonyNetworkInfo alloc] init];
         }
     }
-    
     return SharedTelephonyNetworkInfo;
 }
 
 + (NSString *)currentRadioAccessTechnology {
-    return ([[self sharedTelephonyNetworkInfo] respondsToSelector:@selector(currentRadioAccessTechnology)]
-            ? [self sharedTelephonyNetworkInfo].currentRadioAccessTechnology
-            : nil);
+    return [self sharedTelephonyNetworkInfo].currentRadioAccessTechnology;
 }
 
 @end
@@ -85,16 +72,8 @@ typedef NS_ENUM(NSInteger, WWANType) {
 
 @implementation Reachability (WWANType)
 
-+ (BOOL)isWWANTypeAvailable {
-    return [[self sharedTelephonyNetworkInfo] respondsToSelector:@selector(currentRadioAccessTechnology)];
-}
-
 + (WWANType)currentWWANType {
-    if (![self isWWANTypeAvailable]) {
-        return WWANTypeNotAvailable;
-    }
-    
-    NSString *currentRadioAccessTechnology = [self currentRadioAccessTechnology];
+    NSString *currentRadioAccessTechnology = [self sharedTelephonyNetworkInfo].currentRadioAccessTechnology;
     if (!currentRadioAccessTechnology) {
         return WWANTypeNone;
     }
@@ -119,7 +98,7 @@ typedef NS_ENUM(NSInteger, WWANType) {
                        CTRadioAccessTechnologyLTE:             @(WWANType4G) };
     });
     
-    NSNumber *typeNumber = [WWANTypes objectForKey:[self currentRadioAccessTechnology]];
+    NSNumber *typeNumber = [WWANTypes objectForKey:currentRadioAccessTechnology];
     return typeNumber ? [typeNumber integerValue] : WWANTypeUnknown;
 }
 
@@ -133,11 +112,9 @@ typedef NS_ENUM(NSInteger, WWANType) {
     if ([self notReachable]) {
         return NetworkTypeNone;
     }
-    
     if ([self reachableViaWiFi]) {
         return NetworkTypeWiFi;
     }
-    
     if ([self reachableViaWWAN]) {
         switch ([self currentWWANType]) {
             case WWANType2G:
@@ -147,11 +124,10 @@ typedef NS_ENUM(NSInteger, WWANType) {
             case WWANType4G:
                 return NetworkType4G;
             default:
-                return NetworkTypeUnknownWWAN;
+                return NetworkTypeUnknown; // NetworkTypeUnknownWWAN
         }
     }
-    
-    return NetworkTypeNone; // NetworkTypeUnknown?
+    return NetworkTypeUnknown;
 }
 
 + (BOOL)reachable {
@@ -186,7 +162,6 @@ typedef NS_ENUM(NSInteger, WWANType) {
     // !!!: init shared CTTelephonyNetworkInfo instance before add notification observer
     // @see the comments of this method in the header file
     [self sharedTelephonyNetworkInfo];
-    
     // !!!: object is the CTRadioAccessTechnologyXXX instead of the CTTelephonyNetworkInfo instance
     [[NSNotificationCenter defaultCenter] addObserver:observer
                                              selector:selector

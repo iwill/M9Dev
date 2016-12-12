@@ -39,7 +39,8 @@ typedef NS_ENUM(NSInteger, NetworkType) {
     NetworkType2G   = 2,
     NetworkType3G   = 3,
     NetworkType4G   = 4,
-    NetworkTypeUnknownWWAN = NSIntegerMax
+    NetworkTypeUnknown = NSIntegerMax,
+    NetworkTypeUnknownWWAN DEPRECATED_MSG_ATTRIBUTE("use `NetworkTypeUnknown`") = NetworkTypeUnknown
 };
 
 @interface Reachability (NetworkType)
@@ -68,7 +69,7 @@ typedef NS_ENUM(NSInteger, NetworkType) {
  * @param selector
  *      The selector must have one and only one argument (an instance of NSNotification)
  */
-+ (void)addNetworkTypeChangedNotificationObserver:(id)observer selector:(SEL)selector DEPRECATED_ATTRIBUTE;
-+ (void)removeNetworkTypeChangedNotificationObserver:(id)observer DEPRECATED_ATTRIBUTE;
++ (void)addNetworkTypeChangedNotificationObserver:(id)observer selector:(SEL)selector;
++ (void)removeNetworkTypeChangedNotificationObserver:(id)observer;
 
 @end
