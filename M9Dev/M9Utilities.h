@@ -94,7 +94,7 @@ static id _SINGLETON_INSTANCE = nil; \
  */
 
 #define NSObjectFromValue(value, defaultValue)  value ? @(value) : defaultValue
-#define NSStringFromValue(value, defaultValue)  value ? [@(value) stringValue] : defaultValue
+#define NSStringFromValue(value, defaultValue)  value ? [@(value) description] : defaultValue
 #define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
 
 #define NSSelectorString(sel)                   NSStringFromSelector(@selector(sel))
