@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef long NSMilliseconds;
+typedef long long NSMilliseconds;
 
 extern NSMilliseconds NSMillisecondsFromTimeInterval(NSTimeInterval timeInterval);
 extern NSTimeInterval NSTimeIntervalFromMilliseconds(NSMilliseconds milliseconds);
