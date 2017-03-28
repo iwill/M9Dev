@@ -12,7 +12,9 @@
 
 
 #if defined __cplusplus
-extern "C" {
+    #define __EXTERN_C__ \
+        extern "C" {
+    __EXTERN_C__
 #endif
 
 
@@ -31,7 +33,7 @@ extern "C" {
 
 
 // @see SpectaUtility.h - https://github.com/specta/specta
-#define IS_BLOCK(obj) [(obj) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
+#define IS_BLOCK(OBJECT) [(OBJECT) isKindOfClass:NSClassFromString([NSString stringWithFormat:@"%s%s%s", "N", "SB", "lock"])]
 
 
 #define OR          ? :
@@ -40,13 +42,13 @@ extern "C" {
 #define _RETURN     ; // RETURN is defined in tty.h
 
 // for each with blocks
-#define _BREAK      return NO
-#define _CONTINUE   return YES
+#define _BREAK      return NO   // ???: _STOP
+#define _CONTINUE   return YES  // ???: _GOON
 
 
 /**
- * @see __CLASS__ - Google: Objective-C macro __CLASS__
- *  !!!: _THIS_CLASS != [self class]
+ *  @see __CLASS__ - Google: Objective-C macro __CLASS__
+ *      !!!: _THIS_CLASS != [self class]
  */
 #define _THIS_CLASS_NAME ({ \
     static NSString *ClassName = nil; \
@@ -57,7 +59,7 @@ extern "C" {
         NSRange range = NSMakeSafeRange(loc, len, prettyFunction.length); \
         ClassName = [prettyFunction substringWithRange:range]; \
     } \
-    ClassName; \
+    _RETURN ClassName; \
 })
 #define _THIS_CLASS     NSClassFromString(_THIS_CLASS_NAME)
 
@@ -65,8 +67,8 @@ extern "C" {
 /**
  *  @singleton_synthesize(sharedInstance);
  */
-#define singleton_synthesize(_SHARED_METHOD) \
-class NSObject; /* for @ */ \
+#define singleton_synthesize(SHARED_METHOD) \
+class NSObject; /* '@' for @singleton_synthesize */ \
 \
 static id _SINGLETON_INSTANCE = nil; \
 \
@@ -83,89 +85,106 @@ static id _SINGLETON_INSTANCE = nil; \
     return nil; \
 } \
 \
-+ (instancetype)_SHARED_METHOD { \
++ (instancetype)SHARED_METHOD { \
     return (self == _THIS_CLASS) ? (_SINGLETON_INSTANCE ?: [self new] ?: _SINGLETON_INSTANCE) : nil; \
 }
-#define synthesize_singleton singleton_synthesize
+#define synthesize_singleton singleton_synthesize // DEPRECATED_ATTRIBUTE
 
 
 /**
- * NSString
+ *  NSString
  */
 
-#define NSObjectFromValue(value, defaultValue)  value ? @(value) : defaultValue
-#define NSStringFromValue(value, defaultValue)  value ? [@(value) description] : defaultValue
-#define NSStringFromBOOL(value)                 (value ? @"YES" : @"NO")
+#define NSObjectFromValue(VALUE, DEFAULT_VALUE) ({ VALUE ? @(VALUE) : DEFAULT_VALUE; })
+#define NSStringFromValue(VALUE, DEFAULT_VALUE) ({ VALUE ? [@(VALUE) description] : DEFAULT_VALUE; })
+#define NSStringFromBOOL(VALUE)                 ({ VALUE ? @"YES" : @"NO"; })
 
-#define NSSelectorString(sel)                   NSStringFromSelector(@selector(sel))
+#define NSSelectorString(SELECTOR)              NSStringFromSelector(@selector(SELECTOR))
 
-#define NSStringFromLiteral(literal)            @#literal // #literal - literal to CString
+#define NSStringFromLiteral(LITERAL)            @#LITERAL // #LITERAL - LITERAL to CString
 
-// !!!: use defaultValue if preprocessor is undefined or its value is same to itself
-#define NSStringFromPreprocessor(preprocessor, defaultValue)    ({ \
-    NSString *string = NSStringFromLiteral(preprocessor); \
-    [string isEqualToString:@#preprocessor] ? defaultValue : string; \
+// !!!: use DEFAULT_VALUE if PREPROCESSOR is undefined or its value is same to itself
+#define NSStringFromPreprocessor(PREPROCESSOR, DEFAULT_VALUE)    ({ \
+    NSString *string = NSStringFromLiteral(PREPROCESSOR); \
+    _RETURN [string isEqualToString:@#PREPROCESSOR] ? DEFAULT_VALUE : string; \
 })
-// !!!: use defaultValue if preprocessor is undefined or its value is same to itself
-#define NSIntegerFromPreprocessor(preprocessor, defaultValue)   ({ \
-    NSString *string = NSStringFromLiteral(preprocessor); \
-    [string isEqualToString:@#preprocessor] ? defaultValue : [string integerValue]; \
+// !!!: use DEFAULT_VALUE if PREPROCESSOR is undefined or its value is same to itself
+#define NSIntegerFromPreprocessor(PREPROCESSOR, DEFAULT_VALUE)   ({ \
+    NSString *string = NSStringFromLiteral(PREPROCESSOR); \
+    _RETURN [string isEqualToString:@#PREPROCESSOR] ? DEFAULT_VALUE : [string integerValue]; \
 })
 
-#define NSVersionEQ(a, b) [a compare:b options:NSNumericSearch] == NSOrderedSame
-#define NSVersionLT(a, b) [a compare:b options:NSNumericSearch] <  NSOrderedSame
-#define NSVersionGT(a, b) [a compare:b options:NSNumericSearch] >  NSOrderedSame
-#define NSVersionLE(a, b) [a compare:b options:NSNumericSearch] <= NSOrderedSame
-#define NSVersionGE(a, b) [a compare:b options:NSNumericSearch] >= NSOrderedSame
+#define NSVersionEQ(A, B) ({ [A compare:B options:NSNumericSearch] == NSOrderedSame; })
+#define NSVersionLT(A, B) ({ [A compare:B options:NSNumericSearch] <  NSOrderedSame; })
+#define NSVersionGT(A, B) ({ [A compare:B options:NSNumericSearch] >  NSOrderedSame; })
+#define NSVersionLE(A, B) ({ [A compare:B options:NSNumericSearch] <= NSOrderedSame; })
+#define NSVersionGE(A, B) ({ [A compare:B options:NSNumericSearch] >= NSOrderedSame; })
 
 
 /**
- * NSMerge
+ *  NSMerge - DEPRECATED_ATTRIBUTE
  */
 
-#define NSMergeString(a, b)     [a OR @"" stringByAppendingString:b OR @""]
-#define NSMergeArray(a, b)      [a OR @[] arrayByAddingObjectsFromArray:b OR @[]]
-#define NSMergeDictionary(a, b) [a OR @{} dictionaryByAddingObjectsFromDictionary:b OR @{}]
+#define NSMergeString(A, B)     [A OR @"" stringByAppendingString:B OR @""]
+#define NSMergeArray(A, B)      [A OR @[] arrayByAddingObjectsFromArray:B OR @[]]
+#define NSMergeDictionary(A, B) [A OR @{} dictionaryByAddingObjectsFromDictionary:B OR @{}]
 
 
 /**
- * va - variable arguments
+ *  if_let (int i = 0,
+ *          i > 0) {
+ *      // ...
+ *  }
+ *  else if_let (int i = 1; BOOL b = YES,
+ *               (i > 0 && b)) {
+ *      // ...
+ *  }
+ *  else {
+ *      // ...
+ *  }
  */
-#define va_each(type, first, block) { \
+#define if_let(DEF, IF) if (({ DEF; IF; }))
+
+
+/**
+ *  va - variable arguments
+ */
+#define va_each(TYPE, FIRST, BLOCK) { \
     va_list args; \
-    va_start(args, first); \
-    for (type arg = first; !!arg; arg = va_arg(args, type)) { \
-        block(arg); \
+    va_start(args, FIRST); \
+    for (TYPE arg = FIRST; !!arg; arg = va_arg(args, TYPE)) { \
+        BLOCK(arg); \
     } \
     va_end(args); \
 }
-#define va_each_if_yes(type, first, block) { \
+#define va_each_if_yes(TYPE, FIRST, BLOCK) { \
     va_list args; \
-    va_start(args, first); \
-    for (type arg = first; arg && block(arg); arg = va_arg(args, type)) { \
+    va_start(args, FIRST); \
+    for (TYPE arg = FIRST; arg && BLOCK(arg); arg = va_arg(args, TYPE)) { \
     } \
     va_end(args); \
 }
-#define va_to_array(type, first) ({ \
+#define va_to_array(TYPE, FIRST) ({ \
     NSMutableArray *array = [NSMutableArray array]; \
-    va_each(type, first, ^(type arg) { \
+    va_each(TYPE, FIRST, ^(TYPE arg) { \
         if (arg) [array addObject:arg]; \
     }); \
     _RETURN array; \
 })
 /*
-#define va_make(args, first, statements) \
-    va_list args; \
-    va_start(args, first); \
+#define va_make(ARGS, FIRST, STATEMENTS) { \
+    va_list ARGS; \
+    va_start(ARGS, FIRST); \
     @try \
-        statements \
+        STATEMENTS \
     @finally { \
-        va_end(args); \
-    } */
+        va_end(ARGS); \
+    }
+} */
 
 
 /**
- * weakdef, strongdef & strongdef_ifNOT
+ *  weakdef, strongdef & strongdef_ifNOT
  */
 #define weakdef(...) @weakify(__VA_ARGS__)
 #define strongdef(...) @strongify(__VA_ARGS__)
@@ -180,54 +199,114 @@ static id _SINGLETON_INSTANCE = nil; \
 
 
 /**
- * NSLocking
- * Allows return everywhere between LOCK and UNLOCK, no need extra unlock
+ *  RACTupleUnpackNoWarn without unused-variable warnings - DEPRECATED_ATTRIBUTE
+ */
+#define RACTupleUnpackNoWarn(...) \
+    _Pragma("GCC diagnostic push") \
+    _Pragma("GCC diagnostic ignored \"-Wunused-variable\"") \
+    RACTupleUnpack(__VA_ARGS__) \
+    _Pragma("GCC diagnostic pop")
+
+
+/**
+ *  M9TuplePack & M9TupleUnpack
+ *  define:
+ *      - (M9Tuple<void (^)(BOOL state1, BOOL state2> *)states;
+ *  pack:
+ *      BOOL state1 = self.state1, state2 = self.state2;
+ *      return M9TuplePack(state1, state2);
+ *  unpack:
+ *      M9TupleUnpack(tuple) = ^(BOOL state1, BOOL state2) {
+ *          // ...
+ *      };
  */
 
-/* LOCKED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
- * e.g.
- *  LOCKED(lock, {
- *      // statements
- *  });
+/**
+ *  !!!:
+ *  1. The following `self` is retained, until `tuple` released;
+ *  2. The properties are read when `M9TupleUnpack` but NOT `M9TuplePack`, the result may be unexpected;
+ *      M9Tuple *tuple = M9TuplePack(self.state1, self.state2);
+ *  So, strongly recommend using local variables.
+ *      BOOL state1 = self.state1, state2 = self.state2;
+ *      M9Tuple *tuple = M9TuplePack(state1, state2);
  */
-#define LOCKED($lock, $statements) \
-    [$lock lock]; \
+#define M9TuplePack(TYPE, ...) _M9TuplePack(void (^)TYPE, __VA_ARGS__)
+#define _M9TuplePack(TYPE, ...) \
+({[M9Tuple tupleWithPack:^(M9TupleUnpackBlock unpack) { \
+    if (unpack) ((TYPE)unpack)(__VA_ARGS__); \
+}];})
+/**
+ *  need NOT weakify&strongify in unpack - unpack block is called immediately
+ */
+#define M9TupleUnpack(TUPLE)    (TUPLE ?: [M9Tuple new]).unpack
+
+typedef void (^M9TupleUnpackBlock)(/* ... */);
+typedef void (^M9TuplePackBlock)(M9TupleUnpackBlock unpack);
+
+/*  M9Tuple with Lightweight Generics:
+ *  - (M9Tuple<void (^)(NSString *string, NSInteger integer, ...)> *)aTuple;
+ *  ???: M9TupleGeneric or M9TupleType()
+ */
+// - (M9Tuple<M9TupleGeneric(NSString *string, NSInteger integer, ...)> *)aTuple;
+#define M9TupleGeneric      void (^)
+// - (M9TupleType(NSString *string, NSInteger integer))aTuple;
+#define M9TupleType(...)    M9Tuple<void (^)(__VA_ARGS__)> *
+
+@interface M9Tuple<M9TupleUnpackTypeGeneric> : NSObject
+@property (nonatomic, /* writeonly, */ assign, setter=unpack:) id/* <M9TupleUnpackTypeGeneric> */ unpack;
++ (instancetype)tupleWithPack:(M9TuplePackBlock)pack;
+@end
+
+
+/**
+ *  NSLocking
+ *  Allows return everywhere between LOCK and UNLOCK, no need extra unlock
+ */
+
+/*  LOCKED(id<NSLocking> lock, statements-block) - syntax like @synchronized with NSLocking
+ *  e.g.
+ *      LOCKED(lock, {
+ *          // statements
+ *      });
+ */
+#define LOCKED(_LOCK, _STATEMENTS) \
+    [_LOCK lock]; \
     @try \
-        $statements \
+        _STATEMENTS \
     @finally { \
-        [$lock unlock]; \
+        [_LOCK unlock]; \
     }
 
 /*  LOCK(id<NSLocking> lock);
  *  // statements
  *  UNLOCK();
  */
-#define LOCK($lock) \
+#define LOCK(_LOCK) \
     @try { \
-        [$lock lock];
+        [_LOCK lock];
         // statements
-#define UNLOCK($lock) \
+#define UNLOCK(_LOCK) \
     } \
     @finally { \
-        [$lock unlock]; \
+        [_LOCK unlock]; \
     }
 
-/* NOTE: @synchronized without indent
- *  SYNCHRONIZED(object)
+/*  SYNCHRONIZED(OBJECT)
  *  // statements
  *  SYNCHRONIZED_END
-#define SYNCHRONIZED(object) { \
-    @synchronized(object) {
+#define SYNCHRONIZED(OBJECT) { \
+    @synchronized(OBJECT) {
         // statements
-#define END \
+#define SYNCHRONIZED_END \
     }
  */
 
 
 /**
- * dispatch
+ *  dispatch
  */
 
+// DEPRECATED_ATTRIBUTE
 static inline dispatch_time_t dispatch_time_in_seconds(NSTimeInterval seconds) {
     return dispatch_time(DISPATCH_TIME_NOW, (int64_t)(seconds * NSEC_PER_SEC));
 }
@@ -250,6 +329,7 @@ static inline long dispatch_semaphore_wait_for_seconds(NSTimeInterval seconds) {
     return dispatch_semaphore_wait_for(seconds, nil);
 } */
 
+// DEPRECATED_ATTRIBUTE
 static inline void dispatch_after_seconds(NSTimeInterval seconds,
                                           dispatch_queue_t queue,
                                           dispatch_block_t block) {
@@ -277,8 +357,8 @@ static inline void dispatch_async_background_queue(dispatch_block_t block) {
 
 
 /**
- * if: return self if condition is YES
- * as: return self if self is kind of class
+ *  if: return self if condition is YES
+ *  as: return self if self is kind of class
  */
 
 // TODO: asString, asNumber, asInteger ...
@@ -302,17 +382,17 @@ static inline void dispatch_async_background_queue(dispatch_block_t block) {
 
 
 /**
- * M9MakeCopy & @M9MakeCopyWithZone
+ *  M9Copying & @M9MakeCopyWithZone
  */
 
-@protocol M9MakeCopy <NSCopying>
+@protocol M9Copying <NSCopying>
 
 - (void)makeCopy:(id)copy;
 
 @end
 
 #define M9MakeCopyWithZone \
-class NSObject; /* for @ */ \
+class NSObject;  /* '@' for @M9MakeCopyWithZone */ \
 - (instancetype)copyWithZone:(NSZone *)zone { \
     __typeof__(self) copy = [[self class] new]; \
     [self makeCopy:copy]; \
@@ -336,7 +416,7 @@ CGFloat UISizeScaleWithMargin_414(CGFloat margin);
 
 
 /**
- * bundle & directory
+ *  bundle & directory
  */
 // [UIImage imageNamed:M9Dev_bundle_"QING.png"]
 
@@ -355,14 +435,14 @@ static inline NSString *NSDirectory(NSSearchPathDirectory directory) {
 
 
 /**
- * UIKit
+ *  UIKit
  */
 
 // NS instead of CG
 // typedef CGFloat NSFloat;
 
 // animationDuration
-static const CGFloat UIViewAnimationDuration = 0.2; // @see UIView + setAnimationDuration:
+static CGFloat const UIViewAnimationDuration = 0.2; // @see UIView + setAnimationDuration:
 
 // UIAnimationCompletion
 typedef void (^UIAnimationCompletion)();
@@ -370,7 +450,7 @@ typedef void (^UIAnimationCompletionWithBOOL)(BOOL finished);
 
 
 /**
- * NSRange
+ *  NSRange
  */
 static inline NSRange NSMakeSafeRange(NSUInteger loc, NSUInteger len, NSUInteger length) {
     loc = MIN(loc, length);
@@ -383,70 +463,70 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 
 /**
- * SetStruct
+ *  SetStruct
  */
-#define SetStruct(_struct, statements) ({ \
-    __typeof__(_struct) set = _struct; \
-    statements \
+#define SetStruct(STRUCT, STATEMENTS) ({ \
+    __typeof__(STRUCT) set = STRUCT; \
+    STATEMENTS \
     _RETURN set; \
 })
 
 
 /**
- * CGRectSet
+ *  CGRectSet
  */
-#define CGRectSetX(_rect, _x) ({ \
-    CGRect rect = _rect; \
-    rect.origin.x = _x; \
+#define CGRectSetX(RECT, X) ({ \
+    CGRect rect = RECT; \
+    rect.origin.x = X; \
     _RETURN rect; \
 })
-#define CGRectSetY(_rect, _y) ({ \
-    CGRect rect = _rect; \
-    rect.origin.y = _y; \
+#define CGRectSetY(RECT, Y) ({ \
+    CGRect rect = RECT; \
+    rect.origin.y = Y; \
     _RETURN rect; \
 })
-#define CGRectSetXY(_rect, _x, _y) ({ \
-    CGRect rect = _rect; \
-    rect.origin.x = _x; \
-    rect.origin.y = _y; \
+#define CGRectSetXY(RECT, X, Y) ({ \
+    CGRect rect = RECT; \
+    rect.origin.x = X; \
+    rect.origin.y = Y; \
     _RETURN rect; \
 })
-#define CGRectSetWidth(_rect, _width) ({ \
-    CGRect rect = _rect; \
-    rect.size.width = _width; \
+#define CGRectSetWidth(RECT, WIDTH) ({ \
+    CGRect rect = RECT; \
+    rect.size.width = WIDTH; \
     _RETURN rect; \
 })
-#define CGRectSetHeight(_rect, _height) ({ \
-    CGRect rect = _rect; \
-    rect.size.height = _height; \
+#define CGRectSetHeight(RECT, HEIGHT) ({ \
+    CGRect rect = RECT; \
+    rect.size.height = HEIGHT; \
     _RETURN rect; \
 })
-#define CGRectSetWidthHeight(_rect, _width, _height) ({ \
-    CGRect rect = _rect; \
-    rect.size.width = _width; \
-    rect.size.height = _height; \
+#define CGRectSetWidthHeight(RECT, WIDTH, HEIGHT) ({ \
+    CGRect rect = RECT; \
+    rect.size.width = WIDTH; \
+    rect.size.height = HEIGHT; \
     _RETURN rect; \
 })
-#define CGRectSetOrigin(_rect, _origin) ({ \
-    CGRect rect = _rect; \
-    rect.origin = _origin; \
+#define CGRectSetOrigin(RECT, ORIGIN) ({ \
+    CGRect rect = RECT; \
+    rect.origin = ORIGIN; \
     _RETURN rect; \
 })
-#define CGRectSetSize(_rect, _size) ({ \
-    CGRect rect = _rect; \
-    rect.size = _size; \
+#define CGRectSetSize(RECT, SIZE) ({ \
+    CGRect rect = RECT; \
+    rect.size = SIZE; \
     _RETURN rect; \
 })
-#define CGRectSet(_rect, statements) ({ \
-    CGFloat x = _rect.origin.x, y = _rect.origin.y; \
-    CGFloat width = _rect.size.width, height = _rect.size.height; \
-    statements \
+#define CGRectSet(RECT, STATEMENTS) ({ \
+    CGFloat x = RECT.origin.x, y = RECT.origin.y; \
+    CGFloat width = RECT.size.width, height = RECT.size.height; \
+    STATEMENTS \
     _RETURN CGRectMake(x, y, width, height); \
 })
 
 
 /**
- * custom NSLog
+ *  custom NSLog - ???
  */
 
 // #define AT __FILE__ ":" #__LINE__
@@ -470,7 +550,7 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 
 /**
- *  custom DDLog
+ *  custom DDLog - DEPRECATED_ATTRIBUTE
  *
  *  Install XcodeColors:
  *      https://github.com/robbiehanson/XcodeColors
@@ -495,7 +575,7 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
     #define DDDEB(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagDebug,   M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
     #define DDVER(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, LOG_LEVEL_DEF, DDLogFlagVerbose, M9_DDLOG_CXT, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
     #define DDLOG(frmt, ...) DDINF(frmt, ##__VA_ARGS__)
-    static const NSUInteger M9_ddLogLevel = ddLogLevelGlobal;
+    static NSUInteger const M9_ddLogLevel = ddLogLevelGlobal;
 #else
     #import <Foundation/Foundation.h>
     #define DDERR(frmt, ...) NSLog(@"<#ERR#> " frmt, ##__VA_ARGS__)
@@ -511,18 +591,24 @@ static inline NSRange NSSafeRangeOfLength(NSRange range, NSUInteger length) {
 
 
 /**
- * suppress warning
+ *  suppress warning
  *
- * e.g.
- *  SuppressPerformSelectorLeakWarning({
- *      // statements
- *  });
- * suppress warning, @see
- *  http://stackoverflow.com/a/7933931/456536
- * @see also
- *  http://stackoverflow.com/a/20058585/456536
+ *  e.g.
+ *      SuppressPerformSelectorLeakWarning({
+ *          // statements
+ *      });
+ *  suppress warning, @see
+ *      http://stackoverflow.com/a/7933931/456536
+ *  @see also
+ *      http://stackoverflow.com/a/20058585/456536
  */
 
+#define SuppressUnusedVariableWarning(statements) \
+_Pragma("GCC diagnostic push") \
+_Pragma("GCC diagnostic ignored \"-Wunused-variable\"") \
+statements \
+_Pragma("GCC diagnostic pop")
+    
 #define SuppressPerformSelectorLeakWarning(statements) \
 _Pragma("clang diagnostic push") \
 _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
@@ -537,6 +623,8 @@ _Pragma("clang diagnostic pop")
 
 
 #if defined __cplusplus
-};
+    #define __EXTERN_C_END__ \
+        };
+    __EXTERN_C_END__
 #endif
 

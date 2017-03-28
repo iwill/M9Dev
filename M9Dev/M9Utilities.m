@@ -14,6 +14,32 @@
 
 #pragma mark -
 
+@interface M9Tuple ()
+
+@property (nonatomic, copy) M9TuplePackBlock pack;
+
+@end
+
+@implementation M9Tuple
+
++ (instancetype)tupleWithPack:(M9TuplePackBlock)pack {
+    M9Tuple *tuple = [self new];
+    tuple.pack = pack;
+    return tuple;
+}
+
+@dynamic unpack; // writeonly
+- (void)unpack:(id/* M9TupleUnpackBlock */)unpack {
+    (self.pack ?: ^(M9TupleUnpackBlock unpack) {
+        if (unpack) unpack(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                           0, 0, 0, 0, 0, 0, 0, 0, 0, 0); // 0/nil
+    })(unpack);
+}
+
+@end
+
+#pragma mark -
+
 @implementation NSObject (ReturnSelfIf)
 
 - (id)if:(BOOL)condition {
